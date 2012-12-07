@@ -64,6 +64,7 @@
     <Compile Include="Infrastructure\JsonWebClient.IWebClient.cs" />
     <Compile Include="Infrastructure\RetryLogic.cs" />
     <Compile Include="Interfaces\IAbstractResource.cs" />
+    <Compile Include="Interfaces\IAbstractResourceList.cs" />
     <Compile Include="Interfaces\IApiResponse.cs" />
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
@@ -72,11 +73,20 @@
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
     <Compile Include="Models\AbstractResource.cs" />
+    <Compile Include="Models\AbstractResourceList.cs" />
     <Compile Include="Models\Agreement.cs" />
+    <Compile Include="Models\ApiListResponse.cs" />
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\AppResult.cs" />
     <Compile Include="Models\AppSession.cs" />
+    <Compile Include="Models\GetProjectListRequest.cs" />
+    <Compile Include="Models\GetProjectApiListResponse.cs" />
+    <Compile Include="Models\GetProjectRequest.cs" />
+    <Compile Include="Models\GetRunRequest.cs" />
+    <Compile Include="Models\PostProjectRequest.cs" />
+    <Compile Include="Models\GetProjectResponse.cs" />
+    <Compile Include="Models\GetRunResponse.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\GetUserRequest.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -86,7 +96,7 @@
     <Compile Include="Models\Run.cs" />
     <Compile Include="Models\Sample.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserResponse.cs" />
+    <Compile Include="Models\GetUserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
