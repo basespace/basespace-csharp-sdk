@@ -35,4 +35,16 @@ namespace Illumina.BaseSpace.SDK.Models
         [DataMember]
         public Uri HrefBaseSpaceUI { get; set; }
     }
+
+    public enum ProjectsSortFields { Id, Name, DateCreated }
+
+    [DataContract()]
+    public class ProjectList : AbstractResourceList
+    {
+        [DataMember]
+        public ProjectsSortFields SortBy { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+    }
 }

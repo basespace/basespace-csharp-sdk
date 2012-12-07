@@ -13,9 +13,14 @@ namespace Illumina.BaseSpace.SDK
 
         GetUserResponse GetUser(GetUserRequest request, IRequestOptions options);
 
+        Task<GetRunResponse> GetRunAsync(GetRunRequest request, IRequestOptions options);
+        GetRunResponse GetRun(GetRunRequest request, IRequestOptions options);
+
+        Task<GetProjectResponse> GetProjectAsync(GetProjectRequest request, IRequestOptions options);
+        GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options);
+
+        Task<GetProjectApiListResponse> ListProjects(GetProjectListRequest request, IRequestOptions options);
+
         void SetDefaultRequestOptions(IRequestOptions options);
-
-
-
     }
 }
