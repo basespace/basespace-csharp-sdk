@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Illumina.BaseSpace.SDK.Models;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public interface IAbstractResourceList
+    public interface IAbstractQueryParameters
     {
-        int? Offset { get; set; }
-        int? Limit { get; set; }
+        int Offset { get; set; }
+        int Limit { get; set; }
         SortDirection SortDir { get; set; }
     }
 }

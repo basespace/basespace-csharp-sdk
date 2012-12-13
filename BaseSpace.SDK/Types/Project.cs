@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
-namespace Illumina.BaseSpace.SDK.Models
+namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract( Name = "Project")]
     public class ProjectCompact : AbstractResource
@@ -36,13 +33,13 @@ namespace Illumina.BaseSpace.SDK.Models
         public Uri HrefBaseSpaceUI { get; set; }
     }
 
-    public enum ProjectsSortFields { Id, Name, DateCreated }
+    public enum ProjectsSortByParameters { Id, Name, DateCreated }
 
     [DataContract()]
-    public class ProjectList : AbstractResourceList
+    public class ProjectList : AbstractQueryParameters
     {
         [DataMember]
-        public ProjectsSortFields SortBy { get; set; }
+        public ProjectsSortByParameters SortBy { get; set; }
 
         [DataMember]
         public string Name { get; set; }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using ServiceStack.ServiceInterface.ServiceModel;
 
-namespace Illumina.BaseSpace.SDK.Models
+namespace Illumina.BaseSpace.SDK.Types
 {
     [KnownType(typeof(Notification))]
     [DataContract]

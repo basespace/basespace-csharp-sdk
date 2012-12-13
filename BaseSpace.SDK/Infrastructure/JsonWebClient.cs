@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Util;
 using Common.Logging;
-using Illumina.BaseSpace.SDK.Models;
+using Illumina.BaseSpace.SDK.Types;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.Text;

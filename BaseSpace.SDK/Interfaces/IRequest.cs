@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Illumina.BaseSpace.SDK.Models
+namespace Illumina.BaseSpace.SDK
 {
-    public class GetUserResponse : ApiResponse<User>
+    public interface IRequest<TRequest>
     {
-        
+        TRequest Request { get; }
     }
 }

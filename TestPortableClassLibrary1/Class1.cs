@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Illumina.BaseSpace.SDK.Models
+namespace TestPortableClassLibrary1
 {
-    public class GetProjectResponse : ApiResponse<Project>
+    public class Class1
     {
-
     }
 }

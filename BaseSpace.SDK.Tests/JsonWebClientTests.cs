@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Illumina.BaseSpace.SDK;
-using Illumina.BaseSpace.SDK.Models;
+using Illumina.BaseSpace.SDK.Types;
 using Xunit;
 using Xunit.Extensions;
 
