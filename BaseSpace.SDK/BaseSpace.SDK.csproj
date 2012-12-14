@@ -73,6 +73,15 @@
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
+    <Compile Include="ServiceModels\Request\GetProjectRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetRunRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetUserProjectListRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetUserRequest.cs" />
+    <Compile Include="ServiceModels\Request\PostProjectRequest.cs" />
+    <Compile Include="ServiceModels\Response\GetProjectResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetRunResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetUserProjectListResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetUserResponse.cs" />
     <Compile Include="Types\AbstractResource.cs" />
     <Compile Include="Types\AbstractQueryParameters.cs" />
     <Compile Include="Types\Agreement.cs" />
@@ -82,15 +91,7 @@
     <Compile Include="Types\Application.cs" />
     <Compile Include="Types\AppResult.cs" />
     <Compile Include="Types\AppSession.cs" />
-    <Compile Include="ServiceModels\GetUserProjectListRequest.cs" />
-    <Compile Include="ServiceModels\GetUserProjectListResponse.cs" />
-    <Compile Include="ServiceModels\GetProjectRequest.cs" />
-    <Compile Include="ServiceModels\GetRunRequest.cs" />
-    <Compile Include="ServiceModels\PostProjectRequest.cs" />
-    <Compile Include="ServiceModels\GetProjectResponse.cs" />
-    <Compile Include="ServiceModels\GetRunResponse.cs" />
     <Compile Include="Types\File.cs" />
-    <Compile Include="ServiceModels\GetUserRequest.cs" />
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
     <Compile Include="Types\ReferenceImplementations.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />
     <Compile Include="Types\User.cs" />
-    <Compile Include="ServiceModels\GetUserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
