@@ -10,7 +10,6 @@ namespace Illumina.BaseSpace.SDK
     public interface IBaseSpaceClient
     {
         Task<GetUserResponse> GetUserAsync(GetUserRequest request, IRequestOptions options);
-
         GetUserResponse GetUser(GetUserRequest request, IRequestOptions options);
 
         Task<GetRunResponse> GetRunAsync(GetRunRequest request, IRequestOptions options);

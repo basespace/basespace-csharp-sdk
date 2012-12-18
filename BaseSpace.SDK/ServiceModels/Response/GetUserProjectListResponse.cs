@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetUserProjectListResponse : ListResponse<ProjectCompact, ProjectsSortByParameters>
+    public class GetUserProjectListResponse //: ListResponse<ProjectCompact, ProjectsSortByParameters>
     {
         //private ProjectCompact[] Projects { get;  }
 
