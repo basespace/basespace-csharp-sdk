@@ -6,7 +6,7 @@
         /// Get basic user infomation
         /// </summary>
         /// <param name="id">User Id or null for current user</param>
-        public GetUserRequest(string id)
+        public GetUserRequest(string id = null)
         {
             Id = id;
         }

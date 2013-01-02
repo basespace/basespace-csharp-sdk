@@ -9,17 +9,17 @@ namespace Illumina.BaseSpace.SDK
 {
     public interface IBaseSpaceClient
     {
-        Task<GetUserResponse> GetUserAsync(GetUserRequest request, IRequestOptions options);
-        GetUserResponse GetUser(GetUserRequest request, IRequestOptions options);
+        Task<GetUserResponse> GetUserAsync(GetUserRequest request, IRequestOptions options = null);
+        GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null);
 
-        Task<GetRunResponse> GetRunAsync(GetRunRequest request, IRequestOptions options);
-        GetRunResponse GetRun(GetRunRequest request, IRequestOptions options);
+        Task<GetRunResponse> GetRunAsync(GetRunRequest request, IRequestOptions options = null);
+        GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
 
-        Task<GetProjectResponse> GetProjectAsync(GetProjectRequest request, IRequestOptions options);
-        GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options);
+        Task<GetProjectResponse> GetProjectAsync(GetProjectRequest request, IRequestOptions options = null);
+        GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null);
 
-        Task<GetUserProjectListResponse> ListProjects(GetUserProjectListRequest request, IRequestOptions options);
+        Task<GetUserProjectListResponse> ListProjects(GetUserProjectListRequest request, IRequestOptions options = null);
 
-        void SetDefaultRequestOptions(IRequestOptions options);
+        void SetDefaultRequestOptions(IRequestOptions options = null);
     }
 }
