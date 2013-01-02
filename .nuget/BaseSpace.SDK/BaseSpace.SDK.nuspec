@@ -23,6 +23,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BaseSpace.SDK\bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\net35" />   
+    <file src="..\..\BaseSpace.SDK\bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\net35" />   
   </files>
 </package>
