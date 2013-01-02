@@ -109,3 +109,5 @@ UpgradeLog*.XML
 
 #nuget packages with package restore
 /packages/
+#nuget published packages
+*.nupkg

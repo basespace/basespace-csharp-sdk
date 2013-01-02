@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>BaseSpace.SDK</id>
+    <title>Illumina BaseSpace CSharp SDK</title>
+    <version>0.0.1</version>
+    <authors>Illumina, Greg Roberts</authors>
+    <owners>Illumina, Greg Roberts</owners>
+    <summary>Opensource .NET SDK for Illumina BaseSpace</summary>
+    <description>
+      Illumina BaseSpace SDK for https://basespace.illumina.com . Find out more about development and usage at https://developer.basespace.illumina.com
+    </description>
+    <projectUrl>https://github.com/basespace/basespace-csharp-sdk</projectUrl>
+    <licenseUrl>https://github.com/basespace/basespace-csharp-sdk/blob/master/LICENSE.txt</licenseUrl>
+    <iconUrl>https://dp6rs6ajp5nvi.cloudfront.net/images/sites/basespace/11052012/home/basespace-brand.png</iconUrl>
+    <tags>Illumina BaseSpace CSharp SDK Genomics</tags>
+    <language>en-US</language>
+    <copyright>illumina 2013 and contributors</copyright>
+    <dependencies>
+      <dependency id="Common.Logging" />
+      <dependency id="ServiceStack.Common" />
+      <dependency id="ServiceStack.Text" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="BaseSpace.SDK\bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\net35" />   
+  </files>
+</package>
