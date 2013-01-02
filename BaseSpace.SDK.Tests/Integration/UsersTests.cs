@@ -6,9 +6,9 @@ using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
 
-namespace Illumina.BaseSpace.SDK.Tests
+namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
-    public class UsersTests : IntegrationTests
+    public class UsersTests : BaseIntegrationTest
     {
         private readonly IBaseSpaceClient client;
 

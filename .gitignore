@@ -111,3 +111,5 @@ UpgradeLog*.XML
 /packages/
 #nuget published packages
 *.nupkg
+#hidden config
+*.hidden

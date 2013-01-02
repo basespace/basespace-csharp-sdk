@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using Illumina.BaseSpace.SDK.Types;
 
-namespace Illumina.BaseSpace.SDK.Tests
+namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
-    public class IntegrationTests
+    public class BaseIntegrationTest
     {
         public IBaseSpaceClient CreateRealClient()
         {
