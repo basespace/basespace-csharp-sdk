@@ -26,7 +26,7 @@ namespace Illumina.BaseSpace.SDK
             ChangeSerializationOptions();
         }
 
-        public JsonWebClient(IClientSettings settings)
+        public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
             if (settings == null)
             {
@@ -36,8 +36,12 @@ namespace Illumina.BaseSpace.SDK
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
             HttpEncoder.Current.SerializeToString();
-
-            SetDefaultRequestOptions(new RequestOptions {RetryAttempts = settings.RetryAttempts});
+            if (defaultOptions == null)
+            {
+                defaultOptions = new RequestOptions(settings.BaseSpaceApiUrl);
+            }
+           
+            SetDefaultRequestOptions(defaultOptions);
 
             Client = new JsonServiceClient(DefaultRequestOptions.BaseUrl);
             Client.LocalHttpWebRequestFilter += WebRequestFilter;
@@ -87,8 +91,6 @@ namespace Illumina.BaseSpace.SDK
         {
             try
             {
-                //set the request options for this thread
-                currentRequestOptions = request.Options;
                 tcs.SetResult(Execute<TResult>(client, request, log));
             }
             catch (Exception e)
@@ -104,7 +106,8 @@ namespace Illumina.BaseSpace.SDK
         internal static TResult Execute<TResult>(JsonServiceClient client, RestRequest request, ILog log)
             where TResult : class
         {
-            client.BaseUri = request.Options.BaseUrl;
+            client.BaseUri = request.Options.BaseUrl.TrimEnd('/') + "/";  //make sure we only have a single slash on end always
+            
 
             var fileRestRequest = request as FileRestRequest;
             if (fileRestRequest != null)
@@ -129,7 +132,11 @@ namespace Illumina.BaseSpace.SDK
             }
 
             Func<TResult> func =
-                () => client.Send<TResult>(request.Method.ToString(), request.RelativeOrAbsoluteUrl, request.Request);
+                () =>
+                    {
+                        currentRequestOptions = request.Options;  //we need to set the default options here
+                        return client.Send<TResult>(request.Method.ToString(), request.RelativeOrAbsoluteUrl, request.Request);
+                    };
 
             return WrapResult(func, log, request.Options.RetryAttempts, request.Name);
         }

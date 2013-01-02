@@ -3,16 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
     public class BaseSpaceClient : IBaseSpaceClient
     {
-        public BaseSpaceClient(IClientSettings settings) : this(settings, new JsonWebClient(settings))
+        private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
+        
+        public BaseSpaceClient(string authCode)
+            : this(new RequestOptions(){AuthCode = authCode, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
+        {
+
+        }
+
+        public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null) : this(settings, new JsonWebClient(settings), defaultOptions)
         {
         }
 
-        public BaseSpaceClient(IClientSettings settings, IWebClient client)
+        public BaseSpaceClient(IRequestOptions options)
+            : this(defaultSettings, new JsonWebClient(defaultSettings, options), options)
+        {
+            
+        }
+
+        public BaseSpaceClient(IClientSettings settings, IWebClient client, IRequestOptions defaultOptions = null)
         {
             if (settings == null || client == null)
             {
@@ -20,6 +35,7 @@ namespace Illumina.BaseSpace.SDK
             }
             ClientSettings = settings;
             WebClient = client;
+            SetDefaultRequestOptions(defaultOptions);
         }
 
         protected IClientSettings ClientSettings { get; set; }
@@ -28,6 +44,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void SetDefaultRequestOptions(IRequestOptions options)
         {
+            
             WebClient.SetDefaultRequestOptions(options);
         }
 
