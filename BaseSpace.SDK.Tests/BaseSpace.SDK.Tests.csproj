@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Integration\BaseIntegrationTest.cs" />
+    <Compile Include="Integration\ProjectsTests.cs" />
+    <Compile Include="Integration\RunsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonWebClientTests.cs" />
     <Compile Include="TestData.Designer.cs">
@@ -83,7 +85,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(ProjectDir)appSettings.config.hidden"    call "$(SolutionDir)CopyIfNewer.bat" "$(ProjectDir)App.config.hidden"  "$(TargetDir)appSettings.config.hidden"
+    <PostBuildEvent>IF EXIST "$(ProjectDir)appSettings.config.hidden"    call "$(SolutionDir)CopyIfNewer.bat" "$(ProjectDir)appSettings.config.hidden"  "$(TargetDir)appSettings.config.hidden"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

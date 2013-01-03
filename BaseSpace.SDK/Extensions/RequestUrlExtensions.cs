@@ -21,11 +21,19 @@ namespace Illumina.BaseSpace.SDK
             return string.Format("{0}/users/{1}", version, req.Id ?? "current");
         }
 
-        public static string BuildUrl(this GetUserProjectListRequest req, string version)
+        public static string BuildUrl(this ListProjectsRequest req, string version)
         {
-            var urlWithDefaultQueryParameters = AddDefaultQueryParameters(string.Format("{0}/users/current/projects", version), req.Offset,
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/users/current/projects", version), req.Offset,
                                                  req.Limit, req.SortDir);
-            return string.Format("{0}&{1}={2}&{3}={4}", urlWithDefaultQueryParameters, QueryParameters.SortBy, req.SortBy, QueryParameters.Name, req.Name);
+            if (req.SortBy.HasValue)
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
+            }
+            if (!string.IsNullOrEmpty(req.Name))
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.Name, req.Name);
+            }
+            return urlWithParameters;
         }
 
         public static string BuildUrl(this PostProjectRequest req, string version)
@@ -33,12 +41,22 @@ namespace Illumina.BaseSpace.SDK
             return string.Format("{0}{1}", version, "/projects");
         }
 
-        private static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection sortDir)
+        private static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection? sortDir)
         {
-            var url = relativeUrl.Contains("?") ? relativeUrl : string.Format("{0}?", relativeUrl);
-            return string.Format("{0}&{1}={2}&{3}={4}&{5}={6}", url, QueryParameters.Offset, offset, QueryParameters.Limit,
-                                 limit, QueryParameters.SortDir, sortDir);
-
+            var url = (offset.HasValue || limit.HasValue || sortDir.HasValue) && relativeUrl.Contains("?") ? relativeUrl : string.Format("{0}?", relativeUrl);
+            if (offset.HasValue)
+            {
+                url = string.Format("{0}&{1}={2}", url, QueryParameters.Offset, offset.Value);
+            }
+            if (sortDir.HasValue)
+            {
+                url = string.Format("{0}&{1}={2}", url, QueryParameters.SortDir, sortDir.Value);
+            }
+            if (limit.HasValue)
+            {
+                url = string.Format("{0}&{1}={2}", url, QueryParameters.Limit, limit.Value);
+            }
+            return url;
         }
 
     }
