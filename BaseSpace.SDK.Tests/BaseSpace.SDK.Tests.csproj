@@ -83,7 +83,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(ProjectDir)appSettings.config.hidden"    call "$(SolutionDir)CopyIfNewer.bat" "$(ProjectDir)App.config.hidden"  "$(TargetDir)appSettings.config.hidden"
+    <PostBuildEvent>IF EXIST "$(ProjectDir)appSettings.config.hidden"    call "$(SolutionDir)CopyIfNewer.bat" "$(ProjectDir)appSettings.config.hidden"  "$(TargetDir)appSettings.config.hidden"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
