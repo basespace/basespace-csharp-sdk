@@ -78,9 +78,14 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetProjectResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<GetUserProjectListResponse> ListProjects(GetUserProjectListRequest request, IRequestOptions options)
+        public Task<ListProjectsResponse> ListProjectsAsync(ListProjectsRequest request, IRequestOptions options)
         {
-            return WebClient.SendAsync<GetUserProjectListResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.SendAsync<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
     }

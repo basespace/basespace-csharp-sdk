@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,16 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class BaseIntegrationTest
     {
+        public BaseIntegrationTest()
+        {
+            //configure console logging
+            // create properties
+            var properties = new NameValueCollection();
+            properties["showDateTime"] = "true";
+
+            // set Adapter
+            Common.Logging.LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
+        }
         public IBaseSpaceClient CreateRealClient()
         {
             string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
