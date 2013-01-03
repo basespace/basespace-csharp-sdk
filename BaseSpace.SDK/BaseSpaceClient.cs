@@ -88,5 +88,35 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
+        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<GetSampleResponse> GetSampleAsync(GetSampleRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+        
     }
 }

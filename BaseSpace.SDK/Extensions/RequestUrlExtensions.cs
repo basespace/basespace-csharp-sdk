@@ -41,6 +41,38 @@ namespace Illumina.BaseSpace.SDK
             return string.Format("{0}{1}", version, "/projects");
         }
 
+        public static string BuildUrl(this ListRunsRequest req, string version)
+        {
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/users/current/runs", version), req.Offset,
+                                                 req.Limit, req.SortDir);
+            if (req.SortBy.HasValue)
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
+            }
+            if (!string.IsNullOrEmpty(req.Status))
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, RunSortByParameters.Status, req.Status);
+            }
+            return urlWithParameters;
+        }
+
+        public static string BuildUrl(this GetSampleRequest req, string version)
+        {
+            return string.Format("{0}/samples/{1}", version, req.Id);
+        }
+
+        public static string BuildUrl(this ListSamplesRequest req, string version)
+        {
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/samples", version, req.ProjectId), req.Offset,
+                                                 req.Limit, req.SortDir);
+            if (req.SortBy.HasValue)
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
+            }
+
+            return urlWithParameters;
+        }
+
         private static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection? sortDir)
         {
             var url = (offset.HasValue || limit.HasValue || sortDir.HasValue) && relativeUrl.Contains("?") ? relativeUrl : string.Format("{0}?", relativeUrl);
@@ -58,6 +90,5 @@ namespace Illumina.BaseSpace.SDK
             }
             return url;
         }
-
     }
 }

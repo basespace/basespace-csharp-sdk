@@ -64,4 +64,6 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public long NumReadsPF { get; set; }
     }
+
+    public enum SamplesSortByParameters { Id, Name, DateCreated }
 }
