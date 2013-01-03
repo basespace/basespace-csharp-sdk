@@ -22,7 +22,8 @@ namespace Illumina.BaseSpace.SDK
                 Method = httpMethod,
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
                 Request = request,
-                Options = options ?? DefaultRequestOptions
+                Options = options ?? DefaultRequestOptions,
+                Name = string.Format("{0} request to {1} ", httpMethod, relativeOrAbsoluteUrl)
             };
             return Execute<TResponse>(Client, rr, Logger);
         }
@@ -35,7 +36,8 @@ namespace Illumina.BaseSpace.SDK
                 Method = httpMethod,
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
                 Request = request,
-                Options = options ?? DefaultRequestOptions
+                Options = options ?? DefaultRequestOptions,
+                Name = string.Format("ASYNC {0} request to {1} ",  httpMethod,relativeOrAbsoluteUrl)
             };
             return ExecuteTask<TResponse>(Client, rr, Logger);
         }
@@ -50,7 +52,8 @@ namespace Illumina.BaseSpace.SDK
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
                 Request = request,
                 FileInfo = fileToUpload,
-                Options = options ?? DefaultRequestOptions
+                Options = options ?? DefaultRequestOptions,
+                Name = string.Format("File Put request to {0} for file {1}", relativeOrAbsoluteUrl, fileToUpload.FullName)
             };
             return Execute<TResponse>(Client, rr, Logger);
         }
@@ -65,7 +68,8 @@ namespace Illumina.BaseSpace.SDK
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
                 Request = request,
                 FileInfo = fileToUpload,
-                Options = options ?? DefaultRequestOptions
+                Options = options ?? DefaultRequestOptions,
+                Name = string.Format("ASYNC File Put request to {0} for file {1}", relativeOrAbsoluteUrl, fileToUpload.FullName)
             };
             return ExecuteTask<TResponse>(Client, rr, Logger);
         }
@@ -81,7 +85,8 @@ namespace Illumina.BaseSpace.SDK
                 Request = request,
                 Stream = fileToUpload,
                 FileName = fileName,
-                Options = options ?? DefaultRequestOptions
+                Options = options ?? DefaultRequestOptions,
+                Name = string.Format("File put request to {0} from stream with file name {1} ",  relativeOrAbsoluteUrl, fileName)
             };
             return Execute<TResponse>(Client, rr, Logger);
         }
@@ -97,7 +102,8 @@ namespace Illumina.BaseSpace.SDK
                 Request = request,
                 Stream = fileToUpload,
                 FileName = fileName,
-                Options = options ?? DefaultRequestOptions
+                Options = options ?? DefaultRequestOptions,
+                Name = string.Format("ASYNC File put request to {0} from stream with file name {1} ", relativeOrAbsoluteUrl, fileName)
             };
             return ExecuteTask<TResponse>(Client, rr, Logger);
         }

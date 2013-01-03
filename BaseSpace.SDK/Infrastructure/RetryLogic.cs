@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -77,14 +78,20 @@ namespace Illumina.BaseSpace.SDK
             if (retryHandler == null)
                 retryHandler = GenericRetryHandler;
 
+            var timer = new Stopwatch();
+
             while (triesLeft-- > 0)
             {
+                timer.Start();
                 var delay = (int)Math.Min(1800, Math.Pow(retryIntervalBaseSecs, whichAttempt++));
 
                 try
                 {
+                   
+                    logger.InfoFormat("operation starting: {0} attempt {1}", description, whichAttempt);
                     op();
-                    logger.InfoFormat("{0} completed after {1} attempts", description, whichAttempt);
+                    timer.Stop();
+                    logger.InfoFormat("{0} completed after {1} attempts and {2}ms", description, whichAttempt, timer.ElapsedMilliseconds);
                     return;
                 }
                 catch (WebServiceException exc)
@@ -93,7 +100,7 @@ namespace Illumina.BaseSpace.SDK
                     int statusCode = exc.StatusCode;
                     string message = exc.ErrorMessage;
 
-                    ex = HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode);
+                    ex = HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode, timer);
                 }
                 catch (WebException exc)
                 {
@@ -106,39 +113,45 @@ namespace Illumina.BaseSpace.SDK
                         statusCode = (int)wr.StatusCode;
                         message = wr.StatusDescription;
                     }
-                    ex = HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode);
+                    ex = HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode, timer);
                 }
                 catch (OperationCanceledException)
                 {
-                    logger.ErrorFormat("Operation canceled exception, do not retry");
+                    timer.Stop();
+                    logger.ErrorFormat("Operation canceled exception: {0}, do not retry, ran for {1}ms", description, timer.ElapsedMilliseconds);
                     return;
                 }
                 catch (Exception exc)
                 {
-                    ex = HandleException(description, logger, true, whichAttempt, delay, exc.ToString(), exc, 0); ;
+                    ex = HandleException(description, logger, true, whichAttempt, delay, exc.ToString(), exc, 0, timer); ;
                 }
             }
             if (ex != null)
             {
+                if (timer.IsRunning)
+                {
+                    timer.Stop();
+                }
                 if (error != null)
                     error();
-                throw new ApplicationException("Maximum retries exceeded", ex);
+                throw new ApplicationException(string.Format("Maximum retries exceeded, total time {0}ms", timer.ElapsedMilliseconds) , ex);
             }
         }
 
         private static Exception HandleException(string description, ILog logger, bool allowRetry, int whichAttempt, int delay,
-                                           string message, Exception exc, int statusCode)
+                                           string message, Exception exc, int statusCode, Stopwatch timer)
         {
             if (allowRetry)
             {
-                logger.ErrorFormat("Error while {0}, attempt {1}, retrying in {2} seconds: \r\n{3}", description,
-                                   whichAttempt, delay, message);
+                logger.ErrorFormat("Error while {0}, attempt {1}, elapsed {4}ms, retrying in {2} seconds: \r\n{3}", description,
+                                   whichAttempt, delay, message, timer.ElapsedMilliseconds);
                 System.Threading.Thread.Sleep(1000 * delay);
                 return exc;
             }
             else
             {
-                logger.ErrorFormat("HTTP Response code {0} : {1}", statusCode, exc);
+                timer.Stop();
+                logger.ErrorFormat("HTTP Response code {0} : {1}, elapsed time {2}ms", statusCode, exc, timer.ElapsedMilliseconds);
                 var code = HttpStatusCode.InternalServerError;
                 Enum.TryParse(statusCode.ToString(), out code);
                 throw new BaseSpaceException(code, message);
