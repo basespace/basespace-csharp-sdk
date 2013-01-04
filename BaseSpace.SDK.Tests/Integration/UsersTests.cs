@@ -12,16 +12,13 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class UsersTests : BaseIntegrationTest
     {
-        private readonly IBaseSpaceClient client;
-
         public UsersTests()
         {
-            client = CreateRealClient();
         }
         [Fact]
         public void CanGetCurrentUser()
         {
-            GetUserResponse response = client.GetUser(new GetUserRequest());
+            GetUserResponse response = Client.GetUser(new GetUserRequest());
             Assert.NotNull(response);
             User user = response.Response;
             Assert.NotNull(user);
@@ -33,7 +30,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanGetCurrentUserAsync()
         {
-            Task<GetUserResponse> task = client.GetUserAsync(new GetUserRequest());
+            Task<GetUserResponse> task = Client.GetUserAsync(new GetUserRequest());
             task.Wait(TimeSpan.FromMinutes(1));
             var response = task.Result;
             Assert.NotNull(response);
@@ -50,13 +47,13 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var synchTimer = new Stopwatch();
             var asynchTimer = new Stopwatch();
             //warm up
-             client.GetUser(new GetUserRequest());
+            Client.GetUser(new GetUserRequest());
 
             synchTimer.Start();
             //call 5 times
             for (int i = 0; i < 5; i++)
             {
-                client.GetUser(new GetUserRequest());
+                Client.GetUser(new GetUserRequest());
             }
             synchTimer.Stop();
 
@@ -64,7 +61,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             int counter = 0;
             for (int i = 0; i < 5; i++)
             {
-                Task<GetUserResponse> task = client.GetUserAsync(new GetUserRequest());
+                Task<GetUserResponse> task = Client.GetUserAsync(new GetUserRequest());
                 task.ContinueWith((t) => counter += 1);
             }
             asynchTimer.Start();

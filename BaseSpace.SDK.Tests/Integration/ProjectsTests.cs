@@ -11,17 +11,14 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class ProjectsTests : BaseIntegrationTest
     {
-        private readonly IBaseSpaceClient client;
-
         public ProjectsTests()
         {
-            client = CreateRealClient();
         }
 
         [Fact]
         public void CanGetUserProjectsFirstPage()
         {
-           ListProjectsResponse response = client.ListProjects(new ListProjectsRequest());
+           ListProjectsResponse response = Client.ListProjects(new ListProjectsRequest());
             
            Assert.NotNull(response);
            Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
@@ -37,7 +34,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanGetUserProjectsFirstPageAsync()
         {
-            Task<ListProjectsResponse> asyncResponse = client.ListProjectsAsync(new ListProjectsRequest());
+            Task<ListProjectsResponse> asyncResponse = Client.ListProjectsAsync(new ListProjectsRequest());
            
             asyncResponse.Wait(TimeSpan.FromMinutes(1));
             var response = asyncResponse.Result;
@@ -58,9 +55,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CanPageThroughProjects()
         {
 
-            ListProjectsResponse baseResponse = client.ListProjects(new ListProjectsRequest(){Limit = 1, Offset = 0});   //get 1 and total count
+            ListProjectsResponse baseResponse = Client.ListProjects(new ListProjectsRequest(){Limit = 1, Offset = 0});   //get 1 and total count
             //grab next page, assume there is another
-            ListProjectsResponse pagedResponse =client.ListProjects(new ListProjectsRequest() {Limit = 1, Offset = 1});
+            ListProjectsResponse pagedResponse = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 1 });
             Assert.True(pagedResponse.Response.DisplayedCount == 1);
         }
 
@@ -68,10 +65,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CanSortThroughProjects()
         {
 
-            ListProjectsResponse baseResponse = client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, SortBy = ProjectsSortByParameters.Name, SortDir = SortDirection.Desc});
+            ListProjectsResponse baseResponse = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, SortBy = ProjectsSortByParameters.Name, SortDir = SortDirection.Desc });
             
             //grab next page, assume there is another
-            ListProjectsResponse sortedAsc = client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, SortBy = ProjectsSortByParameters.Name, SortDir = SortDirection.Asc });
+            ListProjectsResponse sortedAsc = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, SortBy = ProjectsSortByParameters.Name, SortDir = SortDirection.Asc });
             Assert.True(baseResponse.Response.Items[0].Name[0] > sortedAsc.Response.Items[0].Name[0]);
         }
 
@@ -79,10 +76,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CanLookupByName()
         {
 
-            ListProjectsResponse baseResponse = client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0 });
+            ListProjectsResponse baseResponse = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0 });
 
             //grab next page, assume there is another
-            ListProjectsResponse byName = client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, Name = baseResponse.Response.Items[0].Name});
+            ListProjectsResponse byName = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, Name = baseResponse.Response.Items[0].Name });
             Assert.True(baseResponse.Response.Items[0].Name == byName.Response.Items[0].Name);
         }
     }
