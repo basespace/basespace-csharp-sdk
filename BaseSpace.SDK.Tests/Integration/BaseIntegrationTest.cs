@@ -20,7 +20,14 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             // set Adapter
             Common.Logging.LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
         }
-        public IBaseSpaceClient CreateRealClient()
+
+        protected IBaseSpaceClient _iBaseSpaceClient;
+        public IBaseSpaceClient Client
+        {
+            get { return _iBaseSpaceClient ?? CreateRealClient(); }
+        }
+
+        private IBaseSpaceClient CreateRealClient()
         {
             string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
             string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
@@ -29,8 +36,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
             string authCode = ConfigurationManager.AppSettings.Get("basespace:api-authcode");
             var settings = new BaseSpaceClientSettings(){AppClientId = apiKey, AppClientSecret = apiSecret, BaseSpaceApiUrl = apiUrl, BaseSpaceWebsiteUrl = webUrl, Version =version};
-            var client = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
-            return client;
+            _iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
+            return _iBaseSpaceClient;
         }
     }
 }
