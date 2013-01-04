@@ -48,4 +48,6 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
     }
+
+    public enum AppResultSortByParameters { Id, Name, DateCreated }
 }

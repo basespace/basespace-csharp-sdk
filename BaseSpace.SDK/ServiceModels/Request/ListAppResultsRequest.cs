@@ -2,13 +2,13 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListSamplesRequest : AbstractResourceListRequest<SamplesSortByParameters>
+    public class ListAppResultsRequest : AbstractResourceListRequest<AppResultSortByParameters>
     {
         /// <summary>
-        /// List samples within a project
+        /// List AppResults within a project
         /// </summary>
         /// <param name="projectId">Project Id</param>
-        public ListSamplesRequest(string projectId)
+        public ListAppResultsRequest(string projectId)
         {
             ProjectId = projectId;
         }

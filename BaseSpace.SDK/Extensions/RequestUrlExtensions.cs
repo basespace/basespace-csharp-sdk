@@ -73,6 +73,24 @@ namespace Illumina.BaseSpace.SDK
             return urlWithParameters;
         }
 
+        public static string BuildUrl(this GetAppResultRequest req, string version)
+        {
+            return string.Format("{0}/appresults/{1}", version, req.Id);
+        }
+
+        public static string BuildUrl(this ListAppResultsRequest req, string version)
+        {
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/appresults", version, req.ProjectId), req.Offset,
+                                                 req.Limit, req.SortDir);
+            if (req.SortBy.HasValue)
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
+            }
+
+            return urlWithParameters;
+        }
+        
+
         private static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection? sortDir)
         {
             var url = (offset.HasValue || limit.HasValue || sortDir.HasValue) && relativeUrl.Contains("?") ? relativeUrl : string.Format("{0}?", relativeUrl);

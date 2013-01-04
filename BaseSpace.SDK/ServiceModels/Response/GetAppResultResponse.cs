@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListSamplesResponse : AbstractResourceListResponse<SampleCompact, SamplesSortByParameters>
+    public class GetAppResultResponse : ApiResponse<AppResult>
     {
     }
 }
