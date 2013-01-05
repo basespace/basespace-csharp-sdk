@@ -1,24 +1,44 @@
-﻿using System;
-using Illumina.BaseSpace.SDK.ServiceModels;
+﻿using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
     public static class RequestUrlExtensions
     {
-        public static string BuildUrl(this GetProjectRequest req, string version)
+        #region Users
+        public static string BuildUrl(this GetUserRequest req, string version)
         {
-            return string.Format("{0}/projects/{1}", version, req.Id);
+            return string.Format("{0}/users/{1}", version, req.Id ?? "current");
         }
+        #endregion
 
+        #region Runs
         public static string BuildUrl(this GetRunRequest req, string version)
         {
             return string.Format("{0}/runs/{1}", version, req.Id);
         }
 
-        public static string BuildUrl(this GetUserRequest req, string version)
+        public static string BuildUrl(this ListRunsRequest req, string version)
         {
-            return string.Format("{0}/users/{1}", version, req.Id ?? "current");
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/users/current/runs", version), req.Offset,
+                                                 req.Limit, req.SortDir);
+            if (req.SortBy.HasValue)
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
+            }
+            if (!string.IsNullOrEmpty(req.Status))
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, RunSortByParameters.Status, req.Status);
+            }
+            return urlWithParameters;
+        }
+        #endregion
+
+
+        #region Projects
+        public static string BuildUrl(this GetProjectRequest req, string version)
+        {
+            return string.Format("{0}/projects/{1}", version, req.Id);
         }
 
         public static string BuildUrl(this ListProjectsRequest req, string version)
@@ -40,22 +60,18 @@ namespace Illumina.BaseSpace.SDK
         {
             return string.Format("{0}{1}", version, "/projects");
         }
+        #endregion
 
-        public static string BuildUrl(this ListRunsRequest req, string version)
+
+        #region AppSessions
+        public static string BuildUrl(this GetAppSessionRequest req, string version)
         {
-            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/users/current/runs", version), req.Offset,
-                                                 req.Limit, req.SortDir);
-            if (req.SortBy.HasValue)
-            {
-                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
-            }
-            if (!string.IsNullOrEmpty(req.Status))
-            {
-                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, RunSortByParameters.Status, req.Status);
-            }
-            return urlWithParameters;
+            return string.Format("{0}/appsessions/{1}", version, req.Id);
         }
+        #endregion
 
+
+        #region Samples
         public static string BuildUrl(this GetSampleRequest req, string version)
         {
             return string.Format("{0}/samples/{1}", version, req.Id);
@@ -72,7 +88,10 @@ namespace Illumina.BaseSpace.SDK
 
             return urlWithParameters;
         }
+        #endregion
 
+
+        #region AppResults
         public static string BuildUrl(this GetAppResultRequest req, string version)
         {
             return string.Format("{0}/appresults/{1}", version, req.Id);
@@ -89,7 +108,25 @@ namespace Illumina.BaseSpace.SDK
 
             return urlWithParameters;
         }
+        #endregion
+
+
+        #region Genomes
         
+        #endregion
+
+        #region Files
+        
+        #endregion
+
+        #region Variants
+        
+        #endregion
+
+        #region Coverage
+
+        #endregion
+
 
         private static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection? sortDir)
         {

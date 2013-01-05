@@ -48,6 +48,7 @@ namespace Illumina.BaseSpace.SDK
             WebClient.SetDefaultRequestOptions(options);
         }
 
+        #region Users
         public Task<GetUserResponse> GetUserAsync(GetUserRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<GetUserResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
@@ -57,7 +58,10 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<GetUserResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+        #endregion
 
+
+        #region Runs
         public Task<GetRunResponse> GetRunAsync(GetRunRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
@@ -68,6 +72,19 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
+        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+        #endregion
+
+
+        #region Projects
         public Task<GetProjectResponse> GetProjectAsync(GetProjectRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<GetProjectResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
@@ -87,17 +104,23 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+        #endregion
 
-        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options)
+
+        #region AppSessions
+        public Task<GetAppSessionResponse> GetAppSessionAsync(GetAppSessionRequest request, IRequestOptions options = null)
         {
-            return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.SendAsync<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options)
+        public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+        #endregion
 
+
+        #region Samples
         public Task<GetSampleResponse> GetSampleAsync(GetSampleRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
@@ -117,7 +140,10 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+        #endregion
+        
 
+        #region AppResults
         public Task<GetAppResultResponse> GetAppResultAsync(GetAppResultRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<GetAppResultResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
@@ -137,6 +163,26 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+        #endregion
+
+
+        #region Genomes
         
+        #endregion
+
+
+        #region Files
+        
+        #endregion
+
+
+        #region Variants
+        
+        #endregion
+
+
+        #region Coverage
+        
+        #endregion
     }
 }
