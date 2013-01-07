@@ -21,6 +21,24 @@ namespace Illumina.BaseSpace.SDK
         Task<ListProjectsResponse> ListProjectsAsync(ListProjectsRequest request, IRequestOptions options = null);
         ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null);
 
+        Task<PostProjectResponse> CreateProjectAsync(PostProjectRequest request, IRequestOptions options = null);
+        PostProjectResponse CreateProject(PostProjectRequest request, IRequestOptions options = null);
+
+        Task<GetAppSessionResponse> GetAppSessionAsync(GetAppSessionRequest request, IRequestOptions options = null);
+        GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
+
+        Task<GetSampleResponse> GetSampleAsync(GetSampleRequest request, IRequestOptions options = null);
+        GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
+
+        Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options);
+        ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options);
+
+        Task<GetAppResultResponse> GetAppResultAsync(GetAppResultRequest request, IRequestOptions options = null);
+        GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
+
+        Task<ListAppResultsResponse> ListAppResultsAsync(ListAppResultsRequest request, IRequestOptions options);
+        ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options);
+
         void SetDefaultRequestOptions(IRequestOptions options = null);
     }
 }

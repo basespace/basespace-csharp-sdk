@@ -104,6 +104,16 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+
+        public Task<PostProjectResponse> CreateProjectAsync(PostProjectRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<PostProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
+
+        public PostProjectResponse CreateProject(PostProjectRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<PostProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
         #endregion
 
 

@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Integration\BaseIntegrationTest.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />

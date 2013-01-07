@@ -76,6 +76,7 @@
     <Compile Include="Interfaces\IWebClient.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAppResultRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetAppSessionRequest.cs" />
     <Compile Include="ServiceModels\Request\GetProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\GetRunRequest.cs" />
     <Compile Include="ServiceModels\Request\GetSampleRequest.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="ServiceModels\Request\PostProjectRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppResultResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetAppSessionResponse.cs" />
     <Compile Include="ServiceModels\Response\GetProjectResponse.cs" />
     <Compile Include="ServiceModels\Response\GetRunResponse.cs" />
     <Compile Include="ServiceModels\Response\GetSampleResponse.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="ServiceModels\Response\GetUserResponse.cs" />
     <Compile Include="ServiceModels\Response\ListRunsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSamplesResponse.cs" />
+    <Compile Include="ServiceModels\Response\PostProjectResponse.cs" />
     <Compile Include="Types\AbstractResource.cs" />
     <Compile Include="Types\AbstractQueryParameters.cs" />
     <Compile Include="Types\Agreement.cs" />
