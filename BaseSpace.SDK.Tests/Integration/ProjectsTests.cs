@@ -82,5 +82,16 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             ListProjectsResponse byName = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, Name = baseResponse.Response.Items[0].Name });
             Assert.True(baseResponse.Response.Items[0].Name == byName.Response.Items[0].Name);
         }
+
+        [Fact]
+        public void CanCreateProject()
+        {
+            var projectName = string.Format("SDKUnitTest-{0}", StringHelpers.RandomAlphanumericString(5));
+            var response = Client.CreateProject(new PostProjectRequest(projectName));
+            Assert.NotNull(response);
+            var project = response.Response;
+            Assert.NotNull(project);
+            Assert.True(project.Name.Contains(projectName));
+        }
     }
 }
