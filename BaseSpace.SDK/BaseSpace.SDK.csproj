@@ -77,7 +77,6 @@
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAppSessionRequest.cs" />
-    <Compile Include="ServiceModels\Request\GetFileRequest.cs" />
     <Compile Include="ServiceModels\Request\GetGenomeRequest.cs" />
     <Compile Include="ServiceModels\Request\GetProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\GetRunRequest.cs" />
@@ -94,7 +93,6 @@
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppSessionResponse.cs" />
-    <Compile Include="ServiceModels\Response\GetFileResponse.cs" />
     <Compile Include="ServiceModels\Response\GetGenomeResponse.cs" />
     <Compile Include="ServiceModels\Response\GetProjectResponse.cs" />
     <Compile Include="ServiceModels\Response\GetRunResponse.cs" />
