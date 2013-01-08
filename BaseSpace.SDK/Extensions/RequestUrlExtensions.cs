@@ -58,7 +58,7 @@ namespace Illumina.BaseSpace.SDK
 
         public static string BuildUrl(this PostProjectRequest req, string version)
         {
-            return string.Format("{0}{1}", version, "/projects");
+            return string.Format("{0}/projects", version);
         }
         #endregion
 
@@ -67,6 +67,16 @@ namespace Illumina.BaseSpace.SDK
         public static string BuildUrl(this GetAppSessionRequest req, string version)
         {
             return string.Format("{0}/appsessions/{1}", version, req.Id);
+        }
+        
+        public static string BuildUrl(this PostAppSessionRequest req, string version)
+        {
+            var urlWithParameters = string.Format("{0}/appsessions/{1}&{2}={3}", version, req.Id, AppSessionQueryParameters.Status, req.Status);
+
+            if (!string.IsNullOrEmpty(req.StatusSummary))
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, AppSessionQueryParameters.StatusSummary, req.StatusSummary);
+
+            return urlWithParameters;
         }
         #endregion
 
@@ -82,9 +92,7 @@ namespace Illumina.BaseSpace.SDK
             var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/samples", version, req.ProjectId), req.Offset,
                                                  req.Limit, req.SortDir);
             if (req.SortBy.HasValue)
-            {
                 urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
-            }
 
             return urlWithParameters;
         }
@@ -112,6 +120,22 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Genomes
+        public static string BuildUrl(this GetGenomeRequest req, string version)
+        {
+            return string.Format("{0}/genomes/{1}", version, req.Id);
+        }
+
+        public static string BuildUrl(this ListGenomeRequest req, string version)
+        {
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/genomes", version), req.Offset,
+                                                 req.Limit, req.SortDir);
+            if (req.SortBy.HasValue)
+            {
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
+            }
+
+            return urlWithParameters;
+        }
         
         #endregion
 

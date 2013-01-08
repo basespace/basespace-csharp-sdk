@@ -38,4 +38,7 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
     }
+
+    public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
+    public enum AppSessionQueryParameters { Status, StatusSummary }
 }

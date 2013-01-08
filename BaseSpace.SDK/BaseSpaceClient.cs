@@ -127,6 +127,16 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+
+        public Task<PostAppSessionResponse> ChangeAppSessionStatusAsync(PostAppSessionRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<PostAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
+
+        public PostAppSessionResponse ChangeAppSessionStatus(PostAppSessionRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<PostAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
         #endregion
 
 
@@ -177,7 +187,25 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Genomes
-        
+        public Task<GetGenomeResponse> GetGenomeAsync(GetGenomeRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<GetGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<GetGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
         #endregion
 
 

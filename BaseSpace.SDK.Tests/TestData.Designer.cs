@@ -72,9 +72,9 @@ namespace Illumina.BaseSpace.SDK.Tests {
         ///        &quot;UserOwnedBy&quot;: {
         ///            &quot;Id&quot;: &quot;1001&quot;,
         ///            &quot;Href&quot;: &quot;v1pre3/users/1001&quot;,
-        ///            &quot;Name&quot;: &quot;Illumina Inc&quot;
+        ///            &quot;Id&quot;: &quot;Illumina Inc&quot;
         ///        },
-        ///        &quot;Name&quot;: &quot;BWA GATK - HiSeq 2500 NA12878 demo 2x150&quot;,
+        ///        &quot;Id&quot;: &quot;BWA GATK - HiSeq 2500 NA12878 demo 2x150&quot;,
         ///        &quot;Status&quot;: &quot;Complete&quot;,
         ///        &quot;StatusSummary&quot;: &quot;&quot;,
         ///        &quot;DateCreate [rest of string was truncated]&quot;;.
@@ -97,7 +97,7 @@ namespace Illumina.BaseSpace.SDK.Tests {
         ///                    &quot;UserOwnedBy&quot;: {
         ///                        &quot;Id&quot;: &quot;1001&quot;,
         ///                        &quot;Href&quot;: &quot;v1pre3/users/1001&quot;,
-        ///                        &quot;Name&quot;: &quot;Illumina Inc&quot;
+        ///                        &quot;Id&quot;: &quot;Illumina Inc&quot;
         ///                    },
         ///           [rest of string was truncated]&quot;;.
         /// </summary>

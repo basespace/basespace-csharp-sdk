@@ -41,16 +41,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.NotNull(user.Id);
         }
 
-        [Fact]
-        public void CanCreateProject()
-        {
-            var projectName = string.Format("SDKUnitTest-{0}", StringHelpers.RandomAlphanumericString(5));
-            var response = Client.CreateProject(new PostProjectRequest(projectName));
-            Assert.NotNull(response);
-            var project = response.Response;
-            Assert.NotNull(project);
-            Assert.True(project.Name.Contains(projectName));
-        }
+
 
         [Fact]
         public void ParallelAsyncFasterThanSync()
