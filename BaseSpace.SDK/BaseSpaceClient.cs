@@ -183,6 +183,16 @@ namespace Illumina.BaseSpace.SDK
         {
             return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
+
+        public Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<PostAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
+
+        public PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<PostAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
         #endregion
 
 

@@ -116,6 +116,11 @@ namespace Illumina.BaseSpace.SDK
 
             return urlWithParameters;
         }
+
+        public static string BuildUrl(this PostAppResultRequest req, string version)
+        {
+            return string.Format("{0}/projects/{1}/appresults", version, req.ProjectId);
+        }
         #endregion
 
 

@@ -49,6 +49,9 @@ namespace Illumina.BaseSpace.SDK
                                                                  IRequestOptions options = null);
         PostAppSessionResponse ChangeAppSessionStatus(PostAppSessionRequest request, IRequestOptions options = null);
 
+        Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null);
+        PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null);
+
         void SetDefaultRequestOptions(IRequestOptions options = null);
     }
 }

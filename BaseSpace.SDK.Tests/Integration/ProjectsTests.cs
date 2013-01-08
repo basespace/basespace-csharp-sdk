@@ -11,10 +11,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class ProjectsTests : BaseIntegrationTest
     {
-        public ProjectsTests()
-        {
-        }
-
         [Fact]
         public void CanGetUserProjectsFirstPage()
         {
@@ -48,7 +44,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.NotEmpty(projectResult.Name);
             Assert.NotSame(projectResult.Id, projectResult.Name);
             Assert.True(projectResult.DateCreated > new DateTime(2009, 1, 1));
-
         }
 
         [Fact]

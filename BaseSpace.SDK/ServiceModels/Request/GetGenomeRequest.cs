@@ -8,9 +8,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
     public class GetGenomeRequest
     {
         /// <summary>
-        /// Get specific sample
+        /// Get specific Genome
         /// </summary>
-        /// <param name="id">Sample Id</param>
+        /// <param name="id">Genome Id</param>
         public GetGenomeRequest(string id)
         {
             Id = id;
