@@ -45,9 +45,9 @@ namespace Illumina.BaseSpace.SDK
         Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options);
         ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options);
 
-        Task<PostAppSessionResponse> ChangeAppSessionStatusAsync(PostAppSessionRequest request,
+        Task<UpdateAppSessionResponse> UpdateAppSessionAsync(UpdateAppSessionRequest request,
                                                                  IRequestOptions options = null);
-        PostAppSessionResponse ChangeAppSessionStatus(PostAppSessionRequest request, IRequestOptions options = null);
+        UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
 
         Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null);
         PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null);

@@ -61,6 +61,7 @@
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="Integration\AppResultTests.cs" />
+    <Compile Include="Integration\AppSessionTests.cs" />
     <Compile Include="Integration\BaseIntegrationTest.cs" />
     <Compile Include="Integration\GenomesTests.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />

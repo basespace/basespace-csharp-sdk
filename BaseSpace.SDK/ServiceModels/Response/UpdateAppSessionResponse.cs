@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class PostAppSessionResponse : ApiResponse<AppSession>
+    public class UpdateAppSessionResponse : ApiResponse<AppSession>
     {
     }
 }

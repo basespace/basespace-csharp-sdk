@@ -69,14 +69,9 @@ namespace Illumina.BaseSpace.SDK
             return string.Format("{0}/appsessions/{1}", version, req.Id);
         }
         
-        public static string BuildUrl(this PostAppSessionRequest req, string version)
+        public static string BuildUrl(this UpdateAppSessionRequest req, string version)
         {
-            var urlWithParameters = string.Format("{0}/appsessions/{1}&{2}={3}", version, req.Id, AppSessionQueryParameters.Status, req.Status);
-
-            if (!string.IsNullOrEmpty(req.StatusSummary))
-                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, AppSessionQueryParameters.StatusSummary, req.StatusSummary);
-
-            return urlWithParameters;
+            return string.Format("{0}/appsessions/{1}", version, req.Id);
         }
         #endregion
 

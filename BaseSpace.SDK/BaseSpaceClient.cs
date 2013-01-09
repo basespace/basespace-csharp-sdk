@@ -128,14 +128,14 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<PostAppSessionResponse> ChangeAppSessionStatusAsync(PostAppSessionRequest request, IRequestOptions options = null)
+        public Task<UpdateAppSessionResponse> UpdateAppSessionAsync(UpdateAppSessionRequest request, IRequestOptions options = null)
         {
-            return WebClient.SendAsync<PostAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.SendAsync<UpdateAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
-        public PostAppSessionResponse ChangeAppSessionStatus(PostAppSessionRequest request, IRequestOptions options = null)
+        public UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<PostAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.Send<UpdateAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
 
