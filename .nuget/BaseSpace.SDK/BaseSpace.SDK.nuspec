@@ -4,7 +4,7 @@
     <id>BaseSpace.SDK</id>
     <title>Illumina BaseSpace CSharp SDK</title>
     <version>0.0.1</version>
-    <authors>Illumina, Greg Roberts</authors>
+    <authors>Illumina, Greg Roberts, Sucheth Koppa, BaseSpace Team</authors>
     <owners>Illumina, Greg Roberts</owners>
     <summary>Opensource .NET SDK for Illumina BaseSpace</summary>
     <description>
@@ -23,6 +23,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\BaseSpace.SDK\bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\net35" />   
+    <file src="..\..\BaseSpace.SDK\bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\40" />   
   </files>
 </package>
