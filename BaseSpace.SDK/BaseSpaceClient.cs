@@ -225,7 +225,25 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Variants
-        
+        public Task<GetVariantHeaderResponse> GetVariantHeaderAsync(GetVariantHeaderRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<GetVariantHeaderResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<GetVariantHeaderResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<ListVariantsResponse> ListVariantsAsync(ListVariantsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<ListVariantsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<ListVariantsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
         #endregion
 
 

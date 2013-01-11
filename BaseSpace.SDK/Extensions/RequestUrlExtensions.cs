@@ -144,6 +144,15 @@ namespace Illumina.BaseSpace.SDK
         #endregion
 
         #region Variants
+        public static string BuildUrl(this GetVariantHeaderRequest req, string version)
+        {
+            return string.Format("{0}/variantset/{1}", version, req.Id);
+        }
+
+        public static string BuildUrl(this ListVariantsRequest req, string version)
+        {
+            return string.Format("{0}/variantset/{1}/variants/{2}", version, req.Id, req.Chrom);
+        }
         
         #endregion
 

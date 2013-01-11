@@ -52,6 +52,14 @@ namespace Illumina.BaseSpace.SDK
         Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null);
         PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null);
 
+        Task<GetVariantHeaderResponse> GetVariantHeaderAsync(GetVariantHeaderRequest request,
+                                                             IRequestOptions options = null);
+
+        GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null);
+
+        Task<ListVariantsResponse> ListVariantsAsync(ListVariantsRequest request, IRequestOptions options = null);
+        ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null);
+
         void SetDefaultRequestOptions(IRequestOptions options = null);
     }
 }
