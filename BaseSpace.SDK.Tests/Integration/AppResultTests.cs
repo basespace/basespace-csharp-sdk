@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.Tests.Helpers;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
 
@@ -11,17 +12,17 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanCreateAppResult()
         {
-            string appResultName;
-            var appResult = CreateAppResult(out appResultName);
-            Assert.True(appResult.Name.Contains(appResultName));
+            var project = TestHelpers.CreateRandomTestProject(Client);
+            var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
+            Assert.True(!string.IsNullOrEmpty(appResult.Name));
 
             Assert.True(string.IsNullOrEmpty(appResult.Description));
             Assert.True(appResult.Status == "Running");// AppSessionStatus.Running); // TODO: use enum value instead of magic value
             Assert.True(string.IsNullOrEmpty(appResult.StatusSummary));
 
-            string HrefFilesFormatString = @"[A-Za-z0-9]*\/appresults\/{0}\/files";
-            string HrefFilesRegexString = string.Format(HrefFilesFormatString, appResult.Id);
-            Match match = Regex.Match(appResult.HrefFiles.OriginalString, HrefFilesRegexString, RegexOptions.IgnoreCase);
+            const string hrefFilesFormatString = @"[A-Za-z0-9]*\/appresults\/{0}\/files";
+            string hrefFilesRegexString = string.Format(hrefFilesFormatString, appResult.Id);
+            Match match = Regex.Match(appResult.HrefFiles.OriginalString, hrefFilesRegexString, RegexOptions.IgnoreCase);
             Assert.True(match.Success);
 
             Assert.Null(appResult.HrefGenome);
@@ -29,56 +30,34 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         [Fact]
-        public void CanFindAppResults()
+        public void CanListAppResultsByProject()
         {
-            string appResultName;
-            var appResult1a = CreateAppResult(out appResultName);
-            var appResult1b = CreateAppResult(out appResultName);
-
-            var appResultRequest = new GetAppResultRequest(appResult1b.Id);
-            var appResultResponse = Client.GetAppResult(appResultRequest);
-            Assert.NotNull(appResultResponse);
-            var appResult2 = appResultResponse.Response;
+            var project = TestHelpers.CreateRandomTestProject(Client);
+            var appResult1 = TestHelpers.CreateRandomTestAppResult(Client, project);
+            var appResult2 = TestHelpers.CreateRandomTestAppResult(Client, project);
+            Assert.NotNull(appResult1);
             Assert.NotNull(appResult2);
-
-            Assert.True(appResult1b.Id           == appResult2.Id);
-            Assert.True(appResult1b.Name         == appResult2.Name);
-            Assert.True(appResult1b.Description  == appResult2.Description);
-            Assert.True(appResult1b.DateCreated  != appResult2.DateCreated); // the containers must have different creation times
-            Assert.True(appResult1b.Href         == appResult2.Href);
-            Assert.True(appResult1b.HrefFiles    == appResult2.HrefFiles);
-            Assert.Null(appResult1b.References);
-            Assert.NotNull(appResult2.References); // a default value should have been assigned
-            Assert.True(appResult2.References.Length == 0);
-        }
-
-        [Fact]
-        public void CanFindAppResultsByProject()
-        {
-            var project = TestHelpers.CreateProject(Client);
-
-            string appResultName;
-            var appResult1a = CreateAppResult(out appResultName, project);
-            var appResult1b = CreateAppResult(out appResultName, project);
 
             var getProjectRequest = new GetProjectRequest(project.Id);
             var getProjectResponse = Client.GetProject(getProjectRequest);
             Assert.NotNull(getProjectResponse);
-            project = getProjectResponse.Response;
-            Assert.NotNull(project);
+            var project2 = getProjectResponse.Response;
+            Assert.NotNull(project2);
 
-            // TODO: acquire the list of appresults from the project and compare them to the inpu
+            var hrefAppResults = project2.HrefAppResults;
+            Assert.NotNull(hrefAppResults);
+            Assert.Contains(project.Id, project2.Href.ToString());
+
+            // TODO: verify appResult{1,2} with listed values on project2 once it is supported.
         }
 
         [Fact]
         public void CanListAppResults()
         {
-            var project = TestHelpers.CreateProject(Client);
-
-            string appResultName;
-            var appResult1a = CreateAppResult(out appResultName, project);
-            var appResult1b = CreateAppResult(out appResultName, project);
-            var appResult1c = CreateAppResult(out appResultName, project);
+            var project = TestHelpers.CreateRandomTestProject(Client);
+            var appResult1 = TestHelpers.CreateRandomTestAppResult(Client, project);
+            var appResult2 = TestHelpers.CreateRandomTestAppResult(Client, project);
+            var appResult3 = TestHelpers.CreateRandomTestAppResult(Client, project);
 
             var appResultListRequest = new ListAppResultsRequest(project.Id);
             var appResultListResponse = Client.ListAppResults(appResultListRequest, null);
@@ -87,26 +66,14 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var response = appResultListResponse.Response;
 
             Assert.True(response.Items.Length == 3);
-            Assert.True(response.Items[0].Id == appResult1a.Id);
-            Assert.True(response.Items[1].Id == appResult1b.Id);
-            Assert.True(response.Items[2].Id == appResult1c.Id);
-            Assert.True(response.Items[2].Name == appResult1c.Name);
-            Assert.True(response.Items[2].Href == appResult1c.Href);
-            Assert.True(response.Items[2].Status == appResult1c.Status);
-            Assert.True(response.Items[2].StatusSummary == appResult1c.StatusSummary);
-            Assert.True(response.Items[2].UserOwnedBy.Name == appResult1c.UserOwnedBy.Name);
-        }
-
-        private AppResult CreateAppResult(out string appResultName, Project projectIn=null)
-        {
-            appResultName = string.Format("SDKUnitTest-AppResult-{0}", StringHelpers.RandomAlphanumericString(10));
-            var project = projectIn ?? TestHelpers.CreateProject(Client);
-
-            var response = Client.CreateAppResult(new PostAppResultRequest(project.Id, appResultName));
-            Assert.NotNull(response);
-            var appResult2 = response.Response;
-            Assert.NotNull(appResult2);
-            return appResult2;
+            Assert.True(response.Items[0].Id == appResult1.Id);
+            Assert.True(response.Items[1].Id == appResult2.Id);
+            Assert.True(response.Items[2].Id == appResult3.Id);
+            Assert.True(response.Items[2].Name == appResult3.Name);
+            Assert.True(response.Items[2].Href == appResult3.Href);
+            Assert.True(response.Items[2].Status == appResult3.Status);
+            Assert.True(response.Items[2].StatusSummary == appResult3.StatusSummary);
+            Assert.True(response.Items[2].UserOwnedBy.Name == appResult3.UserOwnedBy.Name);
         }
     }
 }

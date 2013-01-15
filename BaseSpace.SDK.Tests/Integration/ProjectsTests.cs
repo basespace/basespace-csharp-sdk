@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.Tests.Helpers;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
 
@@ -60,12 +61,19 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanSortThroughProjects()
         {
+            var project1a = TestHelpers.CreateRandomTestProject(Client);
+            var project1b = TestHelpers.CreateRandomTestProject(Client);
+            var project1c = TestHelpers.CreateRandomTestProject(Client);
 
-            ListProjectsResponse baseResponse = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, SortBy = ProjectsSortByParameters.Name, SortDir = SortDirection.Desc });
-            
-            //grab next page, assume there is another
-            ListProjectsResponse sortedAsc = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, SortBy = ProjectsSortByParameters.Name, SortDir = SortDirection.Asc });
-            Assert.True(baseResponse.Response.Items[0].Name[0] > sortedAsc.Response.Items[0].Name[0]);
+            ListProjectsResponse sortedAsc = Client.ListProjects(new ListProjectsRequest() { Limit = 30, Offset = 0, SortBy = ProjectsSortByParameters.DateCreated, SortDir = SortDirection.Desc });
+            Assert.True(sortedAsc.Response.Items.Length >= 3);
+            var project2a = sortedAsc.Response.Items[0];
+            var project2b = sortedAsc.Response.Items[1];
+            var project2c = sortedAsc.Response.Items[2];
+
+            Assert.True((project2a.Name == project1a.Name) || (project2a.Name == project1b.Name) || (project2a.Name == project1c.Name));
+            Assert.True((project2b.Name == project1a.Name) || (project2b.Name == project1b.Name) || (project2b.Name == project1c.Name));
+            Assert.True((project2c.Name == project1a.Name) || (project2c.Name == project1b.Name) || (project2c.Name == project1c.Name));
         }
 
         [Fact]
@@ -79,24 +87,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(baseResponse.Response.Items[0].Name == byName.Response.Items[0].Name);
         }
 
-        private const string TestProjectNameFormatString = "SDKUnitTest-{0}";
-        private string CreateRandomTestProjectName() { return string.Format(TestProjectNameFormatString, StringHelpers.RandomAlphanumericString(5)); }
-        private Project CreateRandomTestProject()
-        {
-            var projectName = CreateRandomTestProjectName();
-            var response = Client.CreateProject(new PostProjectRequest(projectName));
-            Assert.NotNull(response);
-            Assert.NotNull(response.Response);
-            var project = response.Response;
-            Assert.NotNull(project);
-            Assert.True(project.Name.Contains(projectName));
-            return project;
-        }
-
         [Fact]
         public void CanCreateProject()
         {
-            var project = CreateRandomTestProject();
+            var project = TestHelpers.CreateRandomTestProject(Client);
 
             Assert.False(string.IsNullOrEmpty(project.Id));
             Assert.True(int.Parse(project.Id) > -1);
@@ -122,7 +116,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanGetProject()
         {
-            var project = CreateRandomTestProject();
+            var project = TestHelpers.CreateRandomTestProject(Client);
 
             ListProjectsResponse listProjectResponse = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, Name = project.Name });
             Assert.True(listProjectResponse.Response.Items.Length == 1);

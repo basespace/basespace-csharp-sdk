@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Illumina.BaseSpace.SDK.Tests
+namespace Illumina.BaseSpace.SDK.Tests.Helpers
 {
     public class StringHelpers
     {
-        private static readonly Random _randomSeed = new Random();
-        private const string ALPHANUMERICCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static readonly Random RandomSeed = new Random();
+        private const string Alphanumericchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         /// <summary>
         /// Generates a string containing random A-Za-z0-9 characters
@@ -20,7 +20,7 @@ namespace Illumina.BaseSpace.SDK.Tests
             var buffer = new char[length];
             for (var i = 0; i < length; i++)
             {
-                buffer[i] = ALPHANUMERICCHARS[_randomSeed.Next(ALPHANUMERICCHARS.Length)];
+                buffer[i] = Alphanumericchars[RandomSeed.Next(Alphanumericchars.Length)];
             }
             return new string(buffer);
         }
