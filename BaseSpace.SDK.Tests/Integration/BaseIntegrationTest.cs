@@ -21,13 +21,19 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Common.Logging.LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
         }
 
-        protected IBaseSpaceClient _iBaseSpaceClient;
+		#region client singleton
+        private static readonly Lazy<IBaseSpaceClient> _lazy =
+            new Lazy<IBaseSpaceClient>(CreateRealClient);
+        public static IBaseSpaceClient Instance { get { return _lazy.Value; } }
+		#endregion client singleton
+
         public IBaseSpaceClient Client
         {
-            get { return _iBaseSpaceClient ?? CreateRealClient(); }
+            get { return Instance; }
         }
 
-        private IBaseSpaceClient CreateRealClient()
+        // Note: prefer access through the Client property!
+        public static IBaseSpaceClient CreateRealClient()
         {
             string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
             string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
@@ -36,8 +42,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
             string authCode = ConfigurationManager.AppSettings.Get("basespace:api-authcode");
             var settings = new BaseSpaceClientSettings(){AppClientId = apiKey, AppClientSecret = apiSecret, BaseSpaceApiUrl = apiUrl, BaseSpaceWebsiteUrl = webUrl, Version =version};
-            _iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
-            return _iBaseSpaceClient;
+            IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
+            return iBaseSpaceClient;
         }
     }
 }
