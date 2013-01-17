@@ -67,5 +67,21 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
             return appResult;
         }
         #endregion AppResult
+
+        #region AppSession
+        internal static AppSession CreateTestAppSession(IBaseSpaceClient client)
+        {
+            var project = TestHelpers.CreateRandomTestProject(client);
+            var appResult = TestHelpers.CreateRandomTestAppResult(client, project);
+            var appSessionCompact = appResult.AppSession;
+            Assert.NotNull(appSessionCompact);
+            var appSessionResponse = client.GetAppSession(new GetAppSessionRequest(appSessionCompact.Id));
+            Assert.NotNull(appSessionResponse);
+            var appSession = appSessionResponse.Response;
+            Assert.NotNull(appSession);
+
+            return appSession;
+        }
+        #endregion Session
     }
 }
