@@ -60,6 +60,15 @@ namespace Illumina.BaseSpace.SDK
         Task<ListVariantsResponse> ListVariantsAsync(ListVariantsRequest request, IRequestOptions options = null);
         ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null);
 
+        Task<GetCoverageResponse> GetCoverageAsync(GetCoverageRequest request, IRequestOptions options = null);
+        GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null);
+
+        Task<GetCoverageMetadataResponse> GetCoverageMetadataAsync(GetCoverageMetadataRequest request,
+                                                                   IRequestOptions options = null);
+
+        GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request,
+                                                        IRequestOptions options = null);
+
         void SetDefaultRequestOptions(IRequestOptions options = null);
     }
 }

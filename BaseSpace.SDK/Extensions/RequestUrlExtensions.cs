@@ -153,7 +153,15 @@ namespace Illumina.BaseSpace.SDK
         #endregion
 
         #region Coverage
-
+        public static string BuildUrl(this GetCoverageRequest req, string version)
+        {
+            return string.Format("{0}/coverag/{1}/{2}", version, req.Id, req.Chrom);
+        }
+        
+        public static string BuildUrl(this GetCoverageMetadataRequest req, string version)
+        {
+            return string.Format("{0}/coverag/{1}/{2}/meta", version, req.Id, req.Chrom);
+        }
         #endregion
 
         #region VerificationCode

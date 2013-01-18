@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetVariantHeaderResponse : ApiResponse<VariantHeader>
+    public class GetCoverageResponse : ApiResponse<Coverage>
     {
     }
 }

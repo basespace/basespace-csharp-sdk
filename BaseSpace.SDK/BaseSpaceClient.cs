@@ -248,7 +248,25 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Coverage
-        
+        public Task<GetCoverageResponse> GetCoverageAsync(GetCoverageRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<GetCoverageResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<GetCoverageResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<GetCoverageMetadataResponse> GetCoverageMetadataAsync(GetCoverageMetadataRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<GetCoverageMetadataResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<GetCoverageMetadataResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
         #endregion
     }
 }
