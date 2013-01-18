@@ -1,4 +1,5 @@
 ﻿using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.Types;
 using Xunit;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
@@ -29,9 +30,41 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var genomeList = response.Response;
             Assert.NotNull(genomeList);
             Assert.NotNull(genomeList.Items);
+            const int minimumNumberOfExpectedGenomes = 10;
+            Assert.True(genomeList.Items.Length >= minimumNumberOfExpectedGenomes);
             Assert.True(!string.IsNullOrEmpty(genomeList.Items[0].SpeciesName));
             Assert.True(!string.IsNullOrEmpty(genomeList.Items[0].Id));
             Assert.True(!string.IsNullOrEmpty(genomeList.Items[0].Href.ToString()));
+        }
+
+        [Fact]
+        public void CanSortGenomes()
+        {
+            const int someRidiculouslyHighNumberOfGenomes = 1000;
+            var genomesListRequest = new ListGenomeRequest() { Limit = someRidiculouslyHighNumberOfGenomes, Offset = 0, SortBy = GenomeSortByParameters.SpeciesName, SortDir = SortDirection.Asc };
+            var genomesListResponse = Client.ListGenomes(genomesListRequest, null);
+            Assert.NotNull(genomesListResponse);
+            var genomeList = genomesListResponse.Response;
+
+            string[] genomeSpeciesList =
+                {
+                    "Arabidopsis thaliana",
+                    "Bacillus Cereus",
+                    "Bos Taurus",
+                    "Escherichia coli",
+                    "Homo sapiens",
+                    "Mus musculus",
+                    "Phix",
+                    "Rattus norvegicus",
+                    "Rhodobacter sphaeroides",
+                    "Saccharomyces cerevisiae",
+                    "Staphylococcus aureus"
+                };
+
+            // this set will only work if we continue to test against the contents of the test db and if that does not change.
+            Assert.True(genomeList.Items.Length == genomeSpeciesList.Length);
+            for (int i=0; i<genomeSpeciesList.Length; i++)
+                Assert.True(genomeList.Items[i].SpeciesName == genomeSpeciesList[i]);
         }
     }
 }
