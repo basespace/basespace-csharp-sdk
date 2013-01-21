@@ -60,5 +60,28 @@ namespace Illumina.BaseSpace.SDK.Types
         public Uri HrefBaseSpaceUI { get; set; }
     }
 
+    [DataContract]
+    public class RunFilesCompact : AbstractResource
+    {
+        [DataMember(IsRequired = true)]
+        public override string Id { get; set; }
+
+        [DataMember(IsRequired = true)]
+        public override Uri Href { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Size { get; set; }
+
+        [DataMember]
+        public string Path { get; set; }
+
+        [DataMember]
+        public DateTime DateCreated { get; set; }
+    }
+
     public enum RunSortByParameters { Id, DateCreated, Status }
+    public enum RunFilesSortByParameters {Id, Path, DateCreated }
 }

@@ -65,5 +65,30 @@ namespace Illumina.BaseSpace.SDK.Types
         public long NumReadsPF { get; set; }
     }
 
+    [DataContract]
+    public class SampleFilesCompact : AbstractResource
+    {
+        [DataMember(IsRequired = true)]
+        public override string Id { get; set; }
+
+        [DataMember]
+        public override Uri Href { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string ContentType { get; set; }
+
+        [DataMember]
+        public string Size { get; set; }
+
+        [DataMember]
+        public string Path { get; set; }
+
+        [DataMember]
+        public DateTime DateCreated { get; set; }
+    }
+    
     public enum SamplesSortByParameters { Id, Name, DateCreated }
 }

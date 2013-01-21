@@ -137,9 +137,26 @@ namespace Illumina.BaseSpace.SDK
         }
 
         #endregion
-        #region Files
 
+
+        #region Files
+        public static string BuildUrl(this ListRunFilesRequest req, string version)
+        {
+            return string.Format("{0}/runs/{1}/files", version, req.Id);
+        }
+
+        public static string BuildUrl(this ListSampleFilesRequest req, string version)
+        {
+            return string.Format("{0}/samples/{1}/files", version, req.Id);
+        }
+
+        public static string BuildUrl(this ListAppResultFilesRequest req, string version)
+        {
+            return string.Format("{0}/appresults/{1}/files", version, req.Id);
+        }
         #endregion
+
+
         #region Variants
         public static string BuildUrl(this GetVariantHeaderRequest req, string version)
         {

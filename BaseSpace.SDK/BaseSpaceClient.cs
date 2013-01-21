@@ -220,7 +220,35 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Files
-        
+        public Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<ListAppResultFilesResponse> ListAppResultFilesAsync(ListAppResultFilesRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
         #endregion
 
 

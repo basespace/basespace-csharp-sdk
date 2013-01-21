@@ -52,9 +52,19 @@ namespace Illumina.BaseSpace.SDK
         Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null);
         PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null);
 
+        Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options);
+        ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options);
+
+        Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options);
+        ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options);
+
+
+        Task<ListAppResultFilesResponse> ListAppResultFilesAsync(ListAppResultFilesRequest request,
+                                                                 IRequestOptions options);
+        ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options);
+
         Task<GetVariantHeaderResponse> GetVariantHeaderAsync(GetVariantHeaderRequest request,
                                                              IRequestOptions options = null);
-
         GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null);
 
         Task<ListVariantsResponse> ListVariantsAsync(ListVariantsRequest request, IRequestOptions options = null);
@@ -65,7 +75,6 @@ namespace Illumina.BaseSpace.SDK
 
         Task<GetCoverageMetadataResponse> GetCoverageMetadataAsync(GetCoverageMetadataRequest request,
                                                                    IRequestOptions options = null);
-
         GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request,
                                                         IRequestOptions options = null);
 

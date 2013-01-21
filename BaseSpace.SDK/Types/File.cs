@@ -55,6 +55,6 @@ namespace Illumina.BaseSpace.SDK.Types
         public IContentReference<IAbstractResource>[] References { get; set; }
     }
 
-
     public enum FileUploadStatus { undefined, pending, aborted, complete }
+    public enum FilesSortByParameters { Id, Path, DateCreated }
 }
