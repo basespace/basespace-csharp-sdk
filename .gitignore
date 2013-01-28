@@ -113,3 +113,4 @@ UpgradeLog*.XML
 *.nupkg
 #hidden config
 *.hidden
+*.plist

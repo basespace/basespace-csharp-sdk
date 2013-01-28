@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSpace.SDK.MonoTouch", "BaseSpace.SDK.MonoTouch\BaseSpace.SDK.MonoTouch.csproj", "{64F5BEDD-592D-488B-859C-5200397E5959}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSpace.SDK.MonoTouch.Tests", "BaseSpace.SDK.MonoTouch.Tests\BaseSpace.SDK.MonoTouch.Tests.csproj", "{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64F5BEDD-592D-488B-859C-5200397E5959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F5BEDD-592D-488B-859C-5200397E5959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F5BEDD-592D-488B-859C-5200397E5959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F5BEDD-592D-488B-859C-5200397E5959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Debug|iPhone.Build.0 = Debug|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Release|iPhone.ActiveCfg = Release|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Release|iPhone.Build.0 = Release|iPhone
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{CB22833F-3852-4BFA-AE99-5D9CE5DC9939}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = BaseSpace.SDK.MonoTouch\BaseSpace.SDK.MonoTouch.csproj
+	EndGlobalSection
+EndGlobal
