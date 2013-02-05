@@ -1,15 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
+    public class BSWebClient : WebClient
+    {
+        //TODO: Doesnt seem right? Need refactor?
+       // const int CONNECTION_LIMIT = 16;
+        protected override WebRequest GetWebRequest(Uri address)
+        {
+            var request = base.GetWebRequest(address) as HttpWebRequest;
+
+            if (request != null && request.ServicePoint.ConnectionLimit < 20)
+                request.ServicePoint.ConnectionLimit = 10000;  //Note: Is this changing global value?
+
+            return request;
+        }
+    }
+
     public class BaseSpaceClient : IBaseSpaceClient
     {
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
+        
         
         public BaseSpaceClient(string authCode)
             : this(new RequestOptions(){AuthCode = authCode, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
@@ -36,6 +52,7 @@ namespace Illumina.BaseSpace.SDK
             ClientSettings = settings;
             WebClient = client;
             SetDefaultRequestOptions(defaultOptions);
+           
         }
 
         protected IClientSettings ClientSettings { get; set; }
@@ -105,14 +122,14 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<PostProjectResponse> CreateProjectAsync(PostProjectRequest request, IRequestOptions options = null)
+        public Task<CreateProjectResponse> CreateProjectAsync(CreateProjectRequest request, IRequestOptions options = null)
         {
-            return WebClient.SendAsync<PostProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.SendAsync<CreateProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
-        public PostProjectResponse CreateProject(PostProjectRequest request, IRequestOptions options = null)
+        public CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<PostProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.Send<CreateProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
 
@@ -184,14 +201,14 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null)
+        public Task<CreateAppResultResponse> CreateAppResultAsync(CreateAppResultRequest request, IRequestOptions options = null)
         {
-            return WebClient.SendAsync<PostAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.SendAsync<CreateAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
-        public PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null)
+        public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<PostAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.Send<CreateAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
 
@@ -248,6 +265,26 @@ namespace Illumina.BaseSpace.SDK
         public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options)
         {
             return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options)
+        {
+            return WebClient.SendAsync<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options)
+        {
+            return WebClient.Send<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
+                                                                   IRequestOptions options)
+        {
+            var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
+            var fileInfo = new FileInfo(toAppResultRequest.Name);
+            return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(fileInfo, toAppResultRequest.Id,
+                                                                             toAppResultRequest.ResourceIdentifierInUri,
+                                                                             toAppResultRequest.Directory);
         }
         #endregion
 

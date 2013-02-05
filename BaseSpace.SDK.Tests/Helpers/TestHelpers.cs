@@ -14,7 +14,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
         public static Project CreateRandomTestProject(IBaseSpaceClient client, string projectName = null)
         {
             projectName = projectName ?? CreateRandomTestProjectName();
-            var response = client.CreateProject(new PostProjectRequest(projectName));
+            var response = client.CreateProject(new CreateProjectRequest(projectName));
             Assert.NotNull(response);
             Assert.NotNull(response.ResponseStatus);
             Assert.Null(response.ResponseStatus.ErrorCode);
@@ -55,7 +55,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
         internal static AppResult CreateRandomTestAppResult(IBaseSpaceClient client, Project project)
         {
             var appResultName = CreateRandomTestAppResultName();
-            var response = client.CreateAppResult(new PostAppResultRequest(project.Id, appResultName));
+            var response = client.CreateAppResult(new CreateAppResultRequest(project.Id, appResultName));
             Assert.NotNull(response);
             Assert.NotNull(response.ResponseStatus);
             Assert.Null(response.ResponseStatus.ErrorCode);

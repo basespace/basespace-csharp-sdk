@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 
 namespace Illumina.BaseSpace.SDK
@@ -21,8 +17,8 @@ namespace Illumina.BaseSpace.SDK
         Task<ListProjectsResponse> ListProjectsAsync(ListProjectsRequest request, IRequestOptions options = null);
         ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null);
 
-        Task<PostProjectResponse> CreateProjectAsync(PostProjectRequest request, IRequestOptions options = null);
-        PostProjectResponse CreateProject(PostProjectRequest request, IRequestOptions options = null);
+        Task<CreateProjectResponse> CreateProjectAsync(CreateProjectRequest request, IRequestOptions options = null);
+        CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null);
 
         Task<GetAppSessionResponse> GetAppSessionAsync(GetAppSessionRequest request, IRequestOptions options = null);
         GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
@@ -49,8 +45,8 @@ namespace Illumina.BaseSpace.SDK
                                                                  IRequestOptions options = null);
         UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
 
-        Task<PostAppResultResponse> CreateAppResultAsync(PostAppResultRequest request, IRequestOptions options = null);
-        PostAppResultResponse CreateAppResult(PostAppResultRequest request, IRequestOptions options = null);
+        Task<CreateAppResultResponse> CreateAppResultAsync(CreateAppResultRequest request, IRequestOptions options = null);
+        CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
 
         Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options);
         ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options);
@@ -63,6 +59,9 @@ namespace Illumina.BaseSpace.SDK
                                                                  IRequestOptions options);
         ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options);
 
+        Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options);
+        GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options);
+        
         Task<GetVariantHeaderResponse> GetVariantHeaderAsync(GetVariantHeaderRequest request,
                                                              IRequestOptions options = null);
         GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null);
@@ -77,6 +76,9 @@ namespace Illumina.BaseSpace.SDK
                                                                    IRequestOptions options = null);
         GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request,
                                                         IRequestOptions options = null);
+
+        Types.File UploadFileToAppResult(UploadFileToAppResultRequest request,
+                                                IRequestOptions options);
 
         void SetDefaultRequestOptions(IRequestOptions options = null);
     }

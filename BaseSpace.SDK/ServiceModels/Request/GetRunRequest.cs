@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetRunRequest
+    public class GetRunRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get specific run
@@ -10,7 +10,5 @@
         {
             Id = id;
         }
-
-        public string Id { get; set; }
     }
 }

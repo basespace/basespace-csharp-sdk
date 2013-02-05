@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetGenomeRequest
+    public class GetGenomeRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get specific Genome
@@ -15,8 +15,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             Id = id;
         }
-
-        public string Id { get; set; }
     }
 
 }

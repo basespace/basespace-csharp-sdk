@@ -1,8 +1,8 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class PostProjectRequest
+    public class CreateProjectRequest
     {
-        public PostProjectRequest(string name)
+        public CreateProjectRequest(string name)
         {
             Name = name;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetProjectRequest
+    public class GetProjectRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get a specific project
@@ -10,7 +10,5 @@
         {
             Id = id;
         }
-
-        public string Id { get; set; }
     }
 }

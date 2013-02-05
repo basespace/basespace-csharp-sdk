@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetCoverageMetadataRequest
+    public class GetCoverageMetadataRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get Coverage Metadata by Id and Chromosome
@@ -13,7 +13,6 @@
             Chrom = chrom;
         }
 
-        public string Id { get; set; }
         public string Chrom { get; set; }
     }
 }

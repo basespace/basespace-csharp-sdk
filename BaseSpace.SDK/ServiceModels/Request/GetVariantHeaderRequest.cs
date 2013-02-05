@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetVariantHeaderRequest
+    public class GetVariantHeaderRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get variant header by Id
@@ -10,7 +10,6 @@
         {
             Id = id;
         }
-        public string Id { get; set; }
     }
 }
 

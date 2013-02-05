@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -11,7 +12,8 @@ namespace Illumina.BaseSpace.SDK
         public const string DEFAULT_WEBSITE = "https://basespace.illumina.com";
         public const string DEFAULT_API = "https://api.basespace.illumina.com";
         public const string DEFAULT_VERSION = "v1pre3";
-        public const uint DEFAULT_MULTIPART_SIZE = 20;
+        public const uint DEFAULT_MULTIPART_SIZE = 20 * 1024 * 1024; //in bytes
+        public const uint DEFAULT_MULTIPART_SIZE_THRESHOLD = 25 * 1024 * 1024; //in bytes
 
         public BaseSpaceClientSettings()
         {

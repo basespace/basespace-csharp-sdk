@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetSampleRequest
+    public class GetSampleRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get specific sample
@@ -15,8 +15,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             Id = id;
         }
-
-        public string Id { get; set; }
     }
-    
 }

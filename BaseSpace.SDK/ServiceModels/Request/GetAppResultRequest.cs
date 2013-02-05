@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetAppResultRequest
+    public class GetAppResultRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get specific AppResult
@@ -10,7 +10,5 @@
         {
             Id = id;
         }
-
-        public string Id { get; set; }
     }
 }

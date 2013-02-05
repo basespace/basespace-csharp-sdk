@@ -80,6 +80,7 @@
     <Compile Include="Integration\GenomesTests.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
+    <Compile Include="Integration\UploadFileToAppResultTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonWebClientTests.cs" />
     <Compile Include="TestData.Designer.cs">

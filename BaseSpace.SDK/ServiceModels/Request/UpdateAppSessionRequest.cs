@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class UpdateAppSessionRequest
+    public class UpdateAppSessionRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Update AppSession
@@ -13,7 +13,6 @@
             Status = status;
         }
 
-        public string Id { get; set; }
         public string Status { get; set; }
         public string StatusSummary { get; set; }
     }

@@ -57,7 +57,7 @@ namespace Illumina.BaseSpace.SDK
             return urlWithParameters;
         }
 
-        public static string BuildUrl(this PostProjectRequest req, string version)
+        public static string BuildUrl(this CreateProjectRequest req, string version)
         {
             return string.Format("{0}/projects", version);
         }
@@ -71,12 +71,6 @@ namespace Illumina.BaseSpace.SDK
         public static string BuildUrl(this UpdateAppSessionRequest req, string version)
         {
             return string.Format("{0}/appsessions/{1}", version, req.Id);
-            var urlWithParameters = string.Format("{0}/appsessions/{1}&{2}={3}", version, req.Id, AppSessionQueryParameters.Status, req.Status);
-
-            if (!string.IsNullOrEmpty(req.StatusSummary))
-                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, AppSessionQueryParameters.StatusSummary, req.StatusSummary);
-
-            return urlWithParameters;
         }
         #endregion
         #region Samples
@@ -113,10 +107,16 @@ namespace Illumina.BaseSpace.SDK
             return urlWithParameters;
         }
 
-        public static string BuildUrl(this PostAppResultRequest req, string version)
+        public static string BuildUrl(this CreateAppResultRequest req, string version)
         {
             return string.Format("{0}/projects/{1}/appresults", version, req.ProjectId);
         }
+
+        public static string BuildUrl(this UploadFileToAppResultRequest req, string version)
+        {
+            return string.Format("{0}/{1}/{2}/files", version, req.ResourceIdentifierInUri, req.Id);
+        }
+        
         #endregion
         #region Genomes
         public static string BuildUrl(this GetGenomeRequest req, string version)
@@ -154,6 +154,12 @@ namespace Illumina.BaseSpace.SDK
         {
             return string.Format("{0}/appresults/{1}/files", version, req.Id);
         }
+
+        public static string BuildUrl(this GetFileInformationRequest req, string version)
+        {
+            return string.Format("{0}/files/{1}", version, req.Id);
+        }
+
         #endregion
 
 

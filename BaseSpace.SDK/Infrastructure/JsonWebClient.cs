@@ -16,7 +16,7 @@ namespace Illumina.BaseSpace.SDK
     public partial class JsonWebClient
     {
         protected JsonServiceClient Client;
-        protected IRequestOptions DefaultRequestOptions = null;
+        public IRequestOptions DefaultRequestOptions { get; protected set; }
         protected ILog Logger = LogManager.GetCurrentClassLogger();
         [ThreadStatic]
         private static IRequestOptions currentRequestOptions = null; //available per thread
@@ -210,5 +210,6 @@ namespace Illumina.BaseSpace.SDK
             public Stream Stream { get; set; }
             public string FileName { get; set; }
         }
+
     }
 }

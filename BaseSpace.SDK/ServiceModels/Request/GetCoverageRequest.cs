@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetCoverageRequest
+    public class GetCoverageRequest : AbstractResourceRequest
     {
         /// <summary>
         /// Get Coverage by Id and Chromosome
@@ -17,7 +17,6 @@
             EndPos = endPos;
         }
 
-        public string Id { get; set; }
         public string Chrom { get; set; }
         public string StartPos { get; set; }
         public string EndPos { get; set; }
