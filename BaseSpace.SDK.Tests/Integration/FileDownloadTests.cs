@@ -10,7 +10,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
     public class FileDownloadTests : BaseIntegrationTest
     {
         [Fact]
-        public void CanUploadSmallFileToAppResult_SinglePart()
+        public void CanDownloadFile()
         {
             var project = TestHelpers.CreateRandomTestProject(Client);
             var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
