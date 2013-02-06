@@ -187,6 +187,13 @@ namespace Illumina.BaseSpace.SDK
         }
         #endregion
 
+        #region FileDownload
+        public static string BuildUrl(this FileContentRedirectMetaRequest req, string version)
+        {
+            return string.Format("{0}/files/{1}/content", version, req.Id);
+        }
+        #endregion
+
         #region VerificationCode
         public static Uri BuildRequestUri(this VerificationCode verificationCode, BaseSpaceClientSettings settings)
         {

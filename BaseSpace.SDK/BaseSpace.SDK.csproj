@@ -63,6 +63,8 @@
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
     <Compile Include="Infrastructure\BufferPool.cs" />
+    <Compile Include="Infrastructure\DownloadFileCommand.cs" />
+    <Compile Include="Infrastructure\FileDownloadProgressChangedEventHandler.cs" />
     <Compile Include="Infrastructure\FileUpload.cs" />
     <Compile Include="Infrastructure\HttpMethods.cs" />
     <Compile Include="Infrastructure\JsonWebClient.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Interfaces\IWebClient.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\FileContentRedirectMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\FileRequestPost.cs" />
     <Compile Include="ServiceModels\Request\GetAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAppSessionRequest.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="ServiceModels\Request\UploadFileToAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppSessionResponse.cs" />
@@ -139,6 +143,7 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\Coverage.cs" />
+    <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\GenericAbstractList.cs" />
     <Compile Include="Types\ApiResponse.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />

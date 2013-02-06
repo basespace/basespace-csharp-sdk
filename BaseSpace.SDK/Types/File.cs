@@ -56,34 +56,20 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     [DataContract]
-    public class FileInformation : AbstractResource
+    public class FileInformation : FileCompact
     {
-        [DataMember(IsRequired = true)]
-        public override string Id { get; set; }
-
-        [DataMember(IsRequired = true)]
-        public override Uri Href { get; set; }
+        [DataMember]
+        public FileUploadStatus? UploadStatus { get; set; }
 
         [DataMember]
         public Uri HrefContent { get; set; }
 
         [DataMember]
+        public Uri HrefVariants { get; set; }
+
+        [DataMember]
         public Uri HrefCoverage { get; set; }
-        
-        [DataMember]
-        public string UploadStatus { get; set; }
 
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string Size { get; set; }
-
-        [DataMember]
-        public string Path { get; set; }
-
-        [DataMember]
-        public DateTime DateCreated { get; set; }
     }
 
     public enum FileUploadStatus { undefined, pending, aborted, complete }

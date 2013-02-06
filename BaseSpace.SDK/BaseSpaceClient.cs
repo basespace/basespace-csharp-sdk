@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
@@ -331,6 +332,50 @@ namespace Illumina.BaseSpace.SDK
         public GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetCoverageMetadataResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+        #endregion
+
+
+        #region FileDownload
+        public FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<FileContentRedirectMetaResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task<FileContentRedirectMetaResponse> GetFileContentUrlAsync(FileContentRedirectMetaRequest request, IRequestOptions options = null)
+        {
+            return WebClient.SendAsync<FileContentRedirectMetaResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+        }
+
+        public Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken())
+        {
+            var command = new DownloadFileCommand(this, fileId, stream, ClientSettings, token);
+            command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
+
+            return Task.Factory.StartNew(command.Execute, token);
+        }
+
+        public Task DownloadFileTaskAsync(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
+        {
+            var command = new DownloadFileCommand(this, file, stream, ClientSettings, token);
+            command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
+
+            return Task.Factory.StartNew(command.Execute, token);
+        }
+
+        public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
+
+        protected void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)
+        {
+            if (FileDownloadProgressChanged != null)
+            {
+                FileDownloadProgressChanged(this, e);
+            }
+        }
+
+        private void command_FileDownloadProgressChanged(object sender, FileDownloadProgressChangedEventArgs e)
+        {
+            OnFileDownloadProgressChanged(e);
         }
         #endregion
     }

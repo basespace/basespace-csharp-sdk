@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -81,5 +84,14 @@ namespace Illumina.BaseSpace.SDK
                                                 IRequestOptions options);
 
         void SetDefaultRequestOptions(IRequestOptions options = null);
+
+        Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken());
+        Task DownloadFileTaskAsync(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
+
+        FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request,
+                                                          IRequestOptions options = null);
+
+        Task<FileContentRedirectMetaResponse> GetFileContentUrlAsync(FileContentRedirectMetaRequest request,
+                                                                     IRequestOptions options = null);
     }
 }

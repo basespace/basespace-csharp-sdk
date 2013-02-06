@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Illumina.BaseSpace.SDK.ServiceModels;
+﻿using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Tests.Helpers;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
