@@ -190,7 +190,7 @@ namespace Illumina.BaseSpace.SDK
         #region FileDownload
         public static string BuildUrl(this FileContentRedirectMetaRequest req, string version)
         {
-            return string.Format("{0}/files/{1}/content", version, req.Id);
+            return string.Format("{0}/files/{1}/content?Redirect={2}", version, req.Id, req.RedirectType);
         }
         #endregion
 

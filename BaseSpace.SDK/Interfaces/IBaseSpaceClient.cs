@@ -87,11 +87,6 @@ namespace Illumina.BaseSpace.SDK
 
         Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken());
         Task DownloadFileTaskAsync(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
-
-        FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request,
-                                                          IRequestOptions options = null);
-
-        Task<FileContentRedirectMetaResponse> GetFileContentUrlAsync(FileContentRedirectMetaRequest request,
-                                                                     IRequestOptions options = null);
+        event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
     }
 }

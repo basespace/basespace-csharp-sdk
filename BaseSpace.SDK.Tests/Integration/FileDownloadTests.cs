@@ -22,11 +22,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.NotNull(response);
             Assert.True(response.UploadStatus == FileUploadStatus.complete);
 
-            var res2 = Client.GetFileContentUrl(new FileContentRedirectMetaRequest(response.Id));
-            var a = res2;
-
-            //var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
-            //Client.DownloadFileTaskByIdAsync(response.Id, fs).Wait();
+            var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
+            Client.DownloadFileTaskByIdAsync(response.Id, fs);
         }
     }
 }
