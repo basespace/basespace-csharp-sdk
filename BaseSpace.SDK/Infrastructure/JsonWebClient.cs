@@ -49,14 +49,13 @@ namespace Illumina.BaseSpace.SDK
             Client.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
-        void WebRequestFilter(HttpWebRequest req)
+        protected virtual void WebRequestFilter(HttpWebRequest req)
         {
             if (currentRequestOptions != null  && !string.IsNullOrEmpty(currentRequestOptions.AuthCode))
                 req.Headers.Add("Authorization", string.Format("Bearer {0}", currentRequestOptions.AuthCode));
         }
 
         protected IClientSettings Settings { get; set; }
-
 
         protected static void ChangeSerializationOptions()
         {
