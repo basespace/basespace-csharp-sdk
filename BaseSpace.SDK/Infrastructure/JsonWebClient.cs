@@ -21,7 +21,7 @@ namespace Illumina.BaseSpace.SDK
         private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
 
         [ThreadStatic]
-        private static IRequestOptions currentRequestOptions = null; //available per thread
+        protected static IRequestOptions CurrentRequestOptions = null; //available per thread
 
         static JsonWebClient()
         {
@@ -49,10 +49,10 @@ namespace Illumina.BaseSpace.SDK
             Client.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
-        protected virtual void WebRequestFilter(HttpWebRequest req)
+        private void WebRequestFilter(HttpWebRequest req)
         {
-            if (currentRequestOptions != null  && !string.IsNullOrEmpty(currentRequestOptions.AuthCode))
-                req.Headers.Add("Authorization", string.Format("Bearer {0}", currentRequestOptions.AuthCode));
+            if (CurrentRequestOptions != null  && !string.IsNullOrEmpty(CurrentRequestOptions.AuthCode))
+                req.Headers.Add("Authorization", string.Format("Bearer {0}", CurrentRequestOptions.AuthCode));
         }
 
         protected IClientSettings Settings { get; set; }
@@ -100,7 +100,7 @@ namespace Illumina.BaseSpace.SDK
             }
             finally
             {
-                currentRequestOptions = null;
+                CurrentRequestOptions = null;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Illumina.BaseSpace.SDK
             Func<TResult> func =
                 () =>
                     {
-                        currentRequestOptions = request.Options;  //we need to set the default options here
+                        CurrentRequestOptions = request.Options;  //we need to set the default options here
                         return client.Send<TResult>(request.Method.ToString(), request.RelativeOrAbsoluteUrl, request.Request);
                     };
 
