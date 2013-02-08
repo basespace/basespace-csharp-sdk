@@ -80,6 +80,7 @@
     <Compile Include="Integration\BaseIntegrationTest.cs" />
     <Compile Include="Integration\FileDownloadTests.cs" />
     <Compile Include="Integration\GenomesTests.cs" />
+    <Compile Include="Integration\OAuthTests.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
     <Compile Include="Integration\UploadFileToAppResultTest.cs" />
@@ -94,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="appSettings.config.hidden">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

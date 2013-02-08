@@ -1,34 +1,25 @@
 using System;
-using NUnit.Framework;
+using System.Configuration;
+using Xunit;
 using Illumina.BaseSpace.SDK.ServiceModels;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
 
-namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
+namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
-	[TestFixture]
 	public class OAuthTests : BaseIntegrationTest
 	{
-		[Test]
+		[Fact]
 		public void CanStartDeviceAuth ()
 		{
 			OAuthDeviceAuthResponse response = null;
-			try 
-			{
-				response = Client.BeginOAuthDeviceAuth (new OAuthDeviceAuthRequest (SettingsDict ["basespace:api-key"].ToString (), "browse global"));
-			} 
-			catch (BaseSpaceException bse) 
-			{
-				Log.Debug(bse.Message);
-				Assert.Fail(bse.Message);
-			}
-			Assert.IsNotNull(response);
-			Assert.IsNotNull(response.DeviceCode);
-			Assert.IsNotNull(response.VerificationUri);
-			Assert.IsNotNull(response.ExpiresIn);
-			Assert.IsNotNull(response.Interval);
-			Assert.IsNotNull(response.UserCode);
-			Assert.IsNotNull(response.VerificationUriWithCode);
+            response = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
+
+			Assert.NotNull(response);
+			Assert.NotNull(response.DeviceCode);
+			Assert.NotNull(response.VerificationUri);
+			Assert.NotNull(response.ExpiresIn);
+			Assert.NotNull(response.Interval);
+			Assert.NotNull(response.UserCode);
+			Assert.NotNull(response.VerificationUriWithCode);
 
 			Log.DebugFormat(@"
 				device code: {0}
@@ -46,28 +37,20 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 			    response.VerificationUriWithCode);
 		}
 
-		[Test]
+		[Fact]
 		public void CanFinishDeviceAuthWithErrorStatus()
 		{
 			OAuthDeviceAuthResponse verificationResponse = null;
 			OAuthDeviceAccessTokenResponse tokenResponse = null;
-			try 
-			{
-				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest (SettingsDict ["basespace:api-key"].ToString (), "browse global"));
+				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
 				tokenResponse = Client.FinishOAuthDeviceAuth (
-					new OAuthDeviceAccessTokenRequest (SettingsDict ["basespace:api-key"].ToString (), 
-				                                   SettingsDict ["basespace:api-secret"].ToString (), verificationResponse.DeviceCode));
-			} 
-			catch (Exception ex) 
-			{
-				Log.Debug(ex.Message);
-				Assert.Fail(ex.Message);
-			}
+					new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), 
+				                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
 
-			Assert.IsNotNull(tokenResponse);
-			Assert.IsNotNull(tokenResponse.Error);
-			Assert.IsNotNull(tokenResponse.ErrorMessage);
-			Assert.AreEqual("authorization_pending", tokenResponse.Error);
+			Assert.NotNull(tokenResponse);
+			Assert.NotNull(tokenResponse.Error);
+			Assert.NotNull(tokenResponse.ErrorMessage);
+			Assert.Equal("authorization_pending", tokenResponse.Error);
 
 			Log.DebugFormat(@"
 			error: {0}
@@ -75,30 +58,23 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 			", tokenResponse.Error, tokenResponse.ErrorMessage);
 		}
 
-		[Ignore]//step thru to make it work, by going to the verification url and accepting!
-		[Test]
+		//step thru to make it work, by going to the verification url and accepting!
+		[Fact(Skip = "step through and browser interaction required")]
 		public void CanFinishDeviceAuthWithSuccess()
 		{
 			OAuthDeviceAuthResponse verificationResponse = null;
 			OAuthDeviceAccessTokenResponse tokenResponse = null;
-			try 
-			{
-				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest (SettingsDict ["basespace:api-key"].ToString (), "browse global"));
+
+				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
 
 				// pause the debugger here and go accept the verification url
 
 				tokenResponse = Client.FinishOAuthDeviceAuth (
-					new OAuthDeviceAccessTokenRequest (SettingsDict ["basespace:api-key"].ToString (), 
-				                                   SettingsDict ["basespace:api-secret"].ToString (), verificationResponse.DeviceCode));
-			} 
-			catch (Exception ex) 
-			{
-				Log.Debug(ex.Message);
-				Assert.Fail(ex.Message);
-			}
+					new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), 
+				                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
 			
-			Assert.IsNotNull(tokenResponse);
-			Assert.IsNotNull(tokenResponse.AccessToken);
+			Assert.NotNull(tokenResponse);
+			Assert.NotNull(tokenResponse.AccessToken);
 
 			Log.DebugFormat("Access Token: {0}", tokenResponse.AccessToken);
 		}

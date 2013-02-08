@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using ServiceStack.ServiceClient.Web;
+using ServiceStack.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -335,6 +337,29 @@ namespace Illumina.BaseSpace.SDK
         }
         #endregion
 
+		#region OAuth
+		public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+		}
+
+		public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth (OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
+		{
+			try 
+			{
+				return WebClient.Send<OAuthDeviceAccessTokenResponse> (HttpMethods.POST, request.BuildUrl (ClientSettings.Version), request, options);
+			} 
+			catch (BaseSpaceException bex)
+			{
+				if(bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
+				{
+					var wsex = (WebServiceException)bex.InnerException;
+					return wsex.ResponseBody.FromJson<OAuthDeviceAccessTokenResponse>();
+				}
+			}
+			return null;
+		}
+		#endregion
 
         #region FileDownload
         public FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request, IRequestOptions options = null)

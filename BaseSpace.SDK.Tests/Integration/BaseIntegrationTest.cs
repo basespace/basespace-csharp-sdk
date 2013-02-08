@@ -4,12 +4,23 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using Common.Logging;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class BaseIntegrationTest
     {
+        private ILog _log;
+        protected ILog Log
+        {
+            get 
+            { 
+                _log = _log ?? LogManager.GetCurrentClassLogger();
+                return _log;
+            }
+        }
+
         public BaseIntegrationTest()
         {
             //configure console logging

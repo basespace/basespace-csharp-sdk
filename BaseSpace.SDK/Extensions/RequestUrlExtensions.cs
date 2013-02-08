@@ -193,6 +193,17 @@ namespace Illumina.BaseSpace.SDK
             return string.Format("{0}/files/{1}/content?Redirect={2}", version, req.Id, req.RedirectType);
         }
         #endregion
+		#region OAuth
+		public static string BuildUrl (this OAuthDeviceAuthRequest req, string version)
+		{
+			return string.Format("{0}/oauthv2/deviceauthorization", version);
+		}
+
+		public static string BuildUrl (this OAuthDeviceAccessTokenRequest req, string version)
+		{
+			return string.Format("{0}/oauthv2/token", version);
+		}
+		#endregion
 
         #region VerificationCode
         public static Uri BuildRequestUri(this VerificationCode verificationCode, BaseSpaceClientSettings settings)

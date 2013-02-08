@@ -154,7 +154,7 @@ namespace Illumina.BaseSpace.SDK
                 logger.ErrorFormat("HTTP Response code {0} : {1}, elapsed time {2}ms", statusCode, exc, timer.ElapsedMilliseconds);
                 var code = HttpStatusCode.InternalServerError;
                 Enum.TryParse(statusCode.ToString(), out code);
-                throw new BaseSpaceException(code, message);
+                throw new BaseSpaceException(code, message, exc);
             }
         }
     }

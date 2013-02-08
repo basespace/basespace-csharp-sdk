@@ -80,6 +80,9 @@ namespace Illumina.BaseSpace.SDK
         GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request,
                                                         IRequestOptions options = null);
 
+		OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null);
+		OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
+
         Types.File UploadFileToAppResult(UploadFileToAppResultRequest request,
                                                 IRequestOptions options);
 
