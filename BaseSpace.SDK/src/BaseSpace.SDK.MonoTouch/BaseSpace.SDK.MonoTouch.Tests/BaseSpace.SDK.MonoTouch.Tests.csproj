@@ -108,6 +108,7 @@
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
     <Compile Include="Integration\UsersTests.cs" />
+    <Compile Include="Integration\OAuthTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

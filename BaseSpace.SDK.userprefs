@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch.Tests/Settings.bundle/Root.plist">
+    <Files>
+      <File FileName="BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch.Tests/Settings.bundle/Common.Logging.plist" />
+      <File FileName="BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch.Tests/Settings.bundle/Root.plist" />
+      <File FileName="../basespace-mobile/BasespaceRemoteMonitor/BasespaceRemoteMonitor/Settings.bundle/Root.plist" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/arowe/Development/basespace-csharp-sdk/BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch/BaseSpaceClient.cs" line="84" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -10,7 +10,7 @@ using Illumina.BaseSpace.SDK.Types;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.Text;
-
+using ServiceStack.ServiceClient.Web;
 namespace Illumina.BaseSpace.SDK
 {
     public partial class JsonWebClient
@@ -151,6 +151,11 @@ namespace Illumina.BaseSpace.SDK
                 RetryLogic.DoWithRetry(maxRetry, name, () => { result = func(); }, logger);
                 return result;
             }
+			catch (WebServiceException wsex)
+			{
+				//TODO: wrap errors
+				throw;
+			}
             catch (BaseSpaceException)
             {
                 //todo: eventually do something here

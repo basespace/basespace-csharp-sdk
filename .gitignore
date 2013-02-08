@@ -113,4 +113,9 @@ UpgradeLog*.XML
 *.nupkg
 #hidden config
 *.hidden
+#IOS config
+*.plist
 
+*.plist
+
+BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch.Tests/Settings.bundle/Root.plist

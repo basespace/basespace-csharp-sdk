@@ -7,9 +7,10 @@ using System.Text;
 using Illumina.BaseSpace.SDK.Types;
 using Common.Logging;
 using MonoTouch.Foundation;
+using BaseSpace.SDK.MonoTouch.Tests;
 namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 {
-    public class BaseIntegrationTest
+	public class BaseIntegrationTest : UnitTestAppDelegate
     {
         public BaseIntegrationTest()
         {

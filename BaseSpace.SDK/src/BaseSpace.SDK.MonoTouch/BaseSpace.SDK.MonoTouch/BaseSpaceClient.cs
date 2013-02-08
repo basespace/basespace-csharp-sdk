@@ -4,13 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using Common.Logging;
+using System.Net;
+using System.IO;
+using ServiceStack.Text;
+using ServiceStack.ServiceClient.Web;
 
 namespace Illumina.BaseSpace.SDK
 {
     public class BaseSpaceClient : IBaseSpaceClient
     {
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
-        
+		private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         public BaseSpaceClient(string authCode)
             : this(new RequestOptions(){AuthCode = authCode, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
         {
@@ -296,5 +302,29 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetCoverageMetadataResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
         #endregion
+
+		#region OAuth
+		public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+		}
+
+		public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth (OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
+		{
+			try 
+			{
+				return WebClient.Send<OAuthDeviceAccessTokenResponse> (HttpMethods.POST, request.BuildUrl (ClientSettings.Version), request, options);
+			} 
+			catch (BaseSpaceException bex)
+			{
+				if(bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
+				{
+					var wsex = (WebServiceException)bex.InnerException;
+					return wsex.ResponseBody.FromJson<OAuthDeviceAccessTokenResponse>();
+				}
+			}
+			return null;
+		}
+		#endregion
     }
 }

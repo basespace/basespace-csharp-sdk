@@ -149,5 +149,9 @@
     <Compile Include="ServiceModels\Response\ListRunFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSampleFilesResponse.cs" />
     <Compile Include="Types\UserResponse.cs" />
+    <Compile Include="ServiceModels\Request\OAuthDeviceAuthRequest.cs" />
+    <Compile Include="ServiceModels\Response\OAuthDeviceAuthResponse.cs" />
+    <Compile Include="ServiceModels\Request\OAuthDeviceAccessTokenRequest.cs" />
+    <Compile Include="ServiceModels\Response\OAuthDeviceAccessTokenResponse.cs" />
   </ItemGroup>
 </Project>
