@@ -119,3 +119,5 @@ UpgradeLog*.XML
 *.plist
 
 BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch.Tests/Settings.bundle/Root.plist
+
+*.plist
