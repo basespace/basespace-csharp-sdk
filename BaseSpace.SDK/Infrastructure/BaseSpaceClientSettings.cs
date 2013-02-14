@@ -27,6 +27,6 @@
 		public string Version { get; set; }
 		public string OauthAuthorizeUrl { get; set; }
 		public uint FileMultipartSizeThreshold { get; set; }
-		public IAuthentication Authentication { get; set; }
+		public IAuthentication Authentication { get; protected set; }
 	}
 }
