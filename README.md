@@ -1,6 +1,6 @@
 basespace-csharp-sdk
 ====================
-## This is a pre-release and not fully functional or ready for a production!! ##
+## This is a pre-release and not fully functional or ready for production environments!! ##
 
 ## Contributing ##
 - VS 2012
