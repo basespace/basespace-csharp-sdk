@@ -57,12 +57,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 					Authentication = new OAuth2Authentication(apiKey, apiSecret),
 					BaseSpaceApiUrl = apiUrl, 
 					BaseSpaceWebsiteUrl = webUrl, 
-					Version =version
+					Version = version
 				};
             
 			
 			
-			IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
+			IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, new OAuth2Authentication(authCode)));
             return iBaseSpaceClient;
         }
     }

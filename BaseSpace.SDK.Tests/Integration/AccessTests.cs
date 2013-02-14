@@ -48,7 +48,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             // poll for the access token
             AccessToken accessToken = FetchAccessToken(verificationCode, settings);
 
-            var client = new BaseSpaceClient(settings, new RequestOptions(apiUrl, accessToken.TokenString));
+            var client = new BaseSpaceClient(settings, new RequestOptions(apiUrl, new OAuth2Authentication(accessToken.TokenString)));
 
             // build and return the client
             return client;

@@ -168,7 +168,8 @@ namespace Illumina.BaseSpace.SDK
                         {
                             data = BufferPool.GetChunk(Convert.ToInt32(ClientSettings.FileMultipartSizeThreshold));
 
-                            wc.Headers.Add(string.Format("Authorization: Bearer {0}", Options.AuthCode));
+	                        var authentication = Options.Authentication as OAuth2Authentication;
+	                        authentication.UpdateHttpHeader(wc.Headers);
 
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, Convert.ToInt32(ClientSettings.FileMultipartSizeThreshold));

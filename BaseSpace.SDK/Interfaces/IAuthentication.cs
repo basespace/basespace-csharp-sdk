@@ -9,10 +9,17 @@ namespace Illumina.BaseSpace.SDK
 
 	internal class OAuth2Authentication : IAuthentication
 	{
+		private string authCode;
+
 		public OAuth2Authentication(string appId, string appSecret)
 		{
 			AppId = appId;
 			AppSecret = appSecret;
+		}
+
+		internal OAuth2Authentication(string authCode)
+		{
+			authCode = authCode;
 		}
 
 		public string AppId { get; private set; }
@@ -21,9 +28,17 @@ namespace Illumina.BaseSpace.SDK
 
 		public void UpdateHttpHeader(HttpWebRequest request, IRequestOptions requestOptions)
 		{
-			if (requestOptions != null && !string.IsNullOrEmpty(requestOptions.AuthCode))
+			if (requestOptions != null)
 			{
-				request.Headers.Add("Authorization", string.Format("Bearer {0}", requestOptions.AuthCode));
+				UpdateHttpHeader(request.Headers);
+			}
+		}
+
+		internal void UpdateHttpHeader(WebHeaderCollection headers)
+		{
+			if (headers != null && !string.IsNullOrEmpty(authCode))
+			{
+				headers.Add("Authorization", string.Format("Bearer {0}", authCode));
 			}
 		}
 	}

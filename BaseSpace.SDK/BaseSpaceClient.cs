@@ -31,7 +31,7 @@ namespace Illumina.BaseSpace.SDK
         
         
         public BaseSpaceClient(string authCode)
-            : this(new RequestOptions(){AuthCode = authCode, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
+            : this(new RequestOptions { Authentication = new OAuth2Authentication(authCode), RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
         {
 
         }
