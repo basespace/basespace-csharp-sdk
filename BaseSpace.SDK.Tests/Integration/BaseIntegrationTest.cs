@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.Types;
 
@@ -29,7 +26,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             properties["showDateTime"] = "true";
 
             // set Adapter
-            Common.Logging.LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
+            LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
         }
 
 		#region client singleton

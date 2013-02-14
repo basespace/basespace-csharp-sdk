@@ -36,7 +36,8 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-        public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null) : this(settings, new JsonWebClient(settings), defaultOptions)
+        public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null) 
+			: this(settings, new JsonWebClient(settings), defaultOptions)
         {
         }
 
