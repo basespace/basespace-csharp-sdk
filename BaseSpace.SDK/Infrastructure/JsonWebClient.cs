@@ -51,9 +51,8 @@ namespace Illumina.BaseSpace.SDK
 
         private void WebRequestFilter(HttpWebRequest req)
         {
-	        Settings.Authentication.UpdateHttpHeader(req, CurrentRequestOptions);
-
-
+            if (CurrentRequestOptions != null  && !string.IsNullOrEmpty(CurrentRequestOptions.AuthCode))
+				req.Headers.Add("Authorization", string.Format("Bearer {0}", CurrentRequestOptions.AuthCode));
         }
 
         protected IClientSettings Settings { get; set; }

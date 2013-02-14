@@ -67,7 +67,6 @@
     <Compile Include="Infrastructure\FileDownloadProgressChangedEventHandler.cs" />
     <Compile Include="Infrastructure\FileUpload.cs" />
     <Compile Include="Infrastructure\HttpMethods.cs" />
-    <Compile Include="Interfaces\IAuthentication.cs" />
     <Compile Include="Infrastructure\JsonWebClient.cs" />
     <Compile Include="Infrastructure\JsonWebClient.IWebClient.cs" />
     <Compile Include="Infrastructure\RetryLogic.cs" />

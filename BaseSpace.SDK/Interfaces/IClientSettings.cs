@@ -11,6 +11,5 @@
 		string Version { get; }
 		string OauthAuthorizeUrl { get; }
 		uint FileMultipartSizeThreshold { get; }
-		IAuthentication Authentication { get; }
 	}
 }
