@@ -52,8 +52,17 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
             string authCode = ConfigurationManager.AppSettings.Get("basespace:api-authcode");
-            var settings = new BaseSpaceClientSettings(){AppClientId = apiKey, AppClientSecret = apiSecret, BaseSpaceApiUrl = apiUrl, BaseSpaceWebsiteUrl = webUrl, Version =version};
-            IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
+            var settings = new BaseSpaceClientSettings
+				{
+					Authentication = new OAuth2Authentication(apiKey, apiSecret),
+					BaseSpaceApiUrl = apiUrl, 
+					BaseSpaceWebsiteUrl = webUrl, 
+					Version =version
+				};
+            
+			
+			
+			IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, authCode));
             return iBaseSpaceClient;
         }
     }

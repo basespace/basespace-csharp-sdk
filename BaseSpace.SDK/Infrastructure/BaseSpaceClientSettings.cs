@@ -14,19 +14,19 @@
 			RetryAttempts = DEFAULT_RETRY_ATTEMPTS;
 			BaseSpaceApiUrl = DEFAULT_API;
 			BaseSpaceWebsiteUrl = DEFAULT_WEBSITE;
-			Version = DEFAULT_VERSION;
+			//Version = DEFAULT_VERSION;
 			FileMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE;
 		}
 
 		public uint RetryAttempts { get; set; }
-		public string AppClientId { get; set; }
-		public string AppClientSecret { get; set; }
+		//public string AppClientId { get; set; }
+		//public string AppClientSecret { get; set; }
 		public string BaseSpaceWebsiteUrl { get; set; }
 		public string BaseSpaceApiUrl { get; set; }
-		public string AppRedirectUrl { get; set; }
+		//public string AppRedirectUrl { get; set; }
 		public string Version { get; set; }
-		public string OauthAuthorizeUrl { get; set; }
+		//public string OauthAuthorizeUrl { get; set; }
 		public uint FileMultipartSizeThreshold { get; set; }
-		public IAuthentication Authentication { get; protected set; }
+		public IAuthentication Authentication { get; set; }
 	}
 }

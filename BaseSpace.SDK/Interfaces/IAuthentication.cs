@@ -9,9 +9,15 @@ namespace Illumina.BaseSpace.SDK
 
 	internal class OAuth2Authentication : IAuthentication
 	{
-		public OAuth2Authentication(string appId, string appSecret, string token)
+		public OAuth2Authentication(string appId, string appSecret)
 		{
+			AppId = appId;
+			AppSecret = appSecret;
 		}
+
+		public string AppId { get; private set; }
+
+		public string AppSecret { get; private set; }
 
 		public void UpdateHttpHeader(HttpWebRequest request, IRequestOptions requestOptions)
 		{
