@@ -4,7 +4,7 @@ namespace Illumina.BaseSpace.SDK
 {
 	public interface IAuthentication
 	{
-		void UpdateHttpHeader(HttpWebRequest request);
+		void UpdateHttpHeader(HttpWebRequest request, IRequestOptions requestOptions);
 	}
 
 	public class OAuth1Authentication : IAuthentication
@@ -15,9 +15,12 @@ namespace Illumina.BaseSpace.SDK
 		}
 
 
-		public void UpdateHttpHeader(HttpWebRequest request)
+		public void UpdateHttpHeader(HttpWebRequest request, IRequestOptions requestOptions)
 		{
-			throw new System.NotImplementedException();
+			if (requestOptions != null && !string.IsNullOrEmpty(requestOptions.AuthCode))
+			{
+				request.Headers.Add("Authorization", string.Format("Bearer {0}", requestOptions.AuthCode));
+			}
 		}
 	}
 
@@ -28,9 +31,8 @@ namespace Illumina.BaseSpace.SDK
 			
 		}
 
-		public void UpdateHttpHeader(HttpWebRequest request)
+		public void UpdateHttpHeader(HttpWebRequest request, IRequestOptions requestOptions)
 		{
-			throw new System.NotImplementedException();
 		}
 	}
 
