@@ -15,9 +15,14 @@ namespace Illumina.BaseSpace.SDK
 {
     public partial class JsonWebClient
     {
-        protected JsonServiceClient Client;
+        protected JsonServiceClient Client { get; private set; }
+
         public IRequestOptions DefaultRequestOptions { get; protected set; }
-        protected ILog Logger = LogManager.GetCurrentClassLogger();
+
+        protected ILog Logger { get; private set; }
+
+        protected IClientSettings Settings { get; set; }
+
         private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
 
         [ThreadStatic]
@@ -30,6 +35,8 @@ namespace Illumina.BaseSpace.SDK
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
+            Logger = LogManager.GetCurrentClassLogger();
+
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
@@ -51,10 +58,8 @@ namespace Illumina.BaseSpace.SDK
 
         private void WebRequestFilter(HttpWebRequest req)
         {
-	        Settings.Authentication.UpdateHttpHeader(req);
+            Settings.Authentication.UpdateHttpHeader(req);
         }
-
-        protected IClientSettings Settings { get; set; }
 
         protected static void ChangeSerializationOptions()
         {
