@@ -21,12 +21,9 @@ namespace Illumina.BaseSpace.SDK
 
 		public string AppSecret { get; private set; }
 
-		public void UpdateHttpHeader(HttpWebRequest request, IRequestOptions requestOptions)
+		public void UpdateHttpHeader(HttpWebRequest request)
 		{
-			if (requestOptions != null)
-			{
-				UpdateHttpHeader(request.Headers);
-			}
+			UpdateHttpHeader(request.Headers);
 		}
 
 		internal void UpdateHttpHeader(WebHeaderCollection headers)
