@@ -21,7 +21,7 @@ namespace Illumina.BaseSpace.SDK
 
         protected ILog Logger { get; private set; }
 
-        protected IClientSettings Settings { get; set; }
+        protected IClientSettings Settings { get; private set; }
 
         private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
 
