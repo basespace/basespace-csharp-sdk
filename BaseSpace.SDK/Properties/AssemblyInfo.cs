@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Illumina")]
 [assembly: AssemblyProduct("Illumina.BaseSpace.SDK")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,3 +35,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly : InternalsVisibleTo("Illumina.BaseSpace.SDK.Tests")]
+[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Private.Tests")]
