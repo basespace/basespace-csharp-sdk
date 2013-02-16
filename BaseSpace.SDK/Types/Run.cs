@@ -50,7 +50,10 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public UserCompact UserOwnedBy { get; set; }
 
-        [DataMember]
+	    [DataMember]
+	    public UserCompact UserLockedBy { get; set; }
+
+	    [DataMember]
         public DateTime? DateUploadCompleted { get; set; }
 
         [DataMember]
