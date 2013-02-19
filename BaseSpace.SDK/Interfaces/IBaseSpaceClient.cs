@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.ServiceModels.Request;
+using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
@@ -82,6 +84,8 @@ namespace Illumina.BaseSpace.SDK
 
 		OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null);
 		OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
+        OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
+
 
         Types.File UploadFileToAppResult(UploadFileToAppResultRequest request,
                                                 IRequestOptions options);
@@ -91,5 +95,6 @@ namespace Illumina.BaseSpace.SDK
         Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken());
         Task DownloadFileTaskAsync(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
+
     }
 }

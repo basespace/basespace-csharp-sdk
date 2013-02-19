@@ -4,6 +4,8 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.ServiceModels.Request;
+using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Illumina.BaseSpace.SDK.Types;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.Text;
@@ -359,6 +361,24 @@ namespace Illumina.BaseSpace.SDK
 			}
 			return null;
 		}
+
+        public OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null)
+        {
+            try
+            {
+                return WebClient.Send<OAuthV2AccessTokenResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            }
+            catch (BaseSpaceException bex)
+            {
+                if (bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
+                {
+                    var wsex = (WebServiceException)bex.InnerException;
+                    return wsex.ResponseBody.FromJson<OAuthV2AccessTokenResponse>();
+                }
+            }
+            return null;
+        }
+
 		#endregion
 
         #region FileDownload
