@@ -29,9 +29,9 @@ namespace Illumina.BaseSpace.SDK
             {
                 urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
             }
-            if (!string.IsNullOrEmpty(req.Status))
+            if (!string.IsNullOrEmpty(req.Statuses))
             {
-                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, RunSortByParameters.Status, req.Status);
+                urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, RunSortByParameters.Statuses, req.Statuses);
             }
             return urlWithParameters;
         }

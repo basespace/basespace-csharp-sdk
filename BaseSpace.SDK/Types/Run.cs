@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-    
     [DataContract(Name = "Run")]
     public class RunCompact : AbstractResource
     {
@@ -85,6 +84,17 @@ namespace Illumina.BaseSpace.SDK.Types
         public DateTime DateCreated { get; set; }
     }
 
-    public enum RunSortByParameters { Id, DateCreated, Status }
-    public enum RunFilesSortByParameters {Id, Path, DateCreated }
+    public enum RunSortByParameters
+    {
+	    Id, 
+		DateCreated, 
+		Statuses
+    }
+    
+	public enum RunFilesSortByParameters
+	{
+		Id, 
+		Path, 
+		DateCreated
+	}
 }

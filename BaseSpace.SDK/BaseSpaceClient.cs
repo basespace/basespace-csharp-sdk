@@ -93,14 +93,14 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options)
+        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options = null)
         {
-            return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+			return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options)
+        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+			return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
         #endregion
 
