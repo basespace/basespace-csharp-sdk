@@ -163,7 +163,6 @@
     <Compile Include="Types\ReferenceImplementations.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
-    <Compile Include="Types\RunState.cs" />
     <Compile Include="Types\Sample.cs" />
     <Compile Include="Types\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
