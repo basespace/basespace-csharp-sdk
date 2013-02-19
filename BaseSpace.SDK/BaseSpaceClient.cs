@@ -94,12 +94,12 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options)
+        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options)
+        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
@@ -117,12 +117,12 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetProjectResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListProjectsResponse> ListProjectsAsync(ListProjectsRequest request, IRequestOptions options)
+        public Task<ListProjectsResponse> ListProjectsAsync(ListProjectsRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options)
+        public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
@@ -173,12 +173,12 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options)
+        public Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options)
+        public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
@@ -196,12 +196,12 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetAppResultResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListAppResultsResponse> ListAppResultsAsync(ListAppResultsRequest request, IRequestOptions options)
+        public Task<ListAppResultsResponse> ListAppResultsAsync(ListAppResultsRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options)
+        public ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
@@ -229,12 +229,12 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options)
+        public Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options)
+        public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
@@ -242,48 +242,48 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Files
-        public Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options)
+        public Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options)
+        public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options)
+        public Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options)
+        public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListAppResultFilesResponse> ListAppResultFilesAsync(ListAppResultFilesRequest request, IRequestOptions options)
+        public Task<ListAppResultFilesResponse> ListAppResultFilesAsync(ListAppResultFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options)
+        public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options)
+        public Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options = null)
         {
             return WebClient.SendAsync<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options)
+        public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
-                                                                   IRequestOptions options)
+                                                                   IRequestOptions options = null)
         {
             var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
             var fileInfo = new FileInfo(toAppResultRequest.Name);

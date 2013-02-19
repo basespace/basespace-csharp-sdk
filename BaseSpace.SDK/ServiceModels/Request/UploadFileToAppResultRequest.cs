@@ -2,7 +2,7 @@
 {
     public class UploadFileToAppResultRequest : FileUploadRequestBase
     {
-        public UploadFileToAppResultRequest(string resourceId, string name, bool multipart,string directory = null, string resourceIdentifierInUri = "appresults")
+        public UploadFileToAppResultRequest(string resourceId, string name,string directory = null, string resourceIdentifierInUri = "appresults")
         {
             Id = resourceId;
             Name = name;
@@ -10,7 +10,6 @@
             if(directory!=null)
                 Directory = directory;
             
-            MultiPart = multipart;
             ResourceIdentifierInUri = resourceIdentifierInUri;
         }
 

@@ -31,19 +31,19 @@ namespace Illumina.BaseSpace.SDK
         Task<GetSampleResponse> GetSampleAsync(GetSampleRequest request, IRequestOptions options = null);
         GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
 
-        Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options);
+        Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options = null);
         ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options);
 
         Task<GetAppResultResponse> GetAppResultAsync(GetAppResultRequest request, IRequestOptions options = null);
         GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
 
-        Task<ListAppResultsResponse> ListAppResultsAsync(ListAppResultsRequest request, IRequestOptions options);
+        Task<ListAppResultsResponse> ListAppResultsAsync(ListAppResultsRequest request, IRequestOptions options = null);
         ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options);
 
         Task<GetGenomeResponse> GetGenomeAsync(GetGenomeRequest request, IRequestOptions options = null);
         GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null);
 
-        Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options);
+        Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options = null);
         ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options);
 
         Task<UpdateAppSessionResponse> UpdateAppSessionAsync(UpdateAppSessionRequest request,
@@ -53,19 +53,19 @@ namespace Illumina.BaseSpace.SDK
         Task<CreateAppResultResponse> CreateAppResultAsync(CreateAppResultRequest request, IRequestOptions options = null);
         CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
 
-        Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options);
+        Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options = null);
         ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options);
 
-        Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options);
-        ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options);
+        Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options = null);
+        ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null);
 
 
         Task<ListAppResultFilesResponse> ListAppResultFilesAsync(ListAppResultFilesRequest request,
                                                                  IRequestOptions options);
-        ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options);
+        ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null);
 
-        Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options);
-        GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options);
+        Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options = null);
+        GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null);
         
         Task<GetVariantHeaderResponse> GetVariantHeaderAsync(GetVariantHeaderRequest request,
                                                              IRequestOptions options = null);
@@ -88,7 +88,7 @@ namespace Illumina.BaseSpace.SDK
 
 
         Types.File UploadFileToAppResult(UploadFileToAppResultRequest request,
-                                                IRequestOptions options);
+                                                IRequestOptions options = null);
 
         void SetDefaultRequestOptions(IRequestOptions options = null);
 
