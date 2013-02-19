@@ -9,7 +9,7 @@ namespace Illumina.BaseSpace.SDK
     {
         uint RetryAttempts { get;}
 
-        string AuthCode { get; }
+        string AccessToken { get; }
 
         string BaseUrl { get; }
 

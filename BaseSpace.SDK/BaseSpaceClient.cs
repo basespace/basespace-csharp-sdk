@@ -30,8 +30,8 @@ namespace Illumina.BaseSpace.SDK
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
         
         
-        public BaseSpaceClient(string authCode)
-            : this(new RequestOptions(){AuthCode = authCode, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
+        public BaseSpaceClient(string accessToken)
+            : this(new RequestOptions(){AccessToken = accessToken, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
         {
 
         }
