@@ -11,5 +11,7 @@
 		string Version { get; }
 		
 		uint FileMultipartSizeThreshold { get; }
+
+		IAuthentication Authentication { get; }
 	}
 }
