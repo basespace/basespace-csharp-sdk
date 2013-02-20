@@ -74,6 +74,7 @@
     <Compile Include="Interfaces\IAbstractResource.cs" />
     <Compile Include="Interfaces\IAbstractQueryParameters.cs" />
     <Compile Include="Interfaces\IApiResponse.cs" />
+    <Compile Include="Interfaces\IAuthentication.cs" />
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
