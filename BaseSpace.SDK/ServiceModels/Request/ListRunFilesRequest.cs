@@ -13,9 +13,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
         }
 
-        public string RunId { get; set; }
-
-        public string Extensions { get; set; }
+       public string Extensions { get; set; }
     }
 }
 

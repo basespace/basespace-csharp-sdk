@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListRunFilesResponse : AbstractResourceListResponse<RunFilesCompact, FilesSortByParameters>
+    public class ListRunFilesResponse : AbstractResourceListResponse<FileCompact, FilesSortByParameters>
     {
     }
 }
