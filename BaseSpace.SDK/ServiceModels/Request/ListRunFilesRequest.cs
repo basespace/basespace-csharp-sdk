@@ -13,6 +13,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
         }
 
+        public ListRunFilesRequest() { }
+
        public string Extensions { get; set; }
     }
 }
