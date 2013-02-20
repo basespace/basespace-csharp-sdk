@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Linq;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.ServiceModels.Request;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
@@ -199,10 +200,15 @@ namespace Illumina.BaseSpace.SDK
 			return string.Format("{0}/oauthv2/deviceauthorization", version);
 		}
 
-		public static string BuildUrl (this OAuthDeviceAccessTokenRequest req, string version)
-		{
-			return string.Format("{0}/oauthv2/token", version);
-		}
+        public static string BuildUrl(this OAuthDeviceAccessTokenRequest req, string version)
+        {
+            return string.Format("{0}/oauthv2/token", version);
+        }
+
+        public static string BuildUrl(this OAuthV2AccessTokenRequest req, string version)
+        {
+            return string.Format("{0}/oauthv2/token", version);
+        }
 		#endregion
 
         #region VerificationCode

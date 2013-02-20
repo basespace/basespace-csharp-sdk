@@ -48,7 +48,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
-            string authCode = ConfigurationManager.AppSettings.Get("basespace:api-authcode");
+            string accessToken = ConfigurationManager.AppSettings.Get("basespace:api-accesstoken");
             var settings = new BaseSpaceClientSettings
 				{
 					Authentication = new OAuth2Authentication(apiKey, apiSecret),

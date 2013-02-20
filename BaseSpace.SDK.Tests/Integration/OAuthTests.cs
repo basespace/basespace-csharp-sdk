@@ -1,5 +1,7 @@
 using System;
 using System.Configuration;
+using Illumina.BaseSpace.SDK.ServiceModels.Request;
+using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Xunit;
 using Illumina.BaseSpace.SDK.ServiceModels;
 
@@ -7,35 +9,56 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
 	public class OAuthTests : BaseIntegrationTest
 	{
-		[Fact]
-		public void CanStartDeviceAuth ()
-		{
-			OAuthDeviceAuthResponse response = null;
+        [Fact]
+        public void CanStartDeviceAuth()
+        {
+            OAuthDeviceAuthResponse response = null;
             response = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
 
-			Assert.NotNull(response);
-			Assert.NotNull(response.DeviceCode);
-			Assert.NotNull(response.VerificationUri);
-			Assert.NotNull(response.ExpiresIn);
-			Assert.NotNull(response.Interval);
-			Assert.NotNull(response.UserCode);
-			Assert.NotNull(response.VerificationUriWithCode);
+            Assert.NotNull(response);
+            Assert.NotNull(response.DeviceCode);
+            Assert.NotNull(response.VerificationUri);
+            Assert.NotNull(response.ExpiresIn);
+            Assert.NotNull(response.Interval);
+            Assert.NotNull(response.UserCode);
+            Assert.NotNull(response.VerificationUriWithCode);
 
-			Log.DebugFormat(@"
+            Log.DebugFormat(@"
 				device code: {0}
 				verification uri: {1}
 				expires in: {2}
 				invterval: {3}
 				user code: {4}
 				verification uri with code: {5}
-			", 
+			",
                 response.DeviceCode,
                 response.VerificationUri,
-			    response.ExpiresIn,
-			    response.Interval,
-			    response.UserCode,
-			    response.VerificationUriWithCode);
-		}
+                response.ExpiresIn,
+                response.Interval,
+                response.UserCode,
+                response.VerificationUriWithCode);
+        }
+
+        [Fact]
+        public void CanDoNativeAppAuth()
+        {
+            OAuthV2AccessTokenResponse response = null;
+            response = Client.GetOAuthAccessToken(new OAuthV2AccessTokenRequest(ConfigurationManager.AppSettings.Get("basespace:client-id"),
+                ConfigurationManager.AppSettings.Get("basespace:client-secret"),
+                ConfigurationManager.AppSettings.Get("basespace:web-url"),
+                ConfigurationManager.AppSettings.Get("basespace:authorization-code")));
+                
+            Assert.NotNull(response);
+            Assert.NotNull(response.AccessToken);
+            Assert.NotNull(response.ExpiresIn);
+
+            Log.DebugFormat(@"
+				access token: {0}
+				expires in: {1}
+			",
+                response.AccessToken,
+                response.ExpiresIn);
+        }
 
 		[Fact]
 		public void CanFinishDeviceAuthWithErrorStatus()

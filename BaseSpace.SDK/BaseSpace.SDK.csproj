@@ -68,7 +68,6 @@
     <Compile Include="Infrastructure\FileUpload.cs" />
     <Compile Include="Infrastructure\HttpMethods.cs" />
     <Compile Include="Infrastructure\OAuth2Authentication.cs" />
-    <Compile Include="Interfaces\IAuthentication.cs" />
     <Compile Include="Infrastructure\JsonWebClient.cs" />
     <Compile Include="Infrastructure\JsonWebClient.IWebClient.cs" />
     <Compile Include="Infrastructure\RetryLogic.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="ServiceModels\Request\CreateAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\OAuthDeviceAccessTokenRequest.cs" />
     <Compile Include="ServiceModels\Request\OAuthDeviceAuthRequest.cs" />
+    <Compile Include="ServiceModels\Request\OAuthV2AccessTokenRequest.cs" />
     <Compile Include="ServiceModels\Request\UpdateAppSessionRequest.cs" />
     <Compile Include="ServiceModels\Request\CreateProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToAppResultRequest.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthDeviceAccessTokenResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthDeviceAuthResponse.cs" />
+    <Compile Include="ServiceModels\Response\OAuthV2AccessTokensResponse.cs" />
     <Compile Include="ServiceModels\Response\StringHelpers.cs" />
     <Compile Include="ServiceModels\Response\UpdateAppSessionResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateProjectResponse.cs" />

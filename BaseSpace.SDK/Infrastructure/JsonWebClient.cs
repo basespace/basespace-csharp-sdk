@@ -58,8 +58,7 @@ namespace Illumina.BaseSpace.SDK
 
         private void WebRequestFilter(HttpWebRequest req)
         {
-            Settings.Authentication.UpdateHttpHeader(req);
-        }
+            Settings.Authentication.UpdateHttpHeader(req);        }
 
         protected static void ChangeSerializationOptions()
         {

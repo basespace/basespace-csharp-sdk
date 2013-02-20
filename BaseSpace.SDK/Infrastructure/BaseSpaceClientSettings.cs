@@ -32,7 +32,5 @@
 		public string Version { get; set; }
 
 		public uint FileMultipartSizeThreshold { get; set; }
-
-		public IAuthentication Authentication { get; set; }
 	}
 }
