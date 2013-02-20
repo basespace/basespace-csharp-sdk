@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Illumina.BaseSpace.SDK.Types;
+﻿using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public abstract class AbstractResourceListRequest<TSortFieldEnumType>  where TSortFieldEnumType : struct
+    public abstract class AbstractResourceListRequest<TSortFieldEnumType> : AbstractResourceRequest
+		where TSortFieldEnumType : struct
     {
-        public string Id { get; set; }
+		protected AbstractResourceListRequest()
+		{
+		}
+
+		protected AbstractResourceListRequest(string id)
+			: base(id)
+		{
+		}
 
         public int? Offset { get; set; }
 

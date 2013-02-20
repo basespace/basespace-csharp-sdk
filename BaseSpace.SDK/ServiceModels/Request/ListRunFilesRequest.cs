@@ -9,11 +9,12 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// </summary>
         /// <param name="runId">Run Id</param>
         public ListRunFilesRequest(string runId)
+			: base(runId)
         {
-            RunId = runId;
         }
 
         public string RunId { get; set; }
+
         public string Extensions { get; set; }
     }
 }
