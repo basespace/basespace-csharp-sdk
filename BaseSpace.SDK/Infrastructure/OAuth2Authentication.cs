@@ -6,15 +6,15 @@ namespace Illumina.BaseSpace.SDK
 	{
 		private readonly string accessToken;
 
+		public OAuth2Authentication(string accessToken)
+		{
+			this.accessToken = accessToken;
+		}
+
 		public OAuth2Authentication(string appId, string appSecret)
 		{
 			AppId = appId;
 			AppSecret = appSecret;
-		}
-
-		internal OAuth2Authentication(string accessToken)
-		{
-			this.accessToken = accessToken;
 		}
 
 		public string AppId { get; private set; }
