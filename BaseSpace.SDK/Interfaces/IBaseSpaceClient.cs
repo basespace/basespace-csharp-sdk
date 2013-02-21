@@ -54,7 +54,7 @@ namespace Illumina.BaseSpace.SDK
         CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
 
         Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options = null);
-        ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options);
+        ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null);
 
         Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options = null);
         ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null);
