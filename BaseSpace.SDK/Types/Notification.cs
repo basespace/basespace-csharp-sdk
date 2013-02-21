@@ -3,13 +3,13 @@
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract]
-    [KnownType(typeof(Agreement))]
-    public class Notification : INotification<object>
+    public class Notification<T> : INotification<T>
     {
         [DataMember]
         public string Type { get; set; }
 
         [DataMember]
-        public object Item { get; set; }
+        public T Item { get; set; }
+        
     }
 }

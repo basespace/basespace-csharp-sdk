@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-    [KnownType(typeof(Notification))]
     [DataContract]
     public class ApiResponse<TResponse> : IApiResponse<TResponse>
     {

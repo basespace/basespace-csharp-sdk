@@ -25,6 +25,12 @@ namespace Illumina.BaseSpace.SDK
 
         private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
 
+        private static JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
+
+        private static JsonSerializer<Notification<ScheduledDowntime>> scheduledSerializer = new JsonSerializer<Notification<ScheduledDowntime>>();
+        
+		
+
         [ThreadStatic]
         protected static IRequestOptions CurrentRequestOptions = null; //available per thread
 
@@ -64,7 +70,7 @@ namespace Illumina.BaseSpace.SDK
                 Settings.Authentication.UpdateHttpHeader(req);
 		}
 
-        protected static void ChangeSerializationOptions()
+        static void ChangeSerializationOptions()
         {
             // setting this just to make sure it's not set in Linux
             JsonDataContractDeserializer.Instance.UseBcl = false;
@@ -74,6 +80,9 @@ namespace Illumina.BaseSpace.SDK
             JsConfig<Uri>.DeSerializeFn = ParseUri;
             //handle complex parsing of references
             JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
+
+            JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
+
         }
 
         private static Uri ParseUri(string s)
@@ -169,6 +178,25 @@ namespace Illumina.BaseSpace.SDK
             }
         }
 
+        internal static INotification<object> NotificationDeserializer(string source)
+        {
+            //determine type, then use appropriate deserializer
+            var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
+            string type = asValues["Type"];
+
+            object o = null;
+
+            switch (type.ToLower())
+            {
+                case "agreement":
+                    o = agreementSerializer.DeserializeFromString(source).Item;
+                    break;
+                case "scheduleddowntime":
+                    o = scheduledSerializer.DeserializeFromString(source).Item;
+                    break;
+            }
+            return new Notification<object> { Item = o, Type = type };
+        }
 
         internal static IContentReference<IAbstractResource> ResourceDeserializer(string source)
         {
