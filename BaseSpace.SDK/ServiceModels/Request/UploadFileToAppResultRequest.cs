@@ -5,7 +5,7 @@
         public UploadFileToAppResultRequest(string resourceId, string name,string directory = null, string resourceIdentifierInUri = "appresults")
         {
             Id = resourceId;
-            Name = name;
+            FilePath = name;
             
             if(directory!=null)
                 Directory = directory;

@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK
 {
-	internal class OAuth2Authentication : IAuthentication
+	public class OAuth2Authentication : IAuthentication
 	{
 		private readonly string accessToken;
 

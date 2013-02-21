@@ -29,7 +29,7 @@ namespace Illumina.BaseSpace.SDK
 
     public class BaseSpaceClient : IBaseSpaceClient
     {
-        private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
+        protected static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
         
         
         public BaseSpaceClient(string accessToken)
@@ -287,7 +287,7 @@ namespace Illumina.BaseSpace.SDK
                                                                    IRequestOptions options = null)
         {
             var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
-            var fileInfo = new FileInfo(toAppResultRequest.Name);
+            var fileInfo = new FileInfo(toAppResultRequest.FilePath);
             return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(fileInfo, toAppResultRequest.Id,
                                                                              toAppResultRequest.ResourceIdentifierInUri,
                                                                              toAppResultRequest.Directory);
