@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListSampleFilesResponse : AbstractResourceListResponse<SampleFilesCompact, FilesSortByParameters>
+    public class ListSampleFilesResponse : AbstractResourceListResponse<SampleFileCompact, FilesSortByParameters>
     {
     }
 }

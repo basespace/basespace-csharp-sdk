@@ -50,29 +50,8 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     [DataContract]
-    public class AppResultFilesCompact : AbstractResource
+    public class AppResultFileCompact : FileCompact
     {
-        [DataMember(IsRequired = true)]
-        public override string Id { get; set; }
-
-        [DataMember]
-        public override Uri Href { get; set; }
-
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string ContentType { get; set; }
-
-        [DataMember]
-        public string Size { get; set; }
-
-        [DataMember]
-        public string Path { get; set; }
-
-        [DataMember]
-        public DateTime DateCreated { get; set; }
-
     }
 
     public enum AppResultSortByParameters { Id, Name, DateCreated }
