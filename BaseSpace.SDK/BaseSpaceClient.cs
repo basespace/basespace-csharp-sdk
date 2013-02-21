@@ -284,7 +284,7 @@ namespace Illumina.BaseSpace.SDK
         }
 
         public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
-                                                                   IRequestOptions options = null)
+                                                                   IRequestOptions options = null) 
         {
             var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
             var fileInfo = new FileInfo(toAppResultRequest.FilePath);
