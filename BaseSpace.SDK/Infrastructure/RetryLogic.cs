@@ -119,7 +119,8 @@ namespace Illumina.BaseSpace.SDK
                 }
                 if (error != null)
                     error();
-                throw new ApplicationException(string.Format("Maximum retries exceeded, total time {0}ms", timer.ElapsedMilliseconds) , ex);
+                logger.ErrorFormat("Maximum retries exceeded, total time {0}ms", timer.ElapsedMilliseconds);
+                throw ex;
             }
         }
 

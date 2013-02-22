@@ -178,10 +178,16 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null)
-		{
-			return WebClient.Send(request, options);
-		}
+        public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
+                                                                   IRequestOptions options = null) 
+        {
+            var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
+            var fileInfo = new FileInfo(toAppResultRequest.Name);
+            return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(fileInfo, toAppResultRequest.Id,
+                                                                             toAppResultRequest.ResourceIdentifierInUri,
+                                                                             toAppResultRequest.Directory);
+        }
+        #endregion
 
 		public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null)
 		{

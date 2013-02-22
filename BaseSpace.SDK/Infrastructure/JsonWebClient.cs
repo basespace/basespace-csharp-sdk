@@ -146,20 +146,20 @@ namespace Illumina.BaseSpace.SDK
 		//	return WrapResult(func, log, request.Options.RetryAttempts, request.Name);
 		//}
 
-		//private static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
-		//	where TReturn : class
-		//{
-		//	try
-		//	{
-		//		TReturn result = null;
-		//		RetryLogic.DoWithRetry(maxRetry, name, () => { result = func(); }, logger);
-		//		return result;
-		//	}
-		//	catch (WebServiceException wex)
-		//	{
-		//		throw new BaseSpaceException<TReturn>(name + " failed", wex);
-		//	}
-		//}
+        internal static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
+            where TReturn : class
+        {
+            try
+            {
+                TReturn result = null;
+                RetryLogic.DoWithRetry(maxRetry, name, () => { result = func(); }, logger);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                throw new BaseSpaceException(name + " failed", wex);
+            }
+        }
 
         internal static INotification<object> NotificationDeserializer(string source)
         {
