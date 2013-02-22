@@ -1,11 +1,10 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 
 namespace Illumina.BaseSpace.SDK
 {
     public partial class JsonWebClient : IWebClient
     {
-        public void SetDefaultRequestOptions(IRequestOptions options)
+		public void SetDefaultRequestOptions(IRequestOptions options)
         {
             DefaultRequestOptions = options;
         }
@@ -14,7 +13,7 @@ namespace Illumina.BaseSpace.SDK
                                          IRequestOptions options = null)
             where TReturn : class
         {
-            var rr = new RestRequest()
+            var rr = new RestRequest<TReturn>
             {
                 Method = httpMethod,
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
@@ -22,7 +21,8 @@ namespace Illumina.BaseSpace.SDK
                 Options = options ?? DefaultRequestOptions,
                 Name = string.Format("{0} request to {1} ", httpMethod, relativeOrAbsoluteUrl)
             };
-            return Execute<TReturn>(client, rr, logger);
+
+	        return rr.Send(client, logger);
         }
 
 
@@ -31,7 +31,7 @@ namespace Illumina.BaseSpace.SDK
                                                         IRequestOptions options = null) 
             where TReturn : class
         {
-            var rr = new FileRestRequest()
+			var rr = new FileRestRequest<TReturn>
             {
                 Method = HttpMethods.PUT,
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
@@ -40,7 +40,8 @@ namespace Illumina.BaseSpace.SDK
                 Options = options ?? DefaultRequestOptions,
                 Name = string.Format("File Put request to {0} for file {1}", relativeOrAbsoluteUrl, fileToUpload.FullName)
             };
-            return Execute<TReturn>(client, rr, logger);
+
+			return rr.Send(client, logger);
         }
 
         public TReturn PostFileWithRequest<TReturn>(string relativeOrAbsoluteUrl, Stream fileToUpload,
@@ -48,7 +49,7 @@ namespace Illumina.BaseSpace.SDK
                                                         IRequestOptions options = null)
             where TReturn : class
         {
-            var rr = new StreamingRestRequest()
+			var rr = new StreamingRestRequest<TReturn>
             {
                 Method = HttpMethods.PUT,
                 RelativeOrAbsoluteUrl = relativeOrAbsoluteUrl,
@@ -58,7 +59,8 @@ namespace Illumina.BaseSpace.SDK
                 Options = options ?? DefaultRequestOptions,
                 Name = string.Format("File put request to {0} from stream with file name {1} ", relativeOrAbsoluteUrl, fileName)
             };
-            return Execute<TReturn>(client, rr, logger);
+
+			return rr.Send(client, logger);
         }
     }
 }
