@@ -137,23 +137,21 @@ namespace Illumina.BaseSpace.SDK
 
 		private string GetFileContentUrl(out DateTime expiration)
 		{
-			throw new NotImplementedException();
-
 			// get the download URL
-			//var response = _client.GetFileContentUrl(new FileContentRedirectMetaRequest(_file.Id));
+			var response = _client.GetFileContentUrl(new FileContentRedirectMetaRequest(_file.Id));
 
-			//if (response.Response == null || response.Response.HrefContent == null)
-			//{
-			//	throw new ApplicationException("Unable to get HrefContent");
-			//}
+			if (response.Response == null || response.Response.HrefContent == null)
+			{
+				throw new ApplicationException("Unable to get HrefContent");
+			}
 
-			//if (!response.Response.SupportsRange)
-			//{
-			//	throw new ApplicationException("This file does not support range queries");
-			//}
+			if (!response.Response.SupportsRange)
+			{
+				throw new ApplicationException("This file does not support range queries");
+			}
 
-			//expiration = response.Response.Expires;
-			//return response.Response.HrefContent;
+			expiration = response.Response.Expires;
+			return response.Response.HrefContent;
 		}
 
 		private static int GetChunkCount(long fileSize, int chunkSize)
