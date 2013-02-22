@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
 	[DataContract]
-	public class OAuthDeviceAccessTokenRequest
+	public class OAuthDeviceAccessTokenRequest : AbstractRequest<OAuthDeviceAccessTokenResponse>
 	{
 		public OAuthDeviceAccessTokenRequest (string clientId, string clientSecret, string deviceCode)
 		{
@@ -24,6 +24,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		[DataMember(Name = "grant_type")]
 		public string GrantType { get; set; }
+
+		protected override string GetUrl()
+		{
+			return string.Format("{0}/oauthv2/token", Version);
+		}
 	}
 }
 

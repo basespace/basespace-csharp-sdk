@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class CreateAppResultRequest
+    public class CreateAppResultRequest : AbstractRequest<CreateAppResultResponse>
     {
         /// <summary>
         /// Post to create AppResult
@@ -14,9 +14,18 @@
         }
 
         public string ProjectId { get; set; }
+
         public string Name { get; set; }
+
         public string Description { get; set; }
+
         public string HrefAppSession { get; set; }
+
         public IContentReference<IAbstractResource>[] References;
-    }
+
+		protected override string GetUrl()
+		{
+			return string.Format("{0}/projects/{1}/appresults", Version, ProjectId);
+		}
+	}
 }
