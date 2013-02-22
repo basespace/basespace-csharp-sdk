@@ -60,7 +60,7 @@ namespace Illumina.BaseSpace.SDK
             var req = new T()
             {
                 Id = resourceId,
-                FilePath = fileToUpload.Name,
+                Name = fileToUpload.Name,
                 MultiPart = false
             };
 
@@ -79,7 +79,7 @@ namespace Illumina.BaseSpace.SDK
             var req = new T()
             {
                 Id = resourceId,
-                FilePath = fileToUpload.Name,
+                Name = fileToUpload.Name,
                 MultiPart = true
             };
 
