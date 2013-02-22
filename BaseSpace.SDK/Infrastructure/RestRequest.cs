@@ -56,7 +56,7 @@ namespace Illumina.BaseSpace.SDK
 
 		protected override Func<TReturn> GetFunc(JsonServiceClient client)
 		{
-			return () => Client.PostFileWithRequest<TReturn>(RelativeOrAbsoluteUrl, FileInfo, Request);
+			return () => client.PostFileWithRequest<TReturn>(RelativeOrAbsoluteUrl, FileInfo, Request);
 		}
 	}
 
