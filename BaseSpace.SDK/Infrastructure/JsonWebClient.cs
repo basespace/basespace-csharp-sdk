@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Util;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.Types;
@@ -15,13 +13,13 @@ namespace Illumina.BaseSpace.SDK
 {
     public partial class JsonWebClient
     {
-        protected JsonServiceClient Client { get; private set; }
+	    private JsonServiceClient client;
+
+		private ILog logger;
+
+		private IClientSettings settings;
 
         public IRequestOptions DefaultRequestOptions { get; protected set; }
-
-        protected ILog Logger { get; private set; }
-
-        protected IClientSettings Settings { get; private set; }
 
         private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
 
@@ -39,13 +37,13 @@ namespace Illumina.BaseSpace.SDK
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
-            Logger = LogManager.GetCurrentClassLogger();
+            logger = LogManager.GetCurrentClassLogger();
 
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
             }
-            Settings = settings;
+            this.settings = settings;
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
             HttpEncoder.Current.SerializeToString();
@@ -56,8 +54,8 @@ namespace Illumina.BaseSpace.SDK
            
             SetDefaultRequestOptions(defaultOptions);
 
-            Client = new JsonServiceClient(DefaultRequestOptions.BaseUrl);
-            Client.LocalHttpWebRequestFilter += WebRequestFilter;
+            client = new JsonServiceClient(DefaultRequestOptions.BaseUrl);
+            client.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
         private void WebRequestFilter(HttpWebRequest req)
@@ -65,7 +63,7 @@ namespace Illumina.BaseSpace.SDK
             if (DefaultRequestOptions.Authentication != null)
                 DefaultRequestOptions.Authentication.UpdateHttpHeader(req);
             else
-                Settings.Authentication.UpdateHttpHeader(req);
+                settings.Authentication.UpdateHttpHeader(req);
 		}
 
         static void ChangeSerializationOptions()

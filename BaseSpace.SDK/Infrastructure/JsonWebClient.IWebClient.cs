@@ -22,7 +22,7 @@ namespace Illumina.BaseSpace.SDK
                 Options = options ?? DefaultRequestOptions,
                 Name = string.Format("{0} request to {1} ", httpMethod, relativeOrAbsoluteUrl)
             };
-            return Execute<TReturn>(Client, rr, Logger);
+            return Execute<TReturn>(client, rr, logger);
         }
 
 
@@ -40,7 +40,7 @@ namespace Illumina.BaseSpace.SDK
                 Options = options ?? DefaultRequestOptions,
                 Name = string.Format("File Put request to {0} for file {1}", relativeOrAbsoluteUrl, fileToUpload.FullName)
             };
-            return Execute<TReturn>(Client, rr, Logger);
+            return Execute<TReturn>(client, rr, logger);
         }
 
         public TReturn PostFileWithRequest<TReturn>(string relativeOrAbsoluteUrl, Stream fileToUpload,
@@ -58,7 +58,7 @@ namespace Illumina.BaseSpace.SDK
                 Options = options ?? DefaultRequestOptions,
                 Name = string.Format("File put request to {0} from stream with file name {1} ", relativeOrAbsoluteUrl, fileName)
             };
-            return Execute<TReturn>(Client, rr, Logger);
+            return Execute<TReturn>(client, rr, logger);
         }
     }
 }
