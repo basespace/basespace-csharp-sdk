@@ -63,7 +63,7 @@ namespace Illumina.BaseSpace.SDK
 		OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
 
 
-		Types.File UploadFileToAppResult(UploadFileToAppResultRequest request,
+		FileResponse UploadFileToAppResult(UploadFileToAppResultRequest request,
 												IRequestOptions options = null);
 
         void SetDefaultRequestOptions(IRequestOptions options = null);

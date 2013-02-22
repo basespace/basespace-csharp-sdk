@@ -24,18 +24,19 @@ namespace Illumina.BaseSpace.SDK
             Options = options;
         }
 
-        public virtual Types.File UploadFile<T>(FileInfo fileToUpload, string resourceId,string resourceIdentifierInUri, string directory = null,
-                                         int numThreads = 16) where T : FileUploadRequestBase, new()
+		public virtual FileResponse UploadFile<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory = null,
+                                         int numThreads = 16)
+			where T : FileUploadRequestBase<FileResponse>, new()
         {
             Logger.DebugFormat("numthreads {0}", numThreads);
-            Types.File file = null;
+            FileResponse file = null;
 
             RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", fileToUpload.Name),
                                    () =>
                                    {
                                        file = fileToUpload.Length >= ClientSettings.FileMultipartSizeThreshold ?
-                                           UploadFile_MultiPart<T>(fileToUpload, resourceId, resourceIdentifierInUri, directory, numThreads) :
-                                           UploadFile_SinglePart<T>(fileToUpload, resourceId, resourceIdentifierInUri, directory);
+										   UploadFile_MultiPart<T>(fileToUpload, resourceId, resourceIdentifierInUri, directory, numThreads) :
+										   UploadFile_SinglePart<T>(fileToUpload, resourceId, resourceIdentifierInUri, directory);
                                    }, Logger, retryHandler:
                                    (exc) =>
                                    {
@@ -55,7 +56,8 @@ namespace Illumina.BaseSpace.SDK
             return file;
         }
 
-        protected virtual Types.File UploadFile_SinglePart<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory = null) where T : FileUploadRequestBase, new()
+        protected virtual FileResponse UploadFile_SinglePart<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory = null)
+			where T : FileUploadRequestBase<FileResponse>, new()
         {
             var req = new T()
             {
@@ -69,12 +71,13 @@ namespace Illumina.BaseSpace.SDK
 
             var uri = string.Format("{0}/{1}/{2}/files", ClientSettings.Version, resourceIdentifierInUri, req.Id);
 
-            var resp = WebClient.PostFileWithRequest<FileResponse>(uri, fileToUpload, req);
-            return (resp == null) ? null : resp.Response;
+            var resp = WebClient.Send(req);
+            return resp ?? null;
         }
 
 
-        protected virtual Types.File UploadFile_MultiPart<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory, int numThreads) where T : FileUploadRequestBase, new()
+        protected virtual FileResponse UploadFile_MultiPart<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory, int numThreads)
+			where T : FileUploadRequestBase<FileResponse>, new()
         {
             var req = new T()
             {
@@ -86,11 +89,11 @@ namespace Illumina.BaseSpace.SDK
             if (directory != null)
                 req.Directory = directory;
 
-            var uri = string.Format("{0}/{1}/{2}/files", ClientSettings.Version, resourceIdentifierInUri, req.Id);
+            //var uri = string.Format("{0}/{1}/{2}/files", ClientSettings.Version, resourceIdentifierInUri, req.Id);
 
             Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", fileToUpload.Name);
 
-            var fileUploadresp = WebClient.Send<FileResponse>(HttpMethods.POST, uri, req);
+            var fileUploadresp = WebClient.Send<FileResponse>(req);
 
             if (fileUploadresp == null)
             {
@@ -141,12 +144,12 @@ namespace Illumina.BaseSpace.SDK
                 UploadStatus = status
             };
 
-            var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
-            var response = WebClient.Send<FileResponse>(HttpMethods.POST, uri2, statusReq);
+            //var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
+            var response = WebClient.Send(statusReq);
 
             Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
 
-            return response.Response;
+            return response;
         }
 
 

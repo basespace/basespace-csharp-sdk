@@ -1,6 +1,6 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class UploadFileToAppResultRequest : FileUploadRequestBase
+    public class UploadFileToAppResultRequest : FileUploadRequestBase<FileResponse>
     {
         public UploadFileToAppResultRequest(string resourceId, string name,string directory = null, string resourceIdentifierInUri = "appresults")
         {
@@ -18,6 +18,11 @@
         }
 
         public string ResourceIdentifierInUri;
-    }
+
+		protected override string GetUrl()
+		{
+			return string.Format("{0}/{1}/{2}/files", Version, ResourceIdentifierInUri, Id);
+		}
+	}
 }
 

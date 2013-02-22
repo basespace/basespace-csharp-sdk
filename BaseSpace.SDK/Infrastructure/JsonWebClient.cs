@@ -102,7 +102,7 @@ namespace Illumina.BaseSpace.SDK
 			}
 			catch (WebServiceException wex)
 			{
-				throw new BaseSpaceException<TReturn>(request.GetName() + " failed", wex);
+				throw new BaseSpaceException(request.GetName() + " failed", wex);
 			}
 		}
 

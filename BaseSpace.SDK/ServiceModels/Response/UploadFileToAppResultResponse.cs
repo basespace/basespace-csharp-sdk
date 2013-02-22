@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class UploadFileToAppResultResponse : ApiResponse<File>
+    public class UploadFileToAppResultResponse : FileResponse
     {
     }
 }
