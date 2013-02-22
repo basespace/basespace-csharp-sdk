@@ -4,12 +4,13 @@ namespace Illumina.BaseSpace.SDK.Types
 {
 	public class RequestOptions : IRequestOptions
 	{
-		public RequestOptions() : 
+		public RequestOptions() :
 			this(BaseSpaceClientSettings.DEFAULT_API)
 		{
 		}
 
-		public RequestOptions(string baseUrl, IAuthentication authentication = null, uint retryAttempts = BaseSpaceClientSettings.DEFAULT_RETRY_ATTEMPTS)
+		public RequestOptions(string baseUrl, IAuthentication authentication = null,
+		                      uint retryAttempts = BaseSpaceClientSettings.DEFAULT_RETRY_ATTEMPTS)
 		{
 			if (string.IsNullOrWhiteSpace(baseUrl))
 			{
@@ -20,11 +21,13 @@ namespace Illumina.BaseSpace.SDK.Types
 			Authentication = authentication;
 			RetryAttempts = retryAttempts;
 		}
-	   
-		public uint RetryAttempts { get;  set; }
+
+		public uint RetryAttempts { get; set; }
 
 		public IAuthentication Authentication { get; set; }
 
-		public string BaseUrl { get;  set; }
+		public string BaseUrl { get; set; }
+
+		public string HttpMethod { get; set; }
 	}
 }
