@@ -1,14 +1,21 @@
-﻿namespace Illumina.BaseSpace.SDK.ServiceModels
+﻿using System;
+
+namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetAppSessionRequest : AbstractResourceRequest
+    public class GetAppSessionRequest : AbstractResourceRequest<GetAppSessionResponse>
     {
         /// <summary>
         /// Get specific AppSession
         /// </summary>
         /// <param name="id">AppSession Id</param>
         public GetAppSessionRequest(string id)
+			: base(id)
         {
-            Id = id;
         }
-    }
+
+		protected override string GetUrl()
+		{
+			return String.Format("{0}/appsessions/{1}", Version, Id);
+		}
+	}
 }

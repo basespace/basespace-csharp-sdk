@@ -13,13 +13,13 @@ namespace Illumina.BaseSpace.SDK
             DefaultRequestOptions = options;
         }
 
-		public TReturn Send<TReturn>(AbstractResourceRequest request, IRequestOptions options = null)
+		public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
 			where TReturn : class
 		{
 			return WrapResult<TReturn>(request, options ?? DefaultRequestOptions, logger, DefaultRequestOptions.RetryAttempts);
 		}
 
-		private TReturn WrapResult<TReturn>(AbstractResourceRequest request, IRequestOptions options, ILog logger, uint maxRetry)
+		private TReturn WrapResult<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options, ILog logger, uint maxRetry)
 			where TReturn : class
 		{
 			try
@@ -27,7 +27,7 @@ namespace Illumina.BaseSpace.SDK
 				TReturn result = null;
 				RetryLogic.DoWithRetry(maxRetry, request.GetName(), () => 
 				{
-					result = request.GetFunc<TReturn>(client, options)();
+					result = request.GetFunc(client, options)();
 				}
 			, logger);
 				return result;

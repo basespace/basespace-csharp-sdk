@@ -3,9 +3,11 @@ using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class FileRequestPost : AbstractResourceRequest
+    public class FileRequestPost
     {
-        public FileUploadStatus? UploadStatus { get; set; }
+	    public string Id { get; set; }
+
+	    public FileUploadStatus? UploadStatus { get; set; }
     }
 }
 

@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListRunFilesRequest : AbstractResourceListRequest<RunFilesSortByParameters>
+    public class ListRunFilesRequest : AbstractResourceListRequest<ListRunFilesResponse, RunFilesSortByParameters>
     {
         /// <summary>
         /// List files belonging to a run
@@ -11,11 +11,16 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public ListRunFilesRequest(string runId)
 			: base(runId)
         {
-        }
+		}
 
         public ListRunFilesRequest() { }
 
-       public string Extensions { get; set; }
-    }
+        public string Extensions { get; set; }
+
+	    protected override string GetUrl()
+	    {
+		    return string.Format("{0}/runs/{1}/files", Version, Id);
+	    }
+	}
 }
 

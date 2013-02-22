@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListVariantsRequest : AbstractResourceListRequest<VariantSortByParameters>
+    public class ListVariantsRequest : AbstractResourceListRequest<ListVariantsResponse, VariantSortByParameters>
     {
         /// <summary>
         /// Get variants by variant Id and chromosome
@@ -15,7 +15,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
         
         public string Chrom { get; set; }
+
         public string StartPos { get; set; }
+
         public string EndPos { get; set; }
-    }
+
+		protected override string GetUrl()
+		{
+			return string.Format("{0}/variantset/{1}/variants/{2}", Version, Id, Chrom);
+		}
+	}
 }

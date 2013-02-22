@@ -1,6 +1,8 @@
-﻿namespace Illumina.BaseSpace.SDK.ServiceModels
+﻿using System;
+
+namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetCoverageMetadataRequest : AbstractResourceRequest
+    public class GetCoverageMetadataRequest : AbstractResourceRequest<GetCoverageMetadataResponse>
     {
         /// <summary>
         /// Get Coverage Metadata by Id and Chromosome
@@ -8,11 +10,16 @@
         /// <param name="id">File Id</param>
         /// <param name="chrom">Chromosome</param>
         public GetCoverageMetadataRequest(string id, string chrom)
+			: base(id)
         {
-            Id = id;
             Chrom = chrom;
         }
 
         public string Chrom { get; set; }
-    }
+
+		protected override string GetUrl()
+		{
+			return String.Format("{0}/coverag/{1}/{2}/meta", Version, Id, Chrom);
+		}
+	}
 }

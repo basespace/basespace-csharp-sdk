@@ -2,7 +2,8 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public abstract class AbstractResourceListRequest<TSortFieldEnumType> : AbstractResourceRequest
+    public abstract class AbstractResourceListRequest<TResult, TSortFieldEnumType> : AbstractResourceRequest<TResult>
+		where TResult : class 
 		where TSortFieldEnumType : struct
     {
 		protected AbstractResourceListRequest()
@@ -21,5 +22,23 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public SortDirection? SortDir { get; set; }
 
         public TSortFieldEnumType? SortBy { get; set; }
+
+		protected static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection? sortDir)
+		{
+			var url = (offset.HasValue || limit.HasValue || sortDir.HasValue) && relativeUrl.Contains("?") ? relativeUrl : string.Format("{0}?", relativeUrl);
+			if (offset.HasValue)
+			{
+				url = string.Format("{0}&{1}={2}", url, QueryParameters.Offset, offset.Value);
+			}
+			if (sortDir.HasValue)
+			{
+				url = string.Format("{0}&{1}={2}", url, QueryParameters.SortDir, sortDir.Value);
+			}
+			if (limit.HasValue)
+			{
+				url = string.Format("{0}&{1}={2}", url, QueryParameters.Limit, limit.Value);
+			}
+			return url;
+		}
     }
 }

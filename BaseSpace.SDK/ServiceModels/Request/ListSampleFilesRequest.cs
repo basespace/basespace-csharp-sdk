@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListSampleFilesRequest : AbstractResourceListRequest<RunFilesSortByParameters>
+    public class ListSampleFilesRequest : AbstractResourceListRequest<ListSampleFilesResponse, RunFilesSortByParameters>
     {
         /// <summary>
         /// List files belonging to a sample
@@ -13,6 +13,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
 
         public string Extensions { get; set; }
-    }
+
+		protected override string GetUrl()
+		{
+			return string.Format("{0}/samples/{1}/files", Version, Id);
+		}
+	}
 }
 
