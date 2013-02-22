@@ -97,8 +97,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="appSettings.config.hidden">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>
+      </SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
