@@ -32,12 +32,6 @@ namespace Illumina.BaseSpace.SDK.Types
         public int Number { get; set; }
 
         [DataMember]
-        public string Barcode { get; set; }
-
-        [DataMember]
-        public string RunParametersXml { get; set; }
-
-        [DataMember]
         public Uri HrefFiles{ get; set; }
 
         [DataMember]

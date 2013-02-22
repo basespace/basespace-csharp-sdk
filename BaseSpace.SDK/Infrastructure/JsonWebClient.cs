@@ -64,7 +64,10 @@ namespace Illumina.BaseSpace.SDK
 
         private void WebRequestFilter(HttpWebRequest req)
         {
-            Settings.Authentication.UpdateHttpHeader(req);
+            if (DefaultRequestOptions.Authentication != null)
+                DefaultRequestOptions.Authentication.UpdateHttpHeader(req);
+            else
+                Settings.Authentication.UpdateHttpHeader(req);
 		}
 
         static void ChangeSerializationOptions()
