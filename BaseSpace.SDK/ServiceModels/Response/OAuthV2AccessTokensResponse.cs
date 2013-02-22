@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using Illumina.BaseSpace.SDK.Types;
+﻿using System.Runtime.Serialization;
 
-namespace Illumina.BaseSpace.SDK.ServiceModels.Response
+namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     [DataContract()]
     public class OAuthV2AccessTokenResponse

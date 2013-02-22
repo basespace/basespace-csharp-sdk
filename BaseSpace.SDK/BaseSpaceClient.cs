@@ -71,183 +71,183 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		//#region Users
-		//public GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send(request, options);
-		//}
-		//#endregion
+		#region Users
+		public GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
 
-		//#region Runs
-		//public GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
+		#region Runs
+		public GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-		//#endregion
-
-
-		//#region Projects
-		//public GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetProjectResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<CreateProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		//}
-		//#endregion
+		public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
 
-		//#region AppSessions
-		//public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
+		#region Projects
+		public GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//public UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<UpdateAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		//}
-		//#endregion
+		public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-
-		//#region Samples
-		//public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-		//#endregion
-        
-
-		//#region AppResults
-		//public GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetAppResultResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<CreateAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		//}
-		//#endregion
+		public CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
 
-		//#region Genomes
-		//public GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
+		#region AppSessions
+		public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-		//#endregion
-
-
-		//#region Files
-		//public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-
-		//public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
-		//														   IRequestOptions options = null) 
-		//{
-		//	var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
-		//	var fileInfo = new FileInfo(toAppResultRequest.FilePath);
-		//	return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(fileInfo, toAppResultRequest.Id,
-		//																	 toAppResultRequest.ResourceIdentifierInUri,
-		//																	 toAppResultRequest.Directory);
-		//}
-		//#endregion
+		public UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
 
-		//#region Variants
-		//public GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetVariantHeaderResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
+		#region Samples
+		public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//public ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<ListVariantsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-		//#endregion
+		public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
 
-		//#region Coverage
-		//public GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetCoverageResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
+		#region AppResults
+		public GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//public GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<GetCoverageMetadataResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
-		//#endregion
+		public ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//#region OAuth
-		//public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		//}
+		public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
-		//public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth (OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<OAuthDeviceAccessTokenResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		//}
 
-		//public OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<OAuthV2AccessTokenResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		//}
+		#region Genomes
+		public GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
-		//#endregion
+		public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
 
-		//#region FileDownload
-		//public FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request, IRequestOptions options = null)
-		//{
-		//	return WebClient.Send<FileContentRedirectMetaResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-		//}
+
+		#region Files
+		public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
+																   IRequestOptions options = null)
+		{
+			var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
+			var fileInfo = new FileInfo(toAppResultRequest.FilePath);
+			return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(fileInfo, toAppResultRequest.Id,
+																			 toAppResultRequest.ResourceIdentifierInUri,
+																			 toAppResultRequest.Directory);
+		}
+		#endregion
+
+
+		#region Variants
+		public GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
+
+
+		#region Coverage
+		public GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+		#endregion
+
+		#region OAuth
+		public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		public OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
+		#endregion
+
+		#region FileDownload
+		public FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 
 		public Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken())
 		{
@@ -280,6 +280,6 @@ namespace Illumina.BaseSpace.SDK
         {
             OnFileDownloadProgressChanged(e);
         }
-        //#endregion
+        #endregion
     }
 }

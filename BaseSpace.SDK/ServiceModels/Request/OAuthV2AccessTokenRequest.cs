@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Illumina.BaseSpace.SDK.ServiceModels.Request
+namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     [DataContract]
-    public class OAuthV2AccessTokenRequest
+    public class OAuthV2AccessTokenRequest : AbstractRequest<OAuthV2AccessTokenResponse>
     {
         public OAuthV2AccessTokenRequest(string clientId, string clientSecret, string redirectUri, string authorizationCode)
         {
@@ -28,6 +28,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels.Request
 
         [DataMember(Name = "client_secret")]
         public string ClientSecret { get; set; }
-    }
+
+		protected override string GetUrl()
+		{
+			return string.Format("{0}/oauthv2/token", Version);
+		}
+	}
 
 }
