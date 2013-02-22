@@ -29,8 +29,6 @@ namespace Illumina.BaseSpace.SDK
 
         private static JsonSerializer<Notification<ScheduledDowntime>> scheduledSerializer = new JsonSerializer<Notification<ScheduledDowntime>>();
         
-		
-
         [ThreadStatic]
         protected static IRequestOptions CurrentRequestOptions = null; //available per thread
 
@@ -91,25 +89,7 @@ namespace Illumina.BaseSpace.SDK
             return new Uri(s, uriKind);
         }
 
-        internal static void Execute<TReturn>(JsonServiceClient client, RestRequest request, ILog log,
-                                              TaskCompletionSource<TReturn> tcs)
-            where TReturn : class
-        {
-            try
-            {
-                tcs.SetResult(Execute<TReturn>(client, request, log));
-            }
-            catch (Exception e)
-            {
-                tcs.SetException(e);
-            }
-            finally
-            {
-                CurrentRequestOptions = null;
-            }
-        }
-
-        internal static TReturn Execute<TReturn>(JsonServiceClient client, RestRequest request, ILog log)
+        private static TReturn Execute<TReturn>(JsonServiceClient client, RestRequest request, ILog log)
             where TReturn : class
         {
             client.BaseUri = request.Options.BaseUrl.TrimEnd('/') + "/";  //make sure we only have a single slash on end always
@@ -122,7 +102,7 @@ namespace Illumina.BaseSpace.SDK
                                                                                    fileRestRequest.FileInfo,
                                                                                    fileRestRequest.Request);
 
-                return WrapResult<TReturn>(funcFile, log, fileRestRequest.Options.RetryAttempts, fileRestRequest.Name);
+                return WrapResult(funcFile, log, fileRestRequest.Options.RetryAttempts, fileRestRequest.Name);
             }
             var restRequest = request as StreamingRestRequest;
             if (restRequest != null)
@@ -134,7 +114,7 @@ namespace Illumina.BaseSpace.SDK
                                                               sr.FileName,
                                                               restRequest.Request);
 
-                return WrapResult<TReturn>(funcStream, log, restRequest.Options.RetryAttempts, restRequest.Name);
+                return WrapResult(funcStream, log, restRequest.Options.RetryAttempts, restRequest.Name);
             }
 
             Func<TReturn> func =
@@ -144,10 +124,10 @@ namespace Illumina.BaseSpace.SDK
                         return client.Send<TReturn>(request.Method.ToString(), request.RelativeOrAbsoluteUrl, request.Request);
                     };
 
-            return WrapResult<TReturn>(func, log, request.Options.RetryAttempts, request.Name);
+            return WrapResult(func, log, request.Options.RetryAttempts, request.Name);
         }
 
-        internal static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
+		private static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
             where TReturn : class
         {
             try
@@ -159,10 +139,6 @@ namespace Illumina.BaseSpace.SDK
             catch (WebServiceException wex)
             {
                 throw new BaseSpaceException<TReturn>(name + " failed", wex);
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
@@ -215,12 +191,12 @@ namespace Illumina.BaseSpace.SDK
             return null;
         }
 
-        internal class FileRestRequest : RestRequest
+		private class FileRestRequest : RestRequest
         {
             public FileInfo FileInfo { get; set; }
         }
 
-        internal class RestRequest
+		private class RestRequest
         {
             public string Name { get; set; }
             public string RelativeOrAbsoluteUrl { get; set; }
@@ -229,15 +205,10 @@ namespace Illumina.BaseSpace.SDK
             public IRequestOptions Options { get; set; }
         }
 
-        internal class StreamingRestRequest : RestRequest
+		private class StreamingRestRequest : RestRequest
         {
             public Stream Stream { get; set; }
             public string FileName { get; set; }
-        }
-
-        public void GetByteRange(Func<string> absoluteUrl, long start, long end, int chunkSize, int maxRetries, Action<byte[], long, long> dataHandler)
-        {
-            GetByteRange(absoluteUrl, start, end, dataHandler, chunkSize, maxRetries, Logger);
         }
 
         public static void GetByteRange(Func<string> absoluteUrl, long start, long end, Action<byte[], long, long> dataHandler, int chunkSize, int maxRetries, ILog Logger)
@@ -289,6 +260,5 @@ namespace Illumina.BaseSpace.SDK
                 return totalRead;
             }
         }
-
     }
 }
