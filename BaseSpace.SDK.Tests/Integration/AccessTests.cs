@@ -106,7 +106,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                     }
 
                 }
-                catch (System.Net.WebException wex)
+                catch (System.Net.WebException)
                 {
                     // ignore these exceptions
                     continue;

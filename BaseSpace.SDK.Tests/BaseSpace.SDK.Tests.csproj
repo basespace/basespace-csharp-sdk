@@ -71,7 +71,6 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="Integration\AccessTests.cs" />
     <Compile Include="Integration\AppClassesLifecycleTests.cs" />

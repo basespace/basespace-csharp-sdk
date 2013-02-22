@@ -9,9 +9,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// </summary>
         /// <param name="id">Variant Id</param>
         /// <param name="chrom">Chromosome (ex. chr2)</param>
-        public ListVariantsRequest(string id, string chrom)
+        public ListVariantsRequest(string id, string chrom) : base(id)
         {
-            Id = id;
             Chrom = chrom;
         }
         

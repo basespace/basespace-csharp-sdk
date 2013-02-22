@@ -6,9 +6,9 @@ using System.Text;
 namespace Illumina.BaseSpace.SDK
 {
     
-    public interface IApiResponse<TResult> : IHasNotifications
+    public interface IApiResponse<TResponse> : IHasNotifications
     {
-        TResult Response { get; }
+        TResponse Response { get; }
     }
 
     public interface INotification<TItem>

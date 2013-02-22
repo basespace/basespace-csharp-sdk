@@ -23,50 +23,5 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(user.DateCreated > new DateTime(2009,1,1));
             Assert.NotNull(user.Id);
         }
-
-        [Fact]
-        public void CanGetCurrentUserAsync()
-        {
-            Task<GetUserResponse> task = Client.GetUserAsync(new GetUserRequest());
-            task.Wait(TimeSpan.FromMinutes(1));
-            var response = task.Result;
-            Assert.NotNull(response);
-            User user = response.Response;
-            Assert.NotNull(user);
-            Assert.True(user.Email.Contains("@"));
-            Assert.True(user.DateCreated > new DateTime(2009, 1, 1));
-            Assert.NotNull(user.Id);
-        }
-
-        [Fact]
-        public void ParallelAsyncFasterThanSync()
-        {
-            var synchTimer = new Stopwatch();
-            var asynchTimer = new Stopwatch();
-            //warm up
-            Client.GetUser(new GetUserRequest());
-
-            synchTimer.Start();
-            //call 5 times
-            for (int i = 0; i < 5; i++)
-            {
-                Client.GetUser(new GetUserRequest());
-            }
-            synchTimer.Stop();
-
-            //we are calling 5 times asynch and adding to a counter when completed
-            int counter = 0;
-            for (int i = 0; i < 5; i++)
-            {
-                Task<GetUserResponse> task = Client.GetUserAsync(new GetUserRequest());
-                task.ContinueWith((t) => counter += 1);
-            }
-            asynchTimer.Start();
-            while(counter < 5 || asynchTimer.ElapsedMilliseconds > 1000 * 60){}
-            asynchTimer.Stop();
-
-            Assert.True(synchTimer.ElapsedMilliseconds > asynchTimer.ElapsedMilliseconds);
-           
-        }
     }
 }

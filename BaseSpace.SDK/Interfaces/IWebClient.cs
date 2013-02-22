@@ -27,9 +27,8 @@ namespace Illumina.BaseSpace.SDK
         /// <param name="request"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        TResponse Send<TResponse>(HttpMethods httpMethod, string relativeOrAbsoluteUrl, object request, IRequestOptions options = null) where TResponse : class;
-
-        Task<TResponse> SendAsync<TResponse>(HttpMethods httpMethod, string relativeOrAbsoluteUrl, object request, IRequestOptions options = null) where TResponse : class;
+        TReturn Send<TReturn>(HttpMethods httpMethod, string relativeOrAbsoluteUrl, object request, IRequestOptions options = null)
+            where TReturn : class;
 
         /// <summary>
         /// Post a file
@@ -40,9 +39,9 @@ namespace Illumina.BaseSpace.SDK
         /// <param name="request"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        TResponse PostFileWithRequest<TResponse>(string relativeOrAbsoluteUrl, FileInfo fileToUpload, object request, IRequestOptions options = null) where TResponse : class;
+        TReturn PostFileWithRequest<TReturn>(string relativeOrAbsoluteUrl, FileInfo fileToUpload, object request, IRequestOptions options = null)
+            where TReturn : class;
 
-        Task<TResponse> PostFileWithRequestAsync<TResponse>(string relativeOrAbsoluteUrl, FileInfo fileToUpload, object request, IRequestOptions options = null) where TResponse : class;
 
         /// <summary>
         /// Post a stream
@@ -53,9 +52,8 @@ namespace Illumina.BaseSpace.SDK
         /// <param name="request"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        TResponse PostFileWithRequest<TResponse>(string relativeOrAbsoluteUrl, Stream fileToUpload, object request, string fileName, IRequestOptions options = null) where TResponse : class;
-
-        Task<TResponse> PostFileWithRequestAsync<TResponse>(string relativeOrAbsoluteUrl, Stream fileToUpload, object request, string fileName, IRequestOptions options = null) where TResponse : class;
+        TReturn PostFileWithRequest<TReturn>(string relativeOrAbsoluteUrl, Stream fileToUpload, object request, string fileName, IRequestOptions options = null)
+            where TReturn : class;
 
 
     }

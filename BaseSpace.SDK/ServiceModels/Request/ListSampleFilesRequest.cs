@@ -8,12 +8,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List files belonging to a sample
         /// </summary>
         /// <param name="sampleId">Sample Id</param>
-        public ListSampleFilesRequest(string sampleId)
+        public ListSampleFilesRequest(string sampleId) : base(sampleId)
         {
-            SampleId = sampleId;
         }
 
-        public string SampleId { get; set; }
         public string Extensions { get; set; }
     }
 }

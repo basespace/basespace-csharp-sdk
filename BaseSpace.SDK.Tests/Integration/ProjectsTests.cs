@@ -30,25 +30,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         [Fact]
-        public void CanGetUserProjectsFirstPageAsync()
-        {
-            Task<ListProjectsResponse> asyncResponse = Client.ListProjectsAsync(new ListProjectsRequest());
-           
-            asyncResponse.Wait(TimeSpan.FromMinutes(1));
-            var response = asyncResponse.Result;
-            Assert.NotNull(response);
-            Assert.True(response.Response.TotalCount > 0);
-            //make sure account has at least 1 for access token
-            ProjectCompact projectResult = response.Response.Items[0];
-
-            Assert.NotNull(projectResult);
-            Assert.NotEmpty(projectResult.Id);
-            Assert.NotEmpty(projectResult.Name);
-            Assert.NotSame(projectResult.Id, projectResult.Name);
-            Assert.True(projectResult.DateCreated > new DateTime(2009, 1, 1));
-        }
-
-        [Fact]
         public void CanPageThroughProjects()
         {
 
@@ -153,7 +134,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 //Assert.Null(retrievedProject);
                 Assert.True(false, "BaseSpace returned a malformed Project.");
             }
-            catch (BaseSpace.SDK.BaseSpaceException baseSpaceException)
+            catch (BaseSpace.SDK.BaseSpaceException<GetProjectResponse> baseSpaceException)
             {
                 Assert.True((baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound) || 
                             (baseSpaceException.StatusCode == System.Net.HttpStatusCode.BadRequest));

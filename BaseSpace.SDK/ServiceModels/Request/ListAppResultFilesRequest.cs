@@ -8,12 +8,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List files belonging to an AppResult
         /// </summary>
         /// <param name="appResultId">AppResult Id</param>
-        public ListAppResultFilesRequest(string appResultId)
+        public ListAppResultFilesRequest(string appResultId) : base(appResultId)
         {
-            AppResultId = appResultId;
         }
 
-        public string AppResultId { get; set; }
         public string Extensions { get; set; }
     }
 }

@@ -1,15 +1,12 @@
+using Illumina.BaseSpace.SDK.Types;
 using System;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-	[DataContract]
-	public class OAuthDeviceAccessTokenResponse
+    [DataContract]
+    public class OAuthDeviceAccessTokenResponse 
 	{
-		public OAuthDeviceAccessTokenResponse ()
-		{
-		}
-
 		[DataMember(Name = "access_token")]
 		public string AccessToken { get; set; }
 

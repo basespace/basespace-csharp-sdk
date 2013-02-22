@@ -10,9 +10,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels.Response
     [DataContract()]
     public class OAuthV2AccessTokenResponse
     {
-        public OAuthV2AccessTokenResponse()
-        {}
-        
         [DataMember(Name="access_token")]
         public string AccessToken { get; set; }
 

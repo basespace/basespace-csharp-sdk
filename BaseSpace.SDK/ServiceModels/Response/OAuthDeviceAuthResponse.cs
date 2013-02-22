@@ -1,15 +1,12 @@
+using Illumina.BaseSpace.SDK.Types;
 using System;
 using System.Runtime.Serialization;
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-	[DataContract]
-	public class OAuthDeviceAuthResponse
+    [DataContract]
+    public class OAuthDeviceAuthResponse
 	{
-		public OAuthDeviceAuthResponse ()
-		{
-		}
-
-		[DataMember(Name = "device_code")]
+    	[DataMember(Name = "device_code")]
 		public string DeviceCode { get; set; }
 
 		[DataMember(Name = "user_code")]

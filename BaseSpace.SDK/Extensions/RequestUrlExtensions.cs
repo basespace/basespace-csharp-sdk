@@ -82,7 +82,7 @@ namespace Illumina.BaseSpace.SDK
 
         public static string BuildUrl(this ListSamplesRequest req, string version)
         {
-            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/samples", version, req.ProjectId), req.Offset,
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/samples", version, req.Id), req.Offset,
                                                  req.Limit, req.SortDir);
             if (req.SortBy.HasValue)
                 urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, req.SortBy);
@@ -98,7 +98,7 @@ namespace Illumina.BaseSpace.SDK
 
         public static string BuildUrl(this ListAppResultsRequest req, string version)
         {
-            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/appresults", version, req.ProjectId), req.Offset,
+            var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/appresults", version, req.Id), req.Offset,
                                                  req.Limit, req.SortDir);
             if (req.SortBy.HasValue)
             {

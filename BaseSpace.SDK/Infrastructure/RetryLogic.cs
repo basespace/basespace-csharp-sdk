@@ -97,10 +97,13 @@ namespace Illumina.BaseSpace.SDK
                 catch (WebServiceException exc)
                 {
                     bool allowRetry = retryHandler(exc);
+
                     int statusCode = exc.StatusCode;
                     string message = exc.ErrorMessage;
+                    if (!HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode, timer))
+                        throw;
 
-                    ex = HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode, timer);
+                    ex = exc;
                 }
                 catch (WebException exc)
                 {
@@ -113,7 +116,9 @@ namespace Illumina.BaseSpace.SDK
                         statusCode = (int)wr.StatusCode;
                         message = wr.StatusDescription;
                     }
-                    ex = HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode, timer);
+                    if (!HandleException(description, logger, allowRetry, whichAttempt, delay, message, exc, statusCode, timer))
+                        throw;
+                    ex = exc;
                 }
                 catch (OperationCanceledException)
                 {
@@ -123,7 +128,8 @@ namespace Illumina.BaseSpace.SDK
                 }
                 catch (Exception exc)
                 {
-                    ex = HandleException(description, logger, true, whichAttempt, delay, exc.ToString(), exc, 0, timer); ;
+                    HandleException(description, logger, true, whichAttempt, delay, exc.ToString(), exc, 0, timer);
+                    ex = exc;
                 }
             }
             if (ex != null)
@@ -138,7 +144,7 @@ namespace Illumina.BaseSpace.SDK
             }
         }
 
-        private static Exception HandleException(string description, ILog logger, bool allowRetry, int whichAttempt, int delay,
+        private static bool HandleException(string description, ILog logger, bool allowRetry, int whichAttempt, int delay,
                                            string message, Exception exc, int statusCode, Stopwatch timer)
         {
             if (allowRetry)
@@ -146,16 +152,11 @@ namespace Illumina.BaseSpace.SDK
                 logger.ErrorFormat("Error while {0}, attempt {1}, elapsed {4}ms, retrying in {2} seconds: \r\n{3}", description,
                                    whichAttempt, delay, message, timer.ElapsedMilliseconds);
                 System.Threading.Thread.Sleep(1000 * delay);
-                return exc;
+                return true;
             }
-            else
-            {
-                timer.Stop();
-                logger.ErrorFormat("HTTP Response code {0} : {1}, elapsed time {2}ms", statusCode, exc, timer.ElapsedMilliseconds);
-                var code = HttpStatusCode.InternalServerError;
-                Enum.TryParse(statusCode.ToString(), out code);
-                throw new BaseSpaceException(code, message, exc);
-            }
+            timer.Stop();
+            logger.ErrorFormat("HTTP Response code {0} : {1}, elapsed time {2}ms", statusCode, exc, timer.ElapsedMilliseconds);
+            return false;
         }
     }
 }

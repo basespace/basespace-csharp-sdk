@@ -8,11 +8,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List samples within a project
         /// </summary>
         /// <param name="projectId">Project Id</param>
-        public ListSamplesRequest(string projectId)
+        public ListSamplesRequest(string projectId) : base(projectId)
         {
-            ProjectId = projectId;
         }
-
-        public string ProjectId { get; set; }
     }
 }

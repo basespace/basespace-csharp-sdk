@@ -16,8 +16,7 @@ namespace Illumina.BaseSpace.SDK
         protected IClientSettings ClientSettings { get; set; }
         protected IRequestOptions Options { get; set; }
         protected ILog Logger = LogManager.GetCurrentClassLogger();
-        private readonly AccessToken _accessToken;
-
+        
         public FileUpload(IWebClient webClient, IClientSettings settings, IRequestOptions options)
         {
             WebClient = webClient;

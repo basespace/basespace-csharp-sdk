@@ -72,11 +72,6 @@ namespace Illumina.BaseSpace.SDK
         }
 
         #region Users
-        public Task<GetUserResponse> GetUserAsync(GetUserRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetUserResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetUserResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
@@ -85,52 +80,27 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Runs
-        public Task<GetRunResponse> GetRunAsync(GetRunRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetRunResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListRunsResponse> ListRunsAsync(ListRunsRequest request, IRequestOptions options = null)
-        {
-			return WebClient.SendAsync<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
         {
-			return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
         #endregion
 
 
         #region Projects
-        public Task<GetProjectResponse> GetProjectAsync(GetProjectRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetProjectResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetProjectResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListProjectsResponse> ListProjectsAsync(ListProjectsRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<CreateProjectResponse> CreateProjectAsync(CreateProjectRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<CreateProjectResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null)
@@ -141,19 +111,9 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region AppSessions
-        public Task<GetAppSessionResponse> GetAppSessionAsync(GetAppSessionRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetAppSessionResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<UpdateAppSessionResponse> UpdateAppSessionAsync(UpdateAppSessionRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<UpdateAppSessionResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null)
@@ -164,19 +124,9 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Samples
-        public Task<GetSampleResponse> GetSampleAsync(GetSampleRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetSampleResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<ListSamplesResponse> ListSamplesAsync(ListSamplesRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
@@ -187,29 +137,14 @@ namespace Illumina.BaseSpace.SDK
         
 
         #region AppResults
-        public Task<GetAppResultResponse> GetAppResultAsync(GetAppResultRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetAppResultResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetAppResultResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListAppResultsResponse> ListAppResultsAsync(ListAppResultsRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<CreateAppResultResponse> CreateAppResultAsync(CreateAppResultRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<CreateAppResultResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
@@ -220,19 +155,9 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Genomes
-        public Task<GetGenomeResponse> GetGenomeAsync(GetGenomeRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<ListGenomeResponse> ListGenomesAsync(ListGenomeRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null)
@@ -243,19 +168,9 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Files
-        public Task<ListRunFilesResponse> ListRunFilesAsync(ListRunFilesRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<ListSampleFilesResponse> ListSampleFilesAsync(ListSampleFilesRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null)
@@ -263,19 +178,9 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task<ListAppResultFilesResponse> ListAppResultFilesAsync(ListAppResultFilesRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<GetFileInformationResponse> GetFilesInformationAsync(GetFileInformationRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null)
@@ -296,19 +201,9 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Variants
-        public Task<GetVariantHeaderResponse> GetVariantHeaderAsync(GetVariantHeaderRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetVariantHeaderResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetVariantHeaderResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<ListVariantsResponse> ListVariantsAsync(ListVariantsRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<ListVariantsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null)
@@ -319,19 +214,9 @@ namespace Illumina.BaseSpace.SDK
 
 
         #region Coverage
-        public Task<GetCoverageResponse> GetCoverageAsync(GetCoverageRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetCoverageResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
         public GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<GetCoverageResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<GetCoverageMetadataResponse> GetCoverageMetadataAsync(GetCoverageMetadataRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<GetCoverageMetadataResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null)
@@ -343,41 +228,17 @@ namespace Illumina.BaseSpace.SDK
 		#region OAuth
 		public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
 		{
-			return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+            return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
 		}
 
 		public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth (OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
 		{
-			try 
-			{
-				return WebClient.Send<OAuthDeviceAccessTokenResponse> (HttpMethods.POST, request.BuildUrl (ClientSettings.Version), request, options);
-			} 
-			catch (BaseSpaceException bex)
-			{
-				if(bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
-				{
-					var wsex = (WebServiceException)bex.InnerException;
-					return wsex.ResponseBody.FromJson<OAuthDeviceAccessTokenResponse>();
-				}
-			}
-			return null;
+			return WebClient.Send<OAuthDeviceAccessTokenResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
 		}
 
         public OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null)
         {
-            try
-            {
-                return WebClient.Send<OAuthV2AccessTokenResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-            }
-            catch (BaseSpaceException bex)
-            {
-                if (bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
-                {
-                    var wsex = (WebServiceException)bex.InnerException;
-                    return wsex.ResponseBody.FromJson<OAuthV2AccessTokenResponse>();
-                }
-            }
-            return null;
+            return WebClient.Send<OAuthV2AccessTokenResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
 		#endregion
@@ -386,11 +247,6 @@ namespace Illumina.BaseSpace.SDK
         public FileContentRedirectMetaResponse GetFileContentUrl(FileContentRedirectMetaRequest request, IRequestOptions options = null)
         {
             return WebClient.Send<FileContentRedirectMetaResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
-        }
-
-        public Task<FileContentRedirectMetaResponse> GetFileContentUrlAsync(FileContentRedirectMetaRequest request, IRequestOptions options = null)
-        {
-            return WebClient.SendAsync<FileContentRedirectMetaResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
         public Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken())
@@ -408,7 +264,6 @@ namespace Illumina.BaseSpace.SDK
 
             return Task.Factory.StartNew(command.Execute, token);
         }
-
         public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
         protected void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)
