@@ -156,13 +156,9 @@ namespace Illumina.BaseSpace.SDK
                 RetryLogic.DoWithRetry(maxRetry, name, () => { result = func(); }, logger);
                 return result;
             }
-            catch (WebServiceException wex)
+            catch (Exception wex)
             {
-                throw new BaseSpaceException<TReturn>(name + " failed", wex);
-            }
-            catch (Exception)
-            {
-                throw;
+                throw new BaseSpaceException(name + " failed", wex);
             }
         }
 

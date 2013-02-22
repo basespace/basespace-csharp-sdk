@@ -5,14 +5,15 @@ using System.Net;
 using System.Text;
 using ServiceStack.Service;
 using ServiceStack.ServiceClient.Web;
+using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public class BaseSpaceException<TResponse> : ApplicationException where TResponse: class
+    public class BaseSpaceException : ApplicationException
     {
         public HttpStatusCode StatusCode { get; set; }
-       
-        public TResponse Response { get; private set; }
+
+        public IHasResponseStatus Response { get; private set; }
 
         public BaseSpaceException()
         {
@@ -24,14 +25,13 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-        public BaseSpaceException(string message, WebServiceException wse) : base(message, wse)
-        {
-            StatusCode = (HttpStatusCode)wse.StatusCode;
-            Response = (TResponse)wse.ResponseDto;
-        }
         public BaseSpaceException(string message, Exception ex)
             : base(message, ex)
         {
+            StatusCode = (HttpStatusCode)RetryLogic.GetStatusCode(ex);
+            WebServiceException wse = ex as WebServiceException;
+            if (wse != null)
+                Response = wse.ResponseDto as IHasResponseStatus;
         }
     }
 }

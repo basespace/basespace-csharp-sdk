@@ -134,14 +134,15 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 //Assert.Null(retrievedProject);
                 Assert.True(false, "BaseSpace returned a malformed Project.");
             }
-            catch (BaseSpace.SDK.BaseSpaceException<GetProjectResponse> baseSpaceException)
+            catch (BaseSpace.SDK.BaseSpaceException baseSpaceException)
             {
-                Assert.True((baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound) || 
-                            (baseSpaceException.StatusCode == System.Net.HttpStatusCode.BadRequest));
+                Assert.True(baseSpaceException.InnerException.Message == "Internal Server Error" ||
+                    baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound || 
+                            baseSpaceException.StatusCode == System.Net.HttpStatusCode.BadRequest);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Assert.True(ex.InnerException.Message == "Internal Server Error");
+                Assert.False(true);
             }
         }
 
