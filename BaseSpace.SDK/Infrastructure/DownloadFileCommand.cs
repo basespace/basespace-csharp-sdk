@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
@@ -82,36 +84,42 @@ namespace Illumina.BaseSpace.SDK
             };
             var totalChunkCount = GetChunkCount(fileSize, chunkSize);
             var sync = new object();
+	        var downloadedChunkCount = 0;
+            Action<int> downloadPart = (partNumber) =>
+	            {
+	                var startDateTime = DateTime.Now;
+                    var startPosition = (long)partNumber * chunkSize;
+                    var chunkSizeAdj = GetChunkSize(fileSize, chunkSize, partNumber);
+                    var endPosition = startPosition + chunkSizeAdj - 1;
+
+	                parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+
+	                JsonWebClient.GetByteRange(getUrl, startPosition, endPosition, (b, pos, len) =>
+	                                                {
+                                                        lock (sync)
+                                                        {
+                                                            stream.Position = pos;
+                                                            stream.Write(b, 0, (int)len);
+                                                        }
+	                                                }, chunkSize, maxRetries, Logger);
+
+	                lock (sync)
+	                {
+	                    downloadedChunkCount++;
+	                }
+
+                    if (updateStatus != null)
+    	                updateStatus(downloadedChunkCount,totalChunkCount,chunkSizeAdj,DateTime.Now.Subtract(startDateTime).TotalMilliseconds);
+	            };
+
             try
 	        {
-	            var downloadedChunkCount = 0;
-
-	            Parallel.For(0, totalChunkCount, parallelOptions, partNumber =>
-	                {
-	                    var startDateTime = DateTime.Now;
-                        var startPosition = (long)partNumber * chunkSize;
-                        var chunkSizeAdj = GetChunkSize(fileSize, chunkSize, partNumber);
-                        var endPosition = startPosition + chunkSizeAdj - 1;
-
-	                    parallelOptions.CancellationToken.ThrowIfCancellationRequested();
-
-	                    JsonWebClient.GetByteRange(getUrl, startPosition, endPosition, (b, pos, len) =>
-	                                                    {
-                                                            lock (sync)
-                                                            {
-                                                                stream.Position = pos;
-                                                                stream.Write(b, 0, (int)len);
-                                                            }
-	                                                    }, chunkSize, maxRetries, Logger);
-
-	                    lock (sync)
-	                    {
-	                        downloadedChunkCount++;
-	                    }
-
-                        if (updateStatus != null)
-    	                    updateStatus(downloadedChunkCount,totalChunkCount,chunkSizeAdj,DateTime.Now.Subtract(startDateTime).TotalMilliseconds);
-	                });
+                int part = -1;
+                Parallel.For(0, totalChunkCount, parallelOptions, (index) =>
+                                                                    {
+                                                                        int nextPart = Interlocked.Increment(ref part);
+                                                                        downloadPart(nextPart);
+                                                                    });
 	        }
 	        catch (OperationCanceledException)
 	        {
