@@ -1,7 +1,4 @@
-using System;
 using System.Configuration;
-using Illumina.BaseSpace.SDK.ServiceModels.Request;
-using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Xunit;
 using Illumina.BaseSpace.SDK.ServiceModels;
 

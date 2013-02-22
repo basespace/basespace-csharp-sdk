@@ -55,65 +55,69 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
         private static VerificationCode FetchVerificationCode(BaseSpaceClientSettings settings)
         {
-            VerificationCode verificationCode = new VerificationCode();
-            var verificationUri = verificationCode.BuildRequestUri(settings);
-            if ((verificationUri == null) || string.IsNullOrEmpty(verificationUri.AbsoluteUri))
-                return null; // TODO: throw exception
+			//VerificationCode verificationCode = new VerificationCode();
+			//var verificationUri = verificationCode.BuildRequestUri(settings);
+			//if ((verificationUri == null) || string.IsNullOrEmpty(verificationUri.AbsoluteUri))
+			//	return null; // TODO: throw exception
 
-            string jsonResponse = HttpPost(verificationUri, string.Empty);
-            verificationCode.FromJson(jsonResponse);
+			//string jsonResponse = HttpPost(verificationUri, string.Empty);
+			//verificationCode.FromJson(jsonResponse);
 
-            return verificationCode;
+			//return verificationCode;
+
+	        throw new NotImplementedException();
         }
 
 
         private static AccessToken FetchAccessToken(VerificationCode verificationCode, BaseSpaceClientSettings settings)
         {
-            AccessToken accessToken = null;
-            Int32 interval = verificationCode.Interval * 1000;
+			//AccessToken accessToken = null;
+			//Int32 interval = verificationCode.Interval * 1000;
 
-            // TODO: use the new "await" instead of looping
-            // TODO: we should have a hard stop at some useful limit of time
-            while (accessToken == null)
-            {
-                Thread.Sleep(interval);
+			//// TODO: use the new "await" instead of looping
+			//// TODO: we should have a hard stop at some useful limit of time
+			//while (accessToken == null)
+			//{
+			//	Thread.Sleep(interval);
 
-                try
-                {
-                    // TODO: wrap in try-catch with System.Net.WebException handler
-                    Uri authUri = accessToken.BuildRequestUri(verificationCode, settings);
-                    string jsonResponse = HttpPost(authUri, string.Empty);
-                    //string response = HttpPost(authVerificationCode.VerificationWithCodeUri.AbsoluteUri, string.Empty);
-                    // TODO: convert to using 200 response
-                    if ((!string.IsNullOrEmpty(jsonResponse) && !jsonResponse.Contains("DOCTYPE")))
-                    {
-                        accessToken = new AccessToken();
-                        accessToken.FromJson(jsonResponse);
-                        //// TODO: add sensitivity to return value, e.g., 404
-                        //switch(response.getClientResponseStatus())
-                        //{
-                        //    case BAD_REQUEST:
-                        //        AccessToken token = mapper.readValue(response.getEntity(string.class), AccessToken.class);
-                        //        if (token.getError().equalsIgnoreCase(ACCESS_DENIED))
-                        //        {
-                        //            throw new AccessDeniedException();
-                        //        }
-                        //        break;
-                        //    case OK:
-                        //        token = mapper.readValue(response.getEntity(string.class), AccessToken.class);
-                        //        accessToken = token.getAccessToken();
-                        //}
-                    }
+			//	try
+			//	{
+			//		// TODO: wrap in try-catch with System.Net.WebException handler
+			//		Uri authUri = accessToken.BuildRequestUri(verificationCode, settings);
+			//		string jsonResponse = HttpPost(authUri, string.Empty);
+			//		//string response = HttpPost(authVerificationCode.VerificationWithCodeUri.AbsoluteUri, string.Empty);
+			//		// TODO: convert to using 200 response
+			//		if ((!string.IsNullOrEmpty(jsonResponse) && !jsonResponse.Contains("DOCTYPE")))
+			//		{
+			//			accessToken = new AccessToken();
+			//			accessToken.FromJson(jsonResponse);
+			//			//// TODO: add sensitivity to return value, e.g., 404
+			//			//switch(response.getClientResponseStatus())
+			//			//{
+			//			//    case BAD_REQUEST:
+			//			//        AccessToken token = mapper.readValue(response.getEntity(string.class), AccessToken.class);
+			//			//        if (token.getError().equalsIgnoreCase(ACCESS_DENIED))
+			//			//        {
+			//			//            throw new AccessDeniedException();
+			//			//        }
+			//			//        break;
+			//			//    case OK:
+			//			//        token = mapper.readValue(response.getEntity(string.class), AccessToken.class);
+			//			//        accessToken = token.getAccessToken();
+			//			//}
+			//		}
 
-                }
-                catch (System.Net.WebException)
-                {
-                    // ignore these exceptions
-                    continue;
-                    //throw;
-                }
-            }
-            return accessToken;
+			//	}
+			//	catch (System.Net.WebException)
+			//	{
+			//		// ignore these exceptions
+			//		continue;
+			//		//throw;
+			//	}
+			//}
+			//return accessToken;
+
+	        throw new NotImplementedException();
         }
 
         // TODO: pay attention to the return type so we know whether to proceed?
