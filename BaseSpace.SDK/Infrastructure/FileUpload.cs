@@ -69,8 +69,10 @@ namespace Illumina.BaseSpace.SDK
 
             var uri = string.Format("{0}/{1}/{2}/files", ClientSettings.Version, resourceIdentifierInUri, req.Id);
 
-            var resp = WebClient.PostFileWithRequest<FileResponse>(uri, fileToUpload, req);
-            return (resp == null) ? null : resp.Response;
+	        throw new NotImplementedException();
+
+	        //var resp = WebClient.PostFileWithRequest<FileResponse>(uri, fileToUpload, req);
+	        //return (resp == null) ? null : resp.Response;
         }
 
 
@@ -90,63 +92,67 @@ namespace Illumina.BaseSpace.SDK
 
             Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", fileToUpload.Name);
 
-            var fileUploadresp = WebClient.Send<FileResponse>(HttpMethods.POST, uri, req);
+			//var fileUploadresp = WebClient.Send<FileResponse>(HttpMethods.POST, uri, req);
 
-            if (fileUploadresp == null)
-            {
-                Logger.ErrorFormat("File Upload: Failed initiating upload");
-                return null;
-            }
+			//if (fileUploadresp == null)
+			//{
+			//	Logger.ErrorFormat("File Upload: Failed initiating upload");
+			//	return null;
+			//}
 
-            if (fileUploadresp.Response == null)
-            {
-                Logger.ErrorFormat("File Upload: {0}: Failed initiating upload", fileUploadresp.ResponseStatus.Message);
-                return null;
-            }
+	        throw new NotImplementedException();
 
-            var fileId = fileUploadresp.Response.Id;
-            var zeroBasedPartNumberMax = (fileToUpload.Length - 1) / ClientSettings.FileMultipartSizeThreshold;
-            var success = false;
+			//if (fileUploadresp.Response == null)
+			//{
+			//	Logger.ErrorFormat("File Upload: {0}: Failed initiating upload", fileUploadresp.ResponseStatus.Message);
+			//	return null;
+			//}
 
-            // shared signal to let all threads know if one part failed
-            // if so, other threads shouldn't bother uploading
-            var errorSignal = new ManualResetEvent(false);
-            var sync = new object();
-            var totalPartsUploaded = 0;
+			//var fileId = fileUploadresp.Response.Id;
+			//var zeroBasedPartNumberMax = (fileToUpload.Length - 1) / ClientSettings.FileMultipartSizeThreshold;
+			//var success = false;
 
-            Parallel.For(0, (int)(1 + zeroBasedPartNumberMax),
-                         new ParallelOptions() { MaxDegreeOfParallelism = numThreads },
-                         new Action<int>(zeroBasedPartNumber =>
-                         {
-                             var partNumber = zeroBasedPartNumber + 1;
-                             var byteOffset = zeroBasedPartNumber * ClientSettings.FileMultipartSizeThreshold;
-                             var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", ClientSettings.BaseSpaceApiUrl.TrimEnd('/'),ClientSettings.Version, fileId, partNumber);
-                             Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName);
+			//// shared signal to let all threads know if one part failed
+			//// if so, other threads shouldn't bother uploading
+			//var errorSignal = new ManualResetEvent(false);
+			//var sync = new object();
+			//var totalPartsUploaded = 0;
+
+			//Parallel.For(0, (int)(1 + zeroBasedPartNumberMax),
+			//			 new ParallelOptions() { MaxDegreeOfParallelism = numThreads },
+			//			 new Action<int>(zeroBasedPartNumber =>
+			//			 {
+			//				 var partNumber = zeroBasedPartNumber + 1;
+			//				 var byteOffset = zeroBasedPartNumber * ClientSettings.FileMultipartSizeThreshold;
+			//				 var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", ClientSettings.BaseSpaceApiUrl.TrimEnd('/'),ClientSettings.Version, fileId, partNumber);
+			//				 Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName);
                              
-                             UploadPart(serviceUrl, fileToUpload, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1));
-                             lock (sync)
-                             {
-                                 totalPartsUploaded++;
-                                 Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded",
-                                                    partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName,
-                                                    totalPartsUploaded);
-                             }
-                         }));
-            success = errorSignal.WaitOne(0) == false;  //timeout occurs, means was not set, means success
+			//				 UploadPart(serviceUrl, fileToUpload, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1));
+			//				 lock (sync)
+			//				 {
+			//					 totalPartsUploaded++;
+			//					 Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded",
+			//										partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName,
+			//										totalPartsUploaded);
+			//				 }
+			//			 }));
+			//success = errorSignal.WaitOne(0) == false;  //timeout occurs, means was not set, means success
            
-            var status = success ? FileUploadStatus.complete : FileUploadStatus.aborted;
+			//var status = success ? FileUploadStatus.complete : FileUploadStatus.aborted;
 
-            var statusReq = new FileRequestPost()
-            {
-                UploadStatus = status
-            };
+			//var statusReq = new FileRequestPost()
+			//{
+			//	UploadStatus = status
+			//};
 
-            var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
-            var response = WebClient.Send<FileResponse>(HttpMethods.POST, uri2, statusReq);
+			//var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
+			////var response = WebClient.Send<FileResponse>(HttpMethods.POST, uri2, statusReq);
 
-            Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
+			//throw new NotImplementedException();
 
-            return response.Response;
+			//Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
+
+            //return response.Response;
         }
 
 

@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Web.Util;
 using Common.Logging;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
@@ -11,7 +12,7 @@ using ServiceStack.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public partial class JsonWebClient
+    public class JsonWebClient : IWebClient
     {
 		private JsonServiceClient client;
 
@@ -74,6 +75,36 @@ namespace Illumina.BaseSpace.SDK
             JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
 
         }
+
+		public void SetDefaultRequestOptions(IRequestOptions options)
+		{
+			DefaultRequestOptions = options;
+		}
+
+		public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
+			where TReturn : class
+		{
+			return WrapResult(request, options ?? DefaultRequestOptions, logger, DefaultRequestOptions.RetryAttempts);
+		}
+
+		private TReturn WrapResult<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options, ILog logger, uint maxRetry)
+			where TReturn : class
+		{
+			try
+			{
+				TReturn result = null;
+				RetryLogic.DoWithRetry(maxRetry, request.GetName(), () =>
+				{
+					result = request.GetFunc(client, options)();
+				}
+			, logger);
+				return result;
+			}
+			catch (WebServiceException wex)
+			{
+				throw new BaseSpaceException<TReturn>(request.GetName() + " failed", wex);
+			}
+		}
 
         private static Uri ParseUri(string s)
         {

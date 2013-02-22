@@ -36,7 +36,7 @@ namespace Illumina.BaseSpace.SDK
             _client = client;
             _settings = settings;
             _stream = stream;
-            _file = _client.GetFilesInformation(new GetFileInformationRequest(fileId), null).Response;
+	        _file = _client.Send(new GetFileInformationRequest(fileId)).Response;
             Token = token;
             ChunkSize = Convert.ToInt32(_settings.FileMultipartSizeThreshold);
             MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
@@ -137,21 +137,23 @@ namespace Illumina.BaseSpace.SDK
 
 		private string GetFileContentUrl(out DateTime expiration)
 		{
+			throw new NotImplementedException();
+
 			// get the download URL
-		    var response = _client.GetFileContentUrl(new FileContentRedirectMetaRequest(_file.Id));
+			//var response = _client.GetFileContentUrl(new FileContentRedirectMetaRequest(_file.Id));
 
-			if (response.Response == null || response.Response.HrefContent == null)
-			{
-				throw new ApplicationException("Unable to get HrefContent");
-			}
+			//if (response.Response == null || response.Response.HrefContent == null)
+			//{
+			//	throw new ApplicationException("Unable to get HrefContent");
+			//}
 
-			if (!response.Response.SupportsRange)
-			{
-				throw new ApplicationException("This file does not support range queries");
-			}
+			//if (!response.Response.SupportsRange)
+			//{
+			//	throw new ApplicationException("This file does not support range queries");
+			//}
 
-            expiration = response.Response.Expires;
-			return response.Response.HrefContent;
+			//expiration = response.Response.Expires;
+			//return response.Response.HrefContent;
 		}
 
 		private static int GetChunkCount(long fileSize, int chunkSize)

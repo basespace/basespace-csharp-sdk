@@ -69,7 +69,6 @@
     <Compile Include="Infrastructure\HttpMethods.cs" />
     <Compile Include="Infrastructure\OAuth2Authentication.cs" />
     <Compile Include="Infrastructure\JsonWebClient.cs" />
-    <Compile Include="Infrastructure\JsonWebClient.IWebClient.cs" />
     <Compile Include="Infrastructure\RestRequest.cs" />
     <Compile Include="Infrastructure\RetryLogic.cs" />
     <Compile Include="Interfaces\IAbstractResource.cs" />
