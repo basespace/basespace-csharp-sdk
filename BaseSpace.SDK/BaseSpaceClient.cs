@@ -232,12 +232,6 @@ namespace Illumina.BaseSpace.SDK
             }
         }
 
-		protected internal TResult Send<TResult>(AbstractRequest<TResult> request, IRequestOptions options = null)
-			where TResult : class
-		{
-			return WebClient.Send(request, options);
-		}
-
         private void command_FileDownloadProgressChanged(object sender, FileDownloadProgressChangedEventArgs e)
         {
             OnFileDownloadProgressChanged(e);
