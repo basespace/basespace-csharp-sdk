@@ -41,6 +41,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		}
 
 		protected AbstractResourceRequest(string id)
+			: this()
 		{
 			Id = id;
 		}
