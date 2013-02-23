@@ -59,7 +59,6 @@
     <Compile Include="BaseSpaceClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Extensions\JsonRestClientAsyncExtensions.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
     <Compile Include="Infrastructure\BufferPool.cs" />
@@ -153,7 +152,6 @@
     <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\GenericAbstractList.cs" />
     <Compile Include="Types\ApiResponse.cs" />
-    <Compile Include="Extensions\RequestUrlExtensions.cs" />
     <Compile Include="Types\Application.cs" />
     <Compile Include="Types\AppResult.cs" />
     <Compile Include="Types\AppSession.cs" />
