@@ -8,7 +8,9 @@ namespace Illumina.BaseSpace.SDK
 {
     public class BaseSpaceClient : IBaseSpaceClient
     {
-        protected static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
+        private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
+
+		private readonly IClientSettings clientSettings;
         
         public BaseSpaceClient(string accessToken)
 			: this(new RequestOptions { Authentication = new OAuth2Authentication(accessToken), RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl })
@@ -32,26 +34,18 @@ namespace Illumina.BaseSpace.SDK
             {
                 throw new ArgumentNullException("settings");
             }
-            ClientSettings = settings;
+            clientSettings = settings;
             WebClient = client;
             SetDefaultRequestOptions(defaultOptions);
            
         }
 
-        protected IClientSettings ClientSettings { get; set; }
-
-        protected IWebClient WebClient { get; set; }
+        protected IWebClient WebClient { get; private set; }
 
         public void SetDefaultRequestOptions(IRequestOptions options)
         {
             WebClient.SetDefaultRequestOptions(options);
         }
-
-		protected internal TResult Send<TResult>(AbstractRequest<TResult> request, IRequestOptions options = null)
-			where TResult : class 
-		{
-			return WebClient.Send(request, options);
-		}
 
 		#region Users
 		public GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null)
@@ -231,7 +225,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFileById(string fileId, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, fileId, stream, ClientSettings, token);
+            var command = new DownloadFileCommand(this, fileId, stream, clientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
@@ -239,7 +233,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, file, stream, ClientSettings, token);
+            var command = new DownloadFileCommand(this, file, stream, clientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
@@ -253,6 +247,12 @@ namespace Illumina.BaseSpace.SDK
                 FileDownloadProgressChanged(this, e);
             }
         }
+
+		protected internal TResult Send<TResult>(AbstractRequest<TResult> request, IRequestOptions options = null)
+			where TResult : class
+		{
+			return WebClient.Send(request, options);
+		}
 
         private void command_FileDownloadProgressChanged(object sender, FileDownloadProgressChangedEventArgs e)
         {
