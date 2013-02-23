@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Web.Util;
 using Common.Logging;
@@ -16,9 +15,9 @@ namespace Illumina.BaseSpace.SDK
     {
 		private JsonServiceClient client;
 
-	    private ILog logger;
+	    private readonly ILog logger;
 
-		private IClientSettings settings;
+		private readonly IClientSettings settings;
 
         public IRequestOptions DefaultRequestOptions { get; protected set; }
 
@@ -51,6 +50,9 @@ namespace Illumina.BaseSpace.SDK
             }
            
             SetDefaultRequestOptions(defaultOptions);
+
+			client = new JsonServiceClient(DefaultRequestOptions.BaseUrl);
+			client.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
 		private void WebRequestFilter(HttpWebRequest req)
@@ -112,41 +114,7 @@ namespace Illumina.BaseSpace.SDK
             return new Uri(s, uriKind);
         }
 
-		//private static TReturn Execute<TReturn>(JsonServiceClient client, RestRequest request, ILog log)
-		//	where TReturn : class
-		//{
-		//	client.BaseUri = request.Options.BaseUrl.TrimEnd('/') + "/";  //make sure we only have a single slash on end always
-            
-
-		//	var fileRestRequest = request as FileRestRequest;
-		//	if (fileRestRequest != null)
-		//	{
-		//		Func<TReturn> funcFile = () => client.PostFileWithRequest<TReturn>(fileRestRequest.RelativeOrAbsoluteUrl,
-		//																		   fileRestRequest.FileInfo,
-		//																		   fileRestRequest.Request);
-
-		//		return WrapResult(funcFile, log, fileRestRequest.Options.RetryAttempts, fileRestRequest.Name);
-		//	}
-		//	var restRequest = request as StreamingRestRequest;
-		//	if (restRequest != null)
-		//	{
-		//		var sr = restRequest;
-
-		//		Func<TReturn> funcStream =
-		//			() => client.PostFileWithRequest<TReturn>(restRequest.RelativeOrAbsoluteUrl, sr.Stream,
-		//													  sr.FileName,
-		//													  restRequest.Request);
-
-		//		return WrapResult(funcStream, log, restRequest.Options.RetryAttempts, restRequest.Name);
-		//	}
-
-		//	Func<TReturn> func =
-		//		() => client.Send<TReturn>(request.Method.ToString(), request.RelativeOrAbsoluteUrl, request.Request);
-
-		//	return WrapResult(func, log, request.Options.RetryAttempts, request.Name);
-		//}
-
-        internal static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
+		internal static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
             where TReturn : class
         {
             try
