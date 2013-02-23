@@ -22,26 +22,26 @@ namespace Illumina.BaseSpace.SDK
         private int MaxRetries { get; set; }
 
         public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken())
+			: this(client, stream, settings, token)
         {
-            _client = client;
-            _settings = settings;
-            _stream = stream;
             _file = file;
-            Token = token;
-            ChunkSize = Convert.ToInt32(_settings.FileMultipartSizeThreshold);
-            MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
         }
 
         public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken())
+			: this(client, stream, settings, token)
         {
-            _client = client;
-            _settings = settings;
-            _stream = stream;
-	        _file = _client.Send(new GetFileInformationRequest(fileId)).Response;
-            Token = token;
-            ChunkSize = Convert.ToInt32(_settings.FileMultipartSizeThreshold);
-            MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
+			_file = _client.GetFilesInformation(new GetFileInformationRequest(fileId)).Response;
         }
+
+		private DownloadFileCommand(BaseSpaceClient client, Stream stream, IClientSettings settings, CancellationToken token)
+		{
+			_client = client;
+			_settings = settings;
+			_stream = stream;
+			Token = token;
+			ChunkSize = Convert.ToInt32(_settings.FileMultipartSizeThreshold);
+			MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
+		}
 
 		public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
