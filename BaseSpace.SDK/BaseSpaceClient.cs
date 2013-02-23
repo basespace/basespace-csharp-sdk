@@ -1,27 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
-    internal class BSWebClient : WebClient
-    {
-        //TODO: Doesnt seem right? Need refactor?
-       // const int CONNECTION_LIMIT = 16;
-        protected override WebRequest GetWebRequest(Uri address)
-        {
-            var request = base.GetWebRequest(address) as HttpWebRequest;
-
-            if (request != null && request.ServicePoint.ConnectionLimit < 20)
-                request.ServicePoint.ConnectionLimit = 10000;  //Note: Is this changing global value?
-
-            return request;
-        }
-    }
-
     public class BaseSpaceClient : IBaseSpaceClient
     {
         protected static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();

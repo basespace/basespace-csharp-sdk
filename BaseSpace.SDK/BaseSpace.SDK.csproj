@@ -56,9 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseSpaceClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="BaseSpaceClient.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
     <Compile Include="Infrastructure\BufferPool.cs" />

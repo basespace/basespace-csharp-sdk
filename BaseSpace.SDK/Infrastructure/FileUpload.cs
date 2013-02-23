@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
@@ -200,5 +201,20 @@ namespace Illumina.BaseSpace.SDK
                     Logger,
                     error: () => errorSignal.Set());  // notify other threads to give up
         }
+
+		private class BSWebClient : WebClient
+		{
+			//TODO: Doesnt seem right? Need refactor?
+			// const int CONNECTION_LIMIT = 16;
+			protected override WebRequest GetWebRequest(Uri address)
+			{
+				var request = base.GetWebRequest(address) as HttpWebRequest;
+
+				if (request != null && request.ServicePoint.ConnectionLimit < 20)
+					request.ServicePoint.ConnectionLimit = 10000;  //Note: Is this changing global value?
+
+				return request;
+			}
+		}
     }
 }
