@@ -18,27 +18,22 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-        public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null) 
-			: this(settings, new JsonWebClient(settings), defaultOptions)
+        public BaseSpaceClient(IRequestOptions defaultOptions)
+			: this(defaultSettings, defaultOptions)
         {
         }
 
-        public BaseSpaceClient(IRequestOptions options)
-            : this(defaultSettings, new JsonWebClient(defaultSettings, options), options)
-        {
-        }
+		public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null)
+		{
+			if (settings == null)
+			{
+				throw new ArgumentNullException("settings");
+			}
 
-        public BaseSpaceClient(IClientSettings settings, IWebClient client, IRequestOptions defaultOptions = null)
-        {
-            if (settings == null || client == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-            clientSettings = settings;
-            WebClient = client;
-            SetDefaultRequestOptions(defaultOptions);
-           
-        }
+			clientSettings = settings;
+			WebClient = new JsonWebClient(settings, defaultOptions);
+			SetDefaultRequestOptions(defaultOptions);
+		}
 
         protected IWebClient WebClient { get; private set; }
 
