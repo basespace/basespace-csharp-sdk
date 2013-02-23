@@ -64,7 +64,7 @@ namespace Illumina.BaseSpace.SDK
 
         void SetDefaultRequestOptions(IRequestOptions options = null);
 
-        void DownloadFileById(string fileId, Stream stream, CancellationToken token = new CancellationToken());
+        void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken());
         void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 

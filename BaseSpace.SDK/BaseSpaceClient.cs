@@ -49,7 +49,6 @@ namespace Illumina.BaseSpace.SDK
 		}
 		#endregion
 
-
 		#region Runs
 		public GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null)
 		{
@@ -61,7 +60,6 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 		#endregion
-
 
 		#region Projects
 		public GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null)
@@ -80,7 +78,6 @@ namespace Illumina.BaseSpace.SDK
 		}
 		#endregion
 
-
 		#region AppSessions
 		public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
 		{
@@ -93,7 +90,6 @@ namespace Illumina.BaseSpace.SDK
 		}
 		#endregion
 
-
 		#region Samples
 		public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
 		{
@@ -105,7 +101,6 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 		#endregion
-
 
 		#region AppResults
 		public GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null)
@@ -123,7 +118,6 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 		#endregion
-
 
 		#region Genomes
 		public GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null)
@@ -181,7 +175,6 @@ namespace Illumina.BaseSpace.SDK
 		}
 		#endregion
 
-
 		#region Coverage
 		public GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null)
 		{
@@ -218,7 +211,7 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-        public void DownloadFileById(string fileId, Stream stream, CancellationToken token = new CancellationToken())
+        public void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken())
         {
             var command = new DownloadFileCommand(this, fileId, stream, clientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
