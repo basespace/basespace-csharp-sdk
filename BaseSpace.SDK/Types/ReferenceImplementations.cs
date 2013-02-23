@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-	public class ContentReference<T> : IContentReference<T>
+	internal class ContentReference<T> : IContentReference<T>
 		where T : AbstractResource
 	{
 		[DataMember]

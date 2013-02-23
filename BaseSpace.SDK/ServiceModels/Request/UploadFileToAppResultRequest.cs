@@ -12,8 +12,6 @@
         {
         }
 
-        public string ResourceIdentifierInUri;
-
 		protected override string GetUrl()
 		{
 			return string.Format("{0}/{1}/{2}/files", Version, ResourceIdentifierInUri, Id);

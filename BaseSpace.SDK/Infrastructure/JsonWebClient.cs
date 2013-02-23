@@ -19,7 +19,7 @@ namespace Illumina.BaseSpace.SDK
 
 		private readonly IClientSettings settings;
 
-        public IRequestOptions DefaultRequestOptions { get; protected set; }
+        public IRequestOptions DefaultRequestOptions { get; private set; }
 
         private static JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
 
@@ -41,13 +41,14 @@ namespace Illumina.BaseSpace.SDK
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
-            logger = LogManager.GetCurrentClassLogger();
-
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
             }
+
+			logger = LogManager.GetCurrentClassLogger();
             this.settings = settings;
+
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
             HttpEncoder.Current.SerializeToString();
@@ -113,7 +114,6 @@ namespace Illumina.BaseSpace.SDK
             var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
 
             string type = asValues["Type"];
-
 
             switch (type.ToLower())
             {
