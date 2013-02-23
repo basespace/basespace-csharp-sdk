@@ -27,7 +27,16 @@ namespace Illumina.BaseSpace.SDK
 
         static JsonWebClient()
         {
-            ChangeSerializationOptions();
+			// setting this just to make sure it's not set in Linux
+			JsonDataContractDeserializer.Instance.UseBcl = false;
+			// BaseSpace uses this format for DateTime
+			JsConfig.DateHandler = JsonDateHandler.ISO8601;
+
+			JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
+			//handle complex parsing of references
+			JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
+
+			JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
         }
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
@@ -60,21 +69,6 @@ namespace Illumina.BaseSpace.SDK
 			else
 				settings.Authentication.UpdateHttpHeader(req);
 		}
-
-        static void ChangeSerializationOptions()
-        {
-            // setting this just to make sure it's not set in Linux
-            JsonDataContractDeserializer.Instance.UseBcl = false;
-            // BaseSpace uses this format for DateTime
-            JsConfig.DateHandler = JsonDateHandler.ISO8601;
-
-			JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
-            //handle complex parsing of references
-            JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
-
-            JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
-
-        }
 
 		public void SetDefaultRequestOptions(IRequestOptions options)
 		{
