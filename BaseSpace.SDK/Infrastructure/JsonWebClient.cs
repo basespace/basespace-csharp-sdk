@@ -68,7 +68,7 @@ namespace Illumina.BaseSpace.SDK
             // BaseSpace uses this format for DateTime
             JsConfig.DateHandler = JsonDateHandler.ISO8601;
 
-            JsConfig<Uri>.DeSerializeFn = ParseUri;
+			JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
             //handle complex parsing of references
             JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
 
@@ -95,12 +95,6 @@ namespace Illumina.BaseSpace.SDK
 				throw new BaseSpaceException(request.GetName() + " failed", wex);
 			}
 		}
-
-        private static Uri ParseUri(string s)
-        {
-            UriKind uriKind = (s.StartsWith("http") || s.StartsWith("https")) ? UriKind.Absolute : UriKind.Relative;
-            return new Uri(s, uriKind);
-        }
 
         private static INotification<object> NotificationDeserializer(string source)
         {
