@@ -63,7 +63,7 @@ namespace Illumina.BaseSpace.SDK
             WebClient.SetDefaultRequestOptions(options);
         }
 
-		public TResult Send<TResult>(AbstractRequest<TResult> request, IRequestOptions options = null)
+		protected internal TResult Send<TResult>(AbstractRequest<TResult> request, IRequestOptions options = null)
 			where TResult : class 
 		{
 			return WebClient.Send(request, options);

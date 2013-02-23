@@ -54,10 +54,6 @@ namespace Illumina.BaseSpace.SDK
 		GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request,
 														IRequestOptions options = null);
 
-
-	    TResult Send<TResult>(AbstractRequest<TResult> request, IRequestOptions options = null)
-		    where TResult : class;
-
 		OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null);
 		OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
 		OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
