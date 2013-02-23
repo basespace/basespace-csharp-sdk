@@ -1,19 +1,14 @@
 ﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class UploadFileToAppResultRequest : FileUploadRequestBase<FileResponse>
+    public class UploadFileToAppResultRequest : FileUploadRequestBase<UploadFileToAppResultResponse>
     {
-        public UploadFileToAppResultRequest(string resourceId, string name,string directory = null, string resourceIdentifierInUri = "appresults")
+        public UploadFileToAppResultRequest(string resourceId, string name, string directory = null, string resourceIdentifierInUri = "appresults")
+			: base(resourceId, name, directory, resourceIdentifierInUri)
         {
-            Id = resourceId;
-            Name = name;
-            
-            if(directory!=null)
-                Directory = directory;
-            
-            ResourceIdentifierInUri = resourceIdentifierInUri;
         }
 
         public UploadFileToAppResultRequest()
+			: this(null, null)
         {
         }
 

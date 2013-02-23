@@ -20,10 +20,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             new Random().NextBytes(data);
             file.Write(data, 0, 10);
             file.Close();
-            var response = Client.UploadFileToAppResult(new System.IO.FileInfo(file.Name), 
-                new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
+            var response = Client.UploadFileToAppResult(new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
             Assert.NotNull(response);
-            //Assert.True(response.UploadStatus == FileUploadStatus.complete);
+            Assert.True(response.Response.UploadStatus == FileUploadStatus.complete);
 
             var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
         }

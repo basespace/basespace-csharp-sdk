@@ -25,19 +25,21 @@ namespace Illumina.BaseSpace.SDK
             Options = options;
         }
 
-		public virtual FileResponse UploadFile<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory = null,
-                                         int numThreads = 16)
-			where T : FileUploadRequestBase<FileResponse>, new()
-        {
+		public virtual TResult UploadFile<TResult>(FileUploadRequestBase<TResult> request, int numThreads = 16)
+			where TResult : FileResponse
+		{
+			var fileToUpload = new FileInfo(request.Name);
             Logger.DebugFormat("numthreads {0}", numThreads);
-            FileResponse file = null;
+			TResult file = null;
 
             RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", fileToUpload.Name),
                                    () =>
-                                   {
-                                       file = fileToUpload.Length >= ClientSettings.FileMultipartSizeThreshold ?
-										   UploadFile_MultiPart<T>(fileToUpload, resourceId, resourceIdentifierInUri, directory, numThreads) :
-										   UploadFile_SinglePart<T>(fileToUpload, resourceId, resourceIdentifierInUri, directory);
+	                               {
+		                               request.MultiPart = fileToUpload.Length >= ClientSettings.FileMultipartSizeThreshold;
+
+                                       file = request.MultiPart.Value ? 
+										   UploadFile_MultiPart(fileToUpload, request, numThreads) :
+										   WebClient.Send(request);
                                    }, Logger, retryHandler:
                                    (exc) =>
                                    {
@@ -57,44 +59,12 @@ namespace Illumina.BaseSpace.SDK
             return file;
         }
 
-        protected virtual FileResponse UploadFile_SinglePart<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory = null)
-			where T : FileUploadRequestBase<FileResponse>, new()
+		protected virtual TResult UploadFile_MultiPart<TResult>(FileInfo fileToUpload, FileUploadRequestBase<TResult> request, int numThreads)
+			where TResult : FileResponse
         {
-            var req = new T()
-            {
-                Id = resourceId,
-                Name = fileToUpload.Name,
-                MultiPart = false
-            };
+			Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", fileToUpload.Name);
 
-            if (directory != null)
-                req.Directory = directory;
-
-            var uri = string.Format("{0}/{1}/{2}/files", ClientSettings.Version, resourceIdentifierInUri, req.Id);
-
-            var resp = WebClient.Send(req);
-            return resp ?? null;
-        }
-
-
-        protected virtual FileResponse UploadFile_MultiPart<T>(FileInfo fileToUpload, string resourceId, string resourceIdentifierInUri, string directory, int numThreads)
-			where T : FileUploadRequestBase<FileResponse>, new()
-        {
-            var req = new T()
-            {
-                Id = resourceId,
-                Name = fileToUpload.Name,
-                MultiPart = true
-            };
-
-            if (directory != null)
-                req.Directory = directory;
-
-            //var uri = string.Format("{0}/{1}/{2}/files", ClientSettings.Version, resourceIdentifierInUri, req.Id);
-
-            Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", fileToUpload.Name);
-
-            var fileUploadresp = WebClient.Send<FileResponse>(req);
+			var fileUploadresp = WebClient.Send(request);
 
             if (fileUploadresp == null)
             {
@@ -110,9 +80,8 @@ namespace Illumina.BaseSpace.SDK
 
             var fileId = fileUploadresp.Response.Id;
             var zeroBasedPartNumberMax = (fileToUpload.Length - 1) / ClientSettings.FileMultipartSizeThreshold;
-            var success = false;
 
-            // shared signal to let all threads know if one part failed
+			// shared signal to let all threads know if one part failed
             // if so, other threads shouldn't bother uploading
             var errorSignal = new ManualResetEvent(false);
             var sync = new object();
@@ -120,7 +89,7 @@ namespace Illumina.BaseSpace.SDK
 
             Parallel.For(0, (int)(1 + zeroBasedPartNumberMax),
                          new ParallelOptions() { MaxDegreeOfParallelism = numThreads },
-                         new Action<int>(zeroBasedPartNumber =>
+                         (zeroBasedPartNumber =>
                          {
                              var partNumber = zeroBasedPartNumber + 1;
                              var byteOffset = zeroBasedPartNumber * ClientSettings.FileMultipartSizeThreshold;
@@ -136,7 +105,8 @@ namespace Illumina.BaseSpace.SDK
                                                     totalPartsUploaded);
                              }
                          }));
-            success = errorSignal.WaitOne(0) == false;  //timeout occurs, means was not set, means success
+
+            bool success = errorSignal.WaitOne(0) == false;
            
             var status = success ? FileUploadStatus.complete : FileUploadStatus.aborted;
 
@@ -145,12 +115,12 @@ namespace Illumina.BaseSpace.SDK
                 UploadStatus = status
             };
 
-            //var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
+            var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
             var response = WebClient.Send(statusReq);
 
             Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
 
-            return response;
+            return (TResult)response;
         }
 
 

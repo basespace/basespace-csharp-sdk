@@ -10,9 +10,9 @@ namespace Illumina.BaseSpace.SDK
     {
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
 
-		private readonly IClientSettings clientSettings;
+	    protected IClientSettings ClientSettings { get; private set; }
 
-		public BaseSpaceClient(string accessToken)
+	    public BaseSpaceClient(string accessToken)
 			: this(new BaseSpaceClientSettings { Authentication = new OAuth2Authentication(accessToken) },
 					new RequestOptions { RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl })
 		{
@@ -30,7 +30,7 @@ namespace Illumina.BaseSpace.SDK
 				throw new ArgumentNullException("settings");
 			}
 
-			clientSettings = settings;
+			ClientSettings = settings;
 			WebClient = new JsonWebClient(settings, defaultOptions);
 			SetDefaultRequestOptions(defaultOptions);
 		}
@@ -152,14 +152,10 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		public Types.File UploadFileToAppResult(FileInfo sourceFileInfo, UploadFileToAppResultRequest toAppResultRequest, IRequestOptions options = null)
+		public UploadFileToAppResultResponse UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest, IRequestOptions options = null)
 		{
-			throw new NotImplementedException();
-
-			//var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
-			//return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(sourceFileInfo, toAppResultRequest.Id,
-			//																 toAppResultRequest.ResourceIdentifierInUri,
-			//																 toAppResultRequest.Directory);
+			var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
+			return fileUploadClient.UploadFile(toAppResultRequest);
 		}
 		#endregion
 
@@ -213,7 +209,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, fileId, stream, clientSettings, token);
+            var command = new DownloadFileCommand(this, fileId, stream, ClientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
@@ -221,7 +217,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, file, stream, clientSettings, token);
+            var command = new DownloadFileCommand(this, file, stream, ClientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
