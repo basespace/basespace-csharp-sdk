@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
@@ -12,6 +11,8 @@ namespace Illumina.BaseSpace.SDK
 {
 	public class DownloadFileCommand
 	{
+		private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
+
 		private readonly BaseSpaceClient _client;
 	    private readonly IClientSettings _settings;
 		private readonly Stream _stream;
@@ -94,7 +95,7 @@ namespace Illumina.BaseSpace.SDK
 
 	                parallelOptions.CancellationToken.ThrowIfCancellationRequested();
 
-	                JsonWebClient.GetByteRange(getUrl, startPosition, endPosition, (b, pos, len) =>
+	                GetByteRange(getUrl, startPosition, endPosition, (b, pos, len) =>
 	                                                {
                                                         lock (sync)
                                                         {
@@ -175,6 +176,56 @@ namespace Illumina.BaseSpace.SDK
 
             var remainder = (int)(fileSize % chunkSize);
 			return remainder > 0 ? remainder : chunkSize;
+		}
+
+		private static void GetByteRange(Func<string> absoluteUrl, long start, long end, Action<byte[], long, long> dataHandler, int chunkSize, int maxRetries, ILog Logger)
+		{
+			var len = end - start + 1;
+			if (len > chunkSize)
+				throw new ArgumentOutOfRangeException("Byte range requested is too large");
+			RetryLogic.DoWithRetry(Convert.ToUInt32(maxRetries), string.Format("GetByteRange {0} -> {1} from {2}", start, end, absoluteUrl()), // may not be the actual url used
+				() =>
+				{
+					while (start < end + 1)
+					{
+						string url = absoluteUrl();
+						var webreq = HttpWebRequest.Create(url) as HttpWebRequest;
+						webreq.ServicePoint.ConnectionLimit = CONNECTION_COUNT;
+						webreq.ServicePoint.UseNagleAlgorithm = true;
+						webreq.Timeout = 200000;
+
+						Logger.InfoFormat("requesting {0}->{1}", start, end);
+						webreq.AddRange(start, end);
+
+						using (var resp = webreq.GetResponse() as HttpWebResponse)
+							start += CopyResponse(start, dataHandler, resp, chunkSize);
+					}
+				},
+			Logger);
+		}
+
+		private static int CopyResponse(long start, Action<byte[], long, long> dataHandler, WebResponse resp, int chunkSize)
+		{
+			using (var stm = resp.GetResponseStream())
+			{
+				var buffer = BufferPool.GetChunk(chunkSize);
+
+				int totalRead = 0;
+				try
+				{
+					int read;
+					var length = (int)resp.ContentLength;
+					while ((read = stm.Read(buffer, totalRead, length - totalRead)) > 0)
+						totalRead += read;
+
+					dataHandler(buffer, start, totalRead);
+				}
+				finally
+				{
+					BufferPool.ReleaseChunk(buffer);
+				}
+				return totalRead;
+			}
 		}
 	}
 }

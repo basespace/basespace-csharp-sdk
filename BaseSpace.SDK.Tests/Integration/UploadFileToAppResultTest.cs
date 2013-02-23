@@ -18,7 +18,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             file.Close();
             var response = Client.UploadFileToAppResult(new System.IO.FileInfo(file.Name), new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
             Assert.NotNull(response);
-            //Assert.True(response.UploadStatus == FileUploadStatus.complete);
+            Assert.True(response.UploadStatus == FileUploadStatus.complete);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             file.Close();
             var response = Client.UploadFileToAppResult(new System.IO.FileInfo(file.Name), new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
             Assert.NotNull(response);
-            //Assert.True(response.UploadStatus == FileUploadStatus.complete);
+            Assert.True(response.UploadStatus == FileUploadStatus.complete);
         }
     }
 }

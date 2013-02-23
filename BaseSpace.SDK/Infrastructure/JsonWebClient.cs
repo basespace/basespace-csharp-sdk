@@ -21,8 +21,6 @@ namespace Illumina.BaseSpace.SDK
 
         public IRequestOptions DefaultRequestOptions { get; protected set; }
 
-        private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
-
         private static JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
 
         private static JsonSerializer<Notification<ScheduledDowntime>> scheduledSerializer = new JsonSerializer<Notification<ScheduledDowntime>>();
@@ -86,20 +84,10 @@ namespace Illumina.BaseSpace.SDK
 		public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
 			where TReturn : class
 		{
-			return WrapResult(request, options ?? DefaultRequestOptions, logger, DefaultRequestOptions.RetryAttempts);
-		}
-
-		private TReturn WrapResult<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options, ILog logger, uint maxRetry)
-			where TReturn : class
-		{
 			try
 			{
 				TReturn result = null;
-				RetryLogic.DoWithRetry(maxRetry, request.GetName(), () =>
-				{
-					result = request.GetFunc(client, options)();
-				}
-			, logger);
+				RetryLogic.DoWithRetry(DefaultRequestOptions.RetryAttempts, request.GetName(), () => result = request.GetFunc(client, options)(), logger);
 				return result;
 			}
 			catch (WebServiceException wex)
@@ -114,22 +102,7 @@ namespace Illumina.BaseSpace.SDK
             return new Uri(s, uriKind);
         }
 
-		internal static TReturn WrapResult<TReturn>(Func<TReturn> func, ILog logger, uint maxRetry, string name)
-            where TReturn : class
-        {
-            try
-            {
-                TReturn result = null;
-                RetryLogic.DoWithRetry(maxRetry, name, () => { result = func(); }, logger);
-                return result;
-            }
-            catch (Exception wex)
-            {
-                throw new BaseSpaceException(name + " failed", wex);
-            }
-        }
-
-        internal static INotification<object> NotificationDeserializer(string source)
+        private static INotification<object> NotificationDeserializer(string source)
         {
             //determine type, then use appropriate deserializer
             var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
@@ -160,72 +133,22 @@ namespace Illumina.BaseSpace.SDK
             switch (type.ToLower())
             {
                 case "file":
-                    return JsonSerializer.DeserializeFromString<ReferenceWithFileContent>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<File>>(source);
 
                 case "appresult":
-                    return JsonSerializer.DeserializeFromString<ReferenceWithAppResultContent>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<AppResult>>(source);
 
                 case "sample":
-                    return JsonSerializer.DeserializeFromString<ReferenceWithSampleContent>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<Sample>>(source);
 
                 case "project":
-                    return JsonSerializer.DeserializeFromString<ReferenceWithProjectContent>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<Project>>(source);
 
                 case "run":
-                    return JsonSerializer.DeserializeFromString<ReferenceWithRunContent>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<Run>>(source);
             }
 
             return null;
-        }
-
-        public static void GetByteRange(Func<string> absoluteUrl, long start, long end, Action<byte[], long, long> dataHandler, int chunkSize, int maxRetries, ILog Logger)
-        {
-            var len = end - start + 1;
-            if (len > chunkSize)
-                throw new ArgumentOutOfRangeException("Byte range requested is too large");
-            RetryLogic.DoWithRetry(Convert.ToUInt32(maxRetries), string.Format("GetByteRange {0} -> {1} from {2}", start, end, absoluteUrl()), // may not be the actual url used
-                () =>
-                {
-                    while (start < end + 1)
-                    {
-                        string url = absoluteUrl();
-                        var webreq = HttpWebRequest.Create(url) as HttpWebRequest;
-                        webreq.ServicePoint.ConnectionLimit = CONNECTION_COUNT;
-                        webreq.ServicePoint.UseNagleAlgorithm = true;
-                        webreq.Timeout = 200000;
-
-                        Logger.InfoFormat("requesting {0}->{1}", start, end);
-                        webreq.AddRange(start, end);
-
-                        using (var resp = webreq.GetResponse() as HttpWebResponse)
-                            start += CopyResponse(start, dataHandler, resp, chunkSize);
-                    }
-                },
-            Logger);
-        }
-
-        private static int CopyResponse(long start, Action<byte[], long, long> dataHandler, WebResponse resp, int chunkSize)
-        {
-            using (var stm = resp.GetResponseStream())
-            {
-                var buffer = BufferPool.GetChunk(chunkSize);
-
-                int totalRead = 0;
-                try
-                {
-                    int read;
-                    var length = (int)resp.ContentLength;
-                    while ((read = stm.Read(buffer, totalRead, length - totalRead)) > 0)
-                        totalRead += read;
-
-                    dataHandler(buffer, start, totalRead);
-                }
-                finally
-                {
-                    BufferPool.ReleaseChunk(buffer);
-                }
-                return totalRead;
-            }
         }
     }
 }
