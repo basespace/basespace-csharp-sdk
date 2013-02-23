@@ -2,14 +2,12 @@
 using System.IO;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
-
 namespace Illumina.BaseSpace.SDK
 {
-    public class BSWebClient : WebClient
+    internal class BSWebClient : WebClient
     {
         //TODO: Doesnt seem right? Need refactor?
        // const int CONNECTION_LIMIT = 16;
