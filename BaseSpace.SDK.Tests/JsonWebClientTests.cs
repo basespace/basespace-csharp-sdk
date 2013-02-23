@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Illumina.BaseSpace.SDK;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Illumina.BaseSpace.SDK.Tests
 {
@@ -15,7 +10,7 @@ namespace Illumina.BaseSpace.SDK.Tests
         [Fact]
         public void CanDeserializeARunCompactReference()
         {
-            var result = JsonWebClient.ResourceDeserializer(TestData.AppResultReference) as ReferenceWithAppResultContent;
+            var result = JsonWebClient.ResourceDeserializer(TestData.AppResultReference) as ContentReference<AppResult>;
             Assert.NotNull(result);
             Assert.True(result.Href.ToString() == @"v1pre3/appresults/291294");
             Assert.True(result.HrefContent.ToString() == @"v1pre3/appresults/291294");
@@ -37,7 +32,7 @@ namespace Illumina.BaseSpace.SDK.Tests
         [Fact]
         public void CanDeserializeASampleCompactReference()
         {
-            var result = JsonWebClient.ResourceDeserializer(TestData.SampleReference) as ReferenceWithSampleContent;
+            var result = JsonWebClient.ResourceDeserializer(TestData.SampleReference) as ContentReference<Sample>;
             Assert.NotNull(result);
             Assert.True(result.Href.ToString() == @"v1pre3/samples/262264");
             Assert.True(result.HrefContent.ToString() == @"v1pre3/samples/262264");
