@@ -11,6 +11,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 			ResponseType = "device_code";
 			ClientId = clientId;
 			Scope = scope;
+			HttpMethod = HttpMethods.POST;
 		}
 
 		[DataMember(Name = "response_type")]

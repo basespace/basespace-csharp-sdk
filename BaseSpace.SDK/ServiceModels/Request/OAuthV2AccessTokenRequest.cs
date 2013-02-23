@@ -12,6 +12,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             ClientSecret = clientSecret;
             RedirectUri = redirectUri;
             AuthorizationCode = authorizationCode;
+			HttpMethod = HttpMethods.POST;
         }
 
         [DataMember(Name= "grant_type")]

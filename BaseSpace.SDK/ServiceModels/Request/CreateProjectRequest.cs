@@ -5,6 +5,7 @@
         public CreateProjectRequest(string name)
         {
             Name = name;
+			HttpMethod = HttpMethods.POST;
         }
 
         public string Name { get; set; }

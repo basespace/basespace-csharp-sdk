@@ -11,6 +11,7 @@
         {
             ProjectId = projectId;
             Name = name;
+			HttpMethod = HttpMethods.POST;
         }
 
         public string ProjectId { get; set; }

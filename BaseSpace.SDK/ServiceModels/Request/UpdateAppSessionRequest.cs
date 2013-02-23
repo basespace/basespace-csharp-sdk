@@ -11,6 +11,7 @@
 			:base (id)
         {
             Status = status;
+			HttpMethod = HttpMethods.POST;
         }
 
         public string Status { get; set; }

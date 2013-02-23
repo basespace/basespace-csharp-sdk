@@ -11,6 +11,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 			ClientId = clientId;
 			ClientSecret = clientSecret;
 			DeviceCode = deviceCode;
+			HttpMethod = HttpMethods.POST;
 		}
 
 		[DataMember(Name = "client_id")]

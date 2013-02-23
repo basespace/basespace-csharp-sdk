@@ -6,20 +6,28 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 	public abstract class AbstractRequest<TReturn>
 		where TReturn : class
 	{
-		protected string DefaultHttpMethod { get; private set; }
+		protected AbstractRequest()
+		{
+			HttpMethod = HttpMethods.GET;
+		}
 
-		protected string Version { get; private set; }
+		public HttpMethods HttpMethod { get; set; }
+
+		protected string Version
+		{
+			get { return "v1pre3"; }
+		}
 
 		internal Func<TReturn> GetFunc(JsonServiceClient client, IRequestOptions options)
 		{
-			string httpMethod = options.HttpMethod ?? DefaultHttpMethod;
+			var httpMethod = HttpMethod.ToString();
 
 			return () => client.Send<TReturn>(httpMethod, GetUrl(), (httpMethod == "GET") ? null : this);
 		}
 
 		internal string GetName()
 		{
-			return String.Format("{0} request to {1} ", DefaultHttpMethod, GetUrl());
+			return String.Format("{0} request to {1} ", HttpMethod, GetUrl());
 		}
 
 		protected abstract string GetUrl();
@@ -38,24 +46,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		}
 
         public string Id { get; set; }
-
-		//protected string DefaultHttpMethod { get; private set; }
-
-		//internal Func<TReturn> GetFunc(JsonServiceClient client, IRequestOptions options)
-		//{
-		//	string httpMethod = options.HttpMethod ?? DefaultHttpMethod;
-
-		//	return () => client.Send<TReturn>(httpMethod, GetUrl(), (httpMethod == "GET") ? null : this);
-		//}
-
-		//internal string GetName()
-		//{
-		//	return String.Format("{0} request to {1} ", DefaultHttpMethod, GetUrl());
-		//}
-
-		//protected virtual string GetUrl()
-		//{
-		//	return String.Empty;
-		//}
     }
 }

@@ -7,8 +7,6 @@
 		IAuthentication Authentication { get; }
 
 		string BaseUrl { get; }
-
-		string HttpMethod { get; }
 	}
 }
 

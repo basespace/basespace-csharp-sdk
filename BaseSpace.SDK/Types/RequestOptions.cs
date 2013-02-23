@@ -27,7 +27,5 @@ namespace Illumina.BaseSpace.SDK.Types
 		public IAuthentication Authentication { get; set; }
 
 		public string BaseUrl { get; set; }
-
-		public string HttpMethod { get; set; }
 	}
 }
