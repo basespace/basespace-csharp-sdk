@@ -57,7 +57,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 					Version = version
 				};
 
-			IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl, new OAuth2Authentication(accessToken)));
+			// TODO Removed OAuth v2
+			IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions(apiUrl));
             return iBaseSpaceClient;
         }
     }

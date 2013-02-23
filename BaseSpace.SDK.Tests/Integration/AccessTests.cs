@@ -29,9 +29,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
+
+	        var authentication = new OAuth2Authentication(apiKey, apiSecret);
+
             var settings = new BaseSpaceClientSettings
 	                           {
-		                           Authentication = new OAuth2Authentication(apiKey, apiSecret),
+		                           Authentication = authentication,
 								   BaseSpaceApiUrl = apiUrl, 
 								   BaseSpaceWebsiteUrl = webUrl, 
 								   Version = version
@@ -46,7 +49,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             // poll for the access token
             AccessToken accessToken = FetchAccessToken(verificationCode, settings);
 
-            var client = new BaseSpaceClient(settings, new RequestOptions(apiUrl, new OAuth2Authentication(accessToken.TokenString)));
+			// TODO Removed OAuth v2
+            var client = new BaseSpaceClient(settings, new RequestOptions(apiUrl));
 
             // build and return the client
             return client;

@@ -171,7 +171,7 @@ namespace Illumina.BaseSpace.SDK
                         {
                             data = BufferPool.GetChunk(Convert.ToInt32(ClientSettings.FileMultipartSizeThreshold));
 
-	                        var authentication = Options.Authentication as OAuth2Authentication;
+	                        var authentication = ClientSettings.Authentication as OAuth2Authentication;
 	                        authentication.UpdateHttpHeader(wc.Headers);
 
                             int actualSize;

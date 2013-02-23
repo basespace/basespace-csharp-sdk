@@ -4,8 +4,6 @@
 	{
 		uint RetryAttempts { get; }
 
-		IAuthentication Authentication { get; }
-
 		string BaseUrl { get; }
 	}
 }

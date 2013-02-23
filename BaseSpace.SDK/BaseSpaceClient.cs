@@ -11,12 +11,12 @@ namespace Illumina.BaseSpace.SDK
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
 
 		private readonly IClientSettings clientSettings;
-        
-        public BaseSpaceClient(string accessToken)
-			: this(new RequestOptions { Authentication = new OAuth2Authentication(accessToken), RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl })
-        {
 
-        }
+		public BaseSpaceClient(string accessToken)
+			: this(new BaseSpaceClientSettings { Authentication = new OAuth2Authentication(accessToken) },
+					new RequestOptions { RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl })
+		{
+		}
 
         public BaseSpaceClient(IRequestOptions defaultOptions)
 			: this(defaultSettings, defaultOptions)

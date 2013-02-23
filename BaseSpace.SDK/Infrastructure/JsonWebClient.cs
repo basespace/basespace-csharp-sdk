@@ -13,7 +13,7 @@ namespace Illumina.BaseSpace.SDK
 {
     public class JsonWebClient : IWebClient
     {
-		private JsonServiceClient client;
+		private readonly JsonServiceClient client;
 
 	    private readonly ILog logger;
 
@@ -64,10 +64,7 @@ namespace Illumina.BaseSpace.SDK
 
 		private void WebRequestFilter(HttpWebRequest req)
 		{
-			if (DefaultRequestOptions.Authentication != null)
-				DefaultRequestOptions.Authentication.UpdateHttpHeader(req);
-			else
-				settings.Authentication.UpdateHttpHeader(req);
+			settings.Authentication.UpdateHttpHeader(req);
 		}
 
 		public void SetDefaultRequestOptions(IRequestOptions options)
