@@ -18,12 +18,7 @@ namespace Illumina.BaseSpace.SDK
 		{
 		}
 
-        public BaseSpaceClient(IRequestOptions defaultOptions)
-			: this(defaultSettings, defaultOptions)
-        {
-        }
-
-		public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null)
+        public BaseSpaceClient(IClientSettings settings, IRequestOptions defaultOptions = null)
 		{
 			if (settings == null)
 			{
