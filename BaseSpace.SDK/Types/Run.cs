@@ -20,9 +20,12 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public DateTime DateCreated { get; set; }
+
+		[DataMember]
+		public UserCompact UserLockedBy { get; set; }
     }
 
-    [DataContract()]
+    [DataContract]
     public class Run : RunCompact
     {
         [DataMember]
@@ -42,9 +45,6 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public UserCompact UserOwnedBy { get; set; }
-
-	    [DataMember]
-	    public UserCompact UserLockedBy { get; set; }
 
 	    [DataMember]
         public DateTime? DateUploadCompleted { get; set; }
