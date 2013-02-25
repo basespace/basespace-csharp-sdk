@@ -12,7 +12,7 @@ using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public static class RetryLogic
+    internal static class RetryLogic
     {
         public static ICollection<int> RetryableCodes = new ReadOnlyCollection<int>(new[] { 0, 413, 500, 503, 504 });
 

@@ -11,7 +11,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 			HttpMethod = HttpMethods.GET;
 		}
 
-		public HttpMethods HttpMethod { get; set; }
+		protected HttpMethods HttpMethod { get; set; }
 
 		protected string Version
 		{

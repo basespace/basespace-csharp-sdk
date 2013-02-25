@@ -10,7 +10,7 @@ namespace Illumina.BaseSpace.SDK
     {
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
 
-	    protected IClientSettings ClientSettings { get; private set; }
+	    public IClientSettings ClientSettings { get; private set; }
 
 	    public BaseSpaceClient(string accessToken)
 			: this(new BaseSpaceClientSettings { Authentication = new OAuth2Authentication(accessToken) },

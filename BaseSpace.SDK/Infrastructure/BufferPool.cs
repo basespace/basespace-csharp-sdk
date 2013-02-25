@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public static class BufferPool
+    internal static class BufferPool
     {
         static Dictionary<int, Stack<WeakReference>> _chunks = new Dictionary<int, Stack<WeakReference>>();
 

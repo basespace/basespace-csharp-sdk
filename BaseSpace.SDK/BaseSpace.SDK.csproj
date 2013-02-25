@@ -157,7 +157,7 @@
     <Compile Include="Types\Genome.cs" />
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
-    <Compile Include="Types\ReferenceImplementations.cs" />
+    <Compile Include="Types\ContentReference.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-    public class AccessToken
+    internal class AccessToken
     {
         public string TokenString { get; set; }
         public int ExpiresIn { get; set; }

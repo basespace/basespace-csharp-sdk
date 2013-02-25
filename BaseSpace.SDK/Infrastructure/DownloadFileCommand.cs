@@ -9,7 +9,7 @@ using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
-	public class DownloadFileCommand
+	internal class DownloadFileCommand
 	{
 		private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
 
