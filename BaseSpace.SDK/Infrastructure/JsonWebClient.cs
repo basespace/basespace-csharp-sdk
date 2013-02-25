@@ -82,7 +82,7 @@ namespace Illumina.BaseSpace.SDK
 				RetryLogic.DoWithRetry(DefaultRequestOptions.RetryAttempts, request.GetName(), () => result = request.GetFunc(client, options)(), logger);
 				return result;
 			}
-			catch (WebServiceException wex)
+			catch (Exception wex)
 			{
 				throw new BaseSpaceException(request.GetName() + " failed", wex);
 			}
