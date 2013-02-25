@@ -54,7 +54,7 @@ namespace Illumina.BaseSpace.SDK
             HttpEncoder.Current.SerializeToString();
             if (defaultOptions == null)
             {
-                defaultOptions = new RequestOptions(settings.BaseSpaceApiUrl);
+                defaultOptions = new RequestOptions();
             }
            
             SetDefaultRequestOptions(defaultOptions);

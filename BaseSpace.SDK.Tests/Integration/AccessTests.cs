@@ -50,7 +50,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             AccessToken accessToken = FetchAccessToken(verificationCode, settings);
 
 			// TODO Removed OAuth v2
-            var client = new BaseSpaceClient(settings, new RequestOptions(apiUrl));
+            var client = new BaseSpaceClient(settings, new RequestOptions());
 
             // build and return the client
             return client;
