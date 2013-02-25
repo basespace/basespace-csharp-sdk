@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
@@ -23,5 +18,11 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(user.DateCreated > new DateTime(2009,1,1));
             Assert.NotNull(user.Id);
         }
+
+		[Fact]
+		public void GetUsersRunsTest()
+		{
+			
+		}
     }
 }
