@@ -94,6 +94,7 @@
     <Compile Include="ServiceModels\Request\GetSampleRequest.cs" />
     <Compile Include="ServiceModels\Request\GetVariantHeaderRequest.cs" />
     <Compile Include="ServiceModels\Request\ListAppResultFilesRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListRunFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListVariantsRequest.cs" />

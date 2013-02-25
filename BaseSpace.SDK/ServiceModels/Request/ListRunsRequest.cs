@@ -1,4 +1,5 @@
-﻿using Illumina.BaseSpace.SDK.Types;
+﻿using System;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
@@ -8,37 +9,22 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public string InstrumentType { get; set; }
 
-		protected override string GetUrl()
+		protected override bool HasFilters()
 		{
-			var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/users/current/runs", Version), Offset,
-									 Limit, SortDir);
-			if (SortBy.HasValue)
-			{
-				urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, SortBy);
-			}
-			if (!string.IsNullOrEmpty(Statuses))
-			{
-				urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, RunSortByParameters.Statuses, Statuses);
-			}
-			return urlWithParameters;
+			return base.HasFilters() || (Statuses != null) || (InstrumentType != null);
 		}
 
-		private static string AddDefaultQueryParameters(string relativeUrl, int? offset, int? limit, SortDirection? sortDir)
+		protected override string GetUrl()
 		{
-			var url = (offset.HasValue || limit.HasValue || sortDir.HasValue) && relativeUrl.Contains("?") ? relativeUrl : string.Format("{0}?", relativeUrl);
-			if (offset.HasValue)
-			{
-				url = string.Format("{0}&{1}={2}", url, QueryParameters.Offset, offset.Value);
-			}
-			if (sortDir.HasValue)
-			{
-				url = string.Format("{0}&{1}={2}", url, QueryParameters.SortDir, sortDir.Value);
-			}
-			if (limit.HasValue)
-			{
-				url = string.Format("{0}&{1}={2}", url, QueryParameters.Limit, limit.Value);
-			}
-			return url;
+			return BuildUrl(String.Format("{0}/users/current/runs", Version));
+		}
+
+		protected override string BuildUrl(string relativeUrl)
+		{
+			var url = base.BuildUrl(relativeUrl);
+
+			url = UpdateUrl(Statuses, relativeUrl);
+			return UpdateUrl(InstrumentType, url);
 		}
 	}
 }

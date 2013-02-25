@@ -1,8 +1,9 @@
-﻿using Illumina.BaseSpace.SDK.Types;
+﻿using System;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListSampleFilesRequest : AbstractResourceListRequest<ListSampleFilesResponse, RunFilesSortByParameters>
+    public class ListSampleFilesRequest : ListFilesRequest<ListSampleFilesResponse, RunFilesSortByParameters>
     {
         /// <summary>
         /// List files belonging to a sample
@@ -12,11 +13,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
         }
 
-        public string Extensions { get; set; }
-
-		protected override string GetUrl()
+        protected override string GetUrl()
 		{
-			return string.Format("{0}/samples/{1}/files", Version, Id);
+			return BuildUrl(String.Format("{0}/samples/{1}/files", Version, Id));
 		}
 	}
 }

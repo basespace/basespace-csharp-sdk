@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListAppResultFilesRequest : AbstractResourceListRequest<ListAppResultFilesResponse, RunFilesSortByParameters>
+    public class ListAppResultFilesRequest : ListFilesRequest<ListAppResultFilesResponse, RunFilesSortByParameters>
     {
         /// <summary>
         /// List files belonging to an AppResult
@@ -12,11 +12,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
         }
 
-        public string Extensions { get; set; }
-
-		protected override string GetUrl()
+        protected override string GetUrl()
 		{
-			return string.Format("{0}/appresults/{1}/files", Version, Id);
+			var url = BuildUrl(string.Format("{0}/appresults/{1}/files", Version, Id));
+
+			return UpdateUrl(Extensions, url);
 		}
 	}
 }

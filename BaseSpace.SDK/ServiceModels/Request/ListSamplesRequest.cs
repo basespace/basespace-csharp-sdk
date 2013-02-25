@@ -1,4 +1,5 @@
-﻿using Illumina.BaseSpace.SDK.Types;
+﻿using System;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
@@ -15,12 +16,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		protected override string GetUrl()
 		{
-			var urlWithParameters = AddDefaultQueryParameters(string.Format("{0}/projects/{1}/samples", Version, Id), Offset,
-									 Limit, SortDir);
-			if (SortBy.HasValue)
-				urlWithParameters = string.Format("{0}&{1}={2}", urlWithParameters, QueryParameters.SortBy, SortBy);
-
-			return urlWithParameters;
+			return BuildUrl(String.Format("{0}/projects/{1}/samples", Version, Id));
 		}
 	}
 }
