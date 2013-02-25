@@ -93,7 +93,7 @@ namespace Illumina.BaseSpace.SDK
                          {
                              var partNumber = zeroBasedPartNumber + 1;
                              var byteOffset = zeroBasedPartNumber * ClientSettings.FileMultipartSizeThreshold;
-                             var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", ClientSettings.BaseSpaceApiUrl.TrimEnd('/'),ClientSettings.Version, fileId, partNumber);
+                             var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", server, ClientSettings.Version, fileId, partNumber);
                              Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName);
                              
                              UploadPart(serviceUrl, fileToUpload, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1));

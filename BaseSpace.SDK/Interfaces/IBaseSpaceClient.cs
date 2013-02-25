@@ -17,21 +17,21 @@ namespace Illumina.BaseSpace.SDK
 
 		CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null);
 
-		GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
+        ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null);
 
 		GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
 
-		ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options);
+        ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null);
 
 		GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
 
-		ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options);
+        ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null);
 
 		GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null);
 
 		ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options);
 
-		UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
+        ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null);
 
 		CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
 
