@@ -59,7 +59,7 @@ namespace Illumina.BaseSpace.SDK
            
             SetDefaultRequestOptions(defaultOptions);
 
-			client = new JsonServiceClient(DefaultRequestOptions.BaseUrl);
+			client = new JsonServiceClient(settings.BaseSpaceApiUrl);
 			client.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 

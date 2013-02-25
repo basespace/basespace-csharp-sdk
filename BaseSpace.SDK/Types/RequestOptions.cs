@@ -16,12 +16,9 @@ namespace Illumina.BaseSpace.SDK.Types
 				throw new ArgumentException("BaseUrl is required");
 			}
 
-			BaseUrl = baseUrl;
 			RetryAttempts = retryAttempts;
 		}
 
 		public uint RetryAttempts { get; set; }
-
-		public string BaseUrl { get; set; }
 	}
 }
