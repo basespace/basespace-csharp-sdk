@@ -61,13 +61,13 @@ namespace Illumina.BaseSpace.SDK
         OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
 
 
-        Types.File UploadFileToAppResult(UploadFileToAppResultRequest request,
+        Types.File UploadFileToAppResult(System.IO.FileInfo sourceFile, UploadFileToAppResultRequest request,
                                                 IRequestOptions options = null);
 
         void SetDefaultRequestOptions(IRequestOptions options = null);
 
-        Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken());
-        Task DownloadFileTaskAsync(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
+        void DownloadFileById(string fileId, Stream stream, CancellationToken token = new CancellationToken());
+        void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
     }

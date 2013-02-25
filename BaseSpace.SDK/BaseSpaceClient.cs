@@ -187,12 +187,11 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<GetFileInformationResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Types.File UploadFileToAppResult(UploadFileToAppResultRequest toAppResultRequest,
+        public Types.File UploadFileToAppResult(System.IO.FileInfo sourceFileInfo, UploadFileToAppResultRequest toAppResultRequest,
                                                                    IRequestOptions options = null) 
         {
             var fileUploadClient = new FileUpload(WebClient, ClientSettings, options ?? WebClient.DefaultRequestOptions);
-            var fileInfo = new FileInfo(toAppResultRequest.Name);
-            return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(fileInfo, toAppResultRequest.Id,
+            return fileUploadClient.UploadFile<UploadFileToAppResultRequest>(sourceFileInfo, toAppResultRequest.Id,
                                                                              toAppResultRequest.ResourceIdentifierInUri,
                                                                              toAppResultRequest.Directory);
         }
@@ -248,20 +247,20 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<FileContentRedirectMetaResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
 
-        public Task DownloadFileTaskByIdAsync(string fileId, Stream stream, CancellationToken token = new CancellationToken())
+        public void DownloadFileById(string fileId, Stream stream, CancellationToken token = new CancellationToken())
         {
             var command = new DownloadFileCommand(this, fileId, stream, ClientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
-            return Task.Factory.StartNew(command.Execute, token);
+            command.Execute();
         }
 
-        public Task DownloadFileTaskAsync(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
+        public void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
         {
             var command = new DownloadFileCommand(this, file, stream, ClientSettings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
-            return Task.Factory.StartNew(command.Execute, token);
+            command.Execute();
         }
         public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
