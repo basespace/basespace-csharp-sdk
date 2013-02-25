@@ -28,10 +28,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			var url = HasFilters() && relativeUrl.Contains("?") ? relativeUrl : String.Format("{0}?", relativeUrl);
 
-			url = UpdateUrl(Offset, url);
-			url = UpdateUrl(SortDir, url);
-			url = UpdateUrl(Limit, url);
-			url = UpdateUrl(SortBy, url);
+			url = UpdateUrl(QueryParameters.Offset, Offset, url);
+			url = UpdateUrl(QueryParameters.SortDir, SortDir, url);
+			url = UpdateUrl(QueryParameters.Limit, Limit, url);
+			url = UpdateUrl(QueryParameters.SortBy, SortBy, url);
 
 			return url;
 		}
@@ -41,18 +41,18 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 			return (Offset.HasValue || Limit.HasValue || SortDir.HasValue);
 		}
 
-		protected static string UpdateUrl<T>(T? property, string url)
+		protected static string UpdateUrl<T>(object propertyName, T? property, string url)
 			where T : struct
 		{
 			return (!property.HasValue) ? url :
-				String.Format("{0}&{1}={2}", url, QueryParameters.Offset, property.Value);
+				String.Format("{0}&{1}={2}", url, propertyName, property.Value);
 		}
 
-		protected static string UpdateUrl<T>(T property, string url)
+		protected static string UpdateUrl<T>(object propertyName, T property, string url)
 			where T : class
 		{
 			return (property == null) ? url :
-				String.Format("{0}&{1}={2}", url, QueryParameters.Offset, property);
+				String.Format("{0}&{1}={2}", url, propertyName, property);
 		}
     }
 }

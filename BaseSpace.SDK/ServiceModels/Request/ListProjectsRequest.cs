@@ -21,7 +21,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			var url =  base.BuildUrl(relativeUrl);
 
-			return UpdateUrl(Name, url);
+			return UpdateUrl("Name", Name, url);
 		}
 	}
 }

@@ -23,8 +23,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			var url = base.BuildUrl(relativeUrl);
 
-			url = UpdateUrl(Statuses, relativeUrl);
-			return UpdateUrl(InstrumentType, url);
+			url = UpdateUrl("Statuses", Statuses, url);
+			return UpdateUrl("InstrumentType", InstrumentType, url);
 		}
 	}
 }

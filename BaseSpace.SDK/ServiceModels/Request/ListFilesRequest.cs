@@ -15,5 +15,12 @@
 		{
 			return base.HasFilters() || (Extensions != null);
 		}
+
+		protected override string BuildUrl(string relativeUrl)
+		{
+			var url = base.BuildUrl(relativeUrl);
+
+			return UpdateUrl("Extensions", Extensions, url);
+		}
 	}
 }
