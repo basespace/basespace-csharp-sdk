@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
@@ -40,7 +39,6 @@ namespace Illumina.BaseSpace.SDK
 
 		ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null);
 
-
 		ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null);
 
 		GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null);
@@ -51,21 +49,20 @@ namespace Illumina.BaseSpace.SDK
 
 		GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null);
 
-		GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request,
-														IRequestOptions options = null);
+		GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null);
 
 		OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null);
-		OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
-		OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
 
+		OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
+
+		OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
 
 		UploadFileToAppResultResponse UploadFileToAppResult(UploadFileToAppResultRequest request, IRequestOptions options = null);
 
-        void SetDefaultRequestOptions(IRequestOptions options = null);
-
         void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken());
-        void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
-        event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
+        void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
+
+        event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
     }
 }

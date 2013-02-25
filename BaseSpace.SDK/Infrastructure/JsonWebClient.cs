@@ -19,14 +19,31 @@ namespace Illumina.BaseSpace.SDK
 
 		private readonly IClientSettings settings;
 
-        public IRequestOptions DefaultRequestOptions { get; private set; }
+        private static readonly JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
 
-        private static JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
+        private static readonly JsonSerializer<Notification<ScheduledDowntime>> scheduledSerializer = new JsonSerializer<Notification<ScheduledDowntime>>();
 
-        private static JsonSerializer<Notification<ScheduledDowntime>> scheduledSerializer = new JsonSerializer<Notification<ScheduledDowntime>>();
-
-        static JsonWebClient()
+        public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+			this.settings = settings;
+			DefaultRequestOptions = defaultOptions ?? new RequestOptions();
+			logger = LogManager.GetCurrentClassLogger();
+
+            // call something on this object so it gets initialized in single threaded context
+            HttpEncoder.Default.SerializeToString();
+            HttpEncoder.Current.SerializeToString();
+
+			client = new JsonServiceClient(settings.BaseSpaceApiUrl);
+			client.LocalHttpWebRequestFilter += WebRequestFilter;
+        }
+
+		static JsonWebClient()
+		{
 			// setting this just to make sure it's not set in Linux
 			JsonDataContractDeserializer.Instance.UseBcl = false;
 			// BaseSpace uses this format for DateTime
@@ -37,41 +54,9 @@ namespace Illumina.BaseSpace.SDK
 			JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
 
 			JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
-        }
-
-        public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-
-			logger = LogManager.GetCurrentClassLogger();
-            this.settings = settings;
-
-            // call something on this object so it gets initialized in single threaded context
-            HttpEncoder.Default.SerializeToString();
-            HttpEncoder.Current.SerializeToString();
-            if (defaultOptions == null)
-            {
-                defaultOptions = new RequestOptions();
-            }
-           
-            SetDefaultRequestOptions(defaultOptions);
-
-			client = new JsonServiceClient(settings.BaseSpaceApiUrl);
-			client.LocalHttpWebRequestFilter += WebRequestFilter;
-        }
-
-		private void WebRequestFilter(HttpWebRequest req)
-		{
-			settings.Authentication.UpdateHttpHeader(req);
 		}
 
-		public void SetDefaultRequestOptions(IRequestOptions options)
-		{
-			DefaultRequestOptions = options;
-		}
+		public IRequestOptions DefaultRequestOptions { get; set; }
 
 		public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
 			where TReturn : class
@@ -86,6 +71,11 @@ namespace Illumina.BaseSpace.SDK
 			{
 				throw new BaseSpaceException(request.GetName() + " failed", wex);
 			}
+		}
+
+		private void WebRequestFilter(HttpWebRequest req)
+		{
+			settings.Authentication.UpdateHttpHeader(req);
 		}
 
         private static INotification<object> NotificationDeserializer(string source)
