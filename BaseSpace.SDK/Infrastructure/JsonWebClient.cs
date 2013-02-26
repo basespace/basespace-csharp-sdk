@@ -64,7 +64,9 @@ namespace Illumina.BaseSpace.SDK
 			try
 			{
 				TReturn result = null;
-				RetryLogic.DoWithRetry(DefaultRequestOptions.RetryAttempts, request.GetName(), () => result = request.GetFunc(client, options)(), logger);
+			    options = options ?? DefaultRequestOptions;
+
+                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetFunc(client, options)(), logger);
 				return result;
 			}
 			catch (Exception wex)
