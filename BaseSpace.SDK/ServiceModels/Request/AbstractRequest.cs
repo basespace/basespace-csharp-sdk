@@ -18,7 +18,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 			get { return "v1pre3"; }
 		}
 
-		internal Func<TReturn> GetFunc(ServiceClientBase client, IRequestOptions options)
+		internal Func<TReturn> GetFunc(ServiceClientBase client)
 		{
 			var httpMethod = HttpMethod.ToString();
 
