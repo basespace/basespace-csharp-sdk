@@ -2,22 +2,11 @@
 using System.Collections.Specialized;
 using System.Configuration;
 using Common.Logging;
-using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class BaseIntegrationTest
     {
-        private ILog _log;
-        protected ILog Log
-        {
-            get 
-            { 
-                _log = _log ?? LogManager.GetCurrentClassLogger();
-                return _log;
-            }
-        }
-
         public BaseIntegrationTest()
         {
             //configure console logging
@@ -25,41 +14,54 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var properties = new NameValueCollection();
             properties["showDateTime"] = "true";
 
+            _lazy = new Lazy<IBaseSpaceClient>(CreateRealClient);
+
             // set Adapter
             LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
         }
 
-		#region client singleton
-        private static readonly Lazy<IBaseSpaceClient> _lazy =
-            new Lazy<IBaseSpaceClient>(CreateRealClient);
-        public static IBaseSpaceClient Instance { get { return _lazy.Value; } }
-		#endregion client singleton
+        private readonly Lazy<IBaseSpaceClient> _lazy;
 
         public IBaseSpaceClient Client
         {
-            get { return Instance; }
+            get { return _lazy.Value; }
+        }
+
+        private ILog _log;
+        protected ILog Log
+        {
+            get
+            {
+                _log = _log ?? LogManager.GetCurrentClassLogger();
+                return _log;
+            }
         }
 
         // Note: prefer access through the Client property!
-        public static IBaseSpaceClient CreateRealClient()
+        protected IBaseSpaceClient CreateRealClient()
         {
-            string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
-            string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
+            //string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
+            //string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
             string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
-            string accessToken = ConfigurationManager.AppSettings.Get("basespace:api-accesstoken");
+            
             var settings = new BaseSpaceClientSettings
 				{
-					Authentication = new OAuth2Authentication(apiKey, apiSecret),
+					Authentication = GetAuthentication(),
 					BaseSpaceApiUrl = apiUrl, 
 					BaseSpaceWebsiteUrl = webUrl, 
 					Version = version
 				};
 
-			// TODO Removed OAuth v2
-			IBaseSpaceClient iBaseSpaceClient = new BaseSpaceClient(settings, new RequestOptions());
-            return iBaseSpaceClient;
+			return new BaseSpaceClient(settings);
+        }
+
+        protected virtual IAuthentication GetAuthentication()
+        {
+            string accessToken = ConfigurationManager.AppSettings.Get("basespace:api-accesstoken");
+
+            return new OAuth2Authentication(accessToken);
         }
     }
 }
