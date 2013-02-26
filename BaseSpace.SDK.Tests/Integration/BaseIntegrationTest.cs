@@ -38,7 +38,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         // Note: prefer access through the Client property!
-        protected IBaseSpaceClient CreateRealClient()
+        protected virtual IBaseSpaceClient CreateRealClient()
         {
             //string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
             //string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
@@ -55,6 +55,21 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 				};
 
 			return new BaseSpaceClient(settings);
+        }
+
+        protected virtual IClientSettings BuildSettings()
+        {
+            string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
+            string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
+            string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
+
+            return new BaseSpaceClientSettings
+            {
+                Authentication = GetAuthentication(),
+                BaseSpaceApiUrl = apiUrl,
+                BaseSpaceWebsiteUrl = webUrl,
+                Version = version
+            };
         }
 
         protected virtual IAuthentication GetAuthentication()
