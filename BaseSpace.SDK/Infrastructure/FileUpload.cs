@@ -66,6 +66,8 @@ namespace Illumina.BaseSpace.SDK
 
 			var fileUploadresp = WebClient.Send(request);
 
+			var server = ClientSettings.BaseSpaceApiUrl ?? ClientSettings.BaseSpaceApiUrl.TrimEnd('/');
+
             if (fileUploadresp == null)
             {
                 Logger.ErrorFormat("File Upload: Failed initiating upload");
