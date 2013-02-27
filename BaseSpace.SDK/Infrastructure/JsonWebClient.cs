@@ -66,7 +66,7 @@ namespace Illumina.BaseSpace.SDK
 				TReturn result = null;
 			    options = options ?? DefaultRequestOptions;
 
-                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetFunc(client)(), logger);
+                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
 				return result;
 			}
 			catch (Exception wex)

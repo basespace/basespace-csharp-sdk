@@ -41,9 +41,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 	    public string ResourceIdentifierInUri { get; set; }
 
-        internal override Func<TResult> GetFunc(ServiceClientBase client)
+        internal override Func<TResult> GetSendFunc(ServiceClientBase client)
         {
-            return (MultiPart.HasValue && MultiPart.Value) ? base.GetFunc(client) :
+            return (MultiPart.HasValue && MultiPart.Value) ? base.GetSendFunc(client) :
                  () => client.PostFileWithRequest<TResult>(GetUrl(), FileInfo, this);
         }
 
