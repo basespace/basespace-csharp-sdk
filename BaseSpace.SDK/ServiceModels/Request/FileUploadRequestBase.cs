@@ -7,15 +7,13 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 	public abstract class FileUploadRequestBase<TResult> : AbstractResourceRequest<TResult>
 		where TResult : class
 	{
-	    private readonly FileInfo fileInfo;
-
-		protected FileUploadRequestBase(string id, string name, string directory, string resourceIdentifierInUri)
+	    protected FileUploadRequestBase(string id, string name, string directory, string resourceIdentifierInUri)
 		{
             HttpMethod = HttpMethods.PUT;
 
 			Id = id;
-			Name = name;
-		    fileInfo = new FileInfo(name);
+	        FileInfo = new FileInfo(name);
+			Name = FileInfo.Name;
 
 			if (directory != null)
 				Directory = directory;
@@ -39,11 +37,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             }
 	    }
 
+	    internal FileInfo FileInfo { get; private set; }
+
 	    public string ResourceIdentifierInUri { get; set; }
 
         internal override Func<TResult> GetFunc(ServiceClientBase client)
         {
-            return () => client.PostFileWithRequest<TResult>(GetUrl(), fileInfo, this);
+            return (MultiPart.HasValue && MultiPart.Value) ? base.GetFunc(client) :
+                 () => client.PostFileWithRequest<TResult>(GetUrl(), FileInfo, this);
         }
 
         protected override string GetUrl()
