@@ -28,17 +28,16 @@ namespace Illumina.BaseSpace.SDK
 		public virtual TResult UploadFile<TResult>(FileUploadRequestBase<TResult> request, int numThreads = 16)
 			where TResult : FileResponse
 		{
-			var fileToUpload = new FileInfo(request.Name);
-            Logger.DebugFormat("numthreads {0}", numThreads);
+			Logger.DebugFormat("numthreads {0}", numThreads);
 			TResult file = null;
 
-            RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", fileToUpload.Name),
+            RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", request.FileInfo.Name),
                                    () =>
 	                               {
-		                               request.MultiPart = fileToUpload.Length >= ClientSettings.FileMultipartSizeThreshold;
+                                       request.MultiPart = request.FileInfo.Length >= ClientSettings.FileMultipartSizeThreshold;
 
-                                       file = request.MultiPart.Value ? 
-										   UploadFile_MultiPart(fileToUpload, request, numThreads) :
+                                       file = request.MultiPart.Value ?
+                                           UploadFile_MultiPart(request, numThreads) :
 										   WebClient.Send(request);
                                    }, Logger, retryHandler:
                                    (exc) =>
@@ -59,14 +58,14 @@ namespace Illumina.BaseSpace.SDK
             return file;
         }
 
-		protected virtual TResult UploadFile_MultiPart<TResult>(FileInfo fileToUpload, FileUploadRequestBase<TResult> request, int numThreads)
+		protected virtual TResult UploadFile_MultiPart<TResult>(FileUploadRequestBase<TResult> request, int numThreads)
 			where TResult : FileResponse
         {
-			Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", fileToUpload.Name);
+            Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", request.FileInfo.Name);
 
 			var fileUploadresp = WebClient.Send(request);
 
-			var server = ClientSettings.BaseSpaceApiUrl ?? ClientSettings.BaseSpaceApiUrl.TrimEnd('/');
+			var server = ClientSettings.BaseSpaceApiUrl.TrimEnd('/');
 
             if (fileUploadresp == null)
             {
@@ -81,7 +80,7 @@ namespace Illumina.BaseSpace.SDK
             }
 
             var fileId = fileUploadresp.Response.Id;
-            var zeroBasedPartNumberMax = (fileToUpload.Length - 1) / ClientSettings.FileMultipartSizeThreshold;
+            var zeroBasedPartNumberMax = (request.FileInfo.Length - 1) / ClientSettings.FileMultipartSizeThreshold;
 
 			// shared signal to let all threads know if one part failed
             // if so, other threads shouldn't bother uploading
@@ -96,14 +95,14 @@ namespace Illumina.BaseSpace.SDK
                              var partNumber = zeroBasedPartNumber + 1;
                              var byteOffset = zeroBasedPartNumber * ClientSettings.FileMultipartSizeThreshold;
                              var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", server, ClientSettings.Version, fileId, partNumber);
-                             Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName);
-                             
-                             UploadPart(serviceUrl, fileToUpload, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1));
+                             Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName);
+
+                             UploadPart(serviceUrl, request.FileInfo, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1));
                              lock (sync)
                              {
                                  totalPartsUploaded++;
                                  Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded",
-                                                    partNumber, 1 + zeroBasedPartNumberMax, fileToUpload.FullName,
+                                                    partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName,
                                                     totalPartsUploaded);
                              }
                          }));
@@ -120,7 +119,7 @@ namespace Illumina.BaseSpace.SDK
 
             var response = WebClient.Send(statusReq);
 
-            Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
+            Logger.InfoFormat("File Upload: {0}: Finished with status {1}", request.FileInfo.FullName, status);
 
             return response;
         }
