@@ -86,7 +86,7 @@ namespace Illumina.BaseSpace.SDK
 
         public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListRunsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
 
@@ -99,7 +99,7 @@ namespace Illumina.BaseSpace.SDK
 
         public ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListProjectsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null)
@@ -130,7 +130,7 @@ namespace Illumina.BaseSpace.SDK
 
         public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
         
@@ -143,7 +143,7 @@ namespace Illumina.BaseSpace.SDK
 
         public ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListAppResultsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
@@ -161,7 +161,7 @@ namespace Illumina.BaseSpace.SDK
 
         public ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListGenomeResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
 
@@ -169,17 +169,17 @@ namespace Illumina.BaseSpace.SDK
         #region Files
         public ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListRunFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListSampleFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListAppResultFilesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
 
         public GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null)
@@ -206,7 +206,7 @@ namespace Illumina.BaseSpace.SDK
 
         public ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send<ListVariantsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
+            return WebClient.Send<ListVariantsResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), request, options);
         }
         #endregion
 

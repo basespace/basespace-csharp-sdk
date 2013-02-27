@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Util;
 using Common.Logging;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
@@ -124,6 +125,7 @@ namespace Illumina.BaseSpace.SDK
 
                 return WrapResult<TReturn>(funcFile, log, fileRestRequest.Options.RetryAttempts, fileRestRequest.Name);
             }
+
             var restRequest = request as StreamingRestRequest;
             if (restRequest != null)
             {
