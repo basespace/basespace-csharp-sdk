@@ -9,7 +9,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		protected override string GetUrl()
 		{
-			return BuildUrl(String.Format("{0}/genomes", Version));
+			return BuildUrl(String.Format("{0}/users/current/projects", Version));
 		}
 
 		protected override bool HasFilters()
