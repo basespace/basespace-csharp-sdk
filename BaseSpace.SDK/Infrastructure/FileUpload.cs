@@ -112,12 +112,12 @@ namespace Illumina.BaseSpace.SDK
            
             var status = success ? FileUploadStatus.complete : FileUploadStatus.aborted;
 
-            var statusReq = new FileRequestPost()
+            var statusReq = new FileRequestPost
             {
+                Id = fileId,
                 UploadStatus = status
             };
 
-            var uri2 = string.Format("{0}/files/{1}", ClientSettings.Version, fileId);
             var response = WebClient.Send(statusReq);
 
             Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
