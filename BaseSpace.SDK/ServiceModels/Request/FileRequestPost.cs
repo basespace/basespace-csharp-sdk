@@ -2,8 +2,14 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class FileRequestPost : AbstractResourceRequest<FileResponse>
+    internal class FileRequestPost<TResult> : AbstractResourceRequest<TResult>
+        where TResult : FileResponse
     {
+        public FileRequestPost()
+        {
+            HttpMethod = HttpMethods.POST;
+        }
+
 	    public FileUploadStatus? UploadStatus { get; set; }
 
 		protected override string GetUrl()

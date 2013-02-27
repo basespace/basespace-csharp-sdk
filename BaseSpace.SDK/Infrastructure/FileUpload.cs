@@ -112,7 +112,7 @@ namespace Illumina.BaseSpace.SDK
            
             var status = success ? FileUploadStatus.complete : FileUploadStatus.aborted;
 
-            var statusReq = new FileRequestPost
+            var statusReq = new FileRequestPost<TResult>
             {
                 Id = fileId,
                 UploadStatus = status
@@ -122,7 +122,7 @@ namespace Illumina.BaseSpace.SDK
 
             Logger.InfoFormat("File Upload: {0}: Finished with status {1}", fileToUpload.FullName, status);
 
-            return (TResult)response;
+            return response;
         }
 
 
