@@ -27,9 +27,19 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		public string Directory { get; set; }
 
-		public bool? MultiPart { get; set; }
+	    private bool? isMultiPart;
 
-		public string ResourceIdentifierInUri { get; set; }
+	    public bool? MultiPart
+	    {
+	        get { return isMultiPart; }
+            set 
+            { 
+                isMultiPart = value;
+                HttpMethod = (value.HasValue && value.Value) ? HttpMethods.POST : HttpMethods.PUT;
+            }
+	    }
+
+	    public string ResourceIdentifierInUri { get; set; }
 
         internal override Func<TResult> GetFunc(ServiceClientBase client)
         {
