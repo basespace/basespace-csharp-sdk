@@ -9,22 +9,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public string InstrumentType { get; set; }
 
-		protected override bool HasFilters()
-		{
-			return base.HasFilters() || (Statuses != null) || (InstrumentType != null);
-		}
-
-		protected override string GetUrl()
-		{
-			return BuildUrl(String.Format("{0}/users/current/runs", Version));
-		}
-
-		protected override string BuildUrl(string relativeUrl)
-		{
-			var url = base.BuildUrl(relativeUrl);
-
-			url = UpdateUrl("Statuses", Statuses, url);
-			return UpdateUrl("InstrumentType", InstrumentType, url);
-		}
+        protected override string GetUrl()
+        {
+            return String.Format("{0}/users/current/runs", Version);
+        }
 	}
 }

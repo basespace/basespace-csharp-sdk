@@ -9,19 +9,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		protected override string GetUrl()
 		{
-			return BuildUrl(String.Format("{0}/users/current/projects", Version));
-		}
-
-		protected override bool HasFilters()
-		{
-			return base.HasFilters() || (Name != null);
-		}
-
-		protected override string BuildUrl(string relativeUrl)
-		{
-			var url =  base.BuildUrl(relativeUrl);
-
-			return UpdateUrl("Name", Name, url);
+			return String.Format("{0}/users/current/projects", Version);
 		}
 	}
 }

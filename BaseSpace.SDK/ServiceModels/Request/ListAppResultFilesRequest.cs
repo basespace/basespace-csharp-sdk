@@ -1,4 +1,5 @@
-﻿using Illumina.BaseSpace.SDK.Types;
+﻿using System;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
@@ -14,7 +15,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         protected override string GetUrl()
 		{
-			return BuildUrl(string.Format("{0}/appresults/{1}/files", Version, Id));
+			return String.Format("{0}/appresults/{1}/files", Version, Id);
 		}
 	}
 }
