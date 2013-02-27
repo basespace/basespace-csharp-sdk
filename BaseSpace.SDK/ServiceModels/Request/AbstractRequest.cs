@@ -20,9 +20,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		internal virtual Func<TReturn> GetFunc(ServiceClientBase client)
 		{
-			var httpMethod = HttpMethod.ToString();
-
-			return () => client.Send<TReturn>(httpMethod, GetUrl(), (httpMethod == "GET") ? null : this);
+			return () => client.Send<TReturn>(HttpMethod.ToString(), GetUrl(), this);
 		}
 
 		internal string GetName()
