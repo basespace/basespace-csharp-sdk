@@ -7,14 +7,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public FileContentRedirectMetaRequest(string fileId)
 			: base (fileId)
         {
-            RedirectType = FileContentRedirectType.Meta;
+            Redirect = FileContentRedirectType.Meta;
         }
 
-        public FileContentRedirectType RedirectType;
+        public FileContentRedirectType Redirect { get; set; }
 
 		protected override string GetUrl()
 		{
-			return String.Format("{0}/files/{1}/content?Redirect={2}", Version, Id, RedirectType);
+            return String.Format("{0}/files/{1}/content", Version, Id);
 		}
 	}
 }
