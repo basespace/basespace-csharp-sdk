@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
@@ -198,13 +199,13 @@ namespace Illumina.BaseSpace.SDK
 						webreq.AddRange(start, end);
 
 						using (var resp = webreq.GetResponse() as HttpWebResponse)
-							start += CopyResponse(start, dataHandler, resp, chunkSize);
+							start += CopyResponse(start, dataHandler, resp, chunkSize,Logger);
 					}
 				},
 			Logger);
 		}
 
-		private static int CopyResponse(long start, Action<byte[], long, long> dataHandler, WebResponse resp, int chunkSize)
+        private static int CopyResponse(long start, Action<byte[], long, long> dataHandler, WebResponse resp, int chunkSize, ILog Logger)
 		{
 			using (var stm = resp.GetResponseStream())
 			{
@@ -217,6 +218,20 @@ namespace Illumina.BaseSpace.SDK
 					var length = (int)resp.ContentLength;
 					while ((read = stm.Read(buffer, totalRead, length - totalRead)) > 0)
 						totalRead += read;
+
+                    var md5 = resp.Headers["ETag"].Trim('"');
+
+                    if (!string.IsNullOrWhiteSpace(md5))
+                    {
+                        var hasher = new MD5CryptoServiceProvider();
+                        var computedMd5 = BitConverter.ToString(hasher.ComputeHash(buffer, 0, totalRead)).Replace("-", string.Empty).ToLower();
+
+                        // don't take no risk, retry the entire part
+                        if (computedMd5 != md5)
+                            throw new InvalidDataException("the md5 checksums for this part did not match");
+                    }
+                    else
+                        Logger.Debug("No md5 header found");
 
 					dataHandler(buffer, start, totalRead);
 				}
