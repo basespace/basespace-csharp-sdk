@@ -219,19 +219,20 @@ namespace Illumina.BaseSpace.SDK
 					while ((read = stm.Read(buffer, totalRead, length - totalRead)) > 0)
 						totalRead += read;
 
-                    var md5 = resp.Headers["ETag"].Trim('"');
+                    // not working on large file uploads, amazon md5 is hosed in this case
+                    //var md5 = resp.Headers["ETag"].Trim('"');
 
-                    if (!string.IsNullOrWhiteSpace(md5))
-                    {
-                        var hasher = new MD5CryptoServiceProvider();
-                        var computedMd5 = BitConverter.ToString(hasher.ComputeHash(buffer, 0, totalRead)).Replace("-", string.Empty).ToLower();
+                    //if (!string.IsNullOrWhiteSpace(md5))
+                    //{
+                    //    var hasher = new MD5CryptoServiceProvider();
+                    //    var computedMd5 = BitConverter.ToString(hasher.ComputeHash(buffer, 0, totalRead)).Replace("-", string.Empty).ToLower();
 
-                        // don't take no risk, retry the entire part
-                        if (computedMd5 != md5)
-                            throw new InvalidDataException("the md5 checksums for this part did not match");
-                    }
-                    else
-                        Logger.Debug("No md5 header found");
+                    //    // don't take no risk, retry the entire part
+                    //    if (computedMd5 != md5)
+                    //        throw new InvalidDataException("the md5 checksums for this part did not match");
+                    //}
+                    //else
+                    //    Logger.Debug("No md5 header found");
 
 					dataHandler(buffer, start, totalRead);
 				}
