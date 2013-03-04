@@ -10,7 +10,9 @@
 
 		string Version { get; }
 		
-		uint FileMultipartSizeThreshold { get; }
+		uint FileUploadMultipartSizeThreshold { get; }
+
+        uint FileDownloadMultipartSizeThreshold { get; }
 
 		IAuthentication Authentication { get; }
 	}

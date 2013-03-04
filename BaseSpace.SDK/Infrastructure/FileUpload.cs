@@ -34,7 +34,7 @@ namespace Illumina.BaseSpace.SDK
             RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", request.FileInfo.Name),
                                    () =>
 	                               {
-                                       request.MultiPart = request.FileInfo.Length >= ClientSettings.FileMultipartSizeThreshold;
+                                       request.MultiPart = request.FileInfo.Length >= ClientSettings.FileUploadMultipartSizeThreshold;
 
                                        file = request.MultiPart.Value ?
                                            UploadFile_MultiPart(request, numThreads) :
@@ -80,7 +80,7 @@ namespace Illumina.BaseSpace.SDK
             }
 
             var fileId = fileUploadresp.Response.Id;
-            var zeroBasedPartNumberMax = (request.FileInfo.Length - 1) / ClientSettings.FileMultipartSizeThreshold;
+            var zeroBasedPartNumberMax = (request.FileInfo.Length - 1) / ClientSettings.FileUploadMultipartSizeThreshold;
 
 			// shared signal to let all threads know if one part failed
             // if so, other threads shouldn't bother uploading
@@ -93,7 +93,7 @@ namespace Illumina.BaseSpace.SDK
                          (zeroBasedPartNumber =>
                          {
                              var partNumber = zeroBasedPartNumber + 1;
-                             var byteOffset = zeroBasedPartNumber * ClientSettings.FileMultipartSizeThreshold;
+                             var byteOffset = zeroBasedPartNumber * ClientSettings.FileUploadMultipartSizeThreshold;
                              var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", server, ClientSettings.Version, fileId, partNumber);
                              Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName);
 
@@ -140,13 +140,13 @@ namespace Illumina.BaseSpace.SDK
                         byte[] data = null;
                         try
                         {
-                            data = BufferPool.GetChunk(Convert.ToInt32(ClientSettings.FileMultipartSizeThreshold));
+                            data = BufferPool.GetChunk(Convert.ToInt32(ClientSettings.FileUploadMultipartSizeThreshold));
 
 	                        var authentication = ClientSettings.Authentication as OAuth2Authentication;
 	                        authentication.UpdateHttpHeader(wc.Headers);
 
                             int actualSize;
-                            int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, Convert.ToInt32(ClientSettings.FileMultipartSizeThreshold));
+                            int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, Convert.ToInt32(ClientSettings.FileUploadMultipartSizeThreshold));
                             lock (_syncRead) // avoid thrashing the disk
                                 using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
                                 {
