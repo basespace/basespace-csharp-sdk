@@ -10,7 +10,8 @@
 
 		public const string DEFAULT_VERSION = "v1pre3";
 
-		public const uint DEFAULT_MULTIPART_SIZE = 20*1024*1024; //in bytes
+        public const uint DEFAULT_UPLOAD_MULTIPART_SIZE = 20 * 1024 * 1024; //in bytes
+        public const uint DEFAULT_DOWNLOAD_MULTIPART_SIZE = 1024 * 1024; //in bytes
 
 		public const uint DEFAULT_MULTIPART_SIZE_THRESHOLD = 25*1024*1024; //in bytes
 
@@ -20,7 +21,8 @@
 			BaseSpaceApiUrl = DEFAULT_API;
 			BaseSpaceWebsiteUrl = DEFAULT_WEBSITE;
 			Version = DEFAULT_VERSION;
-			FileMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE;
+            FileUploadMultipartSizeThreshold = DEFAULT_UPLOAD_MULTIPART_SIZE;
+            FileDownloadMultipartSizeThreshold = DEFAULT_DOWNLOAD_MULTIPART_SIZE;
 		}
 
 		public uint RetryAttempts { get; set; }
@@ -31,8 +33,10 @@
 
 		public string Version { get; set; }
 
-		public uint FileMultipartSizeThreshold { get; set; }
+        public uint FileUploadMultipartSizeThreshold { get; set; }
 
-		public IAuthentication Authentication { get; set; }
+        public uint FileDownloadMultipartSizeThreshold { get; set; }
+
+        public IAuthentication Authentication { get; set; }
 	}
 }

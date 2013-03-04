@@ -12,7 +12,7 @@ namespace Illumina.BaseSpace.SDK
 {
 	internal class DownloadFileCommand
 	{
-		private const int CONNECTION_COUNT = 8; //TODO: Is this the right place?
+		private const int CONNECTION_COUNT = 16; //TODO: Is this the right place?
 
 		private readonly BaseSpaceClient _client;
 	    private readonly IClientSettings _settings;
@@ -40,7 +40,7 @@ namespace Illumina.BaseSpace.SDK
 			_settings = settings;
 			_stream = stream;
 			Token = token;
-			ChunkSize = Convert.ToInt32(_settings.FileMultipartSizeThreshold);
+			ChunkSize = Convert.ToInt32(_settings.FileDownloadMultipartSizeThreshold);
 			MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
 		}
 
@@ -81,7 +81,7 @@ namespace Illumina.BaseSpace.SDK
         {
             var parallelOptions = new ParallelOptions()
             {
-                MaxDegreeOfParallelism = 16,
+                MaxDegreeOfParallelism = CONNECTION_COUNT,
                 CancellationToken = Token
             };
             var totalChunkCount = GetChunkCount(fileSize, chunkSize);
@@ -193,7 +193,9 @@ namespace Illumina.BaseSpace.SDK
 						var webreq = HttpWebRequest.Create(url) as HttpWebRequest;
 						webreq.ServicePoint.ConnectionLimit = CONNECTION_COUNT;
 						webreq.ServicePoint.UseNagleAlgorithm = true;
+                        webreq.ServicePoint.ReceiveBufferSize = 1048576;  // GV: I experienced improvements using this setting and downloading on 10Gb instances and sockets
 						webreq.Timeout = 200000;
+                        webreq.Proxy = null;
 
 						Logger.InfoFormat("requesting {0}->{1}", start, end);
 						webreq.AddRange(start, end);
@@ -218,21 +220,6 @@ namespace Illumina.BaseSpace.SDK
 					var length = (int)resp.ContentLength;
 					while ((read = stm.Read(buffer, totalRead, length - totalRead)) > 0)
 						totalRead += read;
-
-                    // not working on large file uploads, amazon md5 is hosed in this case
-                    //var md5 = resp.Headers["ETag"].Trim('"');
-
-                    //if (!string.IsNullOrWhiteSpace(md5))
-                    //{
-                    //    var hasher = new MD5CryptoServiceProvider();
-                    //    var computedMd5 = BitConverter.ToString(hasher.ComputeHash(buffer, 0, totalRead)).Replace("-", string.Empty).ToLower();
-
-                    //    // don't take no risk, retry the entire part
-                    //    if (computedMd5 != md5)
-                    //        throw new InvalidDataException("the md5 checksums for this part did not match");
-                    //}
-                    //else
-                    //    Logger.Debug("No md5 header found");
 
 					dataHandler(buffer, start, totalRead);
 				}
