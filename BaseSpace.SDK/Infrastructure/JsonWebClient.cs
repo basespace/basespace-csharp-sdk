@@ -110,19 +110,19 @@ namespace Illumina.BaseSpace.SDK
             switch (type.ToLower())
             {
                 case "file":
-                    return JsonSerializer.DeserializeFromString<ContentReference<File>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<FileCompact>>(source);
 
                 case "appresult":
-                    return JsonSerializer.DeserializeFromString<ContentReference<AppResult>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<AppResultCompact>>(source);
 
                 case "sample":
-                    return JsonSerializer.DeserializeFromString<ContentReference<Sample>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<SampleCompact>>(source);
 
                 case "project":
-                    return JsonSerializer.DeserializeFromString<ContentReference<Project>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<ProjectCompact>>(source);
 
                 case "run":
-                    return JsonSerializer.DeserializeFromString<ContentReference<Run>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReference<RunCompact>>(source);
             }
 
             return null;
