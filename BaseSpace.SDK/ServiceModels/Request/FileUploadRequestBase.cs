@@ -7,12 +7,12 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 	public abstract class FileUploadRequestBase<TResult> : AbstractResourceRequest<TResult>
 		where TResult : class
 	{
-	    protected FileUploadRequestBase(string id, string name, string directory, string resourceIdentifierInUri)
+	    protected FileUploadRequestBase(string id, string filePath, string directory, string resourceIdentifierInUri)
 		{
             HttpMethod = HttpMethods.PUT;
 
 			Id = id;
-	        FileInfo = new FileInfo(name);
+            FileInfo = new FileInfo(filePath);
 			Name = FileInfo.Name;
 
 			if (directory != null)

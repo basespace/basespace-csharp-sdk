@@ -2,8 +2,8 @@
 {
     public class UploadFileToAppResultRequest : FileUploadRequestBase<UploadFileToAppResultResponse>
     {
-        public UploadFileToAppResultRequest(string resourceId, string name, string directory = null)
-            : base(resourceId, name, directory, "appresults")
+        public UploadFileToAppResultRequest(string resourceId, string filePath, string directory = null)
+            : base(resourceId, filePath, directory, "appresults")
         {
         }
 	}
