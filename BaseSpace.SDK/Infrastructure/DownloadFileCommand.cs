@@ -193,8 +193,11 @@ namespace Illumina.BaseSpace.SDK
 						var webreq = HttpWebRequest.Create(url) as HttpWebRequest;
 						webreq.ServicePoint.ConnectionLimit = CONNECTION_COUNT;
 						webreq.ServicePoint.UseNagleAlgorithm = true;
-                        webreq.ServicePoint.ReceiveBufferSize = 1048576;  // GV: I experienced improvements using this setting and downloading on 10Gb instances and sockets
-						webreq.Timeout = 200000;
+
+                        // not implemented on mono :(
+                        //webreq.ServicePoint.ReceiveBufferSize = 1048576;  // GV: I experienced improvements using this setting and downloading on 10Gb instances and sockets
+						
+                        webreq.Timeout = 200000;
                         webreq.Proxy = null;
 
 						Logger.InfoFormat("requesting {0}->{1}", start, end);
