@@ -9,6 +9,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public string InstrumentType { get; set; }
 
+        public bool IncludeLocked { get; set; }
+
         protected override string GetUrl()
         {
             return String.Format("{0}/users/current/runs", Version);
