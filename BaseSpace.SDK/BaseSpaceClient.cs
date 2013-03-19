@@ -202,7 +202,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, fileId, stream, Settings, token);
+            var command = new DownloadFileCommand(this, fileId, stream, Settings, token, WebProxy);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
@@ -210,7 +210,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, file, stream, Settings, token);
+            var command = new DownloadFileCommand(this, file, stream, Settings, token, WebProxy);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();

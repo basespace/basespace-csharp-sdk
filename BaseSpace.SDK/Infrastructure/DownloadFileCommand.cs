@@ -18,27 +18,29 @@ namespace Illumina.BaseSpace.SDK
 	    private readonly IClientSettings _settings;
 		private readonly Stream _stream;
         private readonly FileCompact _file;
+	    private readonly IWebProxy _proxy;
 	    private static CancellationToken Token { get; set; }
         private int ChunkSize { get; set; }
         private int MaxRetries { get; set; }
 
-        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken())
-			: this(client, stream, settings, token)
+        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null)
+			: this(client, stream, settings, token, proxy)
         {
             _file = file;
         }
 
-        public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken())
-			: this(client, stream, settings, token)
+        public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null)
+			: this(client, stream, settings, token, proxy)
         {
 			_file = _client.GetFilesInformation(new GetFileInformationRequest(fileId)).Response;
         }
 
-		private DownloadFileCommand(BaseSpaceClient client, Stream stream, IClientSettings settings, CancellationToken token)
+		private DownloadFileCommand(BaseSpaceClient client, Stream stream, IClientSettings settings, CancellationToken token, IWebProxy proxy)
 		{
 			_client = client;
 			_settings = settings;
 			_stream = stream;
+		    _proxy = proxy;
 			Token = token;
 			ChunkSize = Convert.ToInt32(_settings.FileDownloadMultipartSizeThreshold);
 			MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
@@ -65,7 +67,7 @@ namespace Illumina.BaseSpace.SDK
                 }
             });
 
-            DownloadFile(getUrl, _stream, Convert.ToInt64(_file.Size), ChunkSize, UpdateStatusForFile, MaxRetries, LogManager.GetCurrentClassLogger());
+            DownloadFile(getUrl, _stream, Convert.ToInt64(_file.Size), ChunkSize, UpdateStatusForFile, MaxRetries, LogManager.GetCurrentClassLogger(), _proxy);
 		}
 
 	    private void UpdateStatusForFile(int downloadedChunkCount, int totalChunkCount, int chunkSizeAdj, double span)
@@ -77,7 +79,7 @@ namespace Illumina.BaseSpace.SDK
                                 span));
 	    }
 
-	    public static void DownloadFile(Func<string> getUrl, Stream stream, long fileSize, int chunkSize,Action<int,int,int,double> updateStatus =null, int maxRetries = 3 , ILog Logger = null)
+	    public static void DownloadFile(Func<string> getUrl, Stream stream, long fileSize, int chunkSize,Action<int,int,int,double> updateStatus =null, int maxRetries = 3 , ILog Logger = null, IWebProxy proxy = null)
         {
             var parallelOptions = new ParallelOptions()
             {
@@ -103,7 +105,7 @@ namespace Illumina.BaseSpace.SDK
                                                             stream.Position = pos;
                                                             stream.Write(b, 0, (int)len);
                                                         }
-	                                                }, chunkSize, maxRetries, Logger);
+	                                                }, chunkSize, maxRetries, Logger, proxy);
 
 	                lock (sync)
 	                {
@@ -179,7 +181,7 @@ namespace Illumina.BaseSpace.SDK
 			return remainder > 0 ? remainder : chunkSize;
 		}
 
-		private static void GetByteRange(Func<string> absoluteUrl, long start, long end, Action<byte[], long, long> dataHandler, int chunkSize, int maxRetries, ILog Logger)
+		private static void GetByteRange(Func<string> absoluteUrl, long start, long end, Action<byte[], long, long> dataHandler, int chunkSize, int maxRetries, ILog Logger, IWebProxy proxy)
 		{
 			var len = end - start + 1;
 			if (len > chunkSize)
@@ -193,6 +195,7 @@ namespace Illumina.BaseSpace.SDK
 						var webreq = HttpWebRequest.Create(url) as HttpWebRequest;
 						webreq.ServicePoint.ConnectionLimit = CONNECTION_COUNT;
 						webreq.ServicePoint.UseNagleAlgorithm = true;
+					    webreq.Proxy = proxy;
 
                         // not implemented on mono :(
                         //webreq.ServicePoint.ReceiveBufferSize = 1048576;  // GV: I experienced improvements using this setting and downloading on 10Gb instances and sockets
