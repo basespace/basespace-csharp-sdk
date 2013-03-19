@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
@@ -25,6 +26,12 @@ namespace Illumina.BaseSpace.SDK
 		}
 
 		public IClientSettings Settings { get; private set; }
+
+        public IWebProxy WebProxy
+        {
+            get { return WebClient.WebProxy; }
+            set { WebClient.WebProxy = value; }
+        }
 
         protected IWebClient WebClient { get; private set; }
 

@@ -56,7 +56,13 @@ namespace Illumina.BaseSpace.SDK
 			JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
 		}
 
-		public IRequestOptions DefaultRequestOptions { get; set; }
+        public IWebProxy WebProxy
+        {
+            get { return client.Proxy; }
+            set { client.Proxy = value; }
+        }
+
+        public IRequestOptions DefaultRequestOptions { get; set; }
 
 		public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
 			where TReturn : class

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
@@ -7,7 +8,9 @@ namespace Illumina.BaseSpace.SDK
 {
     public interface IBaseSpaceClient
     {
-		GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null);
+        IWebProxy WebProxy { get; set; }
+
+        GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null);
 
 		GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
 
