@@ -1,5 +1,8 @@
-﻿namespace Illumina.BaseSpace.SDK.ServiceModels
+﻿using System.Runtime.Serialization;
+
+namespace Illumina.BaseSpace.SDK.ServiceModels
 {
+    [DataContract]
     public class CreateAppResultRequest : AbstractRequest<CreateAppResultResponse>
     {
         /// <summary>
@@ -14,15 +17,20 @@
 			HttpMethod = HttpMethods.POST;
         }
 
+        [DataMember]
         public string ProjectId { get; set; }
 
+        [DataMember]
         public string Name { get; set; }
 
+        [DataMember]
         public string Description { get; set; }
 
+        [DataMember]
         public string HrefAppSession { get; set; }
 
-        public IContentReference<IAbstractResource>[] References;
+        [DataMember]
+        public IContentReference<IAbstractResource>[] References { get; set; }
 
 		protected override string GetUrl()
 		{
