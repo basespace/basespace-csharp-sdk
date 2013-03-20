@@ -23,6 +23,15 @@ namespace Illumina.BaseSpace.SDK.Types
 
 		[DataMember]
 		public UserCompact UserLockedBy { get; set; }
+
+        [DataMember]
+        public InstrumentCompact InstrumentLockedBy { get; set; }
+
+        [DataMember]
+        public string ReagentBarcode { get; set; }
+
+        [DataMember]
+        public string FlowcellBarcode { get; set; }
     }
 
     [DataContract]
