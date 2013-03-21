@@ -36,5 +36,11 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefProjects { get; set; }
+
+        [DataMember]
+        public string[] Roles { get; set; }
     }
+
+    public enum UserSortByParameters { Id, Username, Fullname, DateLastActive, DateCreated }
+
 }
