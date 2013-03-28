@@ -39,6 +39,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             }
 	    }
 
+        public int? NumThreads { get; set; }
+
 	    internal FileInfo FileInfo { get; private set; }
 
 	    public string ResourceIdentifierInUri { get; set; }

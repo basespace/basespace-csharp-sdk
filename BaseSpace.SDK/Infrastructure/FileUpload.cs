@@ -142,8 +142,8 @@ namespace Illumina.BaseSpace.SDK
                         {
                             data = BufferPool.GetChunk(Convert.ToInt32(ClientSettings.FileUploadMultipartSizeThreshold));
 
-	                        var authentication = ClientSettings.Authentication as OAuth2Authentication;
-	                        authentication.UpdateHttpHeader(wc.Headers);
+	                        var authentication = ClientSettings.Authentication;
+	                        authentication.UpdateHttpHeader(wc.Headers, new Uri(fullUrl), "PUT");
                             
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, Convert.ToInt32(ClientSettings.FileUploadMultipartSizeThreshold));
@@ -173,7 +173,12 @@ namespace Illumina.BaseSpace.SDK
                     error: () => errorSignal.Set());  // notify other threads to give up
         }
 
-		private class BSWebClient : WebClient
+        public static int NumFileUploadParts(FileInfo file)
+        {
+            return (int)((file.Length - 1)/BaseSpaceClientSettings.DEFAULT_MULTIPART_SIZE_THRESHOLD + 1);
+        }
+
+        private class BSWebClient : WebClient
 		{
 			//TODO: Doesnt seem right? Need refactor?
 			// const int CONNECTION_LIMIT = 16;
