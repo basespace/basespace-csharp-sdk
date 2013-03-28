@@ -158,6 +158,7 @@
     <Compile Include="Types\AppSession.cs" />
     <Compile Include="Types\File.cs" />
     <Compile Include="Types\Genome.cs" />
+    <Compile Include="Types\Instrument.cs" />
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
     <Compile Include="Types\ContentReference.cs" />
