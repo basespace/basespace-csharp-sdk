@@ -173,7 +173,12 @@ namespace Illumina.BaseSpace.SDK
                     error: () => errorSignal.Set());  // notify other threads to give up
         }
 
-		private class BSWebClient : WebClient
+        public static int NumFileUploadParts(FileInfo file)
+        {
+            return (int)((file.Length - 1)/BaseSpaceClientSettings.DEFAULT_MULTIPART_SIZE_THRESHOLD + 1);
+        }
+
+        private class BSWebClient : WebClient
 		{
 			//TODO: Doesnt seem right? Need refactor?
 			// const int CONNECTION_LIMIT = 16;

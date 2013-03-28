@@ -27,7 +27,7 @@ namespace Illumina.BaseSpace.SDK
 			UpdateHttpHeader(request.Headers, request.RequestUri, request.Method);
 		}
 
-		public void UpdateHttpHeader(WebHeaderCollection headers, Uri requestUri, string requestMethod)
+        public void UpdateHttpHeader(WebHeaderCollection headers, Uri requestUri, string requestMethod)
 		{
 			if (headers != null && !string.IsNullOrEmpty(accessToken))
 			{
