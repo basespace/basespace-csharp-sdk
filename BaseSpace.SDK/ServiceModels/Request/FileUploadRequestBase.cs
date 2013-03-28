@@ -11,6 +11,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
             HttpMethod = HttpMethods.PUT;
 
+	        ThreadCount = 16;
 			Id = id;
             FileInfo = new FileInfo(filePath);
 			Name = FileInfo.Name;
@@ -39,9 +40,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             }
 	    }
 
-        public int? NumThreads { get; set; }
-
-	    internal FileInfo FileInfo { get; private set; }
+        internal FileInfo FileInfo { get; private set; }
 
 	    public string ResourceIdentifierInUri { get; set; }
 
