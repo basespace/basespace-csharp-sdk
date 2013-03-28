@@ -25,10 +25,10 @@ namespace Illumina.BaseSpace.SDK
             Options = options;
         }
 
-		public virtual TResult UploadFile<TResult>(FileUploadRequestBase<TResult> request, int numThreads = 16)
+		public virtual TResult UploadFile<TResult>(FileUploadRequestBase<TResult> request)
 			where TResult : FileResponse
 		{
-			Logger.DebugFormat("numthreads {0}", numThreads);
+			Logger.DebugFormat("numthreads {0}", request.ThreadCount);
 			TResult file = null;
 
             RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", request.FileInfo.Name),
@@ -37,7 +37,7 @@ namespace Illumina.BaseSpace.SDK
                                        request.MultiPart = request.FileInfo.Length >= ClientSettings.FileUploadMultipartSizeThreshold;
 
                                        file = request.MultiPart.Value ?
-                                           UploadFile_MultiPart(request, numThreads) :
+                                           UploadFile_MultiPart(request) :
 										   WebClient.Send(request);
                                    }, Logger, retryHandler:
                                    (exc) =>
@@ -58,7 +58,7 @@ namespace Illumina.BaseSpace.SDK
             return file;
         }
 
-		protected virtual TResult UploadFile_MultiPart<TResult>(FileUploadRequestBase<TResult> request, int numThreads)
+		protected virtual TResult UploadFile_MultiPart<TResult>(FileUploadRequestBase<TResult> request)
 			where TResult : FileResponse
         {
             Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", request.FileInfo.Name);
@@ -89,7 +89,7 @@ namespace Illumina.BaseSpace.SDK
             var totalPartsUploaded = 0;
 
             Parallel.For(0, (int)(1 + zeroBasedPartNumberMax),
-                         new ParallelOptions() { MaxDegreeOfParallelism = numThreads },
+                         new ParallelOptions() { MaxDegreeOfParallelism = request.ThreadCount },
                          (zeroBasedPartNumber =>
                          {
                              var partNumber = zeroBasedPartNumber + 1;
@@ -144,7 +144,7 @@ namespace Illumina.BaseSpace.SDK
 
 	                        var authentication = ClientSettings.Authentication as OAuth2Authentication;
 	                        authentication.UpdateHttpHeader(wc.Headers);
-
+                            
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, Convert.ToInt32(ClientSettings.FileUploadMultipartSizeThreshold));
                             lock (_syncRead) // avoid thrashing the disk

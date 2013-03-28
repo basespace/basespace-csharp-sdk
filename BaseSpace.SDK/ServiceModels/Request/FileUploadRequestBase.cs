@@ -25,6 +25,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		public string Directory { get; set; }
 
+	    public int ThreadCount { get; set; }
+
 	    private bool? isMultiPart;
 
 	    public bool? MultiPart
