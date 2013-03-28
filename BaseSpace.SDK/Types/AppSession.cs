@@ -13,6 +13,9 @@ namespace Illumina.BaseSpace.SDK.Types
         public override Uri Href { get; set; }
 
         [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
         public ApplicationCompact Application { get; set; }
 
         [DataMember]

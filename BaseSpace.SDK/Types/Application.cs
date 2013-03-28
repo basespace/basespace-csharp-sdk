@@ -43,4 +43,6 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public Uri HrefSettings { get; set; }
     }
+
+    public enum ApplicationSortByParameters { Id, Name, DateCreated }
 }
