@@ -2,7 +2,7 @@
 {
 	public class BaseSpaceClientSettings : IClientSettings
 	{
-		public const uint DEFAULT_RETRY_ATTEMPTS = 3;
+		public const uint DEFAULT_RETRY_ATTEMPTS = 6;
 
 		public const string DEFAULT_WEBSITE = "https://basespace.illumina.com";
 
