@@ -21,6 +21,9 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public DateTime DateCreated { get; set; }
 
+        [DataMember]
+        public DateTime DateModified { get; set; }
+
 		[DataMember]
 		public UserCompact UserLockedBy { get; set; }
 
@@ -32,17 +35,21 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public string FlowcellBarcode { get; set; }
-    }
 
-    [DataContract]
-    public class Run : RunCompact
-    {
         [DataMember]
         public string Name { get; set; }
 
         [DataMember]
         public int Number { get; set; }
 
+        [DataMember]
+        public UserCompact UserOwnedBy { get; set; }
+
+    }
+
+    [DataContract]
+    public class Run : RunCompact
+    {
         [DataMember]
         public Uri HrefFiles{ get; set; }
 
@@ -51,9 +58,6 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public UserCompact UserUploadedBy { get; set; }
-
-        [DataMember]
-        public UserCompact UserOwnedBy { get; set; }
 
 	    [DataMember]
         public DateTime? DateUploadCompleted { get; set; }
@@ -69,8 +73,8 @@ namespace Illumina.BaseSpace.SDK.Types
     public enum RunSortByParameters
     {
 	    Id, 
-		DateCreated, 
-		Statuses
+		DateCreated,
+        DateModified
     }
     
 	public enum RunFilesSortByParameters
