@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -23,10 +24,10 @@ namespace Illumina.BaseSpace.SDK
 
 		public void UpdateHttpHeader(HttpWebRequest request)
 		{
-			UpdateHttpHeader(request.Headers);
+			UpdateHttpHeader(request.Headers, request.RequestUri, request.Method);
 		}
 
-		internal void UpdateHttpHeader(WebHeaderCollection headers)
+        public void UpdateHttpHeader(WebHeaderCollection headers, Uri requestUri, string requestMethod)
 		{
 			if (headers != null && !string.IsNullOrEmpty(accessToken))
 			{
