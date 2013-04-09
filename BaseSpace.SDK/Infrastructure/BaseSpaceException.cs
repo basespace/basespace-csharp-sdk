@@ -6,6 +6,7 @@ using System.Text;
 using ServiceStack.Service;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceInterface.ServiceModel;
+using System.Web.Helpers;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -14,6 +15,8 @@ namespace Illumina.BaseSpace.SDK
         public HttpStatusCode StatusCode { get; set; }
 
         public IHasResponseStatus Response { get; private set; }
+
+        public dynamic ResponseBody { get; private set; }
 
         public BaseSpaceException()
         {
@@ -31,7 +34,11 @@ namespace Illumina.BaseSpace.SDK
             StatusCode = (HttpStatusCode)RetryLogic.GetStatusCode(ex);
             WebServiceException wse = ex as WebServiceException;
             if (wse != null)
+            {
                 Response = wse.ResponseDto as IHasResponseStatus;
+                if (wse.ResponseBody != null)
+                    ResponseBody = Json.Decode(wse.ResponseBody);
+            }
         }
     }
 }

@@ -30,6 +30,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public string HrefAppSession { get; set; }
 
         [DataMember]
+        public string HrefGenome { get; set; }
+
+        [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
 
 		protected override string GetUrl()
