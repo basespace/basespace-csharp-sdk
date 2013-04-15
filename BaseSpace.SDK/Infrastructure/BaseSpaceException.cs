@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Web.Helpers;
 using ServiceStack.Service;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceInterface.ServiceModel;
-using System.Web.Helpers;
+using ServiceStack.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -16,7 +17,7 @@ namespace Illumina.BaseSpace.SDK
 
         public IHasResponseStatus Response { get; private set; }
 
-        public dynamic ResponseBody { get; private set; }
+        public dynamic ResponseBodyJson { get; private set; }
 
         public BaseSpaceException()
         {
@@ -37,7 +38,13 @@ namespace Illumina.BaseSpace.SDK
             {
                 Response = wse.ResponseDto as IHasResponseStatus;
                 if (wse.ResponseBody != null)
-                    ResponseBody = Json.Decode(wse.ResponseBody);
+                {
+                    try
+                    {
+                        ResponseBodyJson = Json.Decode(wse.ResponseBody);
+                    }
+                    catch { }
+                }
             }
         }
     }
