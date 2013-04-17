@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="BaseSpaceClient.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
+    <Compile Include="Infrastructure\ApiNames.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
     <Compile Include="Infrastructure\BufferPool.cs" />
@@ -82,6 +83,10 @@
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\CreatePurchaseRefundRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\CreatePurchaseRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\GetPurchaseRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\ListPurchasedProductsRequest.cs" />
     <Compile Include="ServiceModels\Request\FileContentRedirectMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\FileRequestPost.cs" />
     <Compile Include="ServiceModels\Request\GetAppResultRequest.cs" />
@@ -114,6 +119,10 @@
     <Compile Include="ServiceModels\Request\UploadFileToAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\ListPurchasedProductsResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\CreatePurchaseRefundResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\CreatePurchaseResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\GetPurchaseResponse.cs" />
     <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppResultResponse.cs" />
@@ -149,6 +158,8 @@
     <Compile Include="Types\AccessToken.cs" />
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
+    <Compile Include="Types\Billing\AppSessionBilling.cs" />
+    <Compile Include="Types\Billing\PurchasedProduct.cs" />
     <Compile Include="Types\Coverage.cs" />
     <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\GenericAbstractList.cs" />
@@ -162,6 +173,7 @@
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
     <Compile Include="Types\ContentReference.cs" />
+    <Compile Include="Types\Billing\Purchase.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />

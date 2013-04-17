@@ -69,5 +69,13 @@ namespace Illumina.BaseSpace.SDK
         void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
 
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
+
+        GetPurchaseResponse GetPurchase(GetPurchaseRequest request, IRequestOptions options = null);
+
+        CreatePurchaseResponse CreatePurchase(CreatePurchaseRequest request, IRequestOptions options = null);
+
+        CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null);
+
+        ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null);
     }
 }

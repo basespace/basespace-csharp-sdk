@@ -9,6 +9,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		protected AbstractRequest()
 		{
 			HttpMethod = HttpMethods.GET;
+            ApiName = ApiNames.BASESPACE;
 		}
 
 		protected HttpMethods HttpMethod { get; set; }
@@ -17,6 +18,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			get { return "v1pre3"; }
 		}
+
+        protected ApiNames ApiName { get; set; }
 
 		internal virtual Func<TReturn> GetSendFunc(ServiceClientBase client)
 		{
@@ -29,5 +32,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		}
 
 		protected abstract string GetUrl();
+
+	    internal ApiNames GetApiName()
+	    {
+	        return ApiName;
+	    }
 	}
 }

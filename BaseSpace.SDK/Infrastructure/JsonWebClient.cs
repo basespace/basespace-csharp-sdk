@@ -14,6 +14,7 @@ namespace Illumina.BaseSpace.SDK
     public class JsonWebClient : IWebClient
     {
 		private readonly JsonServiceClient client;
+        private readonly JsonServiceClient clientBilling;
 
 	    private readonly ILog logger;
 
@@ -30,19 +31,22 @@ namespace Illumina.BaseSpace.SDK
                 throw new ArgumentNullException("settings");
             }
 
-			this.settings = settings;
-			DefaultRequestOptions = defaultOptions ?? new RequestOptions();
-			logger = LogManager.GetCurrentClassLogger();
+            this.settings = settings;
+            DefaultRequestOptions = defaultOptions ?? new RequestOptions();
+            logger = LogManager.GetCurrentClassLogger();
 
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
             HttpEncoder.Current.SerializeToString();
 
-			client = new JsonServiceClient(settings.BaseSpaceApiUrl);
-			client.LocalHttpWebRequestFilter += WebRequestFilter;
+            client = new JsonServiceClient(settings.BaseSpaceApiUrl);
+            client.LocalHttpWebRequestFilter += WebRequestFilter;
+
+            clientBilling = new JsonServiceClient(settings.BaseSpaceBillingApiUrl);
+            clientBilling.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
-		static JsonWebClient()
+        static JsonWebClient()
 		{
 			// setting this just to make sure it's not set in Linux
 			JsonDataContractDeserializer.Instance.UseBcl = false;
@@ -71,8 +75,10 @@ namespace Illumina.BaseSpace.SDK
 			{
 				TReturn result = null;
 			    options = options ?? DefaultRequestOptions;
+			    
+                var clientForRequest = PickClientForApiName(request.GetApiName());
 
-                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
+                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(clientForRequest)(), logger);
 				return result;
 			}
 			catch (Exception wex)
@@ -85,6 +91,19 @@ namespace Illumina.BaseSpace.SDK
 		{
 			settings.Authentication.UpdateHttpHeader(req);
 		}
+
+        private JsonServiceClient PickClientForApiName(ApiNames apiName)
+        {
+            switch (apiName)
+            {
+                case ApiNames.BASESPACE:
+                    return client;
+                case ApiNames.BASESPACE_BILLING:
+                    return clientBilling;
+                default:
+                    throw new ArgumentOutOfRangeException("apiName");
+            }
+        }
 
         private static INotification<object> NotificationDeserializer(string source)
         {

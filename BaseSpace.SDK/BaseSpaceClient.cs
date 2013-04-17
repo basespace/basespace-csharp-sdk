@@ -230,5 +230,27 @@ namespace Illumina.BaseSpace.SDK
             OnFileDownloadProgressChanged(e);
         }
         #endregion
+
+        #region Billing
+        public GetPurchaseResponse GetPurchase(GetPurchaseRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreatePurchaseResponse CreatePurchase(CreatePurchaseRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
     }
 }
