@@ -1,0 +1,17 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask AssemblyFile="C:\xunit\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
+
+<ItemGroup>
+  <ItemsThatNeedToBeCopied Include="C:\build-files\basespace-csharp-sdk\**\*.*"/>
+</ItemGroup>
+<Target Name="Build">
+<Copy SourceFiles="@(ItemsThatNeedToBeCopied)" DestinationFiles="@(ItemsThatNeedToBeCopied->'.\%(RecursiveDir)%(Filename)%(Extension)')"      ></Copy>
+    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Release">
+    </MSBuild>
+   <!-- <xunit Assembly="BaseSpace.SDK.Tests\bin\release\Illumina.BaseSpace.SDK.Tests.dll" />-->
+	<CreateItem Include="BaseSpace.SDK\bin\*.nupkg" >
+        	<Output TaskParameter="Include" ItemName="Artifacts" />
+    	</CreateItem>
+    	<Copy SourceFiles="@(Artifacts)" DestinationFolder="src"></Copy>
+</Target>
+</Project>
