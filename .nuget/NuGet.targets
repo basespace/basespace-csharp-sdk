@@ -35,11 +35,6 @@
     </PropertyGroup>
     
     <Target Name="CheckPrerequisites">
-	    <Message Text="$(SolutionDir)" />
-		<Message Text="$(MSBuildProjectDirectory)" />
-		<Message Text="$(NuGetToolsPath)" />
-		<Message Text="$(workDir)" />
-		<Message Text="hi" />
         <!-- Raise an error if we're unable to locate nuget.exe  -->
         <Error Condition="!Exists('$(NuGetExePath)')" Text="Unable to locate '$(NuGetExePath)'" />
     </Target>

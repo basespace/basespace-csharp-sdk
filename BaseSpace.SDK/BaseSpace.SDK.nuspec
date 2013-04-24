@@ -22,7 +22,4 @@
       <dependency id="ServiceStack.Text" />
     </dependencies>
   </metadata>
-  <files>
-    <file src="bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\40" />   
-  </files>
 </package>
