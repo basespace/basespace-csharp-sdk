@@ -3,7 +3,7 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>Illumina.BaseSpace.SDK</id>
     <title>Illumina BaseSpace CSharp SDK</title>
-    <version>1.0.0.3</version>
+    <version>$version$</version>
     <authors>Illumina, Greg Roberts, Sucheth Koppa, BaseSpace Team</authors>
     <owners>Illumina, Greg Roberts</owners>
     <summary>Opensource .NET SDK for Illumina BaseSpace</summary>
@@ -22,7 +22,4 @@
       <dependency id="ServiceStack.Text" />
     </dependencies>
   </metadata>
-  <files>
-    <file src="..\..\BaseSpace.SDK\bin\Release\Illumina.BaseSpace.SDK.dll" target="lib\40" />   
-  </files>
 </package>

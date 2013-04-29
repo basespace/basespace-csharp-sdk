@@ -31,7 +31,7 @@ namespace Illumina.BaseSpace.SDK
 			Logger.DebugFormat("numthreads {0}", request.ThreadCount);
 			TResult file = null;
 
-            RetryLogic.DoWithRetry(3, string.Format("Uploading file {0}", request.FileInfo.Name),
+            RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, string.Format("Uploading file {0}", request.FileInfo.Name),
                                    () =>
 	                               {
                                        request.MultiPart = request.FileInfo.Length >= ClientSettings.FileUploadMultipartSizeThreshold;
