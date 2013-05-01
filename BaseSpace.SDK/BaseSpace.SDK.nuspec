@@ -2,13 +2,13 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>Illumina.BaseSpace.SDK</id>
-    <title>Illumina BaseSpace CSharp SDK</title>
+    <title>Illumina.BaseSpace.SDK</title>
     <version>$version$</version>
-    <authors>Illumina, Greg Roberts, Sucheth Koppa, BaseSpace Team</authors>
+    <authors>Illumina inc.</authors>
     <owners>Illumina, Greg Roberts</owners>
     <summary>Opensource .NET SDK for Illumina BaseSpace</summary>
     <description>
-      Illumina BaseSpace SDK for https://basespace.illumina.com . Find out more about development and usage at https://developer.basespace.illumina.com
+      A .NET SDK for the BaseSpace API. Find out more about development and usage at https://developer.basespace.illumina.com
     </description>
     <projectUrl>https://github.com/basespace/basespace-csharp-sdk</projectUrl>
     <licenseUrl>https://github.com/basespace/basespace-csharp-sdk/blob/master/LICENSE.txt</licenseUrl>
