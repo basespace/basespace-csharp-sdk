@@ -69,7 +69,6 @@ namespace Illumina.BaseSpace.SDK
         {
             try
             {
-
                 if (!string.IsNullOrWhiteSpace(request.GetLogMessage()))
                     logger.Info(request.GetLogMessage());
                 TReturn result = null;

@@ -14,5 +14,10 @@
 		{
 			return string.Format("{0}/projects", Version);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

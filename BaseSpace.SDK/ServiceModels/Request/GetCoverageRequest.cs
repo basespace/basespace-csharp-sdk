@@ -27,5 +27,10 @@
 		{
 			return string.Format("{0}/coverag/{1}/{2}", Version, Id, Chrom);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

@@ -30,6 +30,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			return string.Format("{0}/oauthv2/token", Version);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }
 

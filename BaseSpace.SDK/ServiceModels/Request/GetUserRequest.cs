@@ -15,5 +15,10 @@
 		{
 			return string.Format("{0}/users/{1}", Version, Id ?? "current");
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

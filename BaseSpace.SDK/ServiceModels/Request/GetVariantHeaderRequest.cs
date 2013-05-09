@@ -15,6 +15,11 @@
 		{
 			return string.Format("{0}/variantset/{1}", Version, Id);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }
 

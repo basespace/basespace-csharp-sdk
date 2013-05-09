@@ -17,5 +17,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			return String.Format("{0}/files/{1}", Version, Id);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

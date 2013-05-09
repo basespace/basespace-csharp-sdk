@@ -21,5 +21,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			return String.Format("{0}/coverag/{1}/{2}/meta", Version, Id, Chrom);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

@@ -39,5 +39,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			return string.Format("{0}/projects/{1}/appresults", Version, ProjectId);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

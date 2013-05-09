@@ -15,5 +15,10 @@
 		{
 			return string.Format("{0}/appresults/{1}", Version, Id);
 		}
+
+        internal override string GetLogMessage()
+        {
+            return "";
+        }
 	}
 }

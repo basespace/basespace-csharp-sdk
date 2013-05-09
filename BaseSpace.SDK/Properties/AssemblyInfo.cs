@@ -34,5 +34,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.9")]
 [assembly: AssemblyFileVersion("1.0.0.9")]
-[assembly : InternalsVisibleTo("Illumina.BaseSpace.SDK.Tests")]
+[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Private")]
+[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Tests")]
 [assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Private.Tests")]
