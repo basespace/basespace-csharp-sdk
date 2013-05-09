@@ -24,8 +24,8 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public DateTime DateModified { get; set; }
 
-		[DataMember]
-		public UserCompact UserLockedBy { get; set; }
+        [DataMember]
+        public UserCompact UserLockedBy { get; set; }
 
         [DataMember]
         public InstrumentCompact InstrumentLockedBy { get; set; }
@@ -51,7 +51,7 @@ namespace Illumina.BaseSpace.SDK.Types
     public class Run : RunCompact
     {
         [DataMember]
-        public Uri HrefFiles{ get; set; }
+        public Uri HrefFiles { get; set; }
 
         [DataMember]
         public Uri HrefSamples { get; set; }
@@ -59,7 +59,7 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public UserCompact UserUploadedBy { get; set; }
 
-	    [DataMember]
+        [DataMember]
         public DateTime? DateUploadCompleted { get; set; }
 
         [DataMember]
@@ -69,18 +69,39 @@ namespace Illumina.BaseSpace.SDK.Types
         public Uri HrefBaseSpaceUI { get; set; }
     }
 
-    
+    [DataContract]
+    public class RunSettings
+    {
+        [DataMember]
+        public int NumCyclesRead1 { get; set; }
+
+        [DataMember]
+        public int NumCyclesRead2 { get; set; }
+
+        [DataMember]
+        public bool CustomPrimerR1 { get; set; }
+
+        [DataMember]
+        public bool CustomPrimerR2 { get; set; }
+
+        [DataMember]
+        public bool CustomPrimerIndex { get; set; }
+
+        [DataMember]
+        public bool AutoRetireOnCompletion { get; set; }
+    }
+
     public enum RunSortByParameters
     {
-	    Id, 
-		DateCreated,
+        Id,
+        DateCreated,
         DateModified
     }
-    
-	public enum RunFilesSortByParameters
-	{
-		Id, 
-		Path, 
-		DateCreated
-	}
+
+    public enum RunFilesSortByParameters
+    {
+        Id,
+        Path,
+        DateCreated
+    }
 }
