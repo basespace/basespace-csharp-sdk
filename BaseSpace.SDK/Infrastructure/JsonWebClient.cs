@@ -13,11 +13,11 @@ namespace Illumina.BaseSpace.SDK
 {
     public class JsonWebClient : IWebClient
     {
-		private readonly JsonServiceClient client;
+        private readonly JsonServiceClient client;
 
-	    private readonly ILog logger;
+        private readonly ILog logger;
 
-		private readonly IClientSettings settings;
+        private readonly IClientSettings settings;
 
         private static readonly JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
 
@@ -30,31 +30,31 @@ namespace Illumina.BaseSpace.SDK
                 throw new ArgumentNullException("settings");
             }
 
-			this.settings = settings;
-			DefaultRequestOptions = defaultOptions ?? new RequestOptions();
-			logger = LogManager.GetCurrentClassLogger();
+            this.settings = settings;
+            DefaultRequestOptions = defaultOptions ?? new RequestOptions();
+            logger = LogManager.GetCurrentClassLogger();
 
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
             HttpEncoder.Current.SerializeToString();
 
-			client = new JsonServiceClient(settings.BaseSpaceApiUrl);
-			client.LocalHttpWebRequestFilter += WebRequestFilter;
+            client = new JsonServiceClient(settings.BaseSpaceApiUrl);
+            client.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
-		static JsonWebClient()
-		{
-			// setting this just to make sure it's not set in Linux
-			JsonDataContractDeserializer.Instance.UseBcl = false;
-			// BaseSpace uses this format for DateTime
-			JsConfig.DateHandler = JsonDateHandler.ISO8601;
+        static JsonWebClient()
+        {
+            // setting this just to make sure it's not set in Linux
+            JsonDataContractDeserializer.Instance.UseBcl = false;
+            // BaseSpace uses this format for DateTime
+            JsConfig.DateHandler = JsonDateHandler.ISO8601;
 
-			JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
-			//handle complex parsing of references
-			JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
+            JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
+            //handle complex parsing of references
+            JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
 
-			JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
-		}
+            JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
+        }
 
         public IWebProxy WebProxy
         {
@@ -64,27 +64,30 @@ namespace Illumina.BaseSpace.SDK
 
         public IRequestOptions DefaultRequestOptions { get; set; }
 
-		public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
-			where TReturn : class
-		{
-			try
-			{
-				TReturn result = null;
-			    options = options ?? DefaultRequestOptions;
+        public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
+            where TReturn : class
+        {
+            try
+            {
+
+                if (!string.IsNullOrWhiteSpace(request.GetLogMessage()))
+                    logger.Info(request.GetLogMessage());
+                TReturn result = null;
+                options = options ?? DefaultRequestOptions;
 
                 RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
-				return result;
-			}
-			catch (Exception wex)
-			{
-				throw new BaseSpaceException(request.GetName() + " failed", wex);
-			}
-		}
+                return result;
+            }
+            catch (Exception wex)
+            {
+                throw new BaseSpaceException(request.GetName() + " failed", wex);
+            }
+        }
 
-		private void WebRequestFilter(HttpWebRequest req)
-		{
-			settings.Authentication.UpdateHttpHeader(req);
-		}
+        private void WebRequestFilter(HttpWebRequest req)
+        {
+            settings.Authentication.UpdateHttpHeader(req);
+        }
 
         private static INotification<object> NotificationDeserializer(string source)
         {
