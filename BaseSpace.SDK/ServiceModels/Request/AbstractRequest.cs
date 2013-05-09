@@ -28,6 +28,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 			return String.Format("{0} request to {1} ", HttpMethod, GetUrl());
 		}
 
+        internal virtual string GetLogMessage()
+        {
+            return "";
+        }
+
 		protected abstract string GetUrl();
 	}
 }

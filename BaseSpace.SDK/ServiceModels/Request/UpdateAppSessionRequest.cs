@@ -24,5 +24,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			return string.Format("{0}/appsessions/{1}", Version, Id);
 		}
+
+        protected override string GetLogMessage()
+        {
+            return string.Format("Updating AppSession status to {0} with status summary {1}", Status, StatusSummary);
+        }
 	}
 }
