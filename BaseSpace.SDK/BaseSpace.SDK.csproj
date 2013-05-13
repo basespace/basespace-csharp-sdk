@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-	<PackageOutputDir>$(ProjectDir)bin\$(Configuration)</PackageOutputDir>
+    <PackageOutputDir>$(ProjectDir)bin\$(Configuration)</PackageOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,6 +85,7 @@
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
     <Compile Include="ServiceModels\Request\FileContentRedirectMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\FileRequestPost.cs" />
+    <Compile Include="ServiceModels\Request\GetApiMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAppSessionRequest.cs" />
     <Compile Include="ServiceModels\Request\GetCoverageMetadataRequest.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
     <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetApiMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\GetAppSessionResponse.cs" />
     <Compile Include="ServiceModels\Response\GetCoverageMetadataResponse.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Types\AccessToken.cs" />
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
+    <Compile Include="Types\ApiMeta.cs" />
     <Compile Include="Types\Coverage.cs" />
     <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\GenericAbstractList.cs" />

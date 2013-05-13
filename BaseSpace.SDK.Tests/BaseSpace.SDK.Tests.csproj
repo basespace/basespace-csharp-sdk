@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="Integration\AccessTests.cs" />
+    <Compile Include="Integration\ApiMetaTests.cs" />
     <Compile Include="Integration\AppClassesLifecycleTests.cs" />
     <Compile Include="Integration\AppResultTests.cs" />
     <Compile Include="Integration\AppSessionTests.cs" />

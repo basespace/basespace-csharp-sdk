@@ -1,8 +1,6 @@
-﻿using Illumina.BaseSpace.SDK.Types;
-
-namespace Illumina.BaseSpace.SDK.ServiceModels
+﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetApiMeta : AbstractResourceRequest<ApiMeta>
+    public class GetApiMetaRequest : AbstractResourceRequest<GetApiMetaResponse>
     {
         protected override string GetUrl()
         {

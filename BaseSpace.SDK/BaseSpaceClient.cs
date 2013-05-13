@@ -230,5 +230,12 @@ namespace Illumina.BaseSpace.SDK
             OnFileDownloadProgressChanged(e);
         }
         #endregion
+
+        #region ApiMeta
+        public GetApiMetaResponse GetApiMeta(GetApiMetaRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
     }
 }
