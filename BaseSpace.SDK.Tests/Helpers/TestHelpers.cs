@@ -30,7 +30,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
         #region AppResult
         private const string TestAppResultNameFormatString = "SDK_Test_AppResult-{0}";
         private static string CreateRandomTestAppResultName() { return string.Format(TestAppResultNameFormatString, StringHelpers.RandomAlphanumericString(5)); }
-        internal static AppResult CreateRandomTestAppResult(IBaseSpaceClient client, Project project)
+        public static AppResult CreateRandomTestAppResult(IBaseSpaceClient client, Project project)
         {
             var appResultName = CreateRandomTestAppResultName();
             var response = client.CreateAppResult(new CreateAppResultRequest(project.Id, appResultName));
