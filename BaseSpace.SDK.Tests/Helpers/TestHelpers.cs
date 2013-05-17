@@ -27,28 +27,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
         }
         #endregion Project
 
-        #region Sample
-        private const string TestSampleNameFormatString = "SDK_Test_Sample-{0}";
-        private static string CreateRandomTestSampleName() { return string.Format(TestSampleNameFormatString, StringHelpers.RandomAlphanumericString(5)); }
-        internal static Sample CreateRandomTestSample(IBaseSpaceClient client, Project project)
-        {
-        /*
-            var sampleName = TestHelpers.CreateRandomTestSampleName();
-            var response = client.CreateSample(new PostSampleRequest(sampleName));
-            Assert.NotNull(response);
-            Assert.NotNull(response.ResponseStatus);
-            Assert.Null(response.ResponseStatus.ErrorCode);
-
-            Assert.NotNull(response.Response);
-            var project = response.Response;
-            Assert.NotNull(project);
-            Assert.True(project.Name.Contains(sampleName));
-            return project;
-         */
-            return null;
-        }
-        #endregion Sample
-
         #region AppResult
         private const string TestAppResultNameFormatString = "SDK_Test_AppResult-{0}";
         private static string CreateRandomTestAppResultName() { return string.Format(TestAppResultNameFormatString, StringHelpers.RandomAlphanumericString(5)); }

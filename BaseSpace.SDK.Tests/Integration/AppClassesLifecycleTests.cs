@@ -18,9 +18,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             // create a project
             var project = TestHelpers.CreateRandomTestProject(Client);
 
-            // create a samples collector in the project
-            var sample = TestHelpers.CreateRandomTestSample(Client, project);
-
             // create an appresult and associate it with a new appsession
             var appresult = TestHelpers.CreateRandomTestAppResult(Client, project);
 
