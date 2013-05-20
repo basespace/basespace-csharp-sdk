@@ -96,6 +96,8 @@
     <Compile Include="ServiceModels\Request\GetSampleRequest.cs" />
     <Compile Include="ServiceModels\Request\GetVariantHeaderRequest.cs" />
     <Compile Include="ServiceModels\Request\ListAppResultFilesRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppResultsByAppSessionRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppSessionsRequest.cs" />
     <Compile Include="ServiceModels\Request\ListFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListRunFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleFilesRequest.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="ServiceModels\Response\GetVariantHeaderResponse.cs" />
     <Compile Include="ServiceModels\Response\ListAppResultFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListAppResultsResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListAppSessionsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListGenomeResponse.cs" />
     <Compile Include="ServiceModels\Response\ListProjectsResponse.cs" />
     <Compile Include="ServiceModels\Response\GetUserResponse.cs" />

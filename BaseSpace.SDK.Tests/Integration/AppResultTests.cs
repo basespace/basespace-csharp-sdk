@@ -30,6 +30,20 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         [Fact]
+        public void CanGetAppResultsByAppSession()
+        {
+            var appSession = TestHelpers.CreateTestAppSession(Client);  
+
+            ListAppResultsByAppSessionRequest request = new ListAppResultsByAppSessionRequest(appSession.UserCreatedBy.Id, appSession.Id);
+
+            ListAppResultsResponse response = Client.ListAppResultsByAppSession(request);
+
+            Assert.NotNull(response);
+
+
+        }
+
+        [Fact]
         public void CanGetAppResults()
         {
             var project = TestHelpers.CreateRandomTestProject(Client);

@@ -30,6 +30,10 @@ namespace Illumina.BaseSpace.SDK
 
         ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null);
 
+        ListAppResultsResponse ListAppResultsByAppSession(ListAppResultsByAppSessionRequest request, IRequestOptions options = null);
+
+        ListAppSessionsResponse ListAppSessions(ListAppSessionsRequest request, IRequestOptions options = null);
+
 		GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
 
         ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null);
