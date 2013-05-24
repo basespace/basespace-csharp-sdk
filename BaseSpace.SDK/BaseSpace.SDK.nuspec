@@ -13,7 +13,7 @@
     <projectUrl>https://github.com/basespace/basespace-csharp-sdk</projectUrl>
     <licenseUrl>https://github.com/basespace/basespace-csharp-sdk/blob/master/LICENSE.txt</licenseUrl>
     <iconUrl>https://dp6rs6ajp5nvi.cloudfront.net/images/sites/basespace/11052012/home/basespace-brand.png</iconUrl>
-    <tags>Illumina BaseSpace CSharp SDK Genomics</tags>
+    <tags>Illumina BaseSpace CSharp SDK Genomics bioinformatics</tags>
     <language>en-US</language>
     <copyright>illumina 2013 and contributors</copyright>
     <dependencies>
