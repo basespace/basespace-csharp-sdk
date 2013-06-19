@@ -51,7 +51,7 @@ namespace Illumina.BaseSpace.SDK
 
             JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
             //handle complex parsing of references
-            JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
+            JsConfig<IResource>.RawDeserializeFn = ResourceDeserializer;
 
             JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
         }
@@ -108,7 +108,7 @@ namespace Illumina.BaseSpace.SDK
             return new Notification<object> { Item = o, Type = type };
         }
 
-        internal static IContentReference<IAbstractResource> ResourceDeserializer(string source)
+        internal static IResource ResourceDeserializer(string source)
         {
             //determine type, then use appropriate deserializer
             var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
@@ -131,6 +131,16 @@ namespace Illumina.BaseSpace.SDK
 
                 case "run":
                     return JsonSerializer.DeserializeFromString<ContentReference<RunCompact>>(source);
+
+                case "string":
+                    return JsonSerializer.DeserializeFromString<ContentSetting<string>>(source);
+
+                case "string[]":
+                    return JsonSerializer.DeserializeFromString<ContentSetting<string[]>>(source);
+
+                case "integer":
+                    return JsonSerializer.DeserializeFromString<ContentSetting<int>>(source);
+
             }
 
             return null;
