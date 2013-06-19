@@ -51,7 +51,7 @@ namespace Illumina.BaseSpace.SDK
 
             JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
             //handle complex parsing of references
-            JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
+            JsConfig<IResource>.RawDeserializeFn = ResourceDeserializer;
 
             JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
         }
@@ -108,7 +108,7 @@ namespace Illumina.BaseSpace.SDK
             return new Notification<object> { Item = o, Type = type };
         }
 
-        internal static IContentReference<IAbstractResource> ResourceDeserializer(string source)
+        internal static IResource ResourceDeserializer(string source)
         {
             //determine type, then use appropriate deserializer
             var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
@@ -118,19 +118,29 @@ namespace Illumina.BaseSpace.SDK
             switch (type.ToLower())
             {
                 case "file":
-                    return JsonSerializer.DeserializeFromString<ContentReference<FileCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<FileCompact>>(source);
 
                 case "appresult":
-                    return JsonSerializer.DeserializeFromString<ContentReference<AppResultCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<AppResultCompact>>(source);
 
                 case "sample":
-                    return JsonSerializer.DeserializeFromString<ContentReference<SampleCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<SampleCompact>>(source);
 
                 case "project":
-                    return JsonSerializer.DeserializeFromString<ContentReference<ProjectCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<ProjectCompact>>(source);
 
                 case "run":
-                    return JsonSerializer.DeserializeFromString<ContentReference<RunCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<RunCompact>>(source);
+
+                case "string":
+                    return JsonSerializer.DeserializeFromString<ContentSettingResource<string>>(source);
+
+                case "string[]":
+                    return JsonSerializer.DeserializeFromString<ContentSettingResource<string[]>>(source);
+
+                case "integer":
+                    return JsonSerializer.DeserializeFromString<ContentSettingResource<int>>(source);
+
             }
 
             return null;

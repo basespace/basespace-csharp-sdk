@@ -10,7 +10,7 @@ namespace Illumina.BaseSpace.SDK.Tests
         [Fact]
         public void CanDeserializeARunCompactReference()
         {
-            var result = JsonWebClient.ResourceDeserializer(TestData.AppResultReference) as ContentReference<AppResult>;
+            var result = JsonWebClient.ResourceDeserializer(TestData.AppResultReference) as ContentReferenceResource<AppResult>;
             Assert.NotNull(result);
             Assert.True(result.Href.ToString() == @"v1pre3/appresults/291294");
             Assert.True(result.HrefContent.ToString() == @"v1pre3/appresults/291294");
@@ -32,7 +32,7 @@ namespace Illumina.BaseSpace.SDK.Tests
         [Fact]
         public void CanDeserializeASampleCompactReference()
         {
-            var result = JsonWebClient.ResourceDeserializer(TestData.SampleReference) as ContentReference<Sample>;
+            var result = JsonWebClient.ResourceDeserializer(TestData.SampleReference) as ContentReferenceResource<Sample>;
             Assert.NotNull(result);
             Assert.True(result.Href.ToString() == @"v1pre3/samples/262264");
             Assert.True(result.HrefContent.ToString() == @"v1pre3/samples/262264");

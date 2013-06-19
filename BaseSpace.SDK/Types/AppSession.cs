@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
@@ -39,7 +42,39 @@ namespace Illumina.BaseSpace.SDK.Types
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IContentReference<IAbstractResource>[] References { get; set; }
+        public IResource[] Resources { get; set; }
+
+        public IEnumerable<IReferenceResource> ReferenceResources
+        {
+            get
+            {
+                return ReferencesOfType<SampleCompact>()
+                    .Union<IReferenceResource>(ReferencesOfType<FileCompact>())
+                    .Union(ReferencesOfType<AppResultCompact>())
+                    .Union(ReferencesOfType<ProjectCompact>())
+                    .Union(ReferencesOfType<RunCompact>());
+            }
+        }
+
+        public IEnumerable<IResource> ValueResources
+        {
+            get
+            {
+                return ValuesOfType<string>()
+                    .Union<IResource>(ValuesOfType<string[]>())
+                    .Union(ValuesOfType<BigInteger>());
+            }
+        }
+
+        public IEnumerable<IContentReferenceResource<T>> ReferencesOfType<T>() where T: IAbstractResource
+        {
+            return Resources.OfType<IContentReferenceResource<T>>();
+        }
+
+        public IEnumerable<IContentValueResource<T>> ValuesOfType<T>()
+        {
+            return Resources.OfType<IContentValueResource<T>>();
+        }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
