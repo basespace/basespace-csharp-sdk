@@ -42,38 +42,38 @@ namespace Illumina.BaseSpace.SDK.Types
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IResource[] References { get; set; }
+        public IResource[] Resources { get; set; }
 
-        public IEnumerable<IReference> Resources
+        public IEnumerable<IReferenceResource> ReferenceResources
         {
             get
             {
-                return ResourcesOfType<SampleCompact>()
-                    .Union<IReference>(ResourcesOfType<FileCompact>())
-                    .Union(ResourcesOfType<AppResultCompact>())
-                    .Union(ResourcesOfType<ProjectCompact>())
-                    .Union(ResourcesOfType<RunCompact>());
+                return ReferencesOfType<SampleCompact>()
+                    .Union<IReferenceResource>(ReferencesOfType<FileCompact>())
+                    .Union(ReferencesOfType<AppResultCompact>())
+                    .Union(ReferencesOfType<ProjectCompact>())
+                    .Union(ReferencesOfType<RunCompact>());
             }
         }
 
-        public IEnumerable<ISetting> Settings
+        public IEnumerable<IResource> ValueResources
         {
             get
             {
-                return SettingsOfType<string>()
-                    .Union<ISetting>(SettingsOfType<string[]>())
-                    .Union(SettingsOfType<BigInteger>());
+                return ValuesOfType<string>()
+                    .Union<IResource>(ValuesOfType<string[]>())
+                    .Union(ValuesOfType<BigInteger>());
             }
         }
 
-        public IEnumerable<IContentReference<T>> ResourcesOfType<T>() where T: IAbstractResource
+        public IEnumerable<IContentReferenceResource<T>> ReferencesOfType<T>() where T: IAbstractResource
         {
-            return References.OfType<IContentReference<T>>();
+            return Resources.OfType<IContentReferenceResource<T>>();
         }
 
-        public IEnumerable<IContentSetting<T>> SettingsOfType<T>()
+        public IEnumerable<IContentValueResource<T>> ValuesOfType<T>()
         {
-            return References.OfType<IContentSetting<T>>();
+            return Resources.OfType<IContentValueResource<T>>();
         }
     }
 

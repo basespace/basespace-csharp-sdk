@@ -7,14 +7,14 @@ using System.Text;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract]
-    public class ContentSetting<T> : IContentSetting<T>
+    public class ContentSettingResource<T> : IContentValueResource<T>
     {
-        public ContentSetting(T resource, string name, string relation)
+        public ContentSettingResource(T resource, string name, string relation, string type)
         {
             Rel = relation;
             Name = name;
             Content = resource;
-            Type = typeof(T).ToString().Replace("Illumina.BaseSpace.SDK.Types.", "");
+            Type = type;
         }
 
         [DataMember]

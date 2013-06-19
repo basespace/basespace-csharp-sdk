@@ -118,28 +118,28 @@ namespace Illumina.BaseSpace.SDK
             switch (type.ToLower())
             {
                 case "file":
-                    return JsonSerializer.DeserializeFromString<ContentReference<FileCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<FileCompact>>(source);
 
                 case "appresult":
-                    return JsonSerializer.DeserializeFromString<ContentReference<AppResultCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<AppResultCompact>>(source);
 
                 case "sample":
-                    return JsonSerializer.DeserializeFromString<ContentReference<SampleCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<SampleCompact>>(source);
 
                 case "project":
-                    return JsonSerializer.DeserializeFromString<ContentReference<ProjectCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<ProjectCompact>>(source);
 
                 case "run":
-                    return JsonSerializer.DeserializeFromString<ContentReference<RunCompact>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<RunCompact>>(source);
 
                 case "string":
-                    return JsonSerializer.DeserializeFromString<ContentSetting<string>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentSettingResource<string>>(source);
 
                 case "string[]":
-                    return JsonSerializer.DeserializeFromString<ContentSetting<string[]>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentSettingResource<string[]>>(source);
 
                 case "integer":
-                    return JsonSerializer.DeserializeFromString<ContentSetting<int>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentSettingResource<int>>(source);
 
             }
 

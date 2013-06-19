@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public interface IContentSetting<T> : ISetting
+    public interface IContentValueResource<T> : IResource
     {
         T Content { get; set; }
     }

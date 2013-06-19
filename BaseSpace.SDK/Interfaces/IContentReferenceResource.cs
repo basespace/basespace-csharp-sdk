@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public interface IContentReference<T> : IReference where T : IAbstractResource
+    public interface IContentReferenceResource<T> : IReferenceResource where T : IAbstractResource
     {
         T Content { get; set; }
     }

@@ -77,9 +77,9 @@
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
-    <Compile Include="Interfaces\IContentReference.cs" />
-    <Compile Include="Interfaces\IContentSetting.cs" />
-    <Compile Include="Interfaces\IReference.cs" />
+    <Compile Include="Interfaces\IContentReferenceResource.cs" />
+    <Compile Include="Interfaces\IContentSettingResource.cs" />
+    <Compile Include="Interfaces\IReferenceResource.cs" />
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />

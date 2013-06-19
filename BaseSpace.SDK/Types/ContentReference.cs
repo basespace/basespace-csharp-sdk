@@ -4,19 +4,22 @@ using System.Runtime.Serialization;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract]
-	public class ContentReference<T> : IContentReference<T> where T : AbstractResource
+	public class ContentReferenceResource<T> : IContentReferenceResource<T> where T : AbstractResource
 	{
-        public ContentReference(T resource, string relation)
+        public ContentReferenceResource(T resource, string relation, string type)
         {
             Href = resource.Href;
             HrefContent = resource.Href;
             Rel = relation;
             Content = resource;
-            Type = typeof(T).ToString().Replace("Compact", "").Replace("Illumina.BaseSpace.SDK.Types.", "");
+            Type = type;
         }
-            
+
         [DataMember]
-		public string Rel { get; set; }
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Rel { get; set; }
 
 		[DataMember]
 		public string Type { get; set; }
