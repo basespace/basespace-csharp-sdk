@@ -6,13 +6,14 @@ namespace Illumina.BaseSpace.SDK.Types
     [DataContract]
 	public class ContentReferenceResource<T> : IContentReferenceResource<T> where T : AbstractResource
 	{
-        public ContentReferenceResource(T resource, string relation, string type)
+        public ContentReferenceResource(T resource, string relation, string type=null)
         {
             Href = resource.Href;
             HrefContent = resource.Href;
             Rel = relation;
             Content = resource;
-            Type = type;
+            
+            Type = type ?? typeof(T).ToString().Replace("Compact", "").Replace("Illumina.BaseSpace.SDK.Types.", "");;
         }
 
         [DataMember]
