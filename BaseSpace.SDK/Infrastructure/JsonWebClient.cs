@@ -133,13 +133,13 @@ namespace Illumina.BaseSpace.SDK
                     return JsonSerializer.DeserializeFromString<ContentReferenceResource<RunCompact>>(source);
 
                 case "string":
-                    return JsonSerializer.DeserializeFromString<ContentSettingResource<string>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentValueResource<string>>(source);
 
                 case "string[]":
-                    return JsonSerializer.DeserializeFromString<ContentSettingResource<string[]>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentValueResource<string[]>>(source);
 
                 case "integer":
-                    return JsonSerializer.DeserializeFromString<ContentSettingResource<int>>(source);
+                    return JsonSerializer.DeserializeFromString<ContentValueResource<int>>(source);
 
             }
 
