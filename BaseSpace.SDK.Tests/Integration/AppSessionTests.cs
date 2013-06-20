@@ -26,7 +26,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(appSession.Id, updateAppSession.Id);
             Assert.Equal(appSession.Status, updateAppSession.Status);
             Assert.Equal(appSession.StatusSummary, updateAppSession.StatusSummary);
-            Assert.Equal(appSession.References.Length, updateAppSession.References.Length);
+            Assert.Equal(appSession.Resources.Length, updateAppSession.Resources.Length);
             Assert.Equal(appSession.OriginatingUri, updateAppSession.OriginatingUri);
             Assert.Equal(appSession.Name, updateAppSession.Name);
         }

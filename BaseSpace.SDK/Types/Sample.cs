@@ -32,7 +32,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public DateTime DateCreated { get; set; }
 
         [DataMember]
-        public IContentReference<IAbstractResource>[] References { get; set; }
+        public IContentReferenceResource<IAbstractResource>[] References { get; set; }
     }
 
     [DataContract()]
