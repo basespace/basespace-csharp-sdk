@@ -44,12 +44,12 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public IResource[] References { get; set; }
 
-        public IEnumerable<IContentReferenceResource<T>> ReferencesOfType<T>() where T: IAbstractResource
+        public IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>() where T: IAbstractResource
         {
             return References.OfType<IContentReferenceResource<T>>();
         }
 
-        public IEnumerable<IContentValueResource<T>> ValueReferencesOfType<T>()
+        public IEnumerable<IContentValueResource<T>> ReferencesOfValueType<T>()
         {
             return References.OfType<IContentValueResource<T>>();
         }
