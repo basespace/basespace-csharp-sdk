@@ -42,38 +42,16 @@ namespace Illumina.BaseSpace.SDK.Types
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IResource[] Resources { get; set; }
-
-        public IEnumerable<IReferenceResource> ReferenceResources
-        {
-            get
-            {
-                return ReferencesOfType<SampleCompact>()
-                    .Union<IReferenceResource>(ReferencesOfType<FileCompact>())
-                    .Union(ReferencesOfType<AppResultCompact>())
-                    .Union(ReferencesOfType<ProjectCompact>())
-                    .Union(ReferencesOfType<RunCompact>());
-            }
-        }
-
-        public IEnumerable<IResource> ValueResources
-        {
-            get
-            {
-                return ValuesOfType<string>()
-                    .Union<IResource>(ValuesOfType<string[]>())
-                    .Union(ValuesOfType<BigInteger>());
-            }
-        }
+        public IResource[] References { get; set; }
 
         public IEnumerable<IContentReferenceResource<T>> ReferencesOfType<T>() where T: IAbstractResource
         {
-            return Resources.OfType<IContentReferenceResource<T>>();
+            return References.OfType<IContentReferenceResource<T>>();
         }
 
-        public IEnumerable<IContentValueResource<T>> ValuesOfType<T>()
+        public IEnumerable<IContentValueResource<T>> ValueReferencesOfType<T>()
         {
-            return Resources.OfType<IContentValueResource<T>>();
+            return References.OfType<IContentValueResource<T>>();
         }
     }
 
