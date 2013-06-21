@@ -46,11 +46,15 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>() where T: IAbstractResource
         {
+            if (References == null)
+                return null;
             return References.OfType<IContentReferenceResource<T>>();
         }
 
         public IEnumerable<IContentValueResource<T>> ReferencesOfValueType<T>()
         {
+            if (References == null)
+                return null;
             return References.OfType<IContentValueResource<T>>();
         }
     }

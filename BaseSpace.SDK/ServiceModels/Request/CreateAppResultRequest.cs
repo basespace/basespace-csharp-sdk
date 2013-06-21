@@ -33,7 +33,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public string HrefGenome { get; set; }
 
         [DataMember]
-        public IContentReferenceResource<IAbstractResource>[] References { get; set; }
+        public IResource[] References { get; set; }
 
 		protected override string GetUrl()
 		{
