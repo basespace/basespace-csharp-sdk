@@ -43,7 +43,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IEnumerable<IResource> References { get; set; }
+        public IResource[] References { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }

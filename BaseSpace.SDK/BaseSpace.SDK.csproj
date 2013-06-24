@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpaceClient.cs" />
+    <Compile Include="Extensions\IResourceExtensions.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
