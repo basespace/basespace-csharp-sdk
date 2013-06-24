@@ -25,7 +25,7 @@ namespace Illumina.BaseSpace.SDK.Extensions
 
         public static IEnumerable<T> OfTypeEntity<T>(this IResource[] references) where T : IAbstractResource
         {
-            return references.OfTypeEntityWithName().Select(kvp => kvp.Value);
+            return references.OfTypeEntityWithName<T>().Select(kvp => kvp.Value);
         }
 
         private static IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>(this IResource[] references) where T : IAbstractResource
