@@ -10,17 +10,29 @@ namespace Illumina.BaseSpace.SDK.Extensions
     {
         public static Dictionary<string, string> OfTypeString(this IResource[] references)
         {
-            return references.ReferencesOfValueType<string>().ToDictionary(r => r.Name, r => r.Content);
+            var refs = references.ReferencesOfValueType<string>();
+            if (refs == null)
+                return null;
+
+            return refs.ToDictionary(r => r.Name, r => r.Content);
         }
 
         public static Dictionary<string, string[]> OfTypeStringArray(this IResource[] references)
         {
-            return references.ReferencesOfValueType<string[]>().ToDictionary(r => r.Name, r => r.Content);
+            var refs = references.ReferencesOfValueType<string[]>();
+            if (refs == null)
+                return null;
+
+            return refs.ToDictionary(r => r.Name, r => r.Content);
         }
 
         public static IEnumerable<KeyValuePair<string, T>> OfTypeEntityWithName<T>(this IResource[] references) where T : IAbstractResource
         {
-            return references.ReferencesOfRefType<T>().Select(r => new KeyValuePair<string, T>(r.Name, r.Content));
+            var refs = references.ReferencesOfRefType<T>();
+            if (refs == null)
+                return null;
+
+            return refs.Select(r => new KeyValuePair<string, T>(r.Name, r.Content));
         }
 
         public static IEnumerable<T> OfTypeEntity<T>(this IResource[] references) where T : IAbstractResource
@@ -28,14 +40,14 @@ namespace Illumina.BaseSpace.SDK.Extensions
             return references.OfTypeEntityWithName<T>().Select(kvp => kvp.Value);
         }
 
-        private static IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>(this IResource[] references) where T : IAbstractResource
+        private static IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>(this IEnumerable<IResource> references) where T : IAbstractResource
         {
             if (references == null)
                 return null;
             return references.OfType<IContentReferenceResource<T>>();
         }
 
-        private static IEnumerable<IContentValueResource<T>> ReferencesOfValueType<T>(this IResource[] references)
+        private static IEnumerable<IContentValueResource<T>> ReferencesOfValueType<T>(this IEnumerable<IResource> references)
         {
             if (references == null)
                 return null;
