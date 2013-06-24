@@ -18,9 +18,14 @@ namespace Illumina.BaseSpace.SDK.Extensions
             return references.ReferencesOfValueType<string[]>().ToDictionary(r => r.Name, r => r.Content);
         }
 
-        public static Dictionary<string, T> OfTypeEntity<T>(this IResource[] references) where T: IAbstractResource
+        public static IEnumerable<KeyValuePair<string, T>> OfTypeEntityWithName<T>(this IResource[] references) where T : IAbstractResource
         {
-            return references.ReferencesOfRefType<T>().ToDictionary(r => r.Name, r => r.Content);
+            return references.ReferencesOfRefType<T>().Select(r => new KeyValuePair<string, T>(r.Name, r.Content));
+        }
+
+        public static IEnumerable<T> OfTypeEntity<T>(this IResource[] references) where T : IAbstractResource
+        {
+            return references.OfTypeEntityWithName().Select(kvp => kvp.Value);
         }
 
         private static IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>(this IResource[] references) where T : IAbstractResource
