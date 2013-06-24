@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
@@ -46,7 +47,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public AppSessionCompact AppSession { get; set; }
 
         [DataMember]
-        public IContentReferenceResource<IAbstractResource>[] References { get; set; }
+        public IEnumerable<IResource> References { get; set; }
     }
 
     [DataContract]

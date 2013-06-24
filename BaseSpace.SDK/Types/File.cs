@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -52,7 +53,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public Uri HrefParts { get; set; }
 
         [DataMember]
-        public IContentReferenceResource<IAbstractResource>[] References { get; set; }
+        public IEnumerable<IResource> References { get; set; }
     }
 
     [DataContract]

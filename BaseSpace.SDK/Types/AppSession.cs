@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.Serialization;
+using Illumina.BaseSpace.SDK.Extensions;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
@@ -42,21 +43,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IResource[] References { get; set; }
-
-        public IEnumerable<IContentReferenceResource<T>> ReferencesOfRefType<T>() where T: IAbstractResource
-        {
-            if (References == null)
-                return null;
-            return References.OfType<IContentReferenceResource<T>>();
-        }
-
-        public IEnumerable<IContentValueResource<T>> ReferencesOfValueType<T>()
-        {
-            if (References == null)
-                return null;
-            return References.OfType<IContentValueResource<T>>();
-        }
+        public IEnumerable<IResource> References { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
