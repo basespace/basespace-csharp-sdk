@@ -35,7 +35,7 @@ namespace Illumina.BaseSpace.SDK.Extensions
             return refs.Select(r => new KeyValuePair<string, IContentReferenceResource<T>>(r.Name, r));
         }
 
-        public static IEnumerable<IResource> OfTypeEntity<T>(this IResource[] references) where T: IAbstractResource
+        public static IEnumerable<IContentReferenceResource<T>> OfTypeEntity<T>(this IResource[] references) where T : IAbstractResource
         {
             return references.OfTypeEntityWithName<T>().Select(kvp => kvp.Value);
         }
