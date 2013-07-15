@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using Illumina.TerminalVelocity;
 
 namespace Illumina.BaseSpace.SDK
 {
-	internal class DownloadFileCommand
+    internal class DownloadFileCommand : IAsyncProgress<LargeFileDownloadProgressChangedEventArgs>
 	{
 		private const int CONNECTION_COUNT = 16; //TODO: Is this the right place?
 
@@ -35,7 +36,7 @@ namespace Illumina.BaseSpace.SDK
 			_file = _client.GetFilesInformation(new GetFileInformationRequest(fileId)).Response;
         }
 
-		private DownloadFileCommand(BaseSpaceClient client, Stream stream, IClientSettings settings, CancellationToken token, IWebProxy proxy)
+		private DownloadFileCommand(BaseSpaceClient client, Stream stream, IClientSettings settings, CancellationToken token, IWebProxy proxy = null)
 		{
 			_client = client;
 			_settings = settings;
@@ -45,6 +46,18 @@ namespace Illumina.BaseSpace.SDK
 			ChunkSize = Convert.ToInt32(_settings.FileDownloadMultipartSizeThreshold);
 			MaxRetries = Convert.ToInt32(_settings.RetryAttempts);
 		}
+
+        /// <summary>
+        ///  Option to pass the file name instead of the stream
+        /// </summary>
+        private string _targetFileName;
+        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName, IClientSettings settings, CancellationToken token = new CancellationToken())
+            : this(client, null, settings, token)
+        {
+            _file = file;
+            _targetFileName = targetFileName;
+        }
+
 
 		public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
@@ -67,8 +80,31 @@ namespace Illumina.BaseSpace.SDK
                 }
             });
 
-            DownloadFile(getUrl, _stream, Convert.ToInt64(_file.Size), ChunkSize, UpdateStatusForFile, MaxRetries, LogManager.GetCurrentClassLogger(), _proxy);
+           // This is where we are using the new downloader code 
+            var logger = LogManager.GetCurrentClassLogger();
+            if (_stream == null)
+            {
+                var downloader = new LargeFileDownloadParameters(new Uri(getUrl()), _targetFileName, _file.Size,_file.Id);
+                downloader.DownloadAsync(Token, this, e => logger.Debug(e)).RunSynchronously();
+            }
+            else
+                DownloadFile(getUrl, _stream, Convert.ToInt64(_file.Size), ChunkSize, UpdateStatusForFile, MaxRetries, logger, _proxy);
+        }
+
+
+        /// <summary>
+        /// Get progress from download (Terminal Velocity)
+        /// </summary>
+        /// <param name="e"></param>
+        public void Report(LargeFileDownloadProgressChangedEventArgs e)
+        {
+            OnFileDownloadProgressChanged( new FileDownloadProgressChangedEventArgs(_file.Id,
+                                                                                    e.ProgressPercentage,
+                                                                                    e.DownloadBitRate));
 		}
+
+
+        #region Old download code
 
 	    private void UpdateStatusForFile(int downloadedChunkCount, int totalChunkCount, int chunkSizeAdj, double span)
 	    {
@@ -79,7 +115,8 @@ namespace Illumina.BaseSpace.SDK
                                 span));
 	    }
 
-	    public static void DownloadFile(Func<string> getUrl, Stream stream, long fileSize, int chunkSize,Action<int,int,int,double> updateStatus =null, int maxRetries = 3 , ILog Logger = null, IWebProxy proxy = null)
+        [Obsolete("Replaced by downloader.Download (TerminalVelocity.Sharp)")]
+        public static void DownloadFile(Func<string> getUrl, Stream stream, long fileSize, int chunkSize, Action<int, int, int, double> updateStatus = null, int maxRetries = 3, ILog Logger = null, IWebProxy proxy = null)
         {
             var parallelOptions = new ParallelOptions()
             {
@@ -95,7 +132,7 @@ namespace Illumina.BaseSpace.SDK
                     var startPosition = (long)partNumber * chunkSize;
                     var chunkSizeAdj = GetChunkSize(fileSize, chunkSize, partNumber);
                     var endPosition = startPosition + chunkSizeAdj - 1;
-
+                     
 	                parallelOptions.CancellationToken.ThrowIfCancellationRequested();
 
 	                GetByteRange(getUrl, startPosition, endPosition, (b, pos, len) =>
@@ -236,6 +273,8 @@ namespace Illumina.BaseSpace.SDK
 				return totalRead;
 			}
 		}
+
+        #endregion
 	}
 }
 

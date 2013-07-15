@@ -215,6 +215,15 @@ namespace Illumina.BaseSpace.SDK
 
             command.Execute();
         }
+
+        public void DownloadFile(FileCompact file, string filePath, CancellationToken token = new CancellationToken())
+        {
+            var command = new DownloadFileCommand(this, file, filePath, Settings, token);
+            command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
+
+            command.Execute();
+        }
+
         public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
         protected void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)
