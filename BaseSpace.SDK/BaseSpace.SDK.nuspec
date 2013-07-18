@@ -16,11 +16,13 @@
     <tags>Illumina BaseSpace CSharp SDK Genomics bioinformatics</tags>
     <language>en-US</language>
     <copyright>illumina 2013 and contributors</copyright>
+    <files>
+      <file src="bin\$configuration$\Illumina.TerminalVelocity.dll" target="lib\net40\" />
+    </files>
     <dependencies>
       <dependency id="Common.Logging" />
       <dependency id="ServiceStack.Common" />
       <dependency id="ServiceStack.Text" />
-      <dependency id="Illumina.TerminalVelocity" />
     </dependencies>
   </metadata>
 </package>
