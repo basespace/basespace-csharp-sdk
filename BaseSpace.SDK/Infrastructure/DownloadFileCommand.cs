@@ -85,7 +85,8 @@ namespace Illumina.BaseSpace.SDK
             if (_stream == null)
             {
                 var downloader = new LargeFileDownloadParameters(new Uri(getUrl()), _targetFileName, _file.Size,_file.Id);
-                downloader.DownloadAsync(Token, this, e => logger.Debug(e));
+                var task = downloader.DownloadAsync(Token, this, e => logger.Debug(e));
+                task.Wait();
             }
             else
                 DownloadFile(getUrl, _stream, Convert.ToInt64(_file.Size), ChunkSize, UpdateStatusForFile, MaxRetries, logger, _proxy);
