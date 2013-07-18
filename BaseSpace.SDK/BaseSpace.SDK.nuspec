@@ -20,6 +20,7 @@
       <dependency id="Common.Logging" />
       <dependency id="ServiceStack.Common" />
       <dependency id="ServiceStack.Text" />
+      <dependency id="Illumina.TerminalVelocity" />
     </dependencies>
   </metadata>
 </package>
