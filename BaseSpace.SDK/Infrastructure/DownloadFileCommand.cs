@@ -84,7 +84,7 @@ namespace Illumina.BaseSpace.SDK
             var logger = LogManager.GetCurrentClassLogger();
             if (_stream == null)
             {
-                var downloader = new LargeFileDownloadParameters(new Uri(getUrl()), _targetFileName, _file.Size,_file.Id,64);
+                var downloader = new LargeFileDownloadParameters(new Uri(getUrl()), _targetFileName, _file.Size,_file.Id,8, 20 * 1024 * 1024);
                 var task = downloader.DownloadAsync(Token, this, e => logger.Debug(e));
                 task.Wait();
             }
