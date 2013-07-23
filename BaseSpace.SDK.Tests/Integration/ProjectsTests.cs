@@ -83,7 +83,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Match match1 = Regex.Match(project.HrefAppResults.OriginalString, regexString1, RegexOptions.IgnoreCase);
             Assert.True(match1.Success);
 
-            string TestProjectRegexStringForUI = @"https:\/\/[A-Za-z0-9-]*\.illumina\.com\/project\/{0}\/{1}";
+            string TestProjectRegexStringForUI = @"https*:\/\/[A-Za-z0-9-]*\.illumina\.com\/project\/{0}\/{1}";
             string regexString2 = string.Format(TestProjectRegexStringForUI, project.Id, project.Name);
             Match match2 = Regex.Match(project.HrefBaseSpaceUI.OriginalString, regexString2, RegexOptions.IgnoreCase);
             Assert.True(match2.Success);
