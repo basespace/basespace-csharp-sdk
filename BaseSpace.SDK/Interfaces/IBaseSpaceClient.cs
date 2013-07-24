@@ -34,6 +34,14 @@ namespace Illumina.BaseSpace.SDK
 
         ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null);
 
+        ListGenomeAnnotationsResponse ListGenomeAnnotations(ListGenomeAnnotationsRequest request, IRequestOptions options = null);
+
+        ListGenomeFileSetsResponse ListFileSets(ListGenomeFileSetsRequest request, IRequestOptions options = null);
+
+        ListGenomeAnnotationFileSetsResponse ListFileSets(ListGenomeAnnotationFileSetsRequest request, IRequestOptions options = null);
+
+        ListFileSetFilesResponse ListFiles(ListFileSetFilesRequest request, IRequestOptions options = null);
+
 		UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
 
 		GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null);

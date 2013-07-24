@@ -122,6 +122,12 @@ namespace Illumina.BaseSpace.SDK
 		{
 			return WebClient.Send(request, options);
 		}
+
+        public ListGenomeAnnotationsResponse ListGenomeAnnotations(ListGenomeAnnotationsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		#endregion
 
 		#region Files
@@ -152,8 +158,25 @@ namespace Illumina.BaseSpace.SDK
 		}
 		#endregion
 
-		#region Variants
-		public GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null)
+        #region FileSet
+        public ListGenomeFileSetsResponse ListFileSets(ListGenomeFileSetsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListGenomeAnnotationFileSetsResponse ListFileSets(ListGenomeAnnotationFileSetsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListFileSetFilesResponse ListFiles(ListFileSetFilesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Variants
+        public GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
 		}
@@ -246,5 +269,7 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send(request, options);
         }
         #endregion
+
+        
     }
 }
