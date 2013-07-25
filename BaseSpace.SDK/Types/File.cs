@@ -52,7 +52,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public Uri HrefParts { get; set; }
 
         [DataMember]
-        public IContentReferenceResource<IAbstractResource>[] References { get; set; }
+        public IContentReference<IAbstractResource>[] References { get; set; }
     }
 
     [DataContract]
