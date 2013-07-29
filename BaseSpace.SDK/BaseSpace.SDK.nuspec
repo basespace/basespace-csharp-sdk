@@ -17,10 +17,7 @@
     <language>en-US</language>
     <copyright>illumina 2013 and contributors</copyright>
     <dependencies>
-      <dependency id="Common.Logging" />
-      <dependency id="ServiceStack.Common" />
-      <dependency id="ServiceStack.Text" />
-	  <dependency id="TerminalVelocity.Sharp" />
+  
     </dependencies>
   </metadata>
 
