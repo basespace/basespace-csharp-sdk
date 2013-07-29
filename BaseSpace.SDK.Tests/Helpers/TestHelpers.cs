@@ -60,6 +60,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
 
             return appSession;
         }
-        #endregion Session
+        #endregion AppSession
     }
 }

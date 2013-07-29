@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using System.Runtime.Serialization;
-using Illumina.BaseSpace.SDK.Extensions;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
@@ -43,7 +39,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IResource[] References { get; set; }
+        public IContentReference<IAbstractResource>[] References { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
