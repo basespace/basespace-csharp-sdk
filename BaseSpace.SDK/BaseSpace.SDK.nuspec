@@ -20,9 +20,8 @@
       <dependency id="Common.Logging" />
       <dependency id="ServiceStack.Common" />
       <dependency id="ServiceStack.Text" />
+	  <dependency id="TerminalVelocity.Sharp" />
     </dependencies>
   </metadata>
-  <files>
-    <file src="bin\$configuration$\Illumina.TerminalVelocity.dll" target="lib\net40\" />
-  </files>
+
 </package>
