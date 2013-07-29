@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>TerminalVelocity.Sharp</id>
+    <version>1.0.0.1</version>
+    <title>TerminalVelocity.Sharp</title>
+    <authors>SYSTEM</authors>
+    <owners>SYSTEM</owners>
+    <licenseUrl>http://example.com</licenseUrl>
+    <projectUrl>http://example.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The TerminalVelocity.Sharp deployment package, built on 7/29/2013</description>
+    <summary>The TerminalVelocity.Sharp deployment package, built on 7/29/2013</summary>
+    <references />
+  </metadata>
+</package>
