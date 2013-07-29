@@ -46,7 +46,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public AppSessionCompact AppSession { get; set; }
 
         [DataMember]
-        public IContentReferenceResource<IAbstractResource>[] References { get; set; }
+        public IContentReference<IAbstractResource>[] References { get; set; }
     }
 
     [DataContract]

@@ -10,5 +10,6 @@ namespace Illumina.BaseSpace.SDK
         string Id { get; set; }
 
         Uri Href { get; set; }
+
     }
 }

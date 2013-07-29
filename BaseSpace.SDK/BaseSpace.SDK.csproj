@@ -48,7 +48,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -77,9 +76,7 @@
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
-    <Compile Include="Interfaces\IContentReferenceResource.cs" />
-    <Compile Include="Interfaces\IContentSettingResource.cs" />
-    <Compile Include="Interfaces\IReferenceResource.cs" />
+    <Compile Include="Interfaces\IReference.cs" />
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
@@ -94,12 +91,15 @@
     <Compile Include="ServiceModels\Request\GetCoverageMetadataRequest.cs" />
     <Compile Include="ServiceModels\Request\GetCoverageRequest.cs" />
     <Compile Include="ServiceModels\Request\GetFileInformationRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListGenomeAnnotationsRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListFileSetsRequest.cs" />
     <Compile Include="ServiceModels\Request\GetGenomeRequest.cs" />
     <Compile Include="ServiceModels\Request\GetProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\GetRunRequest.cs" />
     <Compile Include="ServiceModels\Request\GetSampleRequest.cs" />
     <Compile Include="ServiceModels\Request\GetVariantHeaderRequest.cs" />
     <Compile Include="ServiceModels\Request\ListAppResultFilesRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListFileSetFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListRunFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleFilesRequest.cs" />
@@ -134,6 +134,9 @@
     <Compile Include="ServiceModels\Response\GetVariantHeaderResponse.cs" />
     <Compile Include="ServiceModels\Response\ListAppResultFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListAppResultsResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListFileSetFilesResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListFileSetsResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListGenomeAnnotationResponse.cs" />
     <Compile Include="ServiceModels\Response\ListGenomeResponse.cs" />
     <Compile Include="ServiceModels\Response\ListProjectsResponse.cs" />
     <Compile Include="ServiceModels\Response\GetUserResponse.cs" />
@@ -156,9 +159,9 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
-    <Compile Include="Types\ContentValue.cs" />
     <Compile Include="Types\Coverage.cs" />
     <Compile Include="Types\FileContent.cs" />
+    <Compile Include="Types\FileSet.cs" />
     <Compile Include="Types\GenericAbstractList.cs" />
     <Compile Include="Types\ApiResponse.cs" />
     <Compile Include="Types\Application.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Types\AppSession.cs" />
     <Compile Include="Types\File.cs" />
     <Compile Include="Types\Genome.cs" />
+    <Compile Include="Types\GenomeAnnotation.cs" />
     <Compile Include="Types\Instrument.cs" />
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
