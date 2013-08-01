@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Util;
+using System.Linq;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using ServiceStack.Common.Extensions;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.Text;
@@ -53,7 +55,77 @@ namespace Illumina.BaseSpace.SDK
             //handle complex parsing of references
             JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ResourceDeserializer;
 
+            JsConfig<Property>.RawDeserializeFn = RawDeserializeFn;
+            
             JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
+        }
+
+
+        private static Property RawDeserializeFn(string s)
+        {
+            var json = JsonObject.Parse(s);
+            var property = new Property()
+                               {
+                                   Description = json.Get("Description"),
+                                   Href = json.Get<Uri>("Href"),
+                                   Type = json.Get("Type"),
+                                   Name = json.Get("Name"),
+                                   HrefItems = json.Get<Uri>("HrefItems"),
+                                   ItemsDisplayedCount = json.Get<int?>("ItemsDisplayedCount"),
+                                   ItemsTotalCount = json.Get<int?>("ItemsTotalCount")
+                               };
+
+            var simpleType = property.GetSimpleType();
+            if (json.ContainsKey("Content"))
+            {
+                switch (simpleType)
+                {
+                    case Property.TYPE_STRING:
+                        property.Content = new PropertyContentLiteral(property.Type, json.Get("Content"));
+                        break;
+                    default:
+                        property.Content = DeserializePropertyReference(simpleType, json.Child("Content"));
+                        break;
+                }
+            }
+
+            if (json.ContainsKey("Items"))
+            {
+                switch (simpleType)
+                {
+                    case Property.TYPE_STRING:
+                        property.Items = json.Get<string[]>("Items").Select(i => new PropertyContentLiteral(simpleType, i)).ToArray();
+                        break;
+                    default:
+                        property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyReference(simpleType, itemj.ToJson())).Where(x => x != null).ToArray();
+                        break;
+                }
+            }
+
+            return property;
+        }
+
+        internal static IPropertyContent DeserializePropertyReference(string type, string json)
+        {
+            IPropertyContent ret = null;
+            if (string.IsNullOrEmpty(type) || string.IsNullOrEmpty(json))
+            {
+                return null;
+            }
+            switch (type)
+            {
+                case Property.TYPE_PROJECT:
+                    ret = JsonSerializer.DeserializeFromString<ProjectCompact>(json);
+                    break;
+            }
+            return ret;
+        }
+
+        internal static IPropertyContent PropertyDeserializer(string source)
+        {
+            var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
+            var z = JsonObject.Parse(source);
+            return null;
         }
 
         public IWebProxy WebProxy

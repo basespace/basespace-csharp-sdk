@@ -6,7 +6,7 @@ namespace Illumina.BaseSpace.SDK.Types
 {
 
     [DataContract( Name = "AppResult")]
-    public class AppResultCompact : AbstractResource
+    public class AppResultCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -29,6 +29,7 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public DateTime DateCreated { get; set; }
 
+        public string Type { get { return Property.TYPE_APPRESULT; } }
     }
 
     [DataContract]

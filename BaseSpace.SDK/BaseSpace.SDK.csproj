@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpaceClient.cs" />
+    <Compile Include="Extensions\PropertyExtensions.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
+    <Compile Include="Interfaces\IPropertyContent.cs" />
     <Compile Include="Interfaces\IReference.cs" />
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
     <Compile Include="Types\ContentReference.cs" />
+    <Compile Include="Types\Property.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />
