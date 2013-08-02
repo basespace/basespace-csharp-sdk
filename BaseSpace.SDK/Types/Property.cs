@@ -52,4 +52,6 @@ namespace Illumina.BaseSpace.SDK.Types
             return string.Format("Property: '{0}'; Type: {1}", Name, Type);
         }
     }
+
+    public enum PropertiesSortByParameters { Name }
 }

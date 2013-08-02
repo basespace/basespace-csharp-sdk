@@ -81,5 +81,7 @@ namespace Illumina.BaseSpace.SDK
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
         GetApiMetaResponse GetApiMeta(GetApiMetaRequest request, IRequestOptions options = null);
+
+        SetPropertiesResponse SetProperties(SetPropertiesRequest request, IRequestOptions options = null);
     }
 }

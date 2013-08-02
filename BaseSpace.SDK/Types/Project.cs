@@ -28,7 +28,7 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     [DataContract()]
-    public class Project : ProjectCompact
+    public class Project : ProjectCompact, IPropertyHolder
     {
         [DataMember]
         public Uri HrefSamples { get; set; }

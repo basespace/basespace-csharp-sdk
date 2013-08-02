@@ -16,8 +16,21 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void Foo()
         {
-            var projectProperties = Client.GetProject(new GetProjectRequest("356356")).Response.Properties;
-            //response.Response
+            var project = Client.GetProject(new GetProjectRequest("356356")).Response;
+            var projectProperties = project.Properties;
+
+            var setPropRequest = new SetPropertiesRequest(project);
+            setPropRequest.AddProperty("SDK.foo1").SetSingleValueContent("Fooo1");
+            setPropRequest.AddProperty("SDK.foo2").SetSingleValueContent("Fooo2");
+            try
+            {
+                var propResponse = Client.SetProperties(setPropRequest);
+            }
+            catch (BaseSpaceException x)
+            {
+                string xToString = x.ToString();
+                string msg = x.Message;
+            }
         }
     }
 }

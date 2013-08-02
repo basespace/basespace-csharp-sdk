@@ -270,6 +270,13 @@ namespace Illumina.BaseSpace.SDK
         }
         #endregion
 
-        
+        #region Properties
+
+        public SetPropertiesResponse SetProperties(SetPropertiesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        #endregion
     }
 }

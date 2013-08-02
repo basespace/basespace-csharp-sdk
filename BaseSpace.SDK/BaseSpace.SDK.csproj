@@ -82,6 +82,7 @@
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
     <Compile Include="Interfaces\IPropertyContent.cs" />
+    <Compile Include="Interfaces\IPropertyHolder.cs" />
     <Compile Include="Interfaces\IReference.cs" />
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
@@ -120,11 +121,14 @@
     <Compile Include="ServiceModels\Request\OAuthDeviceAccessTokenRequest.cs" />
     <Compile Include="ServiceModels\Request\OAuthDeviceAuthRequest.cs" />
     <Compile Include="ServiceModels\Request\OAuthV2AccessTokenRequest.cs" />
+    <Compile Include="ServiceModels\Request\SetPropertiesRequest.cs" />
     <Compile Include="ServiceModels\Request\UpdateAppSessionRequest.cs" />
     <Compile Include="ServiceModels\Request\CreateProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
+    <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
     <Compile Include="ServiceModels\Response\GetApiMetaResponse.cs" />
@@ -146,12 +150,12 @@
     <Compile Include="ServiceModels\Response\ListGenomeResponse.cs" />
     <Compile Include="ServiceModels\Response\ListProjectsResponse.cs" />
     <Compile Include="ServiceModels\Response\GetUserResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListRunFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListRunsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSampleFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSamplesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListVariantsResponse.cs" />
-    <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthDeviceAccessTokenResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthDeviceAuthResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthV2AccessTokensResponse.cs" />
@@ -181,6 +185,8 @@
     <Compile Include="Types\Project.cs" />
     <Compile Include="Types\ContentReference.cs" />
     <Compile Include="Types\Property.cs" />
+    <Compile Include="Types\PropertyContainer.cs" />
+    <Compile Include="Types\PropertyContentLiteral.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />
