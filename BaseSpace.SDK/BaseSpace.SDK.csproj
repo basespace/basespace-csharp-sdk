@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -65,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpaceClient.cs" />
+    <Compile Include="Extensions\IResourceExtensions.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
@@ -83,7 +85,9 @@
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
-    <Compile Include="Interfaces\IReference.cs" />
+    <Compile Include="Interfaces\IContentReferenceResource.cs" />
+    <Compile Include="Interfaces\IContentSettingResource.cs" />
+    <Compile Include="Interfaces\IReferenceResource.cs" />
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
@@ -166,6 +170,7 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
+    <Compile Include="Types\ContentValue.cs" />
     <Compile Include="Types\Coverage.cs" />
     <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\FileSet.cs" />
