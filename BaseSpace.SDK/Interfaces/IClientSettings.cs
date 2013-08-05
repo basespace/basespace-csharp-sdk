@@ -15,5 +15,7 @@
         uint FileDownloadMultipartSizeThreshold { get; }
 
 		IAuthentication Authentication { get; }
+
+        int TimeoutMin { get;  }
 	}
 }
