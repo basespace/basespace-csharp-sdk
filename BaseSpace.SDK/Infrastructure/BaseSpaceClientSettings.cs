@@ -38,5 +38,7 @@
         public uint FileDownloadMultipartSizeThreshold { get; set; }
 
         public IAuthentication Authentication { get; set; }
+
+        public int TimeoutMin { get; set; }
 	}
 }
