@@ -17,7 +17,7 @@
     <language>en-US</language>
     <copyright>illumina 2013 and contributors</copyright>
     <dependencies>
-  
+      <dependency id="TerminalVelocity.Sharp" version="1.0.0.1"/>
     </dependencies>
   </metadata>
 

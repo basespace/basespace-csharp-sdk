@@ -196,7 +196,9 @@
     <Compile Include="Types\VerificationCode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BaseSpace.SDK.nuspec" />
+    <None Include="BaseSpace.SDK.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
