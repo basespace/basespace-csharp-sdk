@@ -26,7 +26,37 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public override string ToString()
         {
-            return string.Format("{0}: {1}", Type, Content);
+            return Content;
+        }
+
+        public int? ToInt()
+        {
+            int ret;
+            if (int.TryParse(Content, out ret))
+            {
+                return ret;
+            }
+            return null;
+        }
+
+        public long? ToLong()
+        {
+            long ret;
+            if (long.TryParse(Content, out ret))
+            {
+                return ret;
+            }
+            return null;
+        }
+
+        public DateTime? ToDateTime()
+        {
+            DateTime ret;
+            if (DateTime.TryParse(Content, out ret))
+            {
+                return ret;
+            }
+            return null;
         }
     }
 }

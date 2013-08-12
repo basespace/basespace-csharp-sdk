@@ -149,9 +149,15 @@ namespace Illumina.BaseSpace.SDK
                 RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
                 return result;
             }
-            catch (Exception wex)
+            catch (WebServiceException webx)
             {
-                throw new BaseSpaceException(request.GetName() + " failed", wex);
+                var msg = string.Format("{0} status: {1} ({2}) Message: {3}", request.GetName(), webx.StatusCode,
+                                        webx.StatusDescription, webx.ErrorMessage);
+                throw new BaseSpaceException(msg, webx);
+            }
+            catch (Exception x)
+            {
+                throw new BaseSpaceException(request.GetName() + " failed", x);
             }
         }
 

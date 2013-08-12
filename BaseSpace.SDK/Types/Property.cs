@@ -15,9 +15,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public const string TYPE_SAMPLE = "sample";
         public const string TYPE_APPRESULT = "appresult";
         public const string TYPE_FILE = "file";
-        public const string TYPE_USER = "user";
         public const string TYPE_APPSESSION = "appsession";
-        public const string TYPE_APPLICATION = "application";
         public const string TYPE_LIST_SUFFIX = "[]";
 
         [DataMember]
@@ -49,7 +47,16 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public override string ToString()
         {
-            return string.Format("Property: '{0}'; Type: {1}", Name, Type);
+            string c = string.Empty;
+            if (Content != null)
+            {
+                c = string.Format("Content: {0}", Content.ToString());
+            }
+            else if(Items != null)
+            {
+                c = string.Format("#Items: {0}/{1}", ItemsDisplayedCount ?? 0, ItemsTotalCount ?? 0);
+            }
+            return string.Format("Property: '{0}'; Type: {1}; {2};", Name, Type, c);
         }
     }
 

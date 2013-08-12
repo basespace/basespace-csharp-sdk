@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract( Name = "AppSession")]
-    public class AppSessionCompact : AbstractResource
+    public class AppSessionCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -29,17 +29,30 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public DateTime DateCreated { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
+        }
+
+        public string Type
+        {
+            get { return Property.TYPE_APPSESSION; }
+        }
     }
 
 
     [DataContract]
-    public class AppSession : AppSessionCompact
+    public class AppSession : AppSessionCompact, IPropertyContainingResource
     {
         [DataMember]
         public string OriginatingUri { get; set; }
 
         [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }

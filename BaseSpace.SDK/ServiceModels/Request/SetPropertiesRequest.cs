@@ -16,12 +16,12 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             HttpMethod = HttpMethods.POST;
         }
 
-        public SetPropertiesRequest(IPropertyHolder propertyHolderResource):this()
+        public SetPropertiesRequest(IPropertyContainingResource parentResource):this()
         {
-            HrefPropertyHolder = propertyHolderResource.Href;
+            HrefParentResource = parentResource.Href;
         }
 
-        public Uri HrefPropertyHolder { get; set; }
+        public Uri HrefParentResource { get; set; }
 
         [DataMember]
         public List<PropertyToSet> Properties { get; set; }
@@ -40,11 +40,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         protected override string GetUrl()
         {
-            if (HrefPropertyHolder == null)
+            if (HrefParentResource == null)
             {
                 return null;
             }
-            return string.Format("{0}/{1}", HrefPropertyHolder.ToString(), "properties");
+            return string.Format("{0}/{1}", HrefParentResource.ToString(), "properties");
         }
 
 

@@ -6,7 +6,7 @@ namespace Illumina.BaseSpace.SDK.Types
 {
 
     [DataContract( Name = "Sample")]
-    public class SampleCompact : AbstractResource
+    public class SampleCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -34,10 +34,17 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
+        }
+
+        public string Type { get { return Property.TYPE_SAMPLE; } }
     }
 
     [DataContract()]
-    public class Sample : SampleCompact
+    public class Sample : SampleCompact, IPropertyContainingResource
     {
         [DataMember]
         public Uri HrefGenome { get; set; }
@@ -56,14 +63,22 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public bool IsPairedEnd { get; set; }
+        
         [DataMember]
         public short Read1 { get; set; }
+        
         [DataMember]
         public short Read2 { get; set; }
+        
         [DataMember]
         public long NumReadsRaw { get; set; }
+        
         [DataMember]
         public long NumReadsPF { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
+    
     }
 
     [DataContract]

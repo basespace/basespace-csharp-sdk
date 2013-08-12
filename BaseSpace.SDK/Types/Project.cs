@@ -25,10 +25,15 @@ namespace Illumina.BaseSpace.SDK.Types
         {
             get { return Property.TYPE_PROJECT; }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}", Href, Name);
+        }
     }
 
     [DataContract()]
-    public class Project : ProjectCompact, IPropertyHolder
+    public class Project : ProjectCompact, IPropertyContainingResource
     {
         [DataMember]
         public Uri HrefSamples { get; set; }

@@ -30,10 +30,15 @@ namespace Illumina.BaseSpace.SDK.Types
         public DateTime DateCreated { get; set; }
 
         public string Type { get { return Property.TYPE_APPRESULT; } }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
+        }
     }
 
     [DataContract]
-    public class AppResult : AppResultCompact
+    public class AppResult : AppResultCompact, IPropertyContainingResource
     {
         [DataMember]
         public string Description { get; set; }
@@ -49,6 +54,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
     }
 
     [DataContract]
