@@ -24,6 +24,8 @@ namespace Illumina.BaseSpace.SDK
 
 		GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
 
+        CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
+
 		GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
 
         ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null);
@@ -41,6 +43,8 @@ namespace Illumina.BaseSpace.SDK
         ListGenomeAnnotationFileSetsResponse ListFileSets(ListGenomeAnnotationFileSetsRequest request, IRequestOptions options = null);
 
         ListFileSetFilesResponse ListFiles(ListFileSetFilesRequest request, IRequestOptions options = null);
+
+        UploadFileToFileSetResponse UploadFileToFileSet(UploadFileToFileSetRequest request, IRequestOptions options = null);
 
 		UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
 

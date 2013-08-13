@@ -94,6 +94,7 @@
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\CreateAppSessionLogsRequest.cs" />
     <Compile Include="ServiceModels\Request\FileContentRedirectMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\FileRequestPost.cs" />
     <Compile Include="ServiceModels\Request\GetApiMetaRequest.cs" />
@@ -129,7 +130,9 @@
     <Compile Include="ServiceModels\Request\CreateProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
+    <Compile Include="ServiceModels\Request\UploadFileToFileSetRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\CreateAppSessionLogsResponse.cs" />
     <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
     <Compile Include="ServiceModels\Response\GetApiMetaResponse.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="ServiceModels\Response\UpdateAppSessionResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateProjectResponse.cs" />
     <Compile Include="ServiceModels\Response\UploadFileToAppResultResponse.cs" />
+    <Compile Include="ServiceModels\Response\UploadFileToFileSetResponse.cs" />
     <Compile Include="Types\AbstractResource.cs" />
     <Compile Include="Types\AbstractQueryParameters.cs" />
     <Compile Include="Types\AccessToken.cs" />

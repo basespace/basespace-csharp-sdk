@@ -44,6 +44,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public IResource[] References { get; set; }
+
+        [DataMember]
+        public Uri HrefLogs { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
