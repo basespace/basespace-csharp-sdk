@@ -6,8 +6,6 @@ using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
 {
-
-
     public static class PropertyContainerExtensions
     {
 
@@ -120,7 +118,6 @@ namespace Illumina.BaseSpace.SDK
             {
                 return null;
             }
-
             return propertyContent as TResourceType;
         }
 

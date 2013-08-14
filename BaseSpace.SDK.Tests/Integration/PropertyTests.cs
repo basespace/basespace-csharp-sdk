@@ -82,7 +82,47 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var prop = Client.SetPropertiesForResource(setPropRequest).Response;
 
             var response = Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "unittest.deletetest"));
+        }
 
+        [Fact]
+        public void GetPropertyVerbose()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.AddProperty("unittest.verbosepropertytest").SetMultiValueContent(RAINBOW);
+            var prop = Client.SetPropertiesForResource(setPropRequest).Response;
+            
+            // TODO (maxm): finish this by including app/user/dates in PropertyFull
+        }
+
+        [Fact]
+        public void MultiItemPaging()
+        {
+
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var values = new string[100];
+            for (int i = 0; i < 100; i++)
+            {
+                values[i] = i.ToString();
+            }
+
+            setPropRequest.AddProperty("unittest.multiitem.manyitems").SetMultiValueContent(values);
+            var property = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
+            Assert.NotNull(property);
+            Assert.True(property.ItemsDisplayedCount < property.ItemsTotalCount);
+            Assert.True(property.ItemsDisplayedCount < 100);
+            Assert.Equal(100, property.ItemsTotalCount);
+
+            var propertyItems = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.manyitems")).Response;
+            Assert.NotNull(propertyItems);
+            Assert.Equal(100, propertyItems.TotalCount);
+            Assert.True(propertyItems.DisplayedCount < property.ItemsTotalCount);
+
+            propertyItems = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.manyitems"){ Limit = 3, Offset = 75}).Response;
+            Assert.Equal(3, propertyItems.Limit);
+            Assert.Equal(75, propertyItems.Offset);
+            Assert.Equal(3, propertyItems.DisplayedCount);
+            Assert.True(propertyItems.Items.All(x => x != null));
+            Assert.True(propertyItems.Items.All(x => new[] {"75", "76", "77"}.Contains(x.ToString())));
 
         }
     }

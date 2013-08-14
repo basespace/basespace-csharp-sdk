@@ -272,7 +272,17 @@ namespace Illumina.BaseSpace.SDK
 
         #region Properties
 
-        public GetPropertiesResponse GetPropertiesForResource(GetPropertiesRequest request, IRequestOptions options = null)
+        public ListPropertiesResponse ListPropertiesForResource(ListPropertiesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public GetPropertyResponse GetPropertyForResource(GetPropertyRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListPropertyItemsResponse ListPropertyItems(ListPropertyItemsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
         }

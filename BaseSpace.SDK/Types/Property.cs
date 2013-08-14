@@ -61,4 +61,5 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     public enum PropertiesSortByParameters { Name }
+    public enum PropertyItemsSortByParameters { DateCreated }
 }

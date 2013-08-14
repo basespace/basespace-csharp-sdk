@@ -82,7 +82,11 @@ namespace Illumina.BaseSpace.SDK
 
         GetApiMetaResponse GetApiMeta(GetApiMetaRequest request, IRequestOptions options = null);
 
-        GetPropertiesResponse GetPropertiesForResource(GetPropertiesRequest request, IRequestOptions options = null);
+        ListPropertiesResponse ListPropertiesForResource(ListPropertiesRequest request, IRequestOptions options = null);
+
+        GetPropertyResponse GetPropertyForResource(GetPropertyRequest request, IRequestOptions options = null);
+
+        ListPropertyItemsResponse ListPropertyItems(ListPropertyItemsRequest request, IRequestOptions options = null);
 
         SetPropertiesResponse SetPropertiesForResource(SetPropertiesRequest request, IRequestOptions options = null);
 
