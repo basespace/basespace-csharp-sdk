@@ -125,5 +125,52 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(propertyItems.Items.All(x => new[] {"75", "76", "77"}.Contains(x.ToString())));
 
         }
+
+        [Fact]
+        public void CreateDuplicateProperty()
+        {
+            bool IsPassed = false;
+
+            try
+            {
+                string name = "unittest.duplicateproperty";
+                var setPropRequest = new SetPropertiesRequest(_project);
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo2");
+
+                var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            }
+            catch
+            {
+                //TODO: Add checking on error type/message thrown
+                IsPassed = true;
+            }
+
+            Assert.True(IsPassed, "User should not be able to add duplicate property names");
+        }
+
+        [Fact]
+        public void CreateEmptyPropertyName()
+        {
+            bool IsPassed = false;
+
+            try
+            {
+                string name = string.Empty;
+                var setPropRequest = new SetPropertiesRequest(_project);
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+
+                var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            }
+            catch
+            {
+                //TODO: Add checking on error type/message thrown
+                IsPassed = true;
+            }
+
+            Assert.True(IsPassed, "User should not be able to add an empty property name");
+        }
     }
+
+
 }
