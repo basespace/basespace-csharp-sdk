@@ -5,7 +5,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
     {
         string _uri;
         public UploadFileToFileSetRequest(FileSet fileSet, string filePath, string directory = null)
-            : base(fileSet.Id, filePath, directory, string.Empty)
+            : base(null, filePath, directory, null)
         {
             _uri = fileSet.HrefFiles.ToString();
         }
