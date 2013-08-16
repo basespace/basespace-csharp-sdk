@@ -25,7 +25,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             _project = response.Response;
         }
 
-
         [Fact]
         public void CreateSingleItemProperty()
         {
@@ -48,7 +47,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             setPropRequest.AddProperty(name).SetSingleValueContent(_project);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
-
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
             Assert.NotNull(prop);
             var projectContent = prop.Content.ToResource<ProjectCompact>();
@@ -98,13 +96,11 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void MultiItemPaging()
         {
-
             var setPropRequest = new SetPropertiesRequest(_project);
             var values = new string[100];
+
             for (int i = 0; i < 100; i++)
-            {
                 values[i] = i.ToString();
-            }
 
             setPropRequest.AddProperty("unittest.multiitem.manyitems").SetMultiValueContent(values);
             var property = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
@@ -142,5 +138,148 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             }
 
         }
+
+        [Fact]
+        public void CreateDuplicateProperty()
+        {
+            bool IsPassed = false;
+
+            try
+            {
+                string name = "unittest.duplicateproperty";
+                var setPropRequest = new SetPropertiesRequest(_project);
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo2");
+
+                var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            }
+            catch (BaseSpaceException _BaseSpaceException)
+            {
+                //TODO: Add checking on error type/message thrown
+                IsPassed = true;
+            }
+
+            Assert.True(IsPassed, "User should not be able to add duplicate property names");
+        }
+
+        [Fact]
+        public void CreateEmptyPropertyName()
+        {
+            bool IsPassed = false;
+
+            try
+            {
+                string name = string.Empty;
+                var setPropRequest = new SetPropertiesRequest(_project);
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+
+                var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            }
+            catch (BaseSpaceException _BaseSpaceException)
+            {
+                //TODO: Add checking on error type/message thrown
+                IsPassed = true;
+            }
+
+            Assert.True(IsPassed, "User should not be able to add an empty property name");
+        }
+
+        [Fact]
+        public void DeleteNonExistingProperty()
+        {
+            bool IsPassed = false;
+
+            try
+            {
+                var setPropRequest = new SetPropertiesRequest(_project);
+                setPropRequest.AddProperty("unittest.deletetest").SetSingleValueContent("Property to delete");
+                var prop = Client.SetPropertiesForResource(setPropRequest).Response;
+
+                var response = Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "unittest.deletetest.notexisting"));
+            }
+            catch (BaseSpaceException _BaseSpaceException)
+            {
+                if (_BaseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    IsPassed = true;
+            }
+
+            Assert.True(IsPassed, "User should not be able to add duplicate property names");
+        }
+
+        [Fact]
+        public void CreatePropertyWithNameGreaterThan32()
+        {
+            bool IsPassed = false;
+
+            try
+            {
+                var name = "unittest.singlevalue.propertynamegreaterthan32";
+                var setPropRequest = new SetPropertiesRequest(_project);
+                setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+
+                //This should throw an error
+                var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            }
+            catch (BaseSpaceException _BaseSpaceException)
+            {
+                IsPassed = true;
+            }
+
+            Assert.True(IsPassed, "User should not be able to add property with name greater than 32 characters");
+        }
+
+        [Fact]
+        public void CreateMultipleProperties()
+        {
+            try
+            {
+                var name = "unittest.multipleproperties.property";
+                var setPropRequest = new SetPropertiesRequest(_project);
+
+                for (int intCtr = 1; intCtr <= 65; intCtr++)
+                    setPropRequest.AddProperty(name + intCtr.ToString()).SetSingleValueContent("Foo" + intCtr.ToString());
+
+                var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+
+                Assert.NotNull(propResponse);
+                Assert.True(propResponse.DisplayedCount < propResponse.TotalCount, string.Format("Displayed count:{0} should be less than Total Count:{1}", propResponse.DisplayedCount, propResponse.TotalCount));
+                Assert.Equal(65, propResponse.TotalCount);
+            }
+            catch (BaseSpaceException _BaseSpaceException)
+            {
+                Assert.True(false, _BaseSpaceException.Message.ToString());
+            }
+        }
+
+        //[Fact]
+        public void GetSingleItemProperty()
+        {
+            //var name = "unittest.singlevalue.getproperty";
+            //var setPropRequest = new SetPropertiesRequest(_project);
+            //setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+
+            //var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+
+            //var projProperty = new GetPropertyRequest(_project, name);
+            //projProperty.
+            //Assert.NotNull(projProperty);
+            //Assert.Equal(name, projProperty.PropertyName);
+            //Assert.Equal("Foo", projProperty.
+        }
+
+        public void GetMultipleItemProperty()
+        {
+        }
+
+        public void GetNonExistingProperty()
+        {
+        }
+
+        /*TODO:
+         * Invalid Values on Limit and Offset
+         * 
+         */
     }
+
+
 }
