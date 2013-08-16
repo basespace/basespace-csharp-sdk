@@ -10,6 +10,8 @@ namespace Illumina.BaseSpace.SDK
     {
         public HttpStatusCode StatusCode { get; set; }
 
+        public string ErrorCode { get; private set; }
+
         public IHasResponseStatus Response { get; private set; }
 
         public dynamic ResponseBodyJson { get; private set; }
@@ -24,10 +26,11 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-        public BaseSpaceException(string message, Exception ex)
+        public BaseSpaceException(string message, string errorCode, Exception ex)
             : base(message, ex)
         {
             StatusCode = (HttpStatusCode)RetryLogic.GetStatusCode(ex);
+            ErrorCode = errorCode;
             WebServiceException wse = ex as WebServiceException;
             if (wse != null)
             {

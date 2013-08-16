@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -123,6 +124,22 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(3, propertyItems.DisplayedCount);
             Assert.True(propertyItems.Items.All(x => x != null));
             Assert.True(propertyItems.Items.All(x => new[] {"75", "76", "77"}.Contains(x.ToString())));
+        }
+
+        [Fact]
+        public void InvalidNameError()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.AddProperty("a").SetMultiValueContent(RAINBOW);
+            try
+            {
+                Client.SetPropertiesForResource(setPropRequest);
+            }
+            catch (BaseSpaceException bse)
+            {
+                Assert.Equal("BASESPACE.PROPERTIES.NAME_INVALID", bse.ErrorCode);
+                Assert.Equal(HttpStatusCode.BadRequest, bse.StatusCode);
+            }
 
         }
     }

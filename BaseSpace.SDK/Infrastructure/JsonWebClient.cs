@@ -81,13 +81,17 @@ namespace Illumina.BaseSpace.SDK
             }
             catch (WebServiceException webx)
             {
-                var msg = string.Format("{0} status: {1} ({2}) Message: {3}", request.GetName(), webx.StatusCode,
-                                        webx.StatusDescription, webx.ErrorMessage);
-                throw new BaseSpaceException(msg, webx);
+                string errorCode = string.Empty;
+                if (!string.IsNullOrEmpty(webx.ErrorCode))
+                {
+                    errorCode = string.Format(" ({0})", webx.ErrorCode);
+                }
+                var msg = string.Format("{0} status: {1} ({2}) Message: {3}{4}", request.GetName(), webx.StatusCode, webx.StatusDescription, webx.ErrorMessage, errorCode);
+                throw new BaseSpaceException(msg, webx.ErrorCode, webx);
             }
             catch (Exception x)
             {
-                throw new BaseSpaceException(request.GetName() + " failed", x);
+                throw new BaseSpaceException(request.GetName() + " failed", string.Empty, x);
             }
         }
 
