@@ -182,7 +182,8 @@ namespace Illumina.BaseSpace.SDK
 
         public UploadFileToFileSetResponse UploadFileToFileSet(UploadFileToFileSetRequest request, IRequestOptions options = null)
         {
-            return WebClient.Send(request, options);
+            var fileUploadClient = new FileUpload(WebClient, Settings, options ?? WebClient.DefaultRequestOptions);
+            return fileUploadClient.UploadFile(request);
         }
         #endregion
 

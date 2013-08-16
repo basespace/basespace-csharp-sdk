@@ -24,10 +24,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var data = Encoding.ASCII.GetBytes("Howdy!");
             file.Write(data, 0, data.Length);
             file.Close();
-            var uploadResponse = Client.UploadFileToFileSet(new UploadFileToFileSetRequest(logsResponse.Response, file.Name));
+            var uploadResponse = Client.UploadFileToFileSet(new UploadFileToFileSetRequest(logsResponse.Response, file.Name, "foobar"));
 
             Assert.NotNull(uploadResponse);
             Assert.True(uploadResponse.Response.UploadStatus == FileUploadStatus.complete);
+            Assert.True(uploadResponse.Response.Path.StartsWith("foobar"));
+            Assert.True(uploadResponse.Response.Name.StartsWith("UnitTest"));
         }
 
     }
