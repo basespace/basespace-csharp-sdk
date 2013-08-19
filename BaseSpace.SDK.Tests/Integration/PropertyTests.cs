@@ -133,12 +133,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CreateDuplicateProperty()
         {
-                string name = "unittest.duplicateproperty";
-                var setPropRequest = new SetPropertiesRequest(_project);
-                setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
-                setPropRequest.AddProperty(name).SetSingleValueContent("Foo2");
+            string name = "unittest.duplicateproperty";
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+            setPropRequest.AddProperty(name).SetSingleValueContent("Foo2");
 
-                AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.DUPLICATE_NAMES", HttpStatusCode.BadRequest);
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.DUPLICATE_NAMES", HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -182,8 +182,76 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
             Assert.NotNull(propResponse);
+            Assert.Equal(propResponse.DisplayedCount, propResponse.TotalCount); 
+            Assert.Equal(65, propResponse.TotalCount);
+        }
+
+        [Fact]
+        public void GetAllPropertiesForResource()
+        {
+            var name = "unittest.getmultipleproperties.property";
+            var setPropRequest = new SetPropertiesRequest(_project);
+
+            for (int intCtr = 1; intCtr <= 65; intCtr++)
+                setPropRequest.AddProperty(name + intCtr.ToString()).SetSingleValueContent("Foo" + intCtr.ToString());
+
+            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+
+            Assert.NotNull(propResponse);
             Assert.Equal(propResponse.DisplayedCount, propResponse.TotalCount);
             Assert.Equal(65, propResponse.TotalCount);
+
+            var prjRqst = new ListPropertiesRequest(_project);
+            var prjProperties = Client.ListPropertiesForResource(prjRqst);
+
+            Assert.NotNull(prjProperties);
+            Assert.True(prjProperties.Response.DisplayedCount < prjProperties.Response.TotalCount, string.Format("Displayed count: {0} should be less than Total Count: {1}", propResponse.DisplayedCount, propResponse.TotalCount));
+            Assert.Equal(50, propResponse.TotalCount);
+            Assert.Equal(65, propResponse.TotalCount);
+        }
+
+        [Fact]
+        public void GetAPropertyForResource()
+        {
+            var name = "unittest.getpropertyforaresource.property";
+            var setPropRequest = new SetPropertiesRequest(_project);
+
+            for (int intCtr = 1; intCtr <= 5; intCtr++)
+                setPropRequest.AddProperty(name + intCtr.ToString()).SetSingleValueContent("Foo" + intCtr.ToString());
+
+            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+
+            Assert.NotNull(propResponse);
+            Assert.Equal(propResponse.DisplayedCount, propResponse.TotalCount);
+            Assert.Equal(5, propResponse.TotalCount);
+
+            var prjRqst = new GetPropertyRequest(_project, "unittest.getpropertyforaresource.property2");
+            var prjProperties = Client.GetPropertyForResource(prjRqst);
+
+            Assert.NotNull(prjProperties);
+            Assert.Equal("unittest.getpropertyforaresource.property2", prjProperties.Response.Name);
+            Assert.Equal("Foo2", prjProperties.Response.Content.ToString());
+        }
+
+        [Fact]
+        public void GetNonExistingPropertyForResource()
+        {
+            var name = "unittest.getinvalidproperty";
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.AddProperty(name).SetSingleValueContent("Foo");
+
+            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            Assert.NotNull(propResponse);
+
+            var prjRqst = new GetPropertyRequest(_project, "unittest.getinvalidproperty.notexisting");
+
+            AssertErrorResponse(() => Client.GetPropertyForResource(prjRqst), "BASESPACE.PROPERTIES.NOT_FOUND", HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public void GetPagedPropertiesForResource()
+        {
+
         }
     }
 }
