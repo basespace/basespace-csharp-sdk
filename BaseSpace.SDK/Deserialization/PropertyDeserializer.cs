@@ -49,7 +49,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                                 new PropertyItem()
                                 {
                                     Id = itemj["Id"],
-                                    Content = DeserializePropertyReference(simpleType, itemj.ToJson())
+                                    Content = DeserializePropertyReference(simpleType, itemj.Child("Content"))
                                 })
                             .ToArray();
                     break;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
@@ -202,6 +203,107 @@ namespace Illumina.BaseSpace.SDK
                 return null;
             }
             return propertyContent as TResourceType;
+        }
+
+        public static AppSessionCompact ToAppSession(this IPropertyContent propertyContent)
+        {
+            return propertyContent.ToResource<AppSessionCompact>();
+        }
+
+        public static ProjectCompact ToProject(this IPropertyContent propertyContent)
+        {
+            return propertyContent.ToResource<ProjectCompact>();
+        }
+
+        public static SampleCompact ToSample(this IPropertyContent propertyContent)
+        {
+            return propertyContent.ToResource<SampleCompact>();
+        }
+
+        public static AppResultCompact ToAppResult(this IPropertyContent propertyContent)
+        {
+            return propertyContent.ToResource<AppResultCompact>();
+        }
+
+        public static RunCompact ToRun(this IPropertyContent propertyContent)
+        {
+            return propertyContent.ToResource<RunCompact>();
+        }
+    }
+
+    public static class PropertyItemsResourceListExtensions
+    {
+        /// <summary>
+        /// For multi-value properties containing resource references, returns property items referencing the given type as an array
+        /// </summary>
+        public static TResourceType[] ToResourceArray<TResourceType>(this PropertyItemsResourceList propertyItemsResourceList)
+            where TResourceType : class, IPropertyContent
+        {
+            if (propertyItemsResourceList.Items != null)
+            {
+                return propertyItemsResourceList.Items.Select(i => i.Content.ToResource<TResourceType>()).Where(i => i != null).ToArray();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// For multi-value properties of type 'sample[]', returns property items as SampleCompact[]
+        /// </summary>
+        public static SampleCompact[] ToSampleArray(this PropertyItemsResourceList propertyItemsResourceList)
+        {
+            if ((propertyItemsResourceList.Type ?? string.Empty) != PropertyTypes.SAMPLE + PropertyTypes.LIST_SUFFIX)
+            {
+                return null;
+            }
+            return propertyItemsResourceList.ToResourceArray<SampleCompact>();
+        }
+
+        /// <summary>
+        /// For multi-value properties of type 'appresult[]', returns property items as AppResultCompact[]
+        /// </summary>
+        public static AppResultCompact[] ToAppResultArray(this PropertyItemsResourceList propertyItemsResourceList)
+        {
+            if ((propertyItemsResourceList.Type ?? string.Empty) != PropertyTypes.APPRESULT + PropertyTypes.LIST_SUFFIX)
+            {
+                return null;
+            }
+            return propertyItemsResourceList.ToResourceArray<AppResultCompact>();
+        }
+
+        /// <summary>
+        /// For multi-value properties of type 'project[]', returns property items as ProjectCompact[]
+        /// </summary>
+        public static ProjectCompact[] ToProjectArray(this PropertyItemsResourceList propertyItemsResourceList)
+        {
+            if ((propertyItemsResourceList.Type ?? string.Empty) != PropertyTypes.PROJECT + PropertyTypes.LIST_SUFFIX)
+            {
+                return null;
+            }
+            return propertyItemsResourceList.ToResourceArray<ProjectCompact>();
+        }
+
+        /// <summary>
+        /// For multi-value properties of type 'appsession[]', returns property items as AppSessionCompact[]
+        /// </summary>
+        public static AppSessionCompact[] ToAppSessionArray(this PropertyItemsResourceList propertyItemsResourceList)
+        {
+            if ((propertyItemsResourceList.Type ?? string.Empty) != PropertyTypes.APPSESSION + PropertyTypes.LIST_SUFFIX)
+            {
+                return null;
+            }
+            return propertyItemsResourceList.ToResourceArray<AppSessionCompact>();
+        }
+
+        /// <summary>
+        /// For multi-value properties of type 'run[]', returns property items as RunCompact[]
+        /// </summary>
+        public static RunCompact[] ToRunsArray(this PropertyItemsResourceList propertyItemsResourceList)
+        {
+            if ((propertyItemsResourceList.Type ?? string.Empty) != PropertyTypes.RUN + PropertyTypes.LIST_SUFFIX)
+            {
+                return null;
+            }
+            return propertyItemsResourceList.ToResourceArray<RunCompact>();
         }
     }
 }

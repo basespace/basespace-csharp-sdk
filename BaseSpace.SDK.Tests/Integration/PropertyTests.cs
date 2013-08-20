@@ -32,22 +32,26 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             setPropRequest.AddProperty("mytestapp.metrics.magicnumber").SetSingleValueContent("42");
             setPropRequest.AddProperty("mytestapp.inputs.appresults").SetMultiValueReferences(new[] { "appresults/3006", "appresults/3005" });
 
-            // POST: resource/{id}/properties
+            // Create some properties
+            // POST: resource/{id}/properties 
             var properties = Client.SetPropertiesForResource(setPropRequest).Response.Items;
 
+            // list those properties
             // GET: resource/{id}/properties
             properties = Client.ListPropertiesForResource(new ListPropertiesRequest(_project)).Response.Items;
 
-            // GET: resource/{id}/properties/{name}/items
-            var propertyItems = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "mytestapp.inputs.appresults")).Response.Items;
-
-            // DELETE: resource/{id}/properties/{name}
-            Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "mytestapp.inputs.appresults"));
-
+            // they also show up here
             // GET: resource/{id}
             properties = Client.GetProject(new GetProjectRequest(_project.Id)).Response.Properties.Items;
-        }
 
+            // take a deeper dive into the items list
+            // GET: resource/{id}/properties/{name}/items           
+            var propertyItems = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "mytestapp.inputs.appresults")).Response.Items;
+
+            // delete a property
+            // DELETE: resource/{id}/properties/{name}
+            Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "mytestapp.inputs.appresults"));
+        }
 
         [Fact]
         public void CreateSingleItemProperty()
@@ -95,6 +99,26 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string[] contents = prop.ToStringArray();
             Assert.Equal(RAINBOW.Count(), contents.Count());
             Assert.True(RAINBOW.All(i=>contents.Contains(i)));
+        }
+
+        [Fact]
+        public void CreateMultiItemReferenceProperty()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.AddProperty("unittest.multiitem.projects").SetMultiValueReferences(new []{_project});
+            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+
+            var itemsResponse  = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.projects")).Response;
+ 
+            var returnedProject = itemsResponse.Items.First().Content.ToProject();
+            Assert.NotNull(returnedProject);
+            Assert.Equal(_project.Id, returnedProject.Id);
+            Assert.Equal(_project.Name, returnedProject.Name);
+
+            returnedProject = itemsResponse.ToProjectArray().First();
+            Assert.NotNull(returnedProject);
+            Assert.Equal(_project.Id, returnedProject.Id);
+            Assert.Equal(_project.Name, returnedProject.Name);
         }
 
         [Fact]
