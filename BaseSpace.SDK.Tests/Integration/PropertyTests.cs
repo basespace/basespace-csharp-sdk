@@ -231,6 +231,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(prjProperties.DisplayedCount < prjProperties.TotalCount, string.Format("Displayed count: {0} should be less than Total Count: {1}", propResponse.DisplayedCount, propResponse.TotalCount));
             Assert.Equal(50, prjProperties.DisplayedCount);
             Assert.Equal(65, prjProperties.TotalCount);
+
+            prjProperties = Client.ListPropertiesForResource(new ListPropertiesRequest(_project) { Limit = 65 }).Response;
+            Assert.NotNull(prjProperties);
+            Assert.Equal(65, prjProperties.DisplayedCount);
+            Assert.Equal(65, prjProperties.TotalCount);
+            Assert.Equal(65, prjProperties.Items.Count());
         }
 
         [Fact]

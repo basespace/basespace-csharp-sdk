@@ -71,7 +71,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                 ItemsTotalCount = json.Get<int?>("ItemsTotalCount")
             };
 
-            var simpleType = property.GetSimpleType();
+            var simpleType = property.GetUnderlyingType();
             if (json.ContainsKey("Content"))
             {
                 switch (simpleType)

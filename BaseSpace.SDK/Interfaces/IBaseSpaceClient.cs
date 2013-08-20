@@ -82,14 +82,36 @@ namespace Illumina.BaseSpace.SDK
 
         GetApiMetaResponse GetApiMeta(GetApiMetaRequest request, IRequestOptions options = null);
 
+        /// <summary>
+        /// Retrieve list of properties for a resource. Resulting list may require paging.
+        /// </summary>
+        /// <remarks>
+        /// GET: {resource}/properties
+        /// </remarks>
         ListPropertiesResponse ListPropertiesForResource(ListPropertiesRequest request, IRequestOptions options = null);
 
+        /// <summary>
+        /// Retrieve one property given its parent resource and name
+        /// </summary>
+        /// <remarks>GET: {resource}/properties/{name}</remarks>
         GetPropertyResponse GetPropertyForResource(GetPropertyRequest request, IRequestOptions options = null);
 
+        /// <summary>
+        /// Retrieve list of items for a multi-value property (property having a type ending in '[]'). Resulting list may require paging.
+        /// </summary>
+        /// <remarks>GET: {resource}/properties/{name}/items</remarks>
         ListPropertyItemsResponse ListPropertyItems(ListPropertyItemsRequest request, IRequestOptions options = null);
 
+        /// <summary>
+        /// Add or modify properties associated with a resource. The list of modified properties will be returned.
+        /// </summary>
+        /// <remarks>POST: {resource}/properties</remarks>
         SetPropertiesResponse SetPropertiesForResource(SetPropertiesRequest request, IRequestOptions options = null);
 
+        /// <summary>
+        /// Delete a property given its parent resource and name.
+        /// </summary>
+        /// <remarks>DELETE: {resource}/properties/{name}</remarks>
         DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null);
     }
 }

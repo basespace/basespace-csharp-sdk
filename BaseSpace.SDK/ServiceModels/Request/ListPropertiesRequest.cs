@@ -8,7 +8,7 @@ using Illumina.BaseSpace.SDK.Types;
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     [DataContract]
-    public class ListPropertiesRequest : AbstractRequest<ListPropertiesResponse>
+    public class ListPropertiesRequest : AbstractNestedResourceListRequest<ListPropertiesResponse, PropertiesSortByParameters>
     {
         public ListPropertiesRequest()
         {
@@ -22,7 +22,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
 
         public Uri HrefParentResource { get; set; }
-
 
         internal override string GetLogMessage()
         {
