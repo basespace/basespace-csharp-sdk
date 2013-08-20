@@ -24,11 +24,11 @@ namespace Illumina.BaseSpace.SDK.Deserialization
             };
 
             ret.Type = json["Type"];
-            var simpleType = ret.Type.Replace(Property.TYPE_LIST_SUFFIX, String.Empty);
+            var simpleType = ret.Type.Replace(PropertyTypes.LIST_SUFFIX, String.Empty);
 
             switch (simpleType)
             {
-                case Property.TYPE_STRING:
+                case PropertyTypes.STRING:
                     ret.Items =
                         json.ArrayObjects("Items")
                             .Select(
@@ -76,7 +76,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
             {
                 switch (simpleType)
                 {
-                    case Property.TYPE_STRING:
+                    case PropertyTypes.STRING:
                         property.Content = new PropertyContentLiteral(property.Type, json.Get("Content"));
                         break;
                     default:
@@ -89,7 +89,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
             {
                 switch (simpleType)
                 {
-                    case Property.TYPE_STRING:
+                    case PropertyTypes.STRING:
                         property.Items = json.Get<string[]>("Items").Select(i => new PropertyContentLiteral(simpleType, i)).ToArray();
                         break;
                     default:
@@ -110,22 +110,22 @@ namespace Illumina.BaseSpace.SDK.Deserialization
             }
             switch (type)
             {
-                case Property.TYPE_PROJECT:
+                case PropertyTypes.PROJECT:
                     ret = JsonSerializer.DeserializeFromString<ProjectCompact>(json);
                     break;
-                case Property.TYPE_APPRESULT:
+                case PropertyTypes.APPRESULT:
                     ret = JsonSerializer.DeserializeFromString<AppResultCompact>(json);
                     break;
-                case Property.TYPE_SAMPLE:
+                case PropertyTypes.SAMPLE:
                     ret = JsonSerializer.DeserializeFromString<SampleCompact>(json);
                     break;
-                case Property.TYPE_RUN:
+                case PropertyTypes.RUN:
                     ret = JsonSerializer.DeserializeFromString<RunCompact>(json);
                     break;
-                case Property.TYPE_APPSESSION:
+                case PropertyTypes.APPSESSION:
                     ret = JsonSerializer.DeserializeFromString<AppSessionCompact>(json);
                     break;
-                case Property.TYPE_FILE:
+                case PropertyTypes.FILE:
                     ret = JsonSerializer.DeserializeFromString<FileCompact>(json);
                     break;
             }

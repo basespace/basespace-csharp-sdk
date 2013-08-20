@@ -23,9 +23,8 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public string Type
         {
-            get { return Property.TYPE_PROJECT; }
+            get { return PropertyTypes.PROJECT; }
         }
-
         public override string ToString()
         {
             return string.Format("Href: {0}; Name: {1}", Href, Name);

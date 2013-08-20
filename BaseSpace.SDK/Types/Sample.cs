@@ -40,7 +40,7 @@ namespace Illumina.BaseSpace.SDK.Types
             return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
         }
 
-        public string Type { get { return Property.TYPE_SAMPLE; } }
+        public string Type { get { return PropertyTypes.SAMPLE; } }
     }
 
     [DataContract()]

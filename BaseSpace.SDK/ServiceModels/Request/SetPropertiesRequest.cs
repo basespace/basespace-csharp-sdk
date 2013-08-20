@@ -75,32 +75,42 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public void SetSingleValueContent(string stringContent)
         {
-            Type = Property.TYPE_STRING;
+            Type = PropertyTypes.STRING;
             Content = stringContent;
         }
 
-        public void SetSingleValueContent(IPropertyContent referencedContent)
+        public void SetSingleValueReference(IPropertyContent referencedContent)
         {
             Type = referencedContent.Type;
             Content = referencedContent.Href.ToString();
+        }
+
+        public void SetSingleValueReference(string href)
+        {
+            Content = href;
         }
 
         public void SetMultiValueContent(string[] stringContentItems)
         {
             if (stringContentItems != null && stringContentItems.Any())
             {
-                Type = Property.TYPE_STRING + Property.TYPE_LIST_SUFFIX;
+                Type = PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX;
                 Items = stringContentItems;
             }
         }
 
-        public void SetMultiValueContent(IPropertyContent[] referencedResourcesContent)
+        public void SetMultiValueReferences(IPropertyContent[] referencedResourcesContent)
         {
             if (referencedResourcesContent != null && referencedResourcesContent.Any())
             {
-                Type = referencedResourcesContent.First().Type + Property.TYPE_LIST_SUFFIX;
+                Type = referencedResourcesContent.First().Type + PropertyTypes.LIST_SUFFIX;
                 Items = referencedResourcesContent.Where(rr => rr.Type == Type).Select(rr => rr.Href.ToString()).ToArray();
             }
+        }
+
+        public void SetMultiValueReferences(string[] hrefs)
+        {
+            Items = hrefs;
         }
     }
 }

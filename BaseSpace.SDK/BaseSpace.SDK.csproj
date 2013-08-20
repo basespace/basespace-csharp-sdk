@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpaceClient.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Deserialization\MiscDeserializers.cs" />
     <Compile Include="Deserialization\PropertyDeserializer.cs" />
     <Compile Include="Deserialization\ReferenceDeserializer.cs" />

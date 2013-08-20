@@ -37,7 +37,7 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public string Type
         {
-            get { return Property.TYPE_APPSESSION; }
+            get { return PropertyTypes.APPSESSION; }
         }
     }
 

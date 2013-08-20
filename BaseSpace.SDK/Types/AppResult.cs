@@ -29,7 +29,7 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public DateTime DateCreated { get; set; }
 
-        public string Type { get { return Property.TYPE_APPRESULT; } }
+        public string Type { get { return PropertyTypes.APPRESULT; } }
 
         public override string ToString()
         {

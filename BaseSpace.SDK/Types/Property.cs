@@ -9,15 +9,6 @@ namespace Illumina.BaseSpace.SDK.Types
     [DataContract]
     public class Property
     {
-        public const string TYPE_STRING = "string";
-        public const string TYPE_RUN = "run";
-        public const string TYPE_PROJECT = "project";
-        public const string TYPE_SAMPLE = "sample";
-        public const string TYPE_APPRESULT = "appresult";
-        public const string TYPE_FILE = "file";
-        public const string TYPE_APPSESSION = "appsession";
-        public const string TYPE_LIST_SUFFIX = "[]";
-
         [DataMember]
         public string Type { get; set; }
 

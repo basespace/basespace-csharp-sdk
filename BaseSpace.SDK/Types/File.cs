@@ -37,7 +37,7 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public string Type
         {
-            get { return Property.TYPE_FILE; }
+            get { return PropertyTypes.FILE; }
         }
     }
 

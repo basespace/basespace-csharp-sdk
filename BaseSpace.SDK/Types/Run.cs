@@ -45,7 +45,7 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public UserCompact UserOwnedBy { get; set; }
 
-        public string Type { get { return Property.TYPE_RUN; } }
+        public string Type { get { return PropertyTypes.RUN; } }
 
         public override string ToString()
         {

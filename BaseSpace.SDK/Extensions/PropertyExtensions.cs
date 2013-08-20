@@ -29,12 +29,12 @@ namespace Illumina.BaseSpace.SDK
 
         public static string GetSimpleType(this Property property)
         {
-            return property.Type.Replace(Property.TYPE_LIST_SUFFIX, string.Empty);
+            return property.Type.Replace(PropertyTypes.LIST_SUFFIX, string.Empty);
         }
 
         public static string[] ToStringArray(this Property property)
         {
-            if (property.Type == Property.TYPE_STRING + Property.TYPE_LIST_SUFFIX)
+            if (property.Type == PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX)
             {
                 return property.Items.Select(i => i.ToString()).ToArray();
             }
@@ -43,7 +43,7 @@ namespace Illumina.BaseSpace.SDK
 
         public static int[] ToIntArray(this Property property)
         {
-            if (property.Type == Property.TYPE_STRING + Property.TYPE_LIST_SUFFIX)
+            if (property.Type == PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX)
             {
                 return property.Items.Select(i => i.ToInt()).Where(i => i.HasValue).Select(i => i.Value).ToArray();
             }
@@ -52,7 +52,7 @@ namespace Illumina.BaseSpace.SDK
 
         public static long[] ToLongArray(this Property property)
         {
-            if (property.Type == Property.TYPE_STRING + Property.TYPE_LIST_SUFFIX)
+            if (property.Type == PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX)
             {
                 return property.Items.Select(i => i.ToLong()).Where(i => i.HasValue).Select(i => i.Value).ToArray();
             }

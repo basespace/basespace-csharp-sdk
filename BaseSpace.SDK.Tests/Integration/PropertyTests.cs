@@ -26,6 +26,30 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         [Fact]
+        public void UsageExample()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.AddProperty("mytestapp.metrics.magicnumber").SetSingleValueContent("42");
+            setPropRequest.AddProperty("mytestapp.inputs.appresults").SetMultiValueReferences(new[] { "appresults/3006", "appresults/3005" });
+
+            // POST: resource/{id}/properties
+            var properties = Client.SetPropertiesForResource(setPropRequest).Response.Items;
+
+            // GET: resource/{id}/properties
+            properties = Client.ListPropertiesForResource(new ListPropertiesRequest(_project)).Response.Items;
+
+            // GET: resource/{id}/properties/{name}/items
+            var propertyItems = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "mytestapp.inputs.appresults")).Response.Items;
+
+            // DELETE: resource/{id}/properties/{name}
+            Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "mytestapp.inputs.appresults"));
+
+            // GET: resource/{id}
+            properties = Client.GetProject(new GetProjectRequest(_project.Id)).Response.Properties.Items;
+        }
+
+
+        [Fact]
         public void CreateSingleItemProperty()
         {
             var name = "unittest.singlevalue.contentfoo";
@@ -44,7 +68,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var name = "unittest.singlevalue.referencefoo";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.AddProperty(name).SetSingleValueContent(_project);
+            setPropRequest.AddProperty(name).SetSingleValueReference(_project);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
