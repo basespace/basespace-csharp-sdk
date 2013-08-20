@@ -24,10 +24,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 			return string.Format("{0}/variantset/{1}/variants/{2}", Version, Id, Chrom);
 		}
-
-        internal override string GetLogMessage()
-        {
-            return "";
-        }
 	}
 }

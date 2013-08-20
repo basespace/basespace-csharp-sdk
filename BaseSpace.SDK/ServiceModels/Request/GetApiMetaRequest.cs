@@ -6,10 +6,5 @@
         {
             return string.Format("{0}/meta", Version);
         }
-
-        internal override string GetLogMessage()
-        {
-            return "";
-        }
     }
 }

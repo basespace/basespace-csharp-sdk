@@ -35,10 +35,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             }
             return string.Format("{0}/{1}/{2}", HrefParentResource.ToString(), "properties", PropertyName);
         }
-
-        internal override string GetLogMessage()
-        {
-            return string.Empty;
-        }
     }
 }

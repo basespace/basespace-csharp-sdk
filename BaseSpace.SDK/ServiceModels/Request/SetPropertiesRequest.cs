@@ -39,11 +39,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             return p;
         }
 
-        internal override string GetLogMessage()
-        {
-            return string.Empty;
-        }
-
         protected override string GetUrl()
         {
             if (HrefParentResource == null)

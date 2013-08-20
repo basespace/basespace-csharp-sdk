@@ -23,11 +23,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public Uri HrefParentResource { get; set; }
 
-        internal override string GetLogMessage()
-        {
-            return string.Empty;
-        }
-
         protected override string GetUrl()
         {
             if (HrefParentResource == null)
