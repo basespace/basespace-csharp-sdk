@@ -225,13 +225,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(propResponse.DisplayedCount, propResponse.TotalCount);
             Assert.Equal(65, propResponse.TotalCount);
 
-            var prjRqst = new ListPropertiesRequest(_project);
-            var prjProperties = Client.ListPropertiesForResource(prjRqst);
+            var prjProperties = Client.ListPropertiesForResource(new ListPropertiesRequest(_project)).Response;
 
             Assert.NotNull(prjProperties);
-            Assert.True(prjProperties.Response.DisplayedCount < prjProperties.Response.TotalCount, string.Format("Displayed count: {0} should be less than Total Count: {1}", propResponse.DisplayedCount, propResponse.TotalCount));
-            Assert.Equal(50, propResponse.TotalCount);
-            Assert.Equal(65, propResponse.TotalCount);
+            Assert.True(prjProperties.DisplayedCount < prjProperties.TotalCount, string.Format("Displayed count: {0} should be less than Total Count: {1}", propResponse.DisplayedCount, propResponse.TotalCount));
+            Assert.Equal(50, prjProperties.DisplayedCount);
+            Assert.Equal(65, prjProperties.TotalCount);
         }
 
         [Fact]
@@ -269,13 +268,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
             var prjRqst = new GetPropertyRequest(_project, "unittest.getinvalidproperty.notexisting");
 
-            AssertErrorResponse(() => Client.GetPropertyForResource(prjRqst), "BASESPACE.PROPERTIES.NOT_FOUND", HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
-        public void GetPagedPropertiesForResource()
-        {
-
+            AssertErrorResponse(() => Client.GetPropertyForResource(prjRqst), "BASESPACE.PROPERTIES.NOT_FOUND", HttpStatusCode.NotFound);
         }
     }
 }
