@@ -57,9 +57,15 @@ namespace Illumina.BaseSpace.SDK.Deserialization
             return ret; 
         }
 
+        public static PropertyCompact JsonToPropertyCompact(string jsonString)
+        {
+            return JsonToProperty(jsonString);
+        }
+
         public static Property JsonToProperty(string jsonString)
         {
             var json = JsonObject.Parse(jsonString);
+
             var property = new Property()
             {
                 Description = json.Get("Description"),
@@ -70,6 +76,21 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                 ItemsDisplayedCount = json.Get<int?>("ItemsDisplayedCount"),
                 ItemsTotalCount = json.Get<int?>("ItemsTotalCount")
             };
+
+            if (json.ContainsKey("UserModifiedBy"))
+            {
+                property.UserModifiedBy = JsonSerializer.DeserializeFromString<UserCompact>(json.Child("UserModifiedBy"));
+            }
+
+            if (json.ContainsKey("ApplicationModifiedBy"))
+            {
+                property.ApplicationModifiedBy = JsonSerializer.DeserializeFromString<ApplicationCompact>(json.Child("ApplicationModifiedBy"));
+            }
+
+            if (json.ContainsKey("DateModified"))
+            {
+                property.DateModified = JsonSerializer.DeserializeFromString<DateTime>(json.Get("DateModified"));
+            }
 
             var simpleType = property.GetUnderlyingType();
             if (json.ContainsKey("Content"))

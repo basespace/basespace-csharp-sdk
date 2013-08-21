@@ -7,7 +7,7 @@ using System.Text;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract]
-    public class Property
+    public class PropertyCompact
     {
         [DataMember]
         public string Type { get; set; }
@@ -49,6 +49,19 @@ namespace Illumina.BaseSpace.SDK.Types
             }
             return string.Format("Property: '{0}'; Type: {1}; {2};", Name, Type, c);
         }
+    }
+
+    [DataContract]
+    public class Property : PropertyCompact
+    {
+        [DataMember]
+        public ApplicationCompact ApplicationModifiedBy { get; set; }
+
+        [DataMember]
+        public UserCompact UserModifiedBy { get; set; }
+
+        [DataMember]
+        public DateTime DateModified { get; set; }
     }
 
     public enum PropertiesSortByParameters { Name }

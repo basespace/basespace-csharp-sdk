@@ -10,7 +10,7 @@ namespace Illumina.BaseSpace.SDK.Types
     public class PropertyContainer
     {
         [DataMember]
-        public Property[] Items { get; set; }
+        public PropertyCompact[] Items { get; set; }
 
         [DataMember]
         public int? DisplayedCount { get; set; }

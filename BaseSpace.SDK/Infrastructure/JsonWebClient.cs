@@ -53,7 +53,10 @@ namespace Illumina.BaseSpace.SDK
 
             // setup custom deserializers
             JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ReferenceDeserializer.JsonToReference;
+            
+            JsConfig<PropertyCompact>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyCompact;
             JsConfig<Property>.RawDeserializeFn = PropertyDeserializer.JsonToProperty;
+
             JsConfig<INotification<object>>.RawDeserializeFn = MiscDeserializers.NotificationDeserializer;
             JsConfig<PropertyItemsResourceList>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyItemsResourceList;     
         }

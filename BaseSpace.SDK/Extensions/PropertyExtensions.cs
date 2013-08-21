@@ -9,7 +9,7 @@ namespace Illumina.BaseSpace.SDK
 {
     public static class PropertyContainerExtensions
     {
-        public static bool TryGetProperty(this PropertyContainer propertyContainer, string name, out Property property)
+        public static bool TryGetProperty(this PropertyContainer propertyContainer, string name, out PropertyCompact property)
         {
             property = propertyContainer.Items.FirstOrDefault(p => p.Name == name);
             return property != null;
@@ -26,7 +26,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// Returns true if not all property items for the property have been returned in this request due to paging
         /// </summary>
-        public static bool IsTruncated(this Property property)
+        public static bool IsTruncated(this PropertyCompact property)
         {
             if (property.Content != null)
             {
@@ -40,7 +40,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// Returns the property's type for single-value properties, and the underlying type for multi-value properties.
         /// </summary>
-        public static string GetUnderlyingType(this Property property)
+        public static string GetUnderlyingType(this PropertyCompact property)
         {
             return (property.Type ?? string.Empty).Replace(PropertyTypes.LIST_SUFFIX, string.Empty);
         }
@@ -48,7 +48,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For properties of type 'string[]', returns property items as a string[].
         /// </summary>
-        public static string[] ToStringArray(this Property property)
+        public static string[] ToStringArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) == PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX)
             {
@@ -60,7 +60,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For properties of type 'string[]', returns property items that may be converted to int as a int[]. 
         /// </summary>
-        public static int[] ToIntArray(this Property property)
+        public static int[] ToIntArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) == PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX)
             {
@@ -72,7 +72,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For properties of type 'string[]', returns property items that may be converted to long as a long[]. 
         /// </summary>
-        public static long[] ToLongArray(this Property property)
+        public static long[] ToLongArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) == PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX)
             {
@@ -84,7 +84,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For multi-value properties containing resource references, returns property items referencing the given type as an array
         /// </summary>
-        public static TResourceType[] ToResourceArray<TResourceType>(this Property property)
+        public static TResourceType[] ToResourceArray<TResourceType>(this PropertyCompact property)
             where TResourceType : class, IPropertyContent
         {
             if (property.Items != null)
@@ -97,7 +97,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For multi-value properties of type 'sample[]', returns property items as SampleCompact[]
         /// </summary>
-        public static SampleCompact[] ToSampleArray(this Property property)
+        public static SampleCompact[] ToSampleArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) != PropertyTypes.SAMPLE + PropertyTypes.LIST_SUFFIX)
             {
@@ -109,7 +109,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For multi-value properties of type 'appresult[]', returns property items as AppResultCompact[]
         /// </summary>
-        public static AppResultCompact[] ToAppResultArray(this Property property)
+        public static AppResultCompact[] ToAppResultArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) != PropertyTypes.APPRESULT + PropertyTypes.LIST_SUFFIX)
             {
@@ -121,7 +121,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For multi-value properties of type 'project[]', returns property items as ProjectCompact[]
         /// </summary>
-        public static ProjectCompact[] ToProjectArray(this Property property)
+        public static ProjectCompact[] ToProjectArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) != PropertyTypes.PROJECT + PropertyTypes.LIST_SUFFIX)
             {
@@ -133,7 +133,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For multi-value properties of type 'appsession[]', returns property items as AppSessionCompact[]
         /// </summary>
-        public static AppSessionCompact[] ToAppSessionArray(this Property property)
+        public static AppSessionCompact[] ToAppSessionArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) != PropertyTypes.APPSESSION + PropertyTypes.LIST_SUFFIX)
             {
@@ -145,7 +145,7 @@ namespace Illumina.BaseSpace.SDK
         /// <summary>
         /// For multi-value properties of type 'run[]', returns property items as RunCompact[]
         /// </summary>
-        public static RunCompact[] ToRunsArray(this Property property)
+        public static RunCompact[] ToRunsArray(this PropertyCompact property)
         {
             if ((property.Type ?? string.Empty) != PropertyTypes.RUN + PropertyTypes.LIST_SUFFIX)
             {
