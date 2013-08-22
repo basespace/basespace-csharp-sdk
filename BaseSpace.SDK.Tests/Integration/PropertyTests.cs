@@ -561,22 +561,22 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void AddMultipleHrefItemToProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.AddPropertyToSet("unittest.multiitem.hrefappresults").SetMultiValueReferences(new[] { "appresults/447464", "appresults/447465" });
+            setPropRequest.AddPropertyToSet("unittest.multiitem.hrefappresults").SetMultiValueReferences(new[] { "appresults/710710", "appresults/710711" });
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.hrefappresults")).Response;
 
             Assert.NotNull(itemsResponse);
             Assert.Equal(2, itemsResponse.Items.Count());
-            Assert.NotNull(itemsResponse.Items.Where(i => i.Content.ToAppResult().Id == "447464").FirstOrDefault());
-            Assert.NotNull(itemsResponse.Items.Where(i => i.Content.ToAppResult().Id == "447465").FirstOrDefault());
+            Assert.NotNull(itemsResponse.Items.Where(i => i.Content.ToAppResult().Id == "710710").FirstOrDefault());
+            Assert.NotNull(itemsResponse.Items.Where(i => i.Content.ToAppResult().Id == "710711").FirstOrDefault());
         }
 
         [Fact]
         public void AddMultipleHrefItemNoAccessToResource()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.AddPropertyToSet("unittest.multiitem.hrefappresults.noaccess").SetMultiValueReferences(new[] { "appresults/314321", "appresults/314322" });
+            setPropRequest.AddPropertyToSet("unittest.multiitem.hrefappresults.noaccess").SetMultiValueReferences(new[] { "appresults/447464", "appresults/447465" });
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.hrefappresults.noaccess")).Response;
