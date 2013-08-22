@@ -30,9 +30,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public List<PropertyToSet> Properties { get; set; }
 
         /// <summary>
-        /// Include a new property with a given name and description
+        /// Include an additional property by name that will be added (if the name doesn't yet exist) or replaced (if the name already exists)
         /// </summary>
-        public PropertyToSet AddPropertyToSet(string propertyName, string description = "")
+        public PropertyToSet SetProperty(string propertyName, string description = "")
         {
             var p = new PropertyToSet(propertyName, description);
             Properties.Add(p);
