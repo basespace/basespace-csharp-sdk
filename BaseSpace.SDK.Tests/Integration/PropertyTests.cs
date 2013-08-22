@@ -453,9 +453,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CreatePropertyWithJsonContent()
         {
             var name = "unittest.singlevalue.contentJson";
-            string jsonContent = @"{ ""verification_uri"":""https://basespace.illumina.com/oauth/device"", " +
-            @"""verification_with_code_uri"":""https://basespace.illumina.com/oauth/device?code=b9bac"", " +
-            @"""user_code"":""b9bac"", ""expires_in"":1800, ""device_code"":""dd0e45ebc98c440cb8e369a85be0344a"", ""interval"":1 }";
+            string jsonContent = @"{ ""verification_uri"":""https://basespace.illumina.com/oauth/device"", " + System.Environment.NewLine + "\t" +
+            @"""verification_with_code_uri"":""https://basespace.illumina.com/oauth/device?code=b9bac"",    " + "\t" +
+            @"""user_code"":""b9bac"", ""expires_in"":1800, " + "\r\n \t" + @"""device_code"":""~!@#$%^&*()_+<>?,"", ""interval"":1      }";
 
             var setPropRequest = new SetPropertiesRequest(_project);
             setPropRequest.AddPropertyToSet(name).SetSingleValueContent(jsonContent);
@@ -471,8 +471,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CreatePropertyWithMultiJsonItems()
         {
             var name = "unittest.singlevalue.contentJson";
-            string[] jsonContent = new string[2] {@"{ ""verification_uri"":""https://basespace.illumina.com/oauth/device"", ""verification_with_code_uri"":""https://basespace.illumina.com/oauth/device?code=b9bac"" }",
-            @"{ ""user_code"":""b9bac"", ""expires_in"":1800, ""device_code"":""dd0e45ebc98c440cb8e369a85be0344a"", ""interval"":1 }"};
+            string[] jsonContent = new string[2] {@"{   ""verification_uri"":""https://basespace.illumina.com/oauth/device"", " + System.Environment.NewLine + @"""verification_with_code_uri"":""https://basespace.illumina.com/oauth/device?code=b9bac"" }",
+            @"{ ""user_code"":""b9bac"", " + "\r\n \t" + @"""expires_in"":1800, ""device_code"":""~!@#$%^&*()_+<>?,"", ""interval"":1 }"};
 
             var setPropRequest = new SetPropertiesRequest(_project);
             setPropRequest.AddPropertyToSet(name).SetMultiValueContent(jsonContent);
@@ -489,10 +489,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CreatePropertyWithXMLContent()
         {
             var name = "unittest.singlevalue.contentXML";
-            string XMLContent = "<Environment><Name>cloud-test</Name>" +
+            string XMLContent = "<Environment><Name>cloud-test</Name>" + System.Environment.NewLine + "\t" +
                 @"<BaseUrl>https://cloud-test.illumina.com</BaseUrl>" +
-                @"<DefaultToken>9b555f57d9e94c9eaee0f77cfe968099</DefaultToken>" +
-                @"<BaseSpaceAPIUrl>https://cloud-test-api.illumina.com/@version/</BaseSpaceAPIUrl>" +
+                @"<DefaultToken>~!@#$%^&*()_+<>?</DefaultToken>" + "\r\n \t" +
+                @"<BaseSpaceAPIUrl>https://cloud-test-api.illumina.com/@version/</BaseSpaceAPIUrl>  " +
                 @"<StoreUrl>https://test-store.basespace.illumina.com</StoreUrl>" +
                 @"<VendorUserEmail>basespaceic@gmail.com</VendorUserEmail></Environment>";
 
@@ -510,16 +510,16 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CreatePropertyWithMultiXMLItems()
         {
             var name = "unittest.singlevalue.contentJson";
-            string[] XMLContent = new string[2] {"<Environment><Name>cloud-test</Name>" +
+            string[] XMLContent = new string[2] {"<Environment><Name>cloud-test</Name>" + System.Environment.NewLine + "\t" +
                 @"<BaseUrl>https://cloud-test.illumina.com</BaseUrl>" +
-                @"<DefaultToken>9b555f57d9e94c9eaee0f77cfe968099</DefaultToken>" +
+                @"<DefaultToken>9b555f57d9e94c9eaee0f77cfe968099</DefaultToken>" + "\r\n \t" +
                 @"<BaseSpaceAPIUrl>https://cloud-test-api.illumina.com/@version/</BaseSpaceAPIUrl>" +
                 @"<StoreUrl>https://test-store.basespace.illumina.com</StoreUrl>" +
                 @"<VendorUserEmail>basespaceic@gmail.com</VendorUserEmail></Environment>",
-                "<Environment><Name>cloud-hoth</Name>" +
+                "<Environment><Name>cloud-hoth</Name>       " +
                 @"<BaseUrl>https://cloud-hoth.illumina.com</BaseUrl>" +
-                @"<DefaultToken>ba887d88130748e3bf0893d4828656f4</DefaultToken>" +
-                @"<BaseSpaceAPIUrl>https://api.cloud-hoth.illumina.com/@version/</BaseSpaceAPIUrl>" +
+                @"<DefaultToken>~!@#$%^&*()_+<>?</DefaultToken>" + "\r\n \t" +
+                @"<BaseSpaceAPIUrl>https://api.cloud-hoth.illumina.com/@version/</BaseSpaceAPIUrl>" + "\r\n \t" +
                 @"<StoreUrl>https://hoth-store.basespace.illumina.com</StoreUrl>" +
                 @"<VendorUserEmail>basespaceic@gmail.com</VendorUserEmail></Environment>"};
 
