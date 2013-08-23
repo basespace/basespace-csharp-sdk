@@ -81,6 +81,15 @@ namespace Illumina.BaseSpace.SDK
             return null;
         }
 
+        public static PropertyContentMap[] ToMapArray(this PropertyCompact property)
+        {
+            if ((property.Type ?? string.Empty) == PropertyTypes.MAP + PropertyTypes.LIST_SUFFIX)
+            {
+                return property.Items.Select(i => i.ToMap()).Where(i => i != null).ToArray();
+            }
+            return null;
+        }
+
         /// <summary>
         /// For multi-value properties containing resource references, returns property items referencing the given type as an array
         /// </summary>
@@ -228,6 +237,11 @@ namespace Illumina.BaseSpace.SDK
         public static RunCompact ToRun(this IPropertyContent propertyContent)
         {
             return propertyContent.ToResource<RunCompact>();
+        }
+
+        public static PropertyContentMap ToMap(this IPropertyContent propertyContent)
+        {
+            return propertyContent as PropertyContentMap;
         }
     }
 

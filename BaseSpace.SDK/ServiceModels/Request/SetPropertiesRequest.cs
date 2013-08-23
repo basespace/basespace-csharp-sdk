@@ -74,23 +74,35 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         [DataMember]
         public string[] Items { get; set; }
 
+        [DataMember]
+        public PropertyContentMap ContentMap { get; set; }
+
+        [DataMember]
+        public PropertyContentMap[] ItemsMap { get; set; }
+
         /// <summary>
         /// Sets the property content to a single-value literal (such as a number, string, etc)
         /// </summary>
         /// <remarks>
         /// Content may not be bigger than 65000 bytes.
         /// </remarks>
-        public void SetSingleValueContent(string stringContent)
+        public void SetContentString(string stringContent)
         {
             Type = PropertyTypes.STRING;
             Content = stringContent;
             Items = null;
         }
 
+        public void SetContentMap(PropertyContentMap map)
+        {
+            ContentMap = map;
+            Items = null;
+        }
+
         /// <summary>
         /// Sets the property content to a single-value resource reference
         /// </summary>
-        public void SetSingleValueReference(IPropertyContent referencedContent)
+        public void SetContentReference(IPropertyContent referencedContent)
         {
             Type = referencedContent.Type;
             Content = referencedContent.Href.ToString();
@@ -100,7 +112,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// <summary>
         /// Sets the property content to a single-value resource reference given its relative API URI (ex: 'appresults/123' or 'projects/123' or 'samples/123')
         /// </summary>
-        public void SetSingleValueReference(string href)
+        public void SetContentReference(string href)
         {
             Content = href;
             Items = null;
@@ -112,7 +124,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// <remarks>
         /// Each item may not be bigger than 65000 bytes.
         /// </remarks>
-        public void SetMultiValueContent(string[] stringContentItems)
+        public void SetContentStringArray(string[] stringContentItems)
         {
             if (stringContentItems != null && stringContentItems.Any())
             {
@@ -129,7 +141,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// Note that all items must be of the same type. 
         /// The first item is used to determine the property type.
         /// </remarks>
-        public void SetMultiValueReferences(IPropertyContent[] referencedResourcesContent)
+        public void SetContentReferencesArray(IPropertyContent[] referencedResourcesContent)
         {
             if (referencedResourcesContent != null && referencedResourcesContent.Any())
             {
@@ -149,9 +161,15 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// <example>
         /// {"appresults/1", "appresults/2", "appresults/10"}
         /// </example>
-        public void SetMultiValueReferences(string[] hrefs)
+        public void SetContentReferencesArray(string[] hrefs)
         {
             Items = hrefs;
+        }
+
+        public void SetContentMapArray(PropertyContentMap[] maps)
+        {
+            ItemsMap = maps;
+            Type = PropertyTypes.MAP + PropertyTypes.LIST_SUFFIX;
         }
     }
 }

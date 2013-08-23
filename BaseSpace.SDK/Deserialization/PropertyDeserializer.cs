@@ -33,15 +33,16 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                         json.ArrayObjects("Items")
                             .Select(
                                 itemj =>
-                                new PropertyItem()
-                                {
-                                    Id = itemj["Id"],
-                                    Content = new PropertyContentLiteral(simpleType, itemj["Content"])
-                                })
+                                new PropertyItem(itemj["Id"], new PropertyContentLiteral(simpleType, itemj["Content"])))
                             .ToArray();
 
                     break;
-                default:
+                case PropertyTypes.MAP:
+                    ret.Items = json.ArrayObjects("Items").Select(itemj =>
+                         new PropertyItem(itemj["Id"], DeserializePropertyMap(itemj.Child("Content"))))
+                            .ToArray();
+                    break;
+;                default:
                     ret.Items =
                         json.ArrayObjects("Items")
                             .Select(
@@ -100,6 +101,9 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                     case PropertyTypes.STRING:
                         property.Content = new PropertyContentLiteral(property.Type, json.Get("Content"));
                         break;
+                    case PropertyTypes.MAP:
+                        property.Content = DeserializePropertyMap(json.Child("Content"));
+                        break;
                     default:
                         property.Content = DeserializePropertyReference(simpleType, json.Child("Content"));
                         break;
@@ -112,6 +116,9 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                 {
                     case PropertyTypes.STRING:
                         property.Items = json.Get<string[]>("Items").Select(i => new PropertyContentLiteral(simpleType, i)).ToArray();
+                        break;
+                    case PropertyTypes.MAP:
+                        property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyMap(itemj.ToJson())).Where(x => x != null).ToArray();
                         break;
                     default:
                         property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyReference(simpleType, itemj.ToJson())).Where(x => x != null).ToArray();
@@ -151,6 +158,21 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                     break;
             }
             return ret;
+        }
+
+        public static PropertyContentMap DeserializePropertyMap(string json)
+        {
+            var tuples = JsonSerializer.DeserializeFromString<MapTuple[]>(json);
+            if (tuples == null)
+            {
+                return null;
+            }
+            var hc = new PropertyContentMap();
+            foreach (var t in tuples)
+            {
+                hc.Add(t.Key, t.Values);
+            }
+            return hc;
         }
     }
 }

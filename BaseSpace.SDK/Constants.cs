@@ -14,6 +14,7 @@ namespace Illumina.BaseSpace.SDK
         public const string APPRESULT = "appresult";
         public const string FILE = "file";
         public const string APPSESSION = "appsession";
+        public const string MAP = "map";
         public const string LIST_SUFFIX = "[]";
     } 
 }

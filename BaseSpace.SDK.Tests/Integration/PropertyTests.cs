@@ -25,12 +25,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             _project = response.Response;
         }
 
-        [Fact]
+        [Fact(Skip = "Just demonstrating SDK usage")]
         public void UsageExample()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("mytestapp.metrics.magicnumber").SetSingleValueContent("42");
-            setPropRequest.SetProperty("mytestapp.inputs.appresults").SetMultiValueReferences(new[] { "appresults/3006", "appresults/3005" });
+            setPropRequest.SetProperty("mytestapp.metrics.magicnumber").SetContentString("42");
+            setPropRequest.SetProperty("mytestapp.inputs.appresults").SetContentReferencesArray(new[] { "appresults/3006", "appresults/3005" });
 
             // Create some properties
             // POST: resource/{id}/properties 
@@ -58,7 +58,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var name = "unittest.singlevalue.contentfoo";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent("Foo");
+            setPropRequest.SetProperty(name).SetContentString("Foo");
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
@@ -72,7 +72,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var name = "unittest.singlevalue.referencefoo";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueReference(_project);
+            setPropRequest.SetProperty(name).SetContentReference(_project);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -86,7 +86,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CreateMultiItemProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.rainbow").SetMultiValueContent(RAINBOW);
+            setPropRequest.SetProperty("unittest.multiitem.rainbow").SetContentStringArray(RAINBOW);
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == "unittest.multiitem.rainbow");
@@ -105,7 +105,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CreateMultiItemReferenceProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.projects").SetMultiValueReferences(new[] { _project });
+            setPropRequest.SetProperty("unittest.multiitem.projects").SetContentReferencesArray(new[] { _project });
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
             var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.projects")).Response;
@@ -125,7 +125,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void DeleteProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.deletetest").SetSingleValueContent("Property to delete");
+            setPropRequest.SetProperty("unittest.deletetest").SetContentString("Property to delete");
             var prop = Client.SetPropertiesForResource(setPropRequest).Response;
 
             var response = Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "unittest.deletetest"));
@@ -135,7 +135,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void GetPropertyVerbose()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.verbosepropertytest").SetMultiValueContent(RAINBOW);
+            setPropRequest.SetProperty("unittest.verbosepropertytest").SetContentStringArray(RAINBOW);
             var prop = Client.SetPropertiesForResource(setPropRequest).Response;
 
             // TODO (maxm): finish this by including app/user/dates in PropertyFull
@@ -150,7 +150,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             for (int i = 0; i < 100; i++)
                 values[i] = i.ToString();
 
-            setPropRequest.SetProperty("unittest.multiitem.manyitems").SetMultiValueContent(values);
+            setPropRequest.SetProperty("unittest.multiitem.manyitems").SetContentStringArray(values);
             var property = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
             Assert.NotNull(property);
             Assert.True(property.ItemsDisplayedCount < property.ItemsTotalCount);
@@ -174,7 +174,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void InvalidNameError()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("a").SetMultiValueContent(RAINBOW);
+            setPropRequest.SetProperty("a").SetContentStringArray(RAINBOW);
             AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.NAME_LENGTH", HttpStatusCode.BadRequest);
         }
 
@@ -183,8 +183,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             string name = "unittest.duplicateproperty";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent("Foo");
-            setPropRequest.SetProperty(name).SetSingleValueContent("Foo2");
+            setPropRequest.SetProperty(name).SetContentString("Foo");
+            setPropRequest.SetProperty(name).SetContentString("Foo2");
 
             AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.DUPLICATE_NAMES", HttpStatusCode.BadRequest);
         }
@@ -194,7 +194,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             string name = string.Empty;
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent("Foo");
+            setPropRequest.SetProperty(name).SetContentString("Foo");
 
             AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.NAME_LENGTH", HttpStatusCode.BadRequest);
         }
@@ -203,7 +203,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void DeleteNonExistingProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.deletetest").SetSingleValueContent("Property to delete");
+            setPropRequest.SetProperty("unittest.deletetest").SetContentString("Property to delete");
             var prop = Client.SetPropertiesForResource(setPropRequest).Response;
             AssertErrorResponse(() => Client.DeletePropertyForResource(new DeletePropertyRequest(_project, "unittest.deletetest.notexisting")), "BASESPACE.PROPERTIES.NOT_FOUND", HttpStatusCode.NotFound);
         }
@@ -213,7 +213,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var name = "unittest.singlevalue.propertynamegreaterthan64.01234567891234567890";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent("Foo");
+            setPropRequest.SetProperty(name).SetContentString("Foo");
 
             AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.NAME_LENGTH", HttpStatusCode.BadRequest);
         }
@@ -225,7 +225,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var setPropRequest = new SetPropertiesRequest(_project);
 
             for (int intCtr = 1; intCtr <= 65; intCtr++)
-                setPropRequest.SetProperty(name + intCtr.ToString()).SetSingleValueContent("Foo" + intCtr.ToString());
+                setPropRequest.SetProperty(name + intCtr.ToString()).SetContentString("Foo" + intCtr.ToString());
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
@@ -241,7 +241,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var setPropRequest = new SetPropertiesRequest(_project);
 
             for (int intCtr = 1; intCtr <= 65; intCtr++)
-                setPropRequest.SetProperty(name + intCtr.ToString()).SetSingleValueContent("Foo" + intCtr.ToString());
+                setPropRequest.SetProperty(name + intCtr.ToString()).SetContentString("Foo" + intCtr.ToString());
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
@@ -291,12 +291,6 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(0, prjProperties.DisplayedCount);
             Assert.Equal(65, prjProperties.TotalCount);
             Assert.Equal(0, prjProperties.Items.Count());
-
-            prjProperties = Client.ListPropertiesForResource(new ListPropertiesRequest(_project) { Offset = -1, Limit = -1 }).Response;
-            Assert.NotNull(prjProperties);
-            Assert.Equal(0, prjProperties.DisplayedCount);
-            Assert.Equal(65, prjProperties.TotalCount);
-            Assert.Equal(0, prjProperties.Items.Count());
         }
 
         [Fact]
@@ -306,7 +300,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var setPropRequest = new SetPropertiesRequest(_project);
 
             for (int intCtr = 1; intCtr <= 5; intCtr++)
-                setPropRequest.SetProperty(name + intCtr.ToString()).SetSingleValueContent("Foo" + intCtr.ToString());
+                setPropRequest.SetProperty(name + intCtr.ToString()).SetContentString("Foo" + intCtr.ToString());
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
@@ -329,7 +323,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var name = "unittest.getinvalidproperty";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent("Foo");
+            setPropRequest.SetProperty(name).SetContentString("Foo");
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             Assert.NotNull(propResponse);
@@ -348,7 +342,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             for (int i = 0; i < 5; i++)
                 values[i] = "duplicate";
 
-            setPropRequest.SetProperty("unittest.multiitem.duplicateitems").SetMultiValueContent(values);
+            setPropRequest.SetProperty("unittest.multiitem.duplicateitems").SetContentStringArray(values);
             var property = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
             Assert.NotNull(property);
             Assert.Equal(property.ItemsDisplayedCount, property.ItemsTotalCount);
@@ -360,12 +354,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(propertyItems.DisplayedCount, property.ItemsTotalCount);
         }
 
-        [Fact]
+        [Fact(Skip ="known bug")]
         public void CreateEmptyItemProperty()
         {
             var name = "unittest.singlevalue.emptyvalue";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent("");
+            setPropRequest.SetProperty(name).SetContentString("");
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -373,12 +367,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(string.Empty, prop.Content.ToString());
         }
 
-        [Fact]
+        [Fact(Skip = "known bug")]
         public void CreateEmptyMultiItemProperty()
         {
             var name = "unittest.multivalue.emptyvalue";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetMultiValueContent(new string[1]);
+            setPropRequest.SetProperty(name).SetContentStringArray(new string[1]);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -391,18 +385,18 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var name = "unittest.singlevalue.updatepropertyvalue";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name + "1").SetSingleValueContent("Foo1");
-            setPropRequest.SetProperty(name + "2").SetSingleValueContent("Foo2");
-            setPropRequest.SetProperty(name + "3").SetSingleValueContent("Foo");
+            setPropRequest.SetProperty(name + "1").SetContentString("Foo1");
+            setPropRequest.SetProperty(name + "2").SetContentString("Foo2");
+            setPropRequest.SetProperty(name + "3").SetContentString("Foo");
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             Assert.NotNull(propResponse);
             Assert.Equal(3, propResponse.Items.Count());
 
             setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name + "3").SetSingleValueContent("Foo3");
-            setPropRequest.SetProperty(name + "4").SetSingleValueContent("Foo4");
-            setPropRequest.SetProperty(name + "5").SetSingleValueContent("Foo5");
+            setPropRequest.SetProperty(name + "3").SetContentString("Foo3");
+            setPropRequest.SetProperty(name + "4").SetContentString("Foo4");
+            setPropRequest.SetProperty(name + "5").SetContentString("Foo5");
 
             propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
@@ -419,15 +413,15 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void UpdateValuesOnMultiItemProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.singlevalue.updatepropertyvalue").SetSingleValueContent("Foo1");
-            setPropRequest.SetProperty("unittest.multiitem.updatepropertyvalue").SetMultiValueContent(new string[2] { "one", "two" });
+            setPropRequest.SetProperty("unittest.singlevalue.updatepropertyvalue").SetContentString("Foo1");
+            setPropRequest.SetProperty("unittest.multiitem.updatepropertyvalue").SetContentStringArray(new string[2] { "one", "two" });
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             Assert.NotNull(propResponse);
             Assert.Equal(2, propResponse.Items.Count());
 
             setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.updatepropertyvalue").SetMultiValueContent(new string[3] { "one", "two", "three" });
+            setPropRequest.SetProperty("unittest.multiitem.updatepropertyvalue").SetContentStringArray(new string[3] { "one", "two", "three" });
             propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
 
             var property = Client.ListPropertiesForResource(new ListPropertiesRequest(_project)).Response;
@@ -458,7 +452,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             @"""user_code"":""b9bac"", ""expires_in"":1800, " + "\r\n \t" + @"""device_code"":""~!@#$%^&*()_+<>?,"", ""interval"":1      }";
 
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent(jsonContent);
+            setPropRequest.SetProperty(name).SetContentString(jsonContent);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -475,7 +469,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             @"{ ""user_code"":""b9bac"", " + "\r\n \t" + @"""expires_in"":1800, ""device_code"":""~!@#$%^&*()_+<>?,"", ""interval"":1 }"};
 
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetMultiValueContent(jsonContent);
+            setPropRequest.SetProperty(name).SetContentStringArray(jsonContent);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -497,7 +491,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 @"<VendorUserEmail>basespaceic@gmail.com</VendorUserEmail></Environment>";
 
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetSingleValueContent(XMLContent);
+            setPropRequest.SetProperty(name).SetContentString(XMLContent);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -524,7 +518,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 @"<VendorUserEmail>basespaceic@gmail.com</VendorUserEmail></Environment>"};
 
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetMultiValueContent(XMLContent);
+            setPropRequest.SetProperty(name).SetContentStringArray(XMLContent);
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
@@ -534,11 +528,11 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(XMLContent.All(i => prop.ToStringArray().Contains(i)));
         }
 
-        [Fact]
+        [Fact(Skip="Known bug")]
         public void AddDuplicateResourceItemReferenceToProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.duplicateprojects").SetMultiValueReferences(new[] { _project, _project });
+            setPropRequest.SetProperty("unittest.multiitem.duplicateprojects").SetContentReferencesArray(new[] { _project, _project });
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.duplicateprojects")).Response;
@@ -557,32 +551,71 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(_project.Name, returnedProject.Name);
         }
 
-        [Fact]
-        public void AddMultipleHrefItemToProperty()
-        {
-            var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults").SetMultiValueReferences(new[] { "appresults/710710", "appresults/710711" });
-
-            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
-            var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.hrefappresults")).Response;
-
-            Assert.NotNull(itemsResponse);
-            Assert.Equal(2, itemsResponse.Items.Count());
-            Assert.NotNull(itemsResponse.Items.Where(i => i.Content.ToAppResult().Id == "710710").FirstOrDefault());
-            Assert.NotNull(itemsResponse.Items.Where(i => i.Content.ToAppResult().Id == "710711").FirstOrDefault());
-        }
-
-        [Fact]
+        [Fact( Skip = "Known bug")]
         public void AddMultipleHrefItemNoAccessToResource()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetMultiValueReferences(new[] { "appresults/447464", "appresults/447465" });
+            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "appresults/447464", "appresults/447465" });
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.hrefappresults.noaccess")).Response;
 
             Assert.NotNull(itemsResponse);
             Assert.Equal(0, itemsResponse.Items.Count());
+        }
+
+        [Fact]
+        public void SingleValueMap()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var map = new PropertyContentMap();
+            map.Add("rainbow", RAINBOW);
+            map.Add("key2", "value2"); 
+            setPropRequest.SetProperty("unittest.hash").SetContentMap(map);
+            var prop = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
+            Assert.NotNull(prop);
+            Assert.Equal(PropertyTypes.MAP, prop.Type);
+            Assert.NotNull(prop.Content);
+            map = prop.Content.ToMap();
+            Assert.NotNull(map);
+            Assert.NotNull(map.FirstOrDefault(h=>h.Key == "rainbow"));
+            Assert.True(map.FirstOrDefault(h => h.Key == "rainbow").Values.All(v => RAINBOW.Contains(v)));
+            Assert.Equal(2, map.Count());
+        }
+
+        [Fact]
+        public void SingleValueMapDupes()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var hash = new PropertyContentMap();
+            hash.Add("rainbow", RAINBOW);
+            hash.Add("rainbow", "value2"); 
+            setPropRequest.SetProperty("unittest.hash.dupe").SetContentMap(hash);
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest),
+                                "BASESPACE.PROPERTIES.CONTENT_MAP_DUPES", HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public void MapArray()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var h1 = new PropertyContentMap();
+            h1.Add("rainbow", RAINBOW);
+
+            setPropRequest.SetProperty("unittest.hash.multivalue").SetContentMapArray(new[] {h1, h1, h1});
+            var props = Client.SetPropertiesForResource(setPropRequest).Response;
+            Assert.Equal(1, props.Items.Count());
+            Assert.True(props.Items.All(p => p.Type == PropertyTypes.MAP + PropertyTypes.LIST_SUFFIX));
+            Assert.True(props.Items.All(p => p.Items.Count() == 3));
+            Assert.True(props.Items.All(p => p.ToMapArray().Count() == 3));
+
+            var items = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.hash.multivalue")).Response.Items;
+            Assert.Equal(3, items.Count());
+            Assert.True(items.All(a=>a.Content != null));
+            Assert.True(items.All(a => a.Content.ToMap() != null));
+            Assert.True(items.All(a => a.Content.ToMap()["rainbow"].Values.All(v=>RAINBOW.Contains(v))));
+
         }
     }
 }
