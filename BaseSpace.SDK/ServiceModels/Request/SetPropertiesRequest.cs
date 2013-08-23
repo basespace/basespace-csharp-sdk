@@ -126,7 +126,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// </remarks>
         public void SetContentStringArray(string[] stringContentItems)
         {
-            if (stringContentItems != null && stringContentItems.Any())
+            if (stringContentItems != null)
             {
                 Type = PropertyTypes.STRING + PropertyTypes.LIST_SUFFIX;
                 Items = stringContentItems;
@@ -143,9 +143,12 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// </remarks>
         public void SetContentReferencesArray(IPropertyContent[] referencedResourcesContent)
         {
-            if (referencedResourcesContent != null && referencedResourcesContent.Any())
+            if (referencedResourcesContent != null)
             {
-                Type = referencedResourcesContent.First().Type + PropertyTypes.LIST_SUFFIX;
+                if (referencedResourcesContent.Any())
+                {
+                    Type = referencedResourcesContent.First().Type + PropertyTypes.LIST_SUFFIX;
+                }
                 Items = referencedResourcesContent.Select(rr => rr.Href.ToString()).ToArray();
                 Content = null;
             }

@@ -354,7 +354,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(propertyItems.DisplayedCount, property.ItemsTotalCount);
         }
 
-        [Fact(Skip ="known bug")]
+        [Fact]
         public void CreateEmptyItemProperty()
         {
             var name = "unittest.singlevalue.emptyvalue";
@@ -367,16 +367,38 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(string.Empty, prop.Content.ToString());
         }
 
-        [Fact(Skip = "known bug")]
+        [Fact]
         public void CreateEmptyMultiItemProperty()
         {
             var name = "unittest.multivalue.emptyvalue";
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty(name).SetContentStringArray(new string[1]);
+            setPropRequest.SetProperty(name).SetContentStringArray(new string[] {});
 
             var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
             var prop = propResponse.Items.FirstOrDefault(p => p.Name == name);
             Assert.NotNull(prop);
+            Assert.Equal("string[]", prop.Type);
+            Assert.Equal(0, prop.Items.Count());
+        }
+
+        [Fact]
+        public void CreateEmptyMultiItemReferenceProperty()
+        {
+            var name = "unittest.multivalue.emptyvaluereference";
+            var setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.SetProperty(name).SetContentReferencesArray(new IPropertyContent[] {});
+
+            AssertErrorResponse(
+                () => Client.SetPropertiesForResource(setPropRequest), 
+                "BASESPACE.PROPERTIES.TYPE_INVALID",
+                HttpStatusCode.BadRequest);
+
+            setPropRequest.Properties.First().Type = PropertyTypes.PROJECT + PropertyTypes.LIST_SUFFIX;
+
+            var prop = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
+            Assert.NotNull(prop);
+            Assert.Equal(PropertyTypes.PROJECT + PropertyTypes.LIST_SUFFIX, prop.Type);
+            Assert.NotNull(prop.Items);
             Assert.Equal(0, prop.Items.Count());
         }
 
