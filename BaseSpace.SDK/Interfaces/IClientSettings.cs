@@ -6,14 +6,17 @@
 
 		string BaseSpaceWebsiteUrl { get; }
 
-		string BaseSpaceApiUrl { get; }
+		string BaseSpaceApiUrl { get; } 
 
 		string Version { get; }
-		
-		uint FileUploadMultipartSizeThreshold { get; }
+
+        uint FileUploadMultipartChunkSize { get; }
+        uint FileUploadMultipartSizeThreshold { get; }
 
         uint FileDownloadMultipartSizeThreshold { get; }
 
 		IAuthentication Authentication { get; }
+
+        int TimeoutMin { get;  }
 	}
 }

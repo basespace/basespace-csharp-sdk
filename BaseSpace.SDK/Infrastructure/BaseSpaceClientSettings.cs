@@ -21,7 +21,9 @@
 			BaseSpaceApiUrl = DEFAULT_API;
 			BaseSpaceWebsiteUrl = DEFAULT_WEBSITE;
 			Version = DEFAULT_VERSION;
-            FileUploadMultipartSizeThreshold = DEFAULT_UPLOAD_MULTIPART_SIZE;
+            FileUploadMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE_THRESHOLD;
+            FileUploadMultipartChunkSize = DEFAULT_UPLOAD_MULTIPART_SIZE;
+
             FileDownloadMultipartSizeThreshold = DEFAULT_DOWNLOAD_MULTIPART_SIZE;
 		}
 
@@ -33,10 +35,14 @@
 
 		public string Version { get; set; }
 
+        public uint FileUploadMultipartChunkSize { get; set; }
+
         public uint FileUploadMultipartSizeThreshold { get; set; }
 
         public uint FileDownloadMultipartSizeThreshold { get; set; }
 
         public IAuthentication Authentication { get; set; }
+
+        public int TimeoutMin { get; set; }
 	}
 }

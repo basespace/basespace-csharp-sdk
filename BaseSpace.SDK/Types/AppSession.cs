@@ -53,6 +53,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public PropertyContainer Properties { get; set; }
+
+        [DataMember]
+        public Uri HrefLogs { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }

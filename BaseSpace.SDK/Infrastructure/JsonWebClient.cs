@@ -40,6 +40,9 @@ namespace Illumina.BaseSpace.SDK
 
             client = new JsonServiceClient(settings.BaseSpaceApiUrl);
             client.LocalHttpWebRequestFilter += WebRequestFilter;
+
+            if (settings.TimeoutMin > 0)
+                client.Timeout = TimeSpan.FromMinutes(settings.TimeoutMin);
         }
 
         static JsonWebClient()

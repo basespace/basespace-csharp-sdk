@@ -81,6 +81,12 @@ namespace Illumina.BaseSpace.SDK
 		{
 			return WebClient.Send(request, options);
 		}
+
+        public CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		#endregion
 
 		#region Samples
@@ -172,6 +178,12 @@ namespace Illumina.BaseSpace.SDK
         public ListFileSetFilesResponse ListFiles(ListFileSetFilesRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
+        }
+
+        public UploadFileToFileSetResponse UploadFileToFileSet(UploadFileToFileSetRequest request, IRequestOptions options = null)
+        {
+            var fileUploadClient = new FileUpload(WebClient, Settings, options ?? WebClient.DefaultRequestOptions);
+            return fileUploadClient.UploadFile(request);
         }
         #endregion
 

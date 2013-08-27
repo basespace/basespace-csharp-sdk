@@ -85,6 +85,7 @@
     <Compile Include="Integration\PropertyTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
     <Compile Include="Integration\UploadFileToAppResultTest.cs" />
+    <Compile Include="Integration\UploadLogsToAppSessionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonWebClientTests.cs" />
     <Compile Include="TestData.Designer.cs">
@@ -99,8 +100,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="appSettings.config.hidden">
-      <SubType>
-      </SubType>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
