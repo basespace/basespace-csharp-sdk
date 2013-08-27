@@ -30,8 +30,3 @@
 *.dbproj text=auto merge=union 
 *.sln text=auto eol=crlf merge=union 
 
-src/Cloud.Web/Content/plugins/basespace-mini-topnav/basespace-mini-topnav.css eol=lf
-src/Cloud.Web/public/css/home/home.css eol=lf
-src/Cloud.Web/public/css/jbrowse/jbrowse.css eol=lf
-src/Cloud.Web/public/css/twitbootstrap/bootstrap.css eol=lf
-
