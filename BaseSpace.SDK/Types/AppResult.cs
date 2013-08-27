@@ -6,7 +6,7 @@ namespace Illumina.BaseSpace.SDK.Types
 {
 
     [DataContract( Name = "AppResult")]
-    public class AppResultCompact : AbstractResource
+    public class AppResultCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -29,10 +29,16 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public DateTime DateCreated { get; set; }
 
+        public string Type { get { return PropertyTypes.APPRESULT; } }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
+        }
     }
 
     [DataContract]
-    public class AppResult : AppResultCompact
+    public class AppResult : AppResultCompact, IPropertyContainingResource
     {
         [DataMember]
         public string Description { get; set; }
@@ -47,7 +53,10 @@ namespace Illumina.BaseSpace.SDK.Types
         public AppSessionCompact AppSession { get; set; }
 
         [DataMember]
-        public IResource[] References { get; set; }
+        public IContentReference<IAbstractResource>[] References { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
     }
 
     [DataContract]

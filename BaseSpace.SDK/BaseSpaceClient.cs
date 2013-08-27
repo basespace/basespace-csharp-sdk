@@ -282,6 +282,47 @@ namespace Illumina.BaseSpace.SDK
         }
         #endregion
 
-        
+        #region Properties
+
+        /// <summary>
+        /// Retrieve list of properties for a resource. Resulting list may require paging.
+        /// </summary>
+        public ListPropertiesResponse ListPropertiesForResource(ListPropertiesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        /// <summary>
+        /// Retrieve one property given its parent resource and name
+        /// </summary>
+        public GetPropertyResponse GetPropertyForResource(GetPropertyRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        /// <summary>
+        /// Retrieve list of items for a multi-value property (property having a type ending in '[]'). Resulting list may require paging.
+        /// </summary>
+        public ListPropertyItemsResponse ListPropertyItems(ListPropertyItemsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        /// <summary>
+        /// Add or modify properties associated with a resource. The list of modified properties will be returned.
+        /// </summary>
+        public SetPropertiesResponse SetPropertiesForResource(SetPropertiesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        /// <summary>
+        /// Delete a property given its parent resource and name.
+        /// </summary>
+        public DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
     }
 }

@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Util;
+using System.Linq;
 using Common.Logging;
+using Illumina.BaseSpace.SDK.Deserialization;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using ServiceStack.Common.Extensions;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.Text;
@@ -19,9 +22,6 @@ namespace Illumina.BaseSpace.SDK
 
         private readonly IClientSettings settings;
 
-        private static readonly JsonSerializer<Notification<Agreement>> agreementSerializer = new JsonSerializer<Notification<Agreement>>();
-
-        private static readonly JsonSerializer<Notification<ScheduledDowntime>> scheduledSerializer = new JsonSerializer<Notification<ScheduledDowntime>>();
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
@@ -53,10 +53,15 @@ namespace Illumina.BaseSpace.SDK
             JsConfig.DateHandler = JsonDateHandler.ISO8601;
 
             JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
-            //handle complex parsing of references
-            JsConfig<IResource>.RawDeserializeFn = ResourceDeserializer;
 
-            JsConfig<INotification<object>>.RawDeserializeFn = NotificationDeserializer;
+            // setup custom deserializers
+            JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ReferenceDeserializer.JsonToReference;
+            
+            JsConfig<PropertyCompact>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyCompact;
+            JsConfig<Property>.RawDeserializeFn = PropertyDeserializer.JsonToProperty;
+
+            JsConfig<INotification<object>>.RawDeserializeFn = MiscDeserializers.NotificationDeserializer;
+            JsConfig<PropertyItemsResourceList>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyItemsResourceList;     
         }
 
         public IWebProxy WebProxy
@@ -72,81 +77,49 @@ namespace Illumina.BaseSpace.SDK
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(request.GetLogMessage()))
-                    logger.Info(request.GetLogMessage());
+                if (logger.IsDebugEnabled)
+                {
+                    var debugMessage = request.GetDebugLogMessage();
+                    if (!string.IsNullOrWhiteSpace(debugMessage))
+                    {
+                        logger.Debug(debugMessage);
+                    }
+                }
+
+                if (logger.IsInfoEnabled)
+                {
+                    var infoMessage = request.GetInfoLogMessage();
+                    if (!string.IsNullOrEmpty(infoMessage))
+                    {
+                        logger.Info(infoMessage);
+                    }
+                }
+
                 TReturn result = null;
                 options = options ?? DefaultRequestOptions;
 
                 RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
                 return result;
             }
-            catch (Exception wex)
+            catch (WebServiceException webx)
             {
-                throw new BaseSpaceException(request.GetName() + " failed", wex);
+                string errorCode = string.Empty;
+                if (!string.IsNullOrEmpty(webx.ErrorCode))
+                {
+                    errorCode = string.Format(" ({0})", webx.ErrorCode);
+                }
+                var msg = string.Format("{0} status: {1} ({2}) Message: {3}{4}", request.GetName(), webx.StatusCode, webx.StatusDescription, webx.ErrorMessage, errorCode);
+                throw new BaseSpaceException(msg, webx.ErrorCode, webx);
+            }
+            catch (Exception x)
+            {
+                throw new BaseSpaceException(request.GetName() + " failed", string.Empty, x);
             }
         }
 
         private void WebRequestFilter(HttpWebRequest req)
         {
             settings.Authentication.UpdateHttpHeader(req);
-        }
-
-        private static INotification<object> NotificationDeserializer(string source)
-        {
-            //determine type, then use appropriate deserializer
-            var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
-            string type = asValues["Type"];
-
-            object o = null;
-
-            switch (type.ToLower())
-            {
-                case "agreement":
-                    o = agreementSerializer.DeserializeFromString(source).Item;
-                    break;
-                case "scheduleddowntime":
-                    o = scheduledSerializer.DeserializeFromString(source).Item;
-                    break;
-            }
-            return new Notification<object> { Item = o, Type = type };
-        }
-
-        internal static IResource ResourceDeserializer(string source)
-        {
-            //determine type, then use appropriate deserializer
-            var asValues = JsonSerializer.DeserializeFromString<Dictionary<string, string>>(source);
-
-            string type = asValues["Type"];
-
-            switch (type.ToLower())
-            {
-                case "file":
-                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<FileCompact>>(source);
-
-                case "appresult":
-                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<AppResultCompact>>(source);
-
-                case "sample":
-                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<SampleCompact>>(source);
-
-                case "project":
-                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<ProjectCompact>>(source);
-
-                case "run":
-                    return JsonSerializer.DeserializeFromString<ContentReferenceResource<RunCompact>>(source);
-
-                case "string":
-                    return JsonSerializer.DeserializeFromString<ContentValueResource<string>>(source);
-
-                case "string[]":
-                    return JsonSerializer.DeserializeFromString<ContentValueResource<string[]>>(source);
-
-                case "integer":
-                    return JsonSerializer.DeserializeFromString<ContentValueResource<int>>(source);
-
-            }
-
-            return null;
         }
     }
 }

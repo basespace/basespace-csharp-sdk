@@ -18,11 +18,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             return _url.ToString();
         }
 
-        internal override string GetLogMessage()
-        {
-            return "ListFileSetFilesRequest";
-        }
-
         public string Extensions { get; set; }
     }
     public enum FileSetFilesSortByParameters

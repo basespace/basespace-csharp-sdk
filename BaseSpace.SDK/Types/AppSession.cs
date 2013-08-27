@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using System.Runtime.Serialization;
-using Illumina.BaseSpace.SDK.Extensions;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract( Name = "AppSession")]
-    public class AppSessionCompact : AbstractResource
+    public class AppSessionCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -33,17 +29,30 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public DateTime DateCreated { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
+        }
+
+        public string Type
+        {
+            get { return PropertyTypes.APPSESSION; }
+        }
     }
 
 
     [DataContract]
-    public class AppSession : AppSessionCompact
+    public class AppSession : AppSessionCompact, IPropertyContainingResource
     {
         [DataMember]
         public string OriginatingUri { get; set; }
 
         [DataMember]
-        public IResource[] References { get; set; }
+        public IContentReference<IAbstractResource>[] References { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
 
         [DataMember]
         public Uri HrefLogs { get; set; }

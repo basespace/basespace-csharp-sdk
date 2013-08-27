@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public interface IContentReferenceResource<T> : IReferenceResource where T : IAbstractResource
+    public interface IPropertyContent
     {
-        T Content { get; set; }
+        string Type { get; }
+        Uri Href { get; }
     }
 }

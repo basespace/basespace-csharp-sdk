@@ -7,7 +7,7 @@ namespace Illumina.BaseSpace.SDK.Types
 {
 
     [DataContract( Name = "File")]
-    public class FileCompact : AbstractResource
+    public class FileCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -29,10 +29,20 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public DateTime DateCreated { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Path: {2}; Size: {3}", Href, Name, Path, Size);
+        }
+
+        public string Type
+        {
+            get { return PropertyTypes.FILE; }
+        }
     }
 
-    [DataContract()]
-    public class File : FileCompact
+    [DataContract]
+    public class File : FileCompact, IPropertyContainingResource
     {
         [DataMember]
         public FileUploadStatus? UploadStatus { get; set; }
@@ -53,7 +63,10 @@ namespace Illumina.BaseSpace.SDK.Types
         public Uri HrefParts { get; set; }
 
         [DataMember]
-        public IResource[] References { get; set; }
+        public IContentReference<IAbstractResource>[] References { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
     }
 
     [DataContract]

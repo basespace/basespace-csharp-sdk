@@ -1,4 +1,5 @@
-﻿using Illumina.BaseSpace.SDK.Types;
+﻿using System.Runtime.Serialization;
+using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
@@ -15,12 +16,16 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		{
 		}
 
+        [DataMember]
         public int? Offset { get; set; }
 
+        [DataMember]
         public int? Limit { get; set; }
 
+        [DataMember]
         public SortDirection? SortDir { get; set; }
 
+        [DataMember]
         public TSortFieldEnumType? SortBy { get; set; }
     }
     // for nested resources
@@ -32,12 +37,16 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
         }
 
+        [DataMember]
         public int? Offset { get; set; }
 
+        [DataMember]
         public int? Limit { get; set; }
 
+        [DataMember]
         public SortDirection? SortDir { get; set; }
 
+        [DataMember]
         public TSortFieldEnumType? SortBy { get; set; }
     }
 }

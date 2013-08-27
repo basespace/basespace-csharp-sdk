@@ -14,10 +14,5 @@
 		}
 
         public string Id { get; set; }
-
-        internal override string GetLogMessage()
-        {
-            return "";
-        }
     }
 }

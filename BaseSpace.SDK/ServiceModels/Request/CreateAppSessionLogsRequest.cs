@@ -20,9 +20,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             return _logsHref;
         }
-        internal override string GetLogMessage()
-        {
-            return "Creating logs";
-        }
     }
 }

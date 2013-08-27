@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Net;
 using Common.Logging;
+using Xunit;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
@@ -77,6 +79,28 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string accessToken = ConfigurationManager.AppSettings.Get("basespace:api-accesstoken");
 
             return new OAuth2Authentication(accessToken);
+        }
+
+        public static void AssertErrorResponse(Action function, string errorCode = null, HttpStatusCode? statusCode = null)
+        {
+            try
+            {
+                function();
+            }
+            catch (BaseSpaceException x)
+            {
+                if (!string.IsNullOrEmpty(errorCode))
+                {
+                    Assert.Equal(errorCode, x.ErrorCode);
+                }
+                if (statusCode != null)
+                {
+                    Assert.Equal(statusCode.Value, x.StatusCode);
+                }
+                return;
+            }
+
+            Assert.Equal("No exception thrown.", string.Empty);
         }
     }
 }

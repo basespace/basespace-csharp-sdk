@@ -41,21 +41,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\TerminalVelocity.Sharp.1.0.0.1\Illumina.TerminalVelocity.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=3.9.54.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\packages\ServiceStack.Common.3.9.54\lib\net35\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>$(SolutionDir)\packages\ServiceStack.Common.3.9.28\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=3.9.54.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\packages\ServiceStack.Common.3.9.54\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>$(SolutionDir)\packages\ServiceStack.Common.3.9.28\lib\net35\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=3.9.54.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\packages\ServiceStack.Text.3.9.54\lib\net35\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>$(SolutionDir)\packages\ServiceStack.Text.3.9.29\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -66,7 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpaceClient.cs" />
-    <Compile Include="Extensions\IResourceExtensions.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Deserialization\MiscDeserializers.cs" />
+    <Compile Include="Deserialization\PropertyDeserializer.cs" />
+    <Compile Include="Deserialization\ReferenceDeserializer.cs" />
+    <Compile Include="Extensions\PropertyExtensions.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
@@ -85,15 +85,19 @@
     <Compile Include="Interfaces\IBaseSpaceClient.cs" />
     <Compile Include="Interfaces\IBaseSpaceRequest.cs" />
     <Compile Include="Interfaces\IClientSettings.cs" />
-    <Compile Include="Interfaces\IContentReferenceResource.cs" />
-    <Compile Include="Interfaces\IContentSettingResource.cs" />
-    <Compile Include="Interfaces\IReferenceResource.cs" />
+    <Compile Include="Interfaces\IPropertyContent.cs" />
+    <Compile Include="Interfaces\IPropertyContainingResource.cs" />
+    <Compile Include="Interfaces\IReference.cs" />
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListPropertyItemsRequest.cs" />
+    <Compile Include="ServiceModels\Request\DeletePropertyRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetPropertyRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListPropertiesRequest.cs" />
     <Compile Include="ServiceModels\Request\CreateAppSessionLogsRequest.cs" />
     <Compile Include="ServiceModels\Request\FileContentRedirectMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\FileRequestPost.cs" />
@@ -126,12 +130,18 @@
     <Compile Include="ServiceModels\Request\OAuthDeviceAccessTokenRequest.cs" />
     <Compile Include="ServiceModels\Request\OAuthDeviceAuthRequest.cs" />
     <Compile Include="ServiceModels\Request\OAuthV2AccessTokenRequest.cs" />
+    <Compile Include="ServiceModels\Request\SetPropertiesRequest.cs" />
     <Compile Include="ServiceModels\Request\UpdateAppSessionRequest.cs" />
     <Compile Include="ServiceModels\Request\CreateProjectRequest.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToAppResultRequest.cs" />
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToFileSetRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListPropertyItemsResponse.cs" />
+    <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
+    <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetPropertyResponse.cs" />
+    <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppSessionLogsResponse.cs" />
     <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
@@ -154,16 +164,16 @@
     <Compile Include="ServiceModels\Response\ListGenomeResponse.cs" />
     <Compile Include="ServiceModels\Response\ListProjectsResponse.cs" />
     <Compile Include="ServiceModels\Response\GetUserResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListRunFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListRunsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSampleFilesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSamplesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListVariantsResponse.cs" />
-    <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthDeviceAccessTokenResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthDeviceAuthResponse.cs" />
     <Compile Include="ServiceModels\Response\OAuthV2AccessTokensResponse.cs" />
-    <Compile Include="ServiceModels\Response\StringHelpers.cs" />
+    <Compile Include="Infrastructure\StringHelpers.cs" />
     <Compile Include="ServiceModels\Response\UpdateAppSessionResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateProjectResponse.cs" />
     <Compile Include="ServiceModels\Response\UploadFileToAppResultResponse.cs" />
@@ -174,7 +184,7 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
-    <Compile Include="Types\ContentValue.cs" />
+    <Compile Include="Types\PropertyContentMap.cs" />
     <Compile Include="Types\Coverage.cs" />
     <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\FileSet.cs" />
@@ -190,6 +200,10 @@
     <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Project.cs" />
     <Compile Include="Types\ContentReference.cs" />
+    <Compile Include="Types\Property.cs" />
+    <Compile Include="Types\PropertyContainer.cs" />
+    <Compile Include="Types\PropertyContentLiteral.cs" />
+    <Compile Include="Types\PropertyItem.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />

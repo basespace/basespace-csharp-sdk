@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract(Name = "Run")]
-    public class RunCompact : AbstractResource
+    public class RunCompact : AbstractResource, IPropertyContent
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
@@ -45,10 +45,16 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public UserCompact UserOwnedBy { get; set; }
 
+        public string Type { get { return PropertyTypes.RUN; } }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
+        }
     }
 
     [DataContract]
-    public class Run : RunCompact
+    public class Run : RunCompact, IPropertyContainingResource
     {
         [DataMember]
         public Uri HrefFiles { get; set; }
@@ -67,6 +73,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefBaseSpaceUI { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
     }
 
     [DataContract]

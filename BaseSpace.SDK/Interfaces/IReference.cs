@@ -5,19 +5,21 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public interface IResource
-    {
-        string Name { get; set; }
 
+    public interface IReference
+    {
         string Rel { get; set; }
 
         string Type { get; set; }
-    }
 
-    public interface IReferenceResource : IResource
-    {
         Uri Href { get; set; }
 
         Uri HrefContent { get; set; }
     }
+
+    public interface IContentReference<out T> : IReference where T : IAbstractResource
+    {
+        T Content { get; }
+    }
+
 }

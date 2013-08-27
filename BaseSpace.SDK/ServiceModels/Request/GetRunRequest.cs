@@ -15,10 +15,5 @@
 		{
 			return string.Format("{0}/runs/{1}", Version, Id);
 		}
-
-        internal override string GetLogMessage()
-        {
-            return "";
-        }
 	}
 }

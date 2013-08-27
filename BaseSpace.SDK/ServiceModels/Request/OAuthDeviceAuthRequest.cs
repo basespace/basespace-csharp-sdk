@@ -26,12 +26,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		protected override string GetUrl()
 		{
 			return string.Format("{0}/oauthv2/deviceauthorization", Version);
-		}
-        
-        internal override string GetLogMessage()
-        {
-            return "";
-        }
+		}     
 	}
 }
 
