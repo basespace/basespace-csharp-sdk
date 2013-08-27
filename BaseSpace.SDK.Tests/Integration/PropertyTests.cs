@@ -30,7 +30,14 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var setPropRequest = new SetPropertiesRequest(_project);
             setPropRequest.SetProperty("mytestapp.metrics.magicnumber").SetContentString("42");
-            setPropRequest.SetProperty("mytestapp.inputs.appresults").SetContentReferencesArray(new[] { "appresults/3006", "appresults/3005" });
+            //setPropRequest.SetProperty("mytestapp.inputs.appresults").SetContentReferencesArray(new[] { "appresults/3006", "appresults/3005" });
+            var map = new PropertyContentMap();
+            map.Add("label.x-axis", "energydrinks");
+            map.Add("label.y-axis", "productivity");
+            map.Add("series.x-axis", "0", "1", "2", "3", "4");
+            map.Add("series.y-axis", "5", "7", "8", "4", "1");
+
+            setPropRequest.SetProperty("mytestapp.inputs.metrics").SetContentMap(map);
 
             // Create some properties
             // POST: resource/{id}/properties 
@@ -592,7 +599,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var setPropRequest = new SetPropertiesRequest(_project);
             var map = new PropertyContentMap();
             map.Add("rainbow", RAINBOW);
-            map.Add("key2", "value2"); 
+            map.Add("key2", "value2");
+            map.Add("rainbow2", RAINBOW);
+
             setPropRequest.SetProperty("unittest.hash").SetContentMap(map);
             var prop = Client.SetPropertiesForResource(setPropRequest).Response.Items.FirstOrDefault();
             Assert.NotNull(prop);
@@ -611,7 +620,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var setPropRequest = new SetPropertiesRequest(_project);
             var hash = new PropertyContentMap();
             hash.Add("rainbow", RAINBOW);
-            hash.Add("rainbow", "value2"); 
+            hash.Add("rainbow", "value2");
             setPropRequest.SetProperty("unittest.hash.dupe").SetContentMap(hash);
 
             AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest),
@@ -623,9 +632,11 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             var setPropRequest = new SetPropertiesRequest(_project);
             var h1 = new PropertyContentMap();
-            h1.Add("rainbow", RAINBOW);
+            h1.Add("r1key", "r1", "r1a", "r1a");
+            h1.Add("r2key", "r2");
+            h1.Add("r3key", "r3");
 
-            setPropRequest.SetProperty("unittest.hash.multivalue").SetContentMapArray(new[] {h1, h1, h1});
+            setPropRequest.SetProperty("unittest.hash.multivalue").SetContentMapArray(new[] {h1});
             var props = Client.SetPropertiesForResource(setPropRequest).Response;
             Assert.Equal(1, props.Items.Count());
             Assert.True(props.Items.All(p => p.Type == PropertyTypes.MAP + PropertyTypes.LIST_SUFFIX));
