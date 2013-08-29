@@ -76,23 +76,19 @@ namespace Illumina.BaseSpace.SDK
 		public void Execute()
 		{
            // This is where we are using the new downloader code 
-            if (_enableLogging)
-            {
-#if DEBUG
-                var task = _parameters.DownloadAsync(_token, this, logger: s => Debug.WriteLine(s));
-#else
-                          var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
-#endif
-                task.Wait();
-            }
-            else
-            {
-                var task = _parameters.DownloadAsync(_token, this);
-                task.Wait();
-            }
-           
-              
-        }
+		    if (_enableLogging)
+		    {
+		        var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
+		        task.Wait();
+		    }
+		    else
+		    {
+		        var task = _parameters.DownloadAsync(_token, this);
+		        task.Wait();
+		    }
+
+
+		}
 
 
         /// <summary>
