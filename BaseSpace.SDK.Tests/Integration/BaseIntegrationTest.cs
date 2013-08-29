@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Net;
 using Common.Logging;
-using Xunit;
+
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
@@ -20,6 +20,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
             // set Adapter
             LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
+            Debug.Listeners.Add(new DefaultTraceListener());
         }
 
         private readonly Lazy<IBaseSpaceClient> _lazy;

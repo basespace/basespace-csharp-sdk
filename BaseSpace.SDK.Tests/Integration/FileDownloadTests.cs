@@ -1,4 +1,7 @@
-﻿using Illumina.BaseSpace.SDK.ServiceModels;
+﻿using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Tests.Helpers;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
@@ -16,9 +19,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var project = TestHelpers.CreateRandomTestProject(Client);
             var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
             var file = File.Create(string.Format("UnitTestFile_{0}", appResult.Id));
-            var data = new byte[10];
+            var data = new byte[1024];
             new Random().NextBytes(data);
-            file.Write(data, 0, 10);
+            file.Write(data, 0, data.Length);
             file.Close();
             var response = Client.UploadFileToAppResult(new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
             Assert.NotNull(response);
@@ -28,5 +31,34 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Client.DownloadFile(response.Response.Id, fs);
             Assert.Equal(fs.Length, data.Length);
         }
+
+        [Fact]
+        public void CanDownloadLargerFile()
+        {
+            var project = TestHelpers.CreateRandomTestProject(Client);
+            var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
+            var file = File.Create(string.Format("UnitTestFile_{0}", appResult.Id));
+            var data = new byte[(1024 * 1024) * 5];
+            new Random().NextBytes(data);
+            file.Write(data, 0, data.Length);
+            file.Close();
+            var response = Client.UploadFileToAppResult(new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
+            Assert.NotNull(response);
+            Assert.True(response.Response.UploadStatus == FileUploadStatus.complete);
+            
+            string fileName = "DownloadedFile-" + StringHelpers.RandomAlphanumericString(5);
+            using (var fs = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                Client.DownloadFile(response.Response.Id, fs);
+           
+                Assert.Equal(fs.Length, data.Length);
+                byte[] actual = new byte[data.Length];
+                fs.Position = 0;
+                fs.Read(actual, 0, data.Length);
+                Assert.True(Enumerable.SequenceEqual(data, actual));
+            }
+        }
+
+
     }
 }
