@@ -493,7 +493,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CreatePropertyWithMultiJsonItems()
         {
-            var name = "unittest.singlevalue.contentJson";
+            var name = "unittest.multivalue.contentJson";
             string[] jsonContent = new string[2] {@"{   ""verification_uri"":""https://basespace.illumina.com/oauth/device"", " + System.Environment.NewLine + @"""verification_with_code_uri"":""https://basespace.illumina.com/oauth/device?code=b9bac"" }",
             @"{ ""user_code"":""b9bac"", " + "\r\n \t" + @"""expires_in"":1800, ""device_code"":""~!@#$%^&*()_+<>?,"", ""interval"":1 }"};
 
@@ -532,7 +532,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CreatePropertyWithMultiXMLItems()
         {
-            var name = "unittest.singlevalue.contentJson";
+            var name = "unittest.multivalue.contentXML";
             string[] XMLContent = new string[2] {"<Environment><Name>cloud-test</Name>" + System.Environment.NewLine + "\t" +
                 @"<BaseUrl>https://cloud-test.illumina.com</BaseUrl>" +
                 @"<DefaultToken>9b555f57d9e94c9eaee0f77cfe968099</DefaultToken>" + "\r\n \t" +
@@ -557,7 +557,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(XMLContent.All(i => prop.ToStringArray().Contains(i)));
         }
 
-        [Fact(Skip="Known bug")]
+        [Fact]
         public void AddDuplicateResourceItemReferenceToProperty()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
@@ -580,17 +580,82 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(_project.Name, returnedProject.Name);
         }
 
-        [Fact( Skip = "Known bug")]
+        [Fact (Skip="Fails on AppSession Reference. Need to add a better error message code as well")]
         public void AddMultipleHrefItemNoAccessToResource()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
             setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "appresults/447464", "appresults/447465" });
 
-            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
-            var itemsResponse = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.multiitem.hrefappresults.noaccess")).Response;
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
 
-            Assert.NotNull(itemsResponse);
-            Assert.Equal(0, itemsResponse.Items.Count());
+            setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "appsessions/695697" });
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
+
+            setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "runs/1076076"});
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
+
+            setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "projects/390390"});
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
+
+            setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "samples/961985"});
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
+
+            setPropRequest = new SetPropertiesRequest(_project);
+            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "files/27047206" });
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
+            
+        }
+
+        [Fact]
+        public void AddEmptyMapList()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var hash = new PropertyContentMap();
+            setPropRequest.SetProperty("unittest.hash.empty").SetContentMap(hash);
+
+            var propResponse = Client.SetPropertiesForResource(setPropRequest).Response;
+            var prop = propResponse.Items.FirstOrDefault(p => p.Name == "unittest.hash.empty");
+            Assert.NotNull(prop);
+            Assert.Equal("map", prop.Type);
+            Assert.Equal(null, prop.ToMapArray());
+        }
+
+        [Fact]
+        public void AddEmptyKeyNameMap()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var hash = new PropertyContentMap();
+            hash.Add(string.Empty, "value");
+            setPropRequest.SetProperty("unittest.hash.empty").SetContentMap(hash);
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_MAP_KEY_INVALID", HttpStatusCode.BadRequest);
+        }
+
+        [Fact (Skip = "Does not validate key length")]
+        public void AddInvalidKeyNameMap()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+
+            var hash = new PropertyContentMap();
+            hash.Add("ab", "value");
+            setPropRequest.SetProperty("unittest.hash.invalidkey").SetContentMap(hash);
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_MAP_KEY_INVALID", HttpStatusCode.BadRequest);
+
+            hash = new PropertyContentMap();
+            hash.Add("unittest.singlevalue.propertynamegreaterthan64.01234567891234567890", "value");
+            setPropRequest.SetProperty("unittest.hash.invalidkey").SetContentMap(hash);
+
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_MAP_KEY_INVALID", HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -611,7 +676,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.NotNull(map);
             Assert.NotNull(map.FirstOrDefault(h=>h.Key == "rainbow"));
             Assert.True(map.FirstOrDefault(h => h.Key == "rainbow").Values.All(v => RAINBOW.Contains(v)));
-            Assert.Equal(2, map.Count());
+            Assert.Equal(3, map.Count());
         }
 
         [Fact]
@@ -623,11 +688,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             hash.Add("rainbow", "value2");
             setPropRequest.SetProperty("unittest.hash.dupe").SetContentMap(hash);
 
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest),
-                                "BASESPACE.PROPERTIES.CONTENT_MAP_DUPES", HttpStatusCode.BadRequest);
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_MAP_DUPES", HttpStatusCode.BadRequest);
         }
 
-        [Fact]
+        [Fact (Skip="Need to update the code that validates the response")]
         public void MapArray()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
@@ -638,17 +702,46 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
             setPropRequest.SetProperty("unittest.hash.multivalue").SetContentMapArray(new[] {h1});
             var props = Client.SetPropertiesForResource(setPropRequest).Response;
+            
             Assert.Equal(1, props.Items.Count());
             Assert.True(props.Items.All(p => p.Type == PropertyTypes.MAP + PropertyTypes.LIST_SUFFIX));
-            Assert.True(props.Items.All(p => p.Items.Count() == 3));
-            Assert.True(props.Items.All(p => p.ToMapArray().Count() == 3));
 
-            var items = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.hash.multivalue")).Response.Items;
-            Assert.Equal(3, items.Count());
-            Assert.True(items.All(a=>a.Content != null));
+            Assert.NotNull(props.Items.FirstOrDefault().ToMapArray());
+
+            //Assert.True(props.Items.All(p => p.ToMapArray().Count() == 3));
+
+            //var items = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.hash.multivalue")).Response.Items;
+            //Assert.Equal(3, items.Count());
+            //Assert.True(items.All(a => a.Content != null));
+            //Assert.True(items.All(a => a.Content.ToMap() != null));
+        }
+
+        [Fact (Skip = "Need to update the code that validates the response")]
+        public void MultipleMapArrayProperty()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
+            var h1 = new PropertyContentMap();
+            h1.Add("h1key.1", "h1", "h1a", "h1b");
+            h1.Add("h1key.2", "h2");
+
+            setPropRequest.SetProperty("unittest.hash.multivalue1").SetContentMapArray(new[] { h1 });
+
+            var h2 = new PropertyContentMap();
+            h2.Add("h2key.1", "h1", "h1a");
+            h2.Add("h2key.2", "h2");
+
+            setPropRequest.SetProperty("unittest.hash.multivalue2").SetContentMapArray(new[] { h1, h2});
+
+            var props = Client.SetPropertiesForResource(setPropRequest).Response;
+            Assert.Equal(2, props.Items.Count());
+            Assert.True(props.Items.All(p => p.Type == PropertyTypes.MAP + PropertyTypes.LIST_SUFFIX));
+            Assert.True(props.Items.Where(p => p.Name == "unittest.hash.multivalue1").FirstOrDefault().Items.Count() == 1);
+            Assert.True(props.Items.Where(p => p.Name == "unittest.hash.multivalue2").FirstOrDefault().Items.Count() == 2);
+
+            var items = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "unittest.hash.multivalue1")).Response.Items;
+            Assert.Equal(2, items.Count());
+            Assert.True(items.All(a => a.Content != null));
             Assert.True(items.All(a => a.Content.ToMap() != null));
-            Assert.True(items.All(a => a.Content.ToMap()["rainbow"].Values.All(v=>RAINBOW.Contains(v))));
-
         }
     }
 }
