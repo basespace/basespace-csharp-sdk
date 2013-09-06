@@ -135,7 +135,7 @@ namespace Illumina.BaseSpace.SDK
                 return true;
             }
             timer.Stop();
-            logger.ErrorFormat("HTTP Response code {0} : {1}, elapsed time {2}ms", statusCode, exc, timer.ElapsedMilliseconds);
+            logger.ErrorFormat("{0} HTTP Response code {1} : {2} (elapsed time {3}ms)", description, statusCode, message ?? exc.ToString(), timer.ElapsedMilliseconds);
             return false;
         }
     }
