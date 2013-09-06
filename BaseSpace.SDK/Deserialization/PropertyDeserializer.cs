@@ -39,7 +39,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                     break;
                 case PropertyTypes.MAP:
                     ret.Items = json.ArrayObjects("Items").Select(itemj =>
-                         new PropertyItem(itemj["Id"], DeserializePropertyMap(itemj.Child("Content"))))
+                         new PropertyItem(itemj["Id"], JsonSerializer.DeserializeFromString<PropertyContentMap>(itemj.Child("Content"))))
                             .ToArray();
                     break;
 ;                default:
@@ -102,7 +102,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                         property.Content = new PropertyContentLiteral(property.Type, json.Get("Content"));
                         break;
                     case PropertyTypes.MAP:
-                        property.Content = DeserializePropertyMap(json.Child("Content"));
+                        property.Content = JsonSerializer.DeserializeFromString<PropertyContentMap>(json.Child("Content"));
                         break;
                     default:
                         property.Content = DeserializePropertyReference(simpleType, json.Child("Content"));
@@ -118,7 +118,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                         property.Items = json.Get<string[]>("Items").Select(i => new PropertyContentLiteral(simpleType, i)).ToArray();
                         break;
                     case PropertyTypes.MAP:
-                        property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyMap(itemj.ToJson())).Where(x => x != null).ToArray();
+                        property.Items = JsonSerializer.DeserializeFromString<PropertyContentMap[]>(json.Child("Items"));
                         break;
                     default:
                         property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyReference(simpleType, itemj.ToJson())).Where(x => x != null).ToArray();
@@ -158,21 +158,6 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                     break;
             }
             return ret;
-        }
-
-        public static PropertyContentMap DeserializePropertyMap(string json)
-        {
-            var tuples = JsonSerializer.DeserializeFromString<MapTuple[]>(json);
-            if (tuples == null)
-            {
-                return null;
-            }
-            var hc = new PropertyContentMap();
-            foreach (var t in tuples)
-            {
-                hc.Add(t.Key, t.Values);
-            }
-            return hc;
         }
     }
 }
