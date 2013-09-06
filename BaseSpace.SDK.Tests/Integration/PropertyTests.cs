@@ -580,39 +580,22 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.Equal(_project.Name, returnedProject.Name);
         }
 
-        [Fact (Skip="Fails on AppSession Reference. Need to add a better error message code as well")]
-        public void AddMultipleHrefItemNoAccessToResource()
+        [Fact]
+        public void InvalidContentReference()
         {
             var setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "appresults/447464", "appresults/447465" });
 
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
+            setPropRequest.SetProperty("unittest.multiitem.invalid.uri").SetContentReferencesArray(new[] { _project.Href.ToString(), "somethinginvalid/1234" });
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_REFERENCE_INVALID", HttpStatusCode.BadRequest);
+        }
 
-            setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "appsessions/695697" });
+        [Fact]
+        public void UnresolvedContentReference()
+        {
+            var setPropRequest = new SetPropertiesRequest(_project);
 
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
-
-            setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "runs/1076076"});
-
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
-
-            setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "projects/390390"});
-
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
-
-            setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "samples/961985"});
-
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
-
-            setPropRequest = new SetPropertiesRequest(_project);
-            setPropRequest.SetProperty("unittest.multiitem.hrefappresults.noaccess").SetContentReferencesArray(new[] { "files/27047206" });
-
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "", HttpStatusCode.Forbidden);
-            
+            setPropRequest.SetProperty("unittest.multiitem.invalid.uri").SetContentReferencesArray(new[] { _project.Href.ToString(), "projects/notexistingproject" });
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_REFERENCE_NOT_RESOLVED", HttpStatusCode.Conflict);            
         }
 
         [Fact]
