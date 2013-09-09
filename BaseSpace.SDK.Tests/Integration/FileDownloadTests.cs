@@ -60,5 +60,26 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
 
+        [Fact]
+        public void CanDownloadZeroByteFile()
+        {
+            var project = TestHelpers.CreateRandomTestProject(Client);
+            var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
+            var file = File.Create(string.Format("UnitTestFile_{0}", appResult.Id));
+            file.Close();
+            var response = Client.UploadFileToAppResult(new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
+            Assert.NotNull(response);
+            Assert.True(response.Response.UploadStatus == FileUploadStatus.complete);
+
+            string fileName = "DownloadedFile-" + StringHelpers.RandomAlphanumericString(5);
+            using (var fs = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                Client.DownloadFile(response.Response.Id, fs);
+
+                Assert.Equal(fs.Length, 0);
+            }
+        }
+
+
     }
 }
