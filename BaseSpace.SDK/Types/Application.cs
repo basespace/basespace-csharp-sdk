@@ -32,7 +32,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string DateCreated { get; set; }
     }
     [DataContract]
-    public class Application : ApplicationCompact
+    public class Application : ApplicationCompact, IPropertyContainingResource
     {
         [DataMember]
         public string LongDescription { get; set; }
@@ -42,6 +42,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefSettings { get; set; }
+
+        [DataMember]
+        public PropertyContainer Properties { get; set; }
     }
 
     public enum ApplicationSortByParameters { Id, Name, DateCreated }
