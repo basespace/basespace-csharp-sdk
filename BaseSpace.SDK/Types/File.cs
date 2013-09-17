@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-
     [DataContract( Name = "File")]
     public class FileCompact : AbstractResource, IPropertyContent
     {
@@ -29,6 +28,18 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public DateTime DateCreated { get; set; }
+
+        [DataMember]
+        public SampleCompact ParentSample { get; set; }
+
+        [DataMember]
+        public AppResultCompact ParentAppResult { get; set; }
+
+        [DataMember]
+        public RunCompact ParentRun { get; set; }
+
+        [DataMember]
+        public GenomeCompact ParentGenome { get; set; }
 
         public override string ToString()
         {

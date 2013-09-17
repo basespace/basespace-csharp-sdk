@@ -17,4 +17,14 @@ namespace Illumina.BaseSpace.SDK
         public const string MAP = "map";
         public const string LIST_SUFFIX = "[]";
     } 
+
+    public static class SearchScopes
+    {
+        public const string RUNS = "runs";
+        public const string SAMPLES = "samples";
+        public const string APPRESULTS = "appresults";
+        public const string PROJECTS = "projects";
+        public const string FILES_APPRESULT = "appresult_files";
+        public const string FILES_SAMPLE = "sample_files";
+    }
 }

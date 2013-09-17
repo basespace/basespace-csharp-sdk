@@ -8,7 +8,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public class SearchRequest : AbstractResourceListRequest<SearchResponse, SearchResultSortByParameters>
     {
-        public SearchRequest(string query, string scope)
+        public SearchRequest(string query, string scope = null)
         {
             Query = query;
             Scope = scope;
@@ -16,7 +16,23 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public string Query { get; set; }
 
+        /// <summary>
+        /// Comma separated list of the types of documents to include in the search results. All documents are included by default.
+        /// </summary>
         public string Scope { get; set; }
+
+        /// <summary>
+        /// Set the types of documents to include in the search results. Use SearchScopes.* contants. All documents are included by default.
+        /// </summary>
+        public void SetScope(string[] scopes)
+        {
+            if (scopes == null || scopes.Length == 0)
+            {
+                Scope = null;
+                return;
+            }
+            Scope = string.Join(",", scopes);
+        }
 
         protected override string GetUrl()
         {
