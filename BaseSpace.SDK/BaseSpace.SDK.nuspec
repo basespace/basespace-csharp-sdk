@@ -17,9 +17,9 @@
     <language>en-US</language>
     <copyright>illumina 2013 and contributors</copyright>
     <dependencies>
+      <dependency id="TerminalVelocity.Sharp"/>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\$configuration$\Illumina.TerminalVelocity.dll" target="lib\net40\" />
   </files>
 </package>
