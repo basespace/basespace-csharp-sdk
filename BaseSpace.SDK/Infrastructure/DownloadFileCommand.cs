@@ -31,7 +31,7 @@ namespace Illumina.BaseSpace.SDK
         {
             DateTime expiration;
             string url = GetFileContentUrl(client,fileId, out expiration);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: 4, maxChunkSize: (int) settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false,verifyLength:true);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: true);
             _parameters = parameters;
             _token = token;
             _proxy = proxy;
