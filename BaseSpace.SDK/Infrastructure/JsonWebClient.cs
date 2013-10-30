@@ -36,6 +36,13 @@ namespace Illumina.BaseSpace.SDK
 
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
+
+			//need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
+			if (TerminalVelocity.Helpers.IsRunningOnMono())
+			{
+				HttpEncoder.Current = HttpEncoder.Default;
+			}
+
             HttpEncoder.Current.SerializeToString();
 
             client = new JsonServiceClient(settings.BaseSpaceApiUrl);
