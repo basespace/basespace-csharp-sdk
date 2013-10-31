@@ -14,7 +14,7 @@ namespace Illumina.BaseSpace.SDK
 {
     internal class DownloadFileCommand : IAsyncProgress<LargeFileDownloadProgressChangedEventArgs>
 	{
-        private const int DEFAULT_THREADS = 8;
+        private const int DEFAULT_THREADS = 16;
         private readonly ILargeFileDownloadParameters _parameters;
 	    private readonly IWebProxy _proxy;
 	    private CancellationToken _token { get; set; }
@@ -39,13 +39,12 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-
         public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName,
-                                   IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true)
+                                   IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true, int threadCount = DEFAULT_THREADS)
         {
             DateTime expiration;
             string url = GetFileContentUrl(client, file.Id, out expiration);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName,maxThreads: DEFAULT_THREADS, maxChunkSize: (int?) settings.FileDownloadMultipartSizeThreshold, id: file.Id);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, id: file.Id);
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
