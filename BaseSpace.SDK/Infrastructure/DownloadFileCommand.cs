@@ -14,7 +14,7 @@ namespace Illumina.BaseSpace.SDK
 {
     internal class DownloadFileCommand : IAsyncProgress<LargeFileDownloadProgressChangedEventArgs>
 	{
-        private const int DEFAULT_THREADS = 8;
+        private const int DEFAULT_THREADS = 4;
         private readonly ILargeFileDownloadParameters _parameters;
 	    private readonly IWebProxy _proxy;
 	    private CancellationToken _token { get; set; }
@@ -97,7 +97,7 @@ namespace Illumina.BaseSpace.SDK
         /// <param name="e"></param>
         public void Report(LargeFileDownloadProgressChangedEventArgs e)
         {
-            OnFileDownloadProgressChanged(new FileDownloadProgressChangedEventArgs(e.Id, e.ProgressPercentage,e.DownloadBitRate));
+			OnFileDownloadProgressChanged(new FileDownloadProgressChangedEventArgs(e.Id, e.ProgressPercentage, e.DownloadBitRate, e.IsFailed));
 		}
      
 	    protected virtual void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)
