@@ -30,6 +30,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         public string HrefAppSession { get; set; }
 
         [DataMember]
+        public string HrefAppSessionChild { get; set; }
+
+        [DataMember]
         public string HrefGenome { get; set; }
 
         [DataMember]
