@@ -97,7 +97,7 @@ namespace Illumina.BaseSpace.SDK
         /// <param name="e"></param>
         public void Report(LargeFileDownloadProgressChangedEventArgs e)
         {
-			OnFileDownloadProgressChanged(new FileDownloadProgressChangedEventArgs(e.Id, e.ProgressPercentage, e.DownloadBitRate, e.IsFailed));
+            OnFileDownloadProgressChanged(new FileDownloadProgressChangedEventArgs(_parameters.Id, e.ProgressPercentage, e.DownloadBitRate, e.IsFailed));
 		}
      
 	    protected virtual void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)

@@ -30,6 +30,11 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public string DateCreated { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Href: {0}; Name: {1}", Href, Name);
+        }
     }
     [DataContract]
     public class Application : ApplicationCompact, IPropertyContainingResource
