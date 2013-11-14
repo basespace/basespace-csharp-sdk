@@ -13,6 +13,8 @@ namespace Illumina.BaseSpace.SDK
         public const string SAMPLE = "sample";
         public const string APPRESULT = "appresult";
         public const string FILE = "file";
+        public const string SAMPLE_FILE = "samplefile";
+        public const string APPRESULT_FILE = "appresultfile";
         public const string APPSESSION = "appsession";
         public const string MAP = "map";
         public const string LIST_SUFFIX = "[]";
