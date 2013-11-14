@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
 using Common.Logging;
-using ServiceStack.Service;
 using ServiceStack.ServiceClient.Web;
-using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace Illumina.BaseSpace.SDK
 {
