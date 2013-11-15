@@ -8,6 +8,7 @@ using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using ServiceStack.ServiceClient.Web;
 using Illumina.BaseSpace.SDK.Types;
+using File = System.IO.File;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -164,7 +165,7 @@ namespace Illumina.BaseSpace.SDK
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, chunkSize);
                             lock (_syncRead) // avoid thrashing the disk
-                                using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                using (var fs = File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
                                 {
                                     fs.Seek(startPosition, SeekOrigin.Begin);
                                     actualSize = fs.Read(data, 0, desiredSize);

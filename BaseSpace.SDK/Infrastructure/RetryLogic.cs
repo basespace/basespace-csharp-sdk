@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
+using System.Threading;
 using Common.Logging;
 using ServiceStack.ServiceClient.Web;
 
@@ -129,7 +130,7 @@ namespace Illumina.BaseSpace.SDK
             {
                 logger.ErrorFormat("Error while {0}, attempt {1}, elapsed {4}ms, retrying in {2} seconds: \r\n{3}", description,
                                    whichAttempt, delay, message, timer.ElapsedMilliseconds);
-                System.Threading.Thread.Sleep(1000 * delay);
+                Thread.Sleep(1000 * delay);
                 return true;
             }
             timer.Stop();

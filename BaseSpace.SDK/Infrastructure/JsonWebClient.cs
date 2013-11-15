@@ -5,6 +5,7 @@ using Common.Logging;
 using Illumina.BaseSpace.SDK.Deserialization;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using Illumina.TerminalVelocity;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.Text;
@@ -35,7 +36,7 @@ namespace Illumina.BaseSpace.SDK
             HttpEncoder.Default.SerializeToString();
 
 			//need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
-			if (TerminalVelocity.Helpers.IsRunningOnMono())
+			if (Helpers.IsRunningOnMono())
 			{
 				HttpEncoder.Current = HttpEncoder.Default;
 			}

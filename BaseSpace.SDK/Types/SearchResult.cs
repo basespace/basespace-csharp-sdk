@@ -18,7 +18,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public SampleCompact Sample { get; set; }
 
         [DataMember]
-        public FileCompact SampleFile { get; set; }
+        public FileCompact File { get; set; }
 
         [DataMember]
         public ApplicationCompact Application { get; set; }
@@ -37,9 +37,9 @@ namespace Illumina.BaseSpace.SDK.Types
             {
                 return Sample.ToString();
             }
-            if (SampleFile != null)
+            if (File != null)
             {
-                return SampleFile.ToString();
+                return File.ToString();
             }
             if (Application != null)
             {

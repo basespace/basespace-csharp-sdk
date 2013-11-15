@@ -48,7 +48,7 @@ namespace Illumina.BaseSpace.SDK
 			        {"grant_type", "device"}
 			    };
 
-            return new Uri(string.Format("{0}/{1}/oauthv2/token?{2}", settings.BaseSpaceApiUrl, settings.Version, RequestUrlExtensions.ToQueryString(queryPairs)));
+            return new Uri(string.Format("{0}/{1}/oauthv2/token?{2}", settings.BaseSpaceApiUrl, settings.Version, ToQueryString(queryPairs)));
         }
 
         public static void FromJson(this AccessToken accessToken, string json)

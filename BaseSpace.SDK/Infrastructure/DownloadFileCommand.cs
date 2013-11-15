@@ -83,10 +83,7 @@ namespace Illumina.BaseSpace.SDK
 		        var task = _parameters.DownloadAsync(_token, this);
 		        task.Wait();
 		    }
-
-
 		}
-
 
         /// <summary>
         /// Get progress from download (Terminal Velocity)
@@ -104,7 +101,6 @@ namespace Illumina.BaseSpace.SDK
 				FileDownloadProgressChanged(this, e);
 			}
 		}
-
 
 		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration)
 		{
