@@ -50,6 +50,16 @@ namespace Illumina.BaseSpace.SDK
             _enableLogging = enableLogging;
         }
 
+        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
+        {
+            DateTime expiration;
+            string url = GetFileContentUrl(client, file.Id, out expiration);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id);
+            _parameters = parameters;
+            _token = token;
+            _enableLogging = enableLogging;
+        }
+
         public DownloadFileCommand(Uri uri, string targetFileName, string fileId = null, CancellationToken token = new CancellationToken(), bool enableLogging = true)
         {
             ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(uri, targetFileName, 0,
