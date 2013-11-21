@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -30,6 +31,10 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public SampleCompact ParentSample { get; set; }
+
+        [DataMember]
+        public List<ProjectCompact> ParentProjects { get; set; }
+
 
         [DataMember]
         public AppResultCompact ParentAppResult { get; set; }
