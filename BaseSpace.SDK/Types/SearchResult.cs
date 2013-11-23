@@ -20,9 +20,9 @@ namespace Illumina.BaseSpace.SDK.Types
         //public SampleCompact Sample { get; set; }
 
         [DataMember]
-        public FileCompact SampleFile { get; set; }
+        public SampleFileCompact SampleFile { get; set; }
         [DataMember]
-        public FileCompact AppResultFile { get; set; }
+        public AppResultFileCompact AppResultFile { get; set; }
 
         //[DataMember]
         //public ApplicationCompact Application { get; set; }

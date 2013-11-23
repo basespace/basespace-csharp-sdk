@@ -35,9 +35,8 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public List<ProjectCompact> ParentProjects { get; set; }
 
-
         [DataMember]
-        public AppResultCompact ParentAppResult { get; set; }
+        public AppResult ParentAppResult { get; set; }
 
         [DataMember]
         public RunCompact ParentRun { get; set; }
