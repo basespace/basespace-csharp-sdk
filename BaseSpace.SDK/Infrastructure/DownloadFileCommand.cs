@@ -28,7 +28,9 @@ namespace Illumina.BaseSpace.SDK
         {
             DateTime expiration;
             string url = GetFileContentUrl(client,fileId, out expiration);
+#pragma warning disable 618
             ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: true);
+#pragma warning restore 618
             _parameters = parameters;
             _token = token;
             _proxy = proxy;
@@ -76,12 +78,12 @@ namespace Illumina.BaseSpace.SDK
 		    if (_enableLogging)
 		    {
 		        var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
-		        task.Wait();
+		        task.Wait(_token);
 		    }
 		    else
 		    {
 		        var task = _parameters.DownloadAsync(_token, this);
-		        task.Wait();
+		        task.Wait(_token);
 		    }
 		}
 

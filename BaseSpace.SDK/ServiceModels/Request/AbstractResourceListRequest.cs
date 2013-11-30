@@ -10,6 +10,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 		protected AbstractResourceListRequest()
 		{
 		}
+		
         protected AbstractResourceListRequest(int? offset = null, int? limit = null, SortDirection? sortDir = null , TSortFieldEnumType? sortBy = null)
         {
             Offset = offset;
