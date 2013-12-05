@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
@@ -17,7 +18,7 @@ namespace Illumina.BaseSpace.SDK
 	    private CancellationToken _token { get; set; }
         private static ILog logger = LogManager.GetCurrentClassLogger();
         private bool _enableLogging = true;
-        
+        private string _fileName = "NotSet";
 
         public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, proxy, enableLogging)
         {
@@ -44,6 +45,7 @@ namespace Illumina.BaseSpace.SDK
         {
             DateTime expiration;
             string url = GetFileContentUrl(client, file.Id, out expiration);
+            _fileName = string.Format("[{0}],{1}",file.Id,file.Name);
             ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName,maxThreads: DEFAULT_THREADS, maxChunkSize: (int?) settings.FileDownloadMultipartSizeThreshold, id: file.Id);
             _parameters = parameters;
             _token = token;
@@ -75,16 +77,25 @@ namespace Illumina.BaseSpace.SDK
 		public void Execute()
 		{
            // This is where we are using the new downloader code 
-		    if (_enableLogging)
+		    try
 		    {
-		        var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
-		        task.Wait(_token);
+		        if (_enableLogging)
+		        {
+		            var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
+		            task.Wait(_token);
+		        }
+		        else
+		        {
+		            var task = _parameters.DownloadAsync(_token, this);
+		            task.Wait(_token);
+		        }
 		    }
-		    else
+		    catch (OperationCanceledException e)
 		    {
-		        var task = _parameters.DownloadAsync(_token, this);
-		        task.Wait(_token);
+                logger.DebugFormat("OperationCanceledException {0}", _fileName);
+		        logger.Error(e);
 		    }
+            logger.DebugFormat("Execution Over with _token.IsCancellationRequested = {0} for {1}", _token.IsCancellationRequested, _fileName);
 		}
 
         /// <summary>
