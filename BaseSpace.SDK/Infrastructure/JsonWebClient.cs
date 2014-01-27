@@ -124,7 +124,10 @@ namespace Illumina.BaseSpace.SDK
 
         private void WebRequestFilter(HttpWebRequest req)
         {
-            settings.Authentication.UpdateHttpHeader(req);
+            if (settings.Authentication != null)
+            {
+                settings.Authentication.UpdateHttpHeader(req);
+            }
         }
     }
 }

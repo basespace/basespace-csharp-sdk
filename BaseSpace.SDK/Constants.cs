@@ -23,5 +23,6 @@
         public const string PROJECTS = "projects";
         public const string FILES_APPRESULT = "appresult_files";
         public const string FILES_SAMPLE = "sample_files";
+        public const string FILES_BOTH_SAMPLE_AND_APPRESULT = "sample_files,appresult_files";
     }
 }
