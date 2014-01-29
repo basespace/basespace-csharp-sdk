@@ -165,7 +165,7 @@ namespace Illumina.BaseSpace.SDK
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, chunkSize);
                             lock (_syncRead) // avoid thrashing the disk
-                                using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Delete | FileShare.Read))
                                 {
                                     fs.Seek(startPosition, SeekOrigin.Begin);
                                     actualSize = fs.Read(data, 0, desiredSize);
