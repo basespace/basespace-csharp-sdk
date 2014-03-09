@@ -53,5 +53,18 @@ namespace Illumina.BaseSpace.SDK.Types
         }
     }
 
-    public enum SearchResultSortByParameters { FileId, Name, DateCreated }
+    public enum SearchResultSortByParameters
+    {
+        Score,
+        FileId,
+        Project_Name,
+        AppResult_Name,
+        AppResultFile_Name,
+        Sample_Name,
+        SampleFile_Name,
+        Run_Name,
+        DateCreated,
+        ModifiedOn,
+        Uid
+    }
 }
