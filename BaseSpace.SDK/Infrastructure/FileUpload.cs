@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +8,7 @@ using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using ServiceStack.ServiceClient.Web;
 using Illumina.BaseSpace.SDK.Types;
+using File = System.IO.File;
 
 namespace Illumina.BaseSpace.SDK
 {

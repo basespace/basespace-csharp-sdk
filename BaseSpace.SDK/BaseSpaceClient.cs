@@ -262,7 +262,7 @@ namespace Illumina.BaseSpace.SDK
         public void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount,
                                  CancellationToken token = new CancellationToken())
         {
-               var command = new DownloadFileCommand(this, file,filePath, maxThreadCount, maxChunkSize, token);
+               var command = new DownloadFileCommand(this, file,filePath, Settings, maxThreadCount, maxChunkSize, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
             command.Execute();
         }
@@ -328,6 +328,13 @@ namespace Illumina.BaseSpace.SDK
         /// Delete a property given its parent resource and name.
         /// </summary>
         public DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Search
+        public SearchResponse Search(SearchRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
         }

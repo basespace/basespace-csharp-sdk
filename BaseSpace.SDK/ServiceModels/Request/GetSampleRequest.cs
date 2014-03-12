@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Illumina.BaseSpace.SDK.ServiceModels
+﻿namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public class GetSampleRequest : AbstractResourceRequest<GetSampleResponse>
     {

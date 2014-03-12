@@ -6,11 +6,13 @@ namespace Illumina.BaseSpace.SDK
 
 	public class FileDownloadProgressChangedEventArgs : ProgressChangedEventArgs
 	{
-		public FileDownloadProgressChangedEventArgs(string fileId, int progress, double bitRate)
+		public FileDownloadProgressChangedEventArgs(string fileId, int progress, double bitRate, long bytesDownloaded, bool isFailed = false)
 			: base(progress, null)
 		{
 			FileId = fileId;
 			BitRate = bitRate;
+		    BytesDownloaded = bytesDownloaded;
+		    IsFailed = isFailed;
 		}
 
 		/// <summary>
@@ -18,10 +20,17 @@ namespace Illumina.BaseSpace.SDK
 		/// </summary>
 		public double BitRate { get; private set; }
 
-		/// <summary>
+        /// <summary>
+        /// Bytes downloaded so far
+        /// </summary>
+	    public long BytesDownloaded { get; set; }
+
+	    /// <summary>
 		/// The file ID associated with this download.
 		/// </summary>
 		public string FileId { get; private set; }
+
+		public bool IsFailed { get; private set; }
 	}
 }
 

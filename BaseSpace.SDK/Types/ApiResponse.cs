@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using ServiceStack.ServiceInterface.ServiceModel;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
@@ -7,7 +8,7 @@ namespace Illumina.BaseSpace.SDK.Types
     public class ApiResponse<TResponse> : IApiResponse<TResponse>
     {
         private IList<INotification<object>> notifications = new List<INotification<object>>();
-        private ServiceStack.ServiceInterface.ServiceModel.ResponseStatus status = new ServiceStack.ServiceInterface.ServiceModel.ResponseStatus();
+        private ResponseStatus status = new ResponseStatus();
 
         public ApiResponse() { }
 
@@ -20,7 +21,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public virtual TResponse Response { get; set; }
 
         [DataMember(IsRequired = true)]
-        internal ServiceStack.ServiceInterface.ServiceModel.ResponseStatus ResponseStatus
+        public ResponseStatus ResponseStatus
         {
             get { return status; }
             set { status = value; }

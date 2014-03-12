@@ -119,5 +119,10 @@ namespace Illumina.BaseSpace.SDK
         /// </summary>
         /// <remarks>DELETE: {resource}/properties/{name}</remarks>
         DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Retrieve resources from the API based on a search query
+        /// </summary>
+        SearchResponse Search(SearchRequest request, IRequestOptions options = null);
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
@@ -11,8 +8,8 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public PropertyContentLiteral(string type, string content)
         {
-            this.Type = type;
-            this.Content = content;
+            Type = type;
+            Content = content;
         }
 
         public string Type { get; set; }

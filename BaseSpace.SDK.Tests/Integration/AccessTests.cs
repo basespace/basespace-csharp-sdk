@@ -15,7 +15,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
     public class AccessTests : BaseIntegrationTest
     {
         // the next line should only be enabled when running tests interactively since it requires personal attention to a browser that pops up
-        [Fact]
+        [Fact(Skip="this is for interactive testing only")]
         public void CreateWebRequestTest()
         {
             var client = CreateWebRequestClient();
