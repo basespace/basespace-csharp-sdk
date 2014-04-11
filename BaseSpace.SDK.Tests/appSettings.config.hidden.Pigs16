@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<appSettings>
+    <add key="basespace:api-key" value="7c71fcf9b39949d296c2f4fdc0155368"/>
+    <add key="basespace:api-secret" value="b12032e7e8084264993218bf91a8c11f"/>
+    <add key="basespace:api-accesstoken" value="c23aee44b85543179847bd2eb67f34dd"/>
+    <add key="basespace:api-url" value="http://10.16.32.30:8080"/>
+    <add key="basespace:web-url" value="http://10.16.32.30"/>
+    <add key="basespace:api-version" value="v1pre3"/>
+</appSettings>
