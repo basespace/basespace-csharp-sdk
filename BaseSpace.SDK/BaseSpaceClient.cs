@@ -324,5 +324,63 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send(request, options);
         }
         #endregion
+
+        #region Prep-BiologicalSamples
+        public CreateBiologicalSampleResponse CreateBiologicalSample(CreateBiologicalSampleRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Prep-Libraries
+        public CreateLibraryContainerResponse CreateLibraryContainer(CreateLibraryContainerRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreateOrUpdateContainerLibrariesResponse CreateOrUpdateContainerLibraries(CreateOrUpdateContainerLibrariesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListSupportedLibraryPrepKitsResponse ListSupportedLibraryPrepKits(ListSupportedLibraryPrepKitsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public GetLibraryPrepKitIdResponse GetLibraryPrepKit(GetLibraryPrepKitIdRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public GetContainerToLibraryMappingResponse GetContainerToLibraryMapping(GetContainerToLibraryMappingRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Prep-Pool
+        public CreateLibraryPoolResponse CreateLibraryPool(CreateLibraryPoolRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public UpdatePoolToLibraryMappingResponse UpdatePoolToLibraryMapping(UpdatePoolToLibraryMappingRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Prep-PlannedRun
+        public CreatePlannedRunResponse CreatePlannedRun(CreatePlannedRunRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public PlannedRunReadyResponse PlannedRunReadyRequest(PlannedRunReadyRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
     }
 }
