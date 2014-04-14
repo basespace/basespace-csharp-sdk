@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using System.Collections.Generic;
 
 namespace Illumina.BaseSpace.SDK
 {
@@ -117,5 +118,64 @@ namespace Illumina.BaseSpace.SDK
         /// </summary>
         /// <remarks>DELETE: {resource}/properties/{name}</remarks>
         DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Create a biological sample
+        /// </summary>
+        /// <remarks>POST: /biologicalsamples</remarks>
+        CreateBiologicalSampleResponse CreateBiologicalSample(CreateBiologicalSampleRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Create a library container
+        /// </summary>
+        /// <remarks>POST: /librarycontainers</remarks>
+        CreateLibraryContainerResponse CreateLibraryContainer(CreateLibraryContainerRequest request, IRequestOptions options = null);
+        /// <summary>
+        /// Create or Update the container libraries (mapping)
+        /// </summary>
+        /// <remarks>POST: /librarycontainers/{Id}/libraries</remarks>
+        CreateOrUpdateContainerLibrariesResponse CreateOrUpdateContainerLibraries(CreateOrUpdateContainerLibrariesRequest request, IRequestOptions options = null);
+        
+        /// <summary>
+        /// Create library pool
+        /// </summary>
+        /// <remarks>POST: /library</remarks>
+        CreateLibraryPoolResponse CreateLibraryPool(CreateLibraryPoolRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Create planned run
+        /// </summary>
+        /// <remarks>POST: /plannedruns</remarks>
+        CreatePlannedRunResponse CreatePlannedRun(CreatePlannedRunRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// List supported library prep kits
+        /// </summary>
+        /// <remarks>GET: /librarypreps</remarks>
+        ListSupportedLibraryPrepKitsResponse ListSupportedLibraryPrepKits(ListSupportedLibraryPrepKitsRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// List library prep kit by Id
+        /// </summary>
+        /// <remarks>GET: /libraryprepkits/{Id}</remarks>
+        GetLibraryPrepKitIdResponse GetLibraryPrepKit(GetLibraryPrepKitIdRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Pool libraries
+        /// </summary>
+        /// <remarks>PUT: /librarypools/{Id}/libraries</remarks>
+        UpdatePoolToLibraryMappingResponse UpdatePoolToLibraryMapping(UpdatePoolToLibraryMappingRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Get Libraries in Container
+        /// </summary>
+        /// <remarks>GET: /librarycontainers/{Id}/libraries </remarks>
+        GetContainerToLibraryMappingResponse GetContainerToLibraryMapping(GetContainerToLibraryMappingRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Mark a planned run as ready to sequence
+        /// </summary>
+        /// <remarks>PUT: "/plannedruns/{Id}/ready</remarks>
+        PlannedRunReadyResponse PlannedRunReadyRequest(PlannedRunReadyRequest request, IRequestOptions options = null);
     }
 }
