@@ -55,7 +55,7 @@ namespace Illumina.BaseSpace.SDK
             DateTime expiration;
             string url = GetFileContentUrl(client, file.Id, out expiration);
             _fileName = string.Format("[{0}],{1}",file.Id,file.Name);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName,maxThreads: DEFAULT_THREADS, maxChunkSize: (int?) settings.FileDownloadMultipartSizeThreshold, id: file.Id);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id);
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
