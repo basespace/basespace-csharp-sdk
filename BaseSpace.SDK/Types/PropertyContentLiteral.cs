@@ -16,7 +16,7 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public Uri Href
         {
-            get { return new Uri(""); }
+            get { return null; }
         }
 
         public string Content { get; set; }
