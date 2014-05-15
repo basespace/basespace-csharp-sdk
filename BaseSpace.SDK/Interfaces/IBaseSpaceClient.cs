@@ -82,6 +82,8 @@ namespace Illumina.BaseSpace.SDK
 
         void DownloadFile(FileCompact file, string filePath, CancellationToken token = new CancellationToken());
 
+        void DownloadFile(FileCompact file, string filePath, int maxThreadCount, CancellationToken token = new CancellationToken());
+
         void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken());
         
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
