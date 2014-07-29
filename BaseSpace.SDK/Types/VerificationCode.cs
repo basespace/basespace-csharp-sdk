@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-    internal class VerificationCode
+    public class VerificationCode
     {
         // TODO: convert these "access" options to an enum
         public const string AccessBrowseGlobal = "browse global";

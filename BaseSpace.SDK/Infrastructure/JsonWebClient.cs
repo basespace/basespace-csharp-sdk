@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Web.Util;
-using System.Linq;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.Deserialization;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
-using ServiceStack.Common.Extensions;
+using Illumina.TerminalVelocity;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.Text;
@@ -36,6 +34,13 @@ namespace Illumina.BaseSpace.SDK
 
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
+
+			//need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
+			if (Helpers.IsRunningOnMono())
+			{
+				HttpEncoder.Current = HttpEncoder.Default;
+			}
+
             HttpEncoder.Current.SerializeToString();
 
             client = new JsonServiceClient(settings.BaseSpaceApiUrl);
@@ -119,7 +124,10 @@ namespace Illumina.BaseSpace.SDK
 
         private void WebRequestFilter(HttpWebRequest req)
         {
-            settings.Authentication.UpdateHttpHeader(req);
+            if (settings.Authentication != null)
+            {
+                settings.Authentication.UpdateHttpHeader(req);
+            }
         }
     }
 }

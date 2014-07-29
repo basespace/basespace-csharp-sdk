@@ -1,4 +1,4 @@
-*	text=auto
+*	text
 
 *.doc  diff=astextplain
 *.DOC	diff=astextplain
@@ -14,15 +14,10 @@
 *.jpg  	binary
 *.png 	binary
 *.gif 	binary
+*.exe 	binary
+*.dll 	binary
 
-*.cs text eol=crlf diff=csharp 
-*.aspx text eol=crlf 
-*.asax text eol=crlf 
-*.config text=auto 
-*.html text eol=crlf
-*.htm text eol=crlf
-*.css text=auto
-*.js text=auto
+*.cs text diff=csharp 
 
 *.csproj text=auto merge=union 
 *.vbproj text=auto merge=union 

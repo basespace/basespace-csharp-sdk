@@ -11,7 +11,7 @@
 		public const string DEFAULT_VERSION = "v1pre3";
 
         public const uint DEFAULT_UPLOAD_MULTIPART_SIZE = 20 * 1024 * 1024; //in bytes
-        public const uint DEFAULT_DOWNLOAD_MULTIPART_SIZE = 1024 * 1024; //in bytes
+        public const uint DEFAULT_DOWNLOAD_MULTIPART_SIZE = 25 * 1024 * 1024; //in bytes
 
 		public const uint DEFAULT_MULTIPART_SIZE_THRESHOLD = 25*1024*1024; //in bytes
 

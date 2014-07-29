@@ -1,6 +1,6 @@
 ﻿using System;
 using ServiceStack.ServiceClient.Web;
-
+using ServiceStack.ServiceModel;
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
 	public abstract class AbstractRequest<TReturn>

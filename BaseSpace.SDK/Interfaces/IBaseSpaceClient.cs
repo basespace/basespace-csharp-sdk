@@ -81,6 +81,10 @@ namespace Illumina.BaseSpace.SDK
         void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
 
         void DownloadFile(FileCompact file, string filePath, CancellationToken token = new CancellationToken());
+
+        void DownloadFile(FileCompact file, string filePath, int maxThreadCount, CancellationToken token = new CancellationToken());
+
+        void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken());
         
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
@@ -117,5 +121,10 @@ namespace Illumina.BaseSpace.SDK
         /// </summary>
         /// <remarks>DELETE: {resource}/properties/{name}</remarks>
         DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null);
+
+        /// <summary>
+        /// Retrieve resources from the API based on a search query
+        /// </summary>
+        SearchResponse Search(SearchRequest request, IRequestOptions options = null);
     }
 }
