@@ -22,16 +22,28 @@ namespace Illumina.BaseSpace.SDK
         private bool _enableLogging = true;
         
 
-        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, proxy, enableLogging)
+        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true)
         {
+            DateTime expiration;
+            string url = GetFileContentUrl(client, file.Id, out expiration);
           
+#pragma warning disable 618
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, fileSize: file.Size, id: file.Id, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: false);
+#pragma warning restore 618
+            _parameters = parameters;
+            _token = token;
+            _proxy = proxy;
+            _enableLogging = enableLogging;
         }
 
         public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true)
         {
             DateTime expiration;
             string url = GetFileContentUrl(client,fileId, out expiration);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: 4, maxChunkSize: (int) settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false,verifyLength:true);
+            
+#pragma warning disable 618
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, fileSize:0, id: fileId, maxThreads: 4, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: true);
+#pragma warning restore 618
             _parameters = parameters;
             _token = token;
             _proxy = proxy;
@@ -41,11 +53,22 @@ namespace Illumina.BaseSpace.SDK
 
 
         public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName,
-                                   IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true)
+                                   IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true, int threadCount = DEFAULT_THREADS)
         {
             DateTime expiration;
             string url = GetFileContentUrl(client, file.Id, out expiration);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName,maxThreads: DEFAULT_THREADS, maxChunkSize: (int?) settings.FileDownloadMultipartSizeThreshold, id: file.Id);
+
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, fileSize: file.Size, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, id: file.Id);
+            _parameters = parameters;
+            _token = token;
+            _enableLogging = enableLogging;
+        }
+
+        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
+        {
+            DateTime expiration;
+            string url = GetFileContentUrl(client, file.Id, out expiration);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, fileSize: file.Size, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id);
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
@@ -76,19 +99,19 @@ namespace Illumina.BaseSpace.SDK
 		public void Execute()
 		{
            // This is where we are using the new downloader code 
-		    if (_enableLogging)
-		    {
-		        var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
+		        if (_enableLogging)
+		        {
+		            var task = _parameters.DownloadAsync(_token, this, s => logger.Debug(s));
 		        task.Wait();
-		    }
-		    else
-		    {
-		        var task = _parameters.DownloadAsync(_token, this);
+		        }
+		        else
+		        {
+		            var task = _parameters.DownloadAsync(_token, this);
 		        task.Wait();
-		    }
+		        }
 
 
-		}
+		    }
 
 
         /// <summary>
