@@ -95,6 +95,7 @@
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
+    <Compile Include="ServiceModels\Request\AbstractAppIdRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
     <Compile Include="ServiceModels\Request\ListPropertyItemsRequest.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="ServiceModels\Request\ListAppResultFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListFileSetFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListFilesRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListCurrentAppSessionsRequest.cs" />
     <Compile Include="ServiceModels\Request\ListRunFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleFilesRequest.cs" />
     <Compile Include="ServiceModels\Request\ListVariantsRequest.cs" />
@@ -141,6 +143,7 @@
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToFileSetRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListCurrentAppSessionsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListPropertyItemsResponse.cs" />
     <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />

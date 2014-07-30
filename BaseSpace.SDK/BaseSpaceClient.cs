@@ -77,6 +77,11 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
+		public ListCurrentAppSessionsResponse ListCurrentAppSessions(ListCurrentAppSessionsRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
+
 		public UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
@@ -274,7 +279,6 @@ namespace Illumina.BaseSpace.SDK
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
             command.Execute();
         }
-
 
         public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 

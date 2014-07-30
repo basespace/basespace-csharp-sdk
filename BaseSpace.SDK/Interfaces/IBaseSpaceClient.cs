@@ -24,7 +24,9 @@ namespace Illumina.BaseSpace.SDK
 
 		GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
 
-        CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
+	    ListCurrentAppSessionsResponse ListCurrentAppSessions(ListCurrentAppSessionsRequest request, IRequestOptions options = null);
+
+	    CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
 
 		GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
 
