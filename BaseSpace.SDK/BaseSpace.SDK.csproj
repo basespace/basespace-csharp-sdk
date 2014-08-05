@@ -98,6 +98,7 @@
     <Compile Include="ServiceModels\Request\AbstractAppIdRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppResultsByAppSessionRequest.cs" />
     <Compile Include="ServiceModels\Request\ListPropertyItemsRequest.cs" />
     <Compile Include="ServiceModels\Request\DeletePropertyRequest.cs" />
     <Compile Include="ServiceModels\Request\GetPropertyRequest.cs" />

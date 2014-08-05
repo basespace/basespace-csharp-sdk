@@ -56,6 +56,7 @@ namespace Illumina.BaseSpace.SDK
 
 		CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
 
+	    ListAppResultsResponse ListAppResultByAppSession(ListAppResultsByAppSessionRequest request, IRequestOptions options = null);
 		ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null);
 
 		ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null);

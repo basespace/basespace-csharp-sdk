@@ -121,6 +121,11 @@ namespace Illumina.BaseSpace.SDK
 		{
 			return WebClient.Send(request, options);
 		}
+
+		public ListAppResultsResponse ListAppResultByAppSession(ListAppResultsByAppSessionRequest request, IRequestOptions options = null)
+		{
+			return WebClient.Send(request, options);
+		}
 		#endregion
 
 		#region Genomes
