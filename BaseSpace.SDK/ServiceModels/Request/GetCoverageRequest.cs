@@ -10,7 +10,7 @@
         /// <param name="startPos">Chromosome start position</param>
         /// <param name="endPos">Chromosome end position</param>
         public GetCoverageRequest(string id, string chrom, string startPos, string endPos)
-			: base(id)
+            : base(id)
         {
             Chrom = chrom;
             StartPos = startPos;
@@ -23,9 +23,9 @@
 
         public string EndPos { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/coverag/{1}/{2}", Version, Id, Chrom);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/coverag/{1}/{2}", Version, Id, Chrom);
+        }
+    }
 }

@@ -7,7 +7,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
     public class ListRunsRequest : AbstractResourceListRequest<ListRunsResponse, RunSortByParameters>
     {
         [Description("The run statuses to filter by. Valid values include: New, Ready, Running, Paused, Stopped, Uploading, PendingAnalysis, Analyzing, Complete, Failed, NeedsAttention. Multiple values may be provided separated by commas.")]
-		public string Statuses { get; set; }
+        public string Statuses { get; set; }
 
         [Description("The instrument type to filter by")]
         public string InstrumentType { get; set; }
@@ -25,5 +25,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             return String.Format("{0}/users/current/runs", Version);
         }
-	}
+    }
 }

@@ -7,13 +7,13 @@
         /// </summary>
         /// <param name="id">Run Id</param>
         public GetRunRequest(string id)
-			: base(id)
+            : base(id)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/runs/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/runs/{1}", Version, Id);
+        }
+    }
 }

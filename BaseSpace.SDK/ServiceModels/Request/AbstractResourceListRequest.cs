@@ -4,14 +4,14 @@ using Illumina.BaseSpace.SDK.Types;
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public abstract class AbstractResourceListRequest<TResult, TSortFieldEnumType> : AbstractResourceRequest<TResult>
-		where TResult : class 
-		where TSortFieldEnumType : struct
+        where TResult : class
+        where TSortFieldEnumType : struct
     {
-		protected AbstractResourceListRequest()
-		{
-		}
-		
-        protected AbstractResourceListRequest(int? offset = null, int? limit = null, SortDirection? sortDir = null , TSortFieldEnumType? sortBy = null)
+        protected AbstractResourceListRequest()
+        {
+        }
+
+        protected AbstractResourceListRequest(int? offset = null, int? limit = null, SortDirection? sortDir = null, TSortFieldEnumType? sortBy = null)
         {
             Offset = offset;
             Limit = limit;
@@ -20,9 +20,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
 
         protected AbstractResourceListRequest(string id)
-			: base(id)
-		{
-		}
+            : base(id)
+        {
+        }
 
         [DataMember]
         public int? Offset { get; set; }

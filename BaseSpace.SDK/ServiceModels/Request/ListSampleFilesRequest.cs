@@ -14,9 +14,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
 
         protected override string GetUrl()
-		{
-			return String.Format("{0}/samples/{1}/files", Version, Id);
-		}
-	}
+        {
+            return String.Format("{0}/samples/{1}/files", Version, Id);
+        }
+    }
 }
 

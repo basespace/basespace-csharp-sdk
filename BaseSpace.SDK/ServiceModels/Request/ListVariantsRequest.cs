@@ -13,16 +13,16 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             Chrom = chrom;
         }
-        
+
         public string Chrom { get; set; }
 
         public string StartPos { get; set; }
 
         public string EndPos { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/variantset/{1}/variants/{2}", Version, Id, Chrom);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/variantset/{1}/variants/{2}", Version, Id, Chrom);
+        }
+    }
 }

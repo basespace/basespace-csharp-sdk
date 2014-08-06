@@ -9,13 +9,13 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// </summary>
         /// <param name="id">AppSession Id</param>
         public GetAppSessionRequest(string id)
-			: base(id)
+            : base(id)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return String.Format("{0}/appsessions/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return String.Format("{0}/appsessions/{1}", Version, Id);
+        }
+    }
 }

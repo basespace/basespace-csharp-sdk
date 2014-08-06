@@ -13,7 +13,7 @@
         public const string APPSESSION = "appsession";
         public const string MAP = "map";
         public const string LIST_SUFFIX = "[]";
-    } 
+    }
 
     public static class SearchScopes
     {

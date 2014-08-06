@@ -6,6 +6,6 @@
             : base(resourceId, filePath, directory, "appresults")
         {
         }
-	}
+    }
 }
 

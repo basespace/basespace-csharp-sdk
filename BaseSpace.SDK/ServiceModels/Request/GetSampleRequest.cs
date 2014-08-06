@@ -7,14 +7,14 @@
         /// </summary>
         /// <param name="id">Sample Id</param>
        public GetSampleRequest(string id)
-		   : base(id)
+           : base(id)
        {
             Id = id;
        }
 
-	   protected override string GetUrl()
-	   {
-		   return string.Format("{0}/samples/{1}", Version, Id);
-	   }
-	}
+       protected override string GetUrl()
+       {
+           return string.Format("{0}/samples/{1}", Version, Id);
+       }
+    }
 }

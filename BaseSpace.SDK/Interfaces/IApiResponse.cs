@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK
 {
-    
+
     public interface IApiResponse<TResponse> : IHasNotifications
     {
         TResponse Response { get; }
@@ -18,5 +18,5 @@ namespace Illumina.BaseSpace.SDK
     {
         IList<INotification<object>> Notifications { get; set; }
     }
-    
+
 }

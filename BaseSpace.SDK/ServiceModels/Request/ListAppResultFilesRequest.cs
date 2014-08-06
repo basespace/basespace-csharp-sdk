@@ -9,14 +9,15 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List files belonging to an AppResult
         /// </summary>
         /// <param name="appResultId">AppResult Id</param>
-        public ListAppResultFilesRequest(string appResultId) : base(appResultId)
+        public ListAppResultFilesRequest(string appResultId)
+            : base(appResultId)
         {
         }
 
         protected override string GetUrl()
-		{
-			return String.Format("{0}/appresults/{1}/files", Version, Id);
-		}
-	}
+        {
+            return String.Format("{0}/appresults/{1}/files", Version, Id);
+        }
+    }
 }
 

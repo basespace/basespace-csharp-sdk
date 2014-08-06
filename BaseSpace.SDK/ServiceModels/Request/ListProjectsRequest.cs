@@ -7,9 +7,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
     {
         public string Name { get; set; }
 
-		protected override string GetUrl()
-		{
-			return String.Format("{0}/users/current/projects", Version);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return String.Format("{0}/users/current/projects", Version);
+        }
+    }
 }

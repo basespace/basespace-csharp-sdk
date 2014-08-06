@@ -12,29 +12,29 @@ namespace Illumina.BaseSpace.SDK
 
         GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null);
 
-		GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
+        GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
 
         ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null);
 
-		GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null);
+        GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null);
 
-		ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null);
+        ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null);
 
-		CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null);
+        CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null);
 
-		GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
+        GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
 
-	    ListCurrentAppSessionsResponse ListCurrentAppSessions(ListCurrentAppSessionsRequest request, IRequestOptions options = null);
+        ListCurrentAppSessionsResponse ListCurrentAppSessions(ListCurrentAppSessionsRequest request, IRequestOptions options = null);
 
-	    CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
+        CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
 
-		GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
+        GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
 
         ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null);
 
         ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null);
 
-		GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
+        GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
 
         ListGenomeResponse ListGenomes(ListGenomeRequest request, IRequestOptions options = null);
 
@@ -48,36 +48,37 @@ namespace Illumina.BaseSpace.SDK
 
         UploadFileToFileSetResponse UploadFileToFileSet(UploadFileToFileSetRequest request, IRequestOptions options = null);
 
-		UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
+        UpdateAppSessionResponse UpdateAppSession(UpdateAppSessionRequest request, IRequestOptions options = null);
 
-		GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null);
+        GetGenomeResponse GetGenome(GetGenomeRequest request, IRequestOptions options = null);
 
         ListRunFilesResponse ListRunFiles(ListRunFilesRequest request, IRequestOptions options = null);
 
-		CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
+        CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null);
 
-	    ListAppResultsResponse ListAppResultByAppSession(ListAppResultsByAppSessionRequest request, IRequestOptions options = null);
-		ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null);
+        ListAppResultsResponse ListAppResultByAppSession(ListAppResultsByAppSessionRequest request, IRequestOptions options = null);
 
-		ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null);
+        ListSampleFilesResponse ListSampleFiles(ListSampleFilesRequest request, IRequestOptions options = null);
 
-		GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null);
+        ListAppResultFilesResponse ListAppResultFiles(ListAppResultFilesRequest request, IRequestOptions options = null);
 
-		GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null);
+        GetFileInformationResponse GetFilesInformation(GetFileInformationRequest request, IRequestOptions options = null);
 
-		ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null);
+        GetVariantHeaderResponse GetVariantHeader(GetVariantHeaderRequest request, IRequestOptions options = null);
 
-		GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null);
+        ListVariantsResponse ListVariants(ListVariantsRequest request, IRequestOptions options = null);
 
-		GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null);
+        GetCoverageResponse GetCoverage(GetCoverageRequest request, IRequestOptions options = null);
 
-		OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null);
+        GetCoverageMetadataResponse GetCoverageMetadata(GetCoverageMetadataRequest request, IRequestOptions options = null);
 
-		OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
+        OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null);
 
-		OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
+        OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth(OAuthDeviceAccessTokenRequest request, IRequestOptions options = null);
 
-		UploadFileToAppResultResponse UploadFileToAppResult(UploadFileToAppResultRequest request, IRequestOptions options = null);
+        OAuthV2AccessTokenResponse GetOAuthAccessToken(OAuthV2AccessTokenRequest request, IRequestOptions options = null);
+
+        UploadFileToAppResultResponse UploadFileToAppResult(UploadFileToAppResultRequest request, IRequestOptions options = null);
 
         void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken());
 
@@ -88,7 +89,7 @@ namespace Illumina.BaseSpace.SDK
         void DownloadFile(FileCompact file, string filePath, int maxThreadCount, CancellationToken token = new CancellationToken());
 
         void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken());
-        
+
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
         GetApiMetaResponse GetApiMeta(GetApiMetaRequest request, IRequestOptions options = null);
