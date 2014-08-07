@@ -72,6 +72,12 @@ namespace Illumina.BaseSpace.SDK
 		#endregion
 
 		#region AppSessions
+
+        public ListAppSessionsResponse ListAppSessions(ListAppSessionsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
@@ -112,7 +118,13 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
+        public ListAppResultsResponse ListAppResultsFromAppSession(ListAppResultsFromAppSessionRequest request,
+            IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
 		}
