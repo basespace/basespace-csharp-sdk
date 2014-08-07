@@ -10,12 +10,12 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             HttpMethod = HttpMethods.POST;
         }
 
-	    public FileUploadStatus? UploadStatus { get; set; }
+        public FileUploadStatus? UploadStatus { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/files/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/files/{1}", Version, Id);
+        }
+    }
 }
 

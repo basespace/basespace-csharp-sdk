@@ -10,7 +10,7 @@ namespace Illumina.BaseSpace.SDK
     public class BaseSpaceException: Exception
     {
         public HttpStatusCode StatusCode { get; set; }
-       
+
         public string Response { get; private set; }
 
         public BaseSpaceException()
@@ -23,11 +23,11 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-		internal BaseSpaceException(HttpStatusCode status, string message, Exception innerException)
-			: base(message, innerException)
-		{
-			StatusCode = status;
-		}
+        internal BaseSpaceException(HttpStatusCode status, string message, Exception innerException)
+            : base(message, innerException)
+        {
+            StatusCode = status;
+        }
 
         internal BaseSpaceException(HttpStatusCode status, string message)
             : base(message)

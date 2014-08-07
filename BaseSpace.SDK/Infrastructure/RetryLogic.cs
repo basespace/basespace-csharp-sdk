@@ -46,7 +46,7 @@ namespace Illumina.BaseSpace.SDK
                                        double retryIntervalBaseSecs = 5, Action error = null,
                                         Func<Exception, bool> retryHandler = null)
         {
-          
+
             retryIntervalBaseSecs = Math.Max(1, retryIntervalBaseSecs);
             var triesLeft = maxAttempts;
             int whichAttempt = 0;
@@ -63,7 +63,7 @@ namespace Illumina.BaseSpace.SDK
 
                 try
                 {
-                   
+
                     logger.InfoFormat("operation starting: {0} attempt {1}", description, whichAttempt);
                     op();
                     timer.Stop();

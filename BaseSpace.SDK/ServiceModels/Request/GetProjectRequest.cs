@@ -7,13 +7,13 @@
         /// </summary>
         /// <param name="id">Project Id</param>
         public GetProjectRequest(string id)
-			: base(id)
+            : base(id)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/projects/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/projects/{1}", Version, Id);
+        }
+    }
 }

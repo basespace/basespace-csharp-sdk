@@ -53,7 +53,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                             .ToArray();
                     break;
             }
-            return ret; 
+            return ret;
         }
 
         public static PropertyCompact JsonToPropertyCompact(string jsonString)

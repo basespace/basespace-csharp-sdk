@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 {
-	[TestFixture]
+    [TestFixture]
     public class AppSessionTests: BaseIntegrationTest
     {
         [Test]

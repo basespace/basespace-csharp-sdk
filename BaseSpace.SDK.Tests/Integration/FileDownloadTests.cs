@@ -49,12 +49,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var response = Client.UploadFileToAppResult(new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
             Assert.NotNull(response);
             Assert.True(response.Response.UploadStatus == FileUploadStatus.complete);
-            
+
             string fileName = "DownloadedFile-" + StringHelpers.RandomAlphanumericString(5);
             using (var fs = new FileStream(fileName, FileMode.OpenOrCreate))
             {
                 Client.DownloadFile(response.Response.Id, fs);
-           
+
                 Assert.Equal(fs.Length, data.Length);
                 byte[] actual = new byte[data.Length];
                 fs.Position = 0;

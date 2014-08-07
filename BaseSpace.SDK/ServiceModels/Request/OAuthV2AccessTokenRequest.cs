@@ -12,7 +12,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             ClientSecret = clientSecret;
             RedirectUri = redirectUri;
             AuthorizationCode = authorizationCode;
-			HttpMethod = HttpMethods.POST;
+            HttpMethod = HttpMethods.POST;
         }
 
         [DataMember(Name= "grant_type")]
@@ -30,9 +30,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         [DataMember(Name = "client_secret")]
         public string ClientSecret { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/oauthv2/token", Version);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/oauthv2/token", Version);
+        }
+    }
 }

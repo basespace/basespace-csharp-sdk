@@ -24,7 +24,7 @@ namespace Illumina.BaseSpace.SDK
                 case HttpMethods.POST:
                     client.PostAsync(relativeOrAbsoluteUrl, request, onSuccess, onError);
                     break;
-              
+
                 default:
                     throw new ArgumentOutOfRangeException("HttpMethod not in use");
             }

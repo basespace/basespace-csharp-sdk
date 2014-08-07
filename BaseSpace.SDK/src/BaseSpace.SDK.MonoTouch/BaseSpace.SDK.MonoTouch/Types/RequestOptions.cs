@@ -18,7 +18,7 @@ namespace Illumina.BaseSpace.SDK.Types
             AuthCode = authCode;
             RetryAttempts = retryAttempts;
         }
-       
+
         public uint RetryAttempts { get;  set; }
 
         public string AuthCode { get;  set; }

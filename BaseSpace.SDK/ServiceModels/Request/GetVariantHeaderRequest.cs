@@ -7,14 +7,14 @@
         /// </summary>
         /// <param name="id">Variant Id</param>
         public GetVariantHeaderRequest(string id)
-			: base(id)
+            : base(id)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/variantset/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/variantset/{1}", Version, Id);
+        }
+    }
 }
 

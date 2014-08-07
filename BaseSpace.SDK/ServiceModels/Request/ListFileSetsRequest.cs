@@ -11,14 +11,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             _href = obj.HrefFileSets;
         }
-        
+
         Uri _href;
 
         protected override string GetUrl()
         {
             return _href.ToString();
         }
-        
+
     }
 
     public class ListGenomeAnnotationFileSetsRequest : AbstractResourceListRequest<ListGenomeAnnotationFileSetsResponse, FileSetSortFields>
@@ -27,13 +27,13 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             _href = obj.HrefFileSets;
         }
-        
+
         Uri _href;
 
         protected override string GetUrl()
         {
             return _href.ToString();
         }
-    
+
     }
 }

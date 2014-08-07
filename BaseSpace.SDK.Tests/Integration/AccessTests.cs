@@ -31,15 +31,15 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
 
-	        var authentication = new OAuth2Authentication(apiKey, apiSecret);
+            var authentication = new OAuth2Authentication(apiKey, apiSecret);
 
             var settings = new BaseSpaceClientSettings
-	                           {
-		                           Authentication = authentication,
-								   BaseSpaceApiUrl = apiUrl, 
-								   BaseSpaceWebsiteUrl = webUrl, 
-								   Version = version
-	                           };
+                               {
+                                   Authentication = authentication,
+                                   BaseSpaceApiUrl = apiUrl,
+                                   BaseSpaceWebsiteUrl = webUrl,
+                                   Version = version
+                               };
 
             // first retrieve the verification code
             var verificationCode = FetchVerificationCode(settings);
@@ -50,7 +50,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             // poll for the access token
             AccessToken accessToken = FetchAccessToken(verificationCode, settings);
 
-			// TODO Removed OAuth v2
+            // TODO Removed OAuth v2
             var client = new BaseSpaceClient(settings, new RequestOptions());
 
             // build and return the client

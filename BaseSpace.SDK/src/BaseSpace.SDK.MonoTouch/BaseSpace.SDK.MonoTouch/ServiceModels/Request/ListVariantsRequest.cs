@@ -14,7 +14,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             Id = id;
             Chrom = chrom;
         }
-        
+
         public string Chrom { get; set; }
         public string StartPos { get; set; }
         public string EndPos { get; set; }

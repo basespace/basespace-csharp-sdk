@@ -15,7 +15,7 @@ namespace Illumina.BaseSpace.SDK
     public class BaseSpaceClient : IBaseSpaceClient
     {
         private static readonly IClientSettings defaultSettings = new BaseSpaceClientSettings();
-		private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         public BaseSpaceClient(string authCode)
             : this(new RequestOptions(){AuthCode = authCode, RetryAttempts = defaultSettings.RetryAttempts, BaseUrl = defaultSettings.BaseSpaceApiUrl})
@@ -30,7 +30,7 @@ namespace Illumina.BaseSpace.SDK
         public BaseSpaceClient(IRequestOptions options)
             : this(defaultSettings, new JsonWebClient(defaultSettings, options), options)
         {
-            
+
         }
 
         public BaseSpaceClient(IClientSettings settings, IWebClient client, IRequestOptions defaultOptions = null)
@@ -50,7 +50,7 @@ namespace Illumina.BaseSpace.SDK
 
         public void SetDefaultRequestOptions(IRequestOptions options)
         {
-            
+
             WebClient.SetDefaultRequestOptions(options);
         }
 
@@ -167,7 +167,7 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send<ListSamplesResponse>(HttpMethods.GET, request.BuildUrl(ClientSettings.Version), null, options);
         }
         #endregion
-        
+
 
         #region AppResults
         public Task<GetAppResultResponse> GetAppResultAsync(GetAppResultRequest request, IRequestOptions options = null)
@@ -303,28 +303,28 @@ namespace Illumina.BaseSpace.SDK
         }
         #endregion
 
-		#region OAuth
-		public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
-		{
-			return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
-		}
+        #region OAuth
+        public OAuthDeviceAuthResponse BeginOAuthDeviceAuth(OAuthDeviceAuthRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send<OAuthDeviceAuthResponse>(HttpMethods.POST, request.BuildUrl(ClientSettings.Version), request, options);
+        }
 
-		public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth (OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
-		{
-			try 
-			{
-				return WebClient.Send<OAuthDeviceAccessTokenResponse> (HttpMethods.POST, request.BuildUrl (ClientSettings.Version), request, options);
-			} 
-			catch (BaseSpaceException bex)
-			{
-				if(bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
-				{
-					var wsex = (WebServiceException)bex.InnerException;
-					return wsex.ResponseBody.FromJson<OAuthDeviceAccessTokenResponse>();
-				}
-			}
-			return null;
-		}
-		#endregion
+        public OAuthDeviceAccessTokenResponse FinishOAuthDeviceAuth (OAuthDeviceAccessTokenRequest request, IRequestOptions options = null)
+        {
+            try
+            {
+                return WebClient.Send<OAuthDeviceAccessTokenResponse> (HttpMethods.POST, request.BuildUrl (ClientSettings.Version), request, options);
+            }
+            catch (BaseSpaceException bex)
+            {
+                if(bex.InnerException != null && bex.InnerException.GetType() == typeof(WebServiceException))
+                {
+                    var wsex = (WebServiceException)bex.InnerException;
+                    return wsex.ResponseBody.FromJson<OAuthDeviceAccessTokenResponse>();
+                }
+            }
+            return null;
+        }
+        #endregion
     }
 }

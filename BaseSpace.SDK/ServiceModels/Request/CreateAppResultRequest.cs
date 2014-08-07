@@ -14,7 +14,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             ProjectId = projectId;
             Name = name;
-			HttpMethod = HttpMethods.POST;
+            HttpMethod = HttpMethods.POST;
         }
 
         [DataMember]
@@ -38,9 +38,9 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         [DataMember]
         public IContentReference<IAbstractResource>[] References { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/projects/{1}/appresults", Version, ProjectId);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/projects/{1}/appresults", Version, ProjectId);
+        }
+    }
 }

@@ -30,6 +30,6 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
                 return null;
             }
             return string.Format("{0}/{1}/{2}/{3}", HrefParentResource.ToString(), "properties", PropertyName, "items");
-        }  
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CanGetUserProjectsFirstPage()
         {
            ListProjectsResponse response = Client.ListProjects(new ListProjectsRequest());
-            
+
            Assert.NotNull(response);
            Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
             ProjectCompact projectResult = response.Response.Items[0];
@@ -137,7 +137,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             catch (BaseSpace.SDK.BaseSpaceException baseSpaceException)
             {
                 Assert.True(baseSpaceException.InnerException.Message == "Internal Server Error" ||
-                    baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound || 
+                    baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound ||
                             baseSpaceException.StatusCode == System.Net.HttpStatusCode.BadRequest);
             }
             catch (Exception)

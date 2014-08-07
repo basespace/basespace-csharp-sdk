@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 {
-	[TestFixture]
+    [TestFixture]
     public class GenomesTests : BaseIntegrationTest
     {
         [Test]

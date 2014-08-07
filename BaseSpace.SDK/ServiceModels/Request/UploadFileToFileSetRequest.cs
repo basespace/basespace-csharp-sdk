@@ -13,5 +13,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             return _uri;
         }
-	}
+    }
 }

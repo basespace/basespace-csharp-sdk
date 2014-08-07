@@ -7,13 +7,13 @@
         /// </summary>
         /// <param name="id">AppResult Id</param>
         public GetAppResultRequest(string id)
-			: base(id)
+            : base(id)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/appresults/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/appresults/{1}", Version, Id);
+        }
+    }
 }

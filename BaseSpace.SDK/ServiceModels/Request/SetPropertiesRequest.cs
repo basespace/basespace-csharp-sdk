@@ -134,10 +134,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
 
         /// <summary>
-        /// Sets the property content to an array of resource references (such as a list of Samples, Projects, etc). 
+        /// Sets the property content to an array of resource references (such as a list of Samples, Projects, etc).
         /// </summary>
         /// <remarks>
-        /// Note that all items must be of the same type. 
+        /// Note that all items must be of the same type.
         /// The first item is used to determine the property type.
         /// </remarks>
         public void SetContentReferencesArray(IPropertyContent[] referencedResourcesContent)
@@ -154,10 +154,10 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         }
 
         /// <summary>
-        /// Sets the property content to an array of resource references (such as a list of Samples, Projects, etc) given API URIs to the resources. 
+        /// Sets the property content to an array of resource references (such as a list of Samples, Projects, etc) given API URIs to the resources.
         /// </summary>
         /// <remarks>
-        /// Note that all items must be of the same type. 
+        /// Note that all items must be of the same type.
         /// The first item is used to determine the property type.
         /// </remarks>
         /// <example>

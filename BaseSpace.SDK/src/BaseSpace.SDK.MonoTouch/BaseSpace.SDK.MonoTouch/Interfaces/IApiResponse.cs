@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK
 {
-    
+
     public interface IApiResponse<TResult> : IHasNotifications
     {
         TResult Response { get; }
@@ -21,5 +21,5 @@ namespace Illumina.BaseSpace.SDK
     {
         IList<INotification<object>> Notifications { get; set; }
     }
-    
+
 }

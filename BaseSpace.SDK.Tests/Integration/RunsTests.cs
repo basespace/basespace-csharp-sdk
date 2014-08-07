@@ -49,9 +49,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 Assert.NotNull(run.Status);
                 Assert.NotNull(run.UserOwnedBy);
             }
-            
+
         }
-        
+
 
     }
 }

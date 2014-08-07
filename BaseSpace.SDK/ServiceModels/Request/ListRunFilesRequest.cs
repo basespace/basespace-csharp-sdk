@@ -10,14 +10,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// </summary>
         /// <param name="runId">Run Id</param>
         public ListRunFilesRequest(string runId)
-			: base(runId)
+            : base(runId)
         {
-		}
+        }
 
         protected override string GetUrl()
-	    {
-		    return String.Format("{0}/runs/{1}/files", Version, Id);
-	    }
-	}
+        {
+            return String.Format("{0}/runs/{1}/files", Version, Id);
+        }
+    }
 }
 

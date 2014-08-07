@@ -19,7 +19,7 @@ namespace Illumina.BaseSpace.SDK.Tests
             Assert.True(result.Type == @"AppResult");
             Assert.True(result.Content.Id == "291294");
             Assert.True(result.Content.Href.ToString() == @"v1pre3/appresults/291294");
-           
+
             Assert.True(result.Content.Name == "BWA GATK - HiSeq 2500 NA12878 demo 2x150");
             Assert.True(result.Content.Status == "Complete");
             Assert.True(result.Content.DateCreated == new DateTime(2012,11, 15, 19,24,21, DateTimeKind.Utc) );

@@ -7,6 +7,6 @@ namespace Illumina.BaseSpace.SDK.Models
 {
     public class GetUserResponse : ApiResponse<User>
     {
-        
+
     }
 }

@@ -35,5 +35,5 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public string OriginalPath { get; set; }
     }
-    
+
 }

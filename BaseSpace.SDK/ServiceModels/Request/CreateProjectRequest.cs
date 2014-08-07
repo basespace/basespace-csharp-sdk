@@ -5,14 +5,14 @@
         public CreateProjectRequest(string name)
         {
             Name = name;
-			HttpMethod = HttpMethods.POST;
+            HttpMethod = HttpMethods.POST;
         }
 
         public string Name { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/projects", Version);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/projects", Version);
+        }
+    }
 }

@@ -4,7 +4,7 @@ using Illumina.BaseSpace.SDK.Types;
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public class ListPropertyItemsResponse : ApiResponse<PropertyItemsResourceList>
-    {  
+    {
     }
 
     [DataContract]
@@ -12,5 +12,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
     {
         [DataMember]
         public string Type { get; set; }
-    } 
+    }
 }

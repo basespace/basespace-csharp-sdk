@@ -19,7 +19,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         {
             get;
             set;
-        }        
+        }
 
         public string Query { get; set; }
 

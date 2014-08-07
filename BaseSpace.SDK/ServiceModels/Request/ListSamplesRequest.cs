@@ -9,14 +9,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List samples within a project
         /// </summary>
         /// <param name="projectId">Project Id</param>
-        public ListSamplesRequest(string projectId) 
-			: base(projectId)
+        public ListSamplesRequest(string projectId)
+            : base(projectId)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return String.Format("{0}/projects/{1}/samples", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return String.Format("{0}/projects/{1}/samples", Version, Id);
+        }
+    }
 }

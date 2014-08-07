@@ -49,7 +49,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string ALT { get; set; }
 
         [DataMember]
-        public double QUAL { get; set; } 
+        public double QUAL { get; set; }
 
         [DataMember]
         public string FILTER { get; set; }

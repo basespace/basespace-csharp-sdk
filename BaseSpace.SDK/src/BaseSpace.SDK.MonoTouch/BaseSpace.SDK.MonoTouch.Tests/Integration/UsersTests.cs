@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 {
-	[TestFixture]
+    [TestFixture]
     public class UsersTests : BaseIntegrationTest
     {
         [Test]
@@ -67,7 +67,7 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
             asynchTimer.Stop();
 
             Assert.True(synchTimer.ElapsedMilliseconds > asynchTimer.ElapsedMilliseconds);
-           
+
         }
     }
 }

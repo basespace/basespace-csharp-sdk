@@ -9,14 +9,14 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List AppResults within a project
         /// </summary>
         /// <param name="projectId">Project Id</param>
-        public ListAppResultsRequest(string projectId) 
-			: base(projectId)
+        public ListAppResultsRequest(string projectId)
+            : base(projectId)
         {
         }
 
-		protected override string GetUrl()
-		{
-			return String.Format("{0}/projects/{1}/appresults", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return String.Format("{0}/projects/{1}/appresults", Version, Id);
+        }
+    }
 }
