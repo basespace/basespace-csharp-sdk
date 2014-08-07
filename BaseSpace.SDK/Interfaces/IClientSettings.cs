@@ -8,9 +8,12 @@
 
         string BaseSpaceApiUrl { get; }
 
-        string Version { get; }
+        string BaseSpaceBillingApiUrl { get; set; }
+
+		string Version { get; }
 
         uint FileUploadMultipartChunkSize { get; }
+		
         uint FileUploadMultipartSizeThreshold { get; }
 
         uint FileDownloadMultipartSizeThreshold { get; }

@@ -3,30 +3,34 @@ using ServiceStack.ServiceClient.Web;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public abstract class AbstractRequest<TReturn>
-        where TReturn : class
-    {
-        protected AbstractRequest()
-        {
-            HttpMethod = HttpMethods.GET;
-        }
 
-        protected HttpMethods HttpMethod { get; set; }
+	public abstract class AbstractRequest<TReturn>
+		where TReturn : class
+	{
+		protected AbstractRequest()
+		{
+			HttpMethod = HttpMethods.GET;
+			ApiName = ApiNames.BASESPACE;
+		}
 
-        protected string Version
-        {
-            get { return "v1pre3"; }
-        }
+		protected HttpMethods HttpMethod { get; set; }
 
-        internal virtual Func<TReturn> GetSendFunc(ServiceClientBase client)
-        {
-            return () => client.Send<TReturn>(HttpMethod.ToString(), GetUrl(), this);
-        }
+		protected string Version
+		{
+			get { return "v1pre3"; }
+		}
 
-        internal string GetName()
-        {
-            return String.Format("{0}:{1}", HttpMethod, GetUrl());
-        }
+		protected ApiNames ApiName { get; set; }
+
+		internal virtual Func<TReturn> GetSendFunc(ServiceClientBase client)
+		{
+			return () => client.Send<TReturn>(HttpMethod.ToString(), GetUrl(), this);
+		}
+
+		internal string GetName()
+		{
+			return String.Format("{0}:{1}", HttpMethod, GetUrl());
+		}
 
         internal virtual string GetInfoLogMessage()
         {
@@ -40,6 +44,11 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
             return GetName();
         }
 
-        protected abstract string GetUrl();
-    }
+		protected abstract string GetUrl();
+
+	    internal ApiNames GetApiName()
+	    {
+	        return ApiName;
+	    }
+	}
 }

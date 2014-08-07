@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Util;
 using Common.Logging;
@@ -15,6 +16,7 @@ namespace Illumina.BaseSpace.SDK
     public class JsonWebClient : IWebClient
     {
         private readonly JsonServiceClient client;
+        private readonly JsonServiceClient clientBilling;
 
         private readonly ILog logger;
 
@@ -48,6 +50,9 @@ namespace Illumina.BaseSpace.SDK
 
             if (settings.TimeoutMin > 0)
                 client.Timeout = TimeSpan.FromMinutes(settings.TimeoutMin);
+
+            clientBilling = new JsonServiceClient(settings.BaseSpaceBillingApiUrl);
+            clientBilling.LocalHttpWebRequestFilter += WebRequestFilter;
         }
 
         static JsonWebClient()
@@ -103,7 +108,10 @@ namespace Illumina.BaseSpace.SDK
                 TReturn result = null;
                 options = options ?? DefaultRequestOptions;
 
-                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
+                var clientForRequest = PickClientForApiName(request.GetApiName());
+
+                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(),
+                    () => result = request.GetSendFunc(clientForRequest)(), logger);
                 return result;
             }
             catch (WebServiceException webx)
@@ -113,12 +121,26 @@ namespace Illumina.BaseSpace.SDK
                 {
                     errorCode = string.Format(" ({0})", webx.ErrorCode);
                 }
-                var msg = string.Format("{0} status: {1} ({2}) Message: {3}{4}", request.GetName(), webx.StatusCode, webx.StatusDescription, webx.ErrorMessage, errorCode);
+                var msg = string.Format("{0} status: {1} ({2}) Message: {3}{4}", request.GetName(), webx.StatusCode,
+                    webx.StatusDescription, webx.ErrorMessage, errorCode);
                 throw new BaseSpaceException(msg, webx.ErrorCode, webx);
             }
             catch (Exception x)
             {
                 throw new BaseSpaceException(request.GetName() + " failed", string.Empty, x);
+            }
+        }
+
+        private JsonServiceClient PickClientForApiName(ApiNames apiName)
+        {
+            switch (apiName)
+            {
+                case ApiNames.BASESPACE:
+                    return client;
+                case ApiNames.BASESPACE_BILLING:
+                    return clientBilling;
+                default:
+                    throw new ArgumentOutOfRangeException("apiName");
             }
         }
 

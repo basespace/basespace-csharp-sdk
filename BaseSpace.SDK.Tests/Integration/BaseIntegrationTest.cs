@@ -48,6 +48,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             //string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
             //string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
             string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
+            string apiBillingUrl = ConfigurationManager.AppSettings.Get("basespace:api-billing-url");
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
             
@@ -55,6 +56,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 				{
 					Authentication = GetAuthentication(),
 					BaseSpaceApiUrl = apiUrl, 
+                    BaseSpaceBillingApiUrl = apiBillingUrl,
 					BaseSpaceWebsiteUrl = webUrl, 
 					Version = version
 				};
@@ -66,12 +68,14 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         {
             string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
+            string apiBillingUrl = ConfigurationManager.AppSettings.Get("basespace:api-billing-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
 
             return new BaseSpaceClientSettings
             {
                 Authentication = GetAuthentication(),
                 BaseSpaceApiUrl = apiUrl,
+                BaseSpaceBillingApiUrl = apiBillingUrl,
                 BaseSpaceWebsiteUrl = webUrl,
                 Version = version
             };
