@@ -51,17 +51,17 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             string apiBillingUrl = ConfigurationManager.AppSettings.Get("basespace:api-billing-url");
             string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
             string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
-            
-            var settings = new BaseSpaceClientSettings
-				{
-					Authentication = GetAuthentication(),
-					BaseSpaceApiUrl = apiUrl, 
-                    BaseSpaceBillingApiUrl = apiBillingUrl,
-					BaseSpaceWebsiteUrl = webUrl, 
-					Version = version
-				};
 
-			return new BaseSpaceClient(settings);
+            var settings = new BaseSpaceClientSettings
+                {
+                    Authentication = GetAuthentication(),
+                    BaseSpaceApiUrl = apiUrl,
+                    BaseSpaceBillingApiUrl = apiBillingUrl,
+                    BaseSpaceWebsiteUrl = webUrl,
+                    Version = version
+                };
+
+            return new BaseSpaceClient(settings);
         }
 
         protected virtual IClientSettings BuildSettings()

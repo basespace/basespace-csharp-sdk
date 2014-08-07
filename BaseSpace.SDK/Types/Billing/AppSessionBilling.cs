@@ -7,7 +7,7 @@ using System.Text;
 namespace Illumina.BaseSpace.SDK.Types
 {
     /// <summary>
-    /// Lightweight representation of the AppSession providing the most basic details. An AppSession may optionally be included when a purchase is created. 
+    /// Lightweight representation of the AppSession providing the most basic details. An AppSession may optionally be included when a purchase is created.
     /// </summary>
     [DataContract]
     public class AppSessionBilling

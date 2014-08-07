@@ -5,7 +5,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
     public class CreatePurchaseRequest : AbstractRequest<CreatePurchaseResponse>
     {
         /// <summary>
-        /// Create a new purchase 
+        /// Create a new purchase
         /// </summary>
         /// <param name="products">List of purchased products each with an Id, quantity, tags</param>
         /// <param name="appSessionId">AppSession Id is known when an application is first started. You may optionally connect the purchase to this AppSession by providing the Id here</param>
@@ -22,17 +22,17 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
         /// List of purchased products each with an Id, quantity, tags
         /// </summary>
         public CreatePurchaseRequestProduct[] Products { get; set; }
-        
+
         /// <summary>
         /// AppSession Id is known when an application is first started. You may optionally connect the purchase to this AppSession by providing the Id here
         /// </summary>
         public string AppSessionId { get; set; }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/purchases", Version);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/purchases", Version);
+        }
+    }
 
     public class CreatePurchaseRequestProduct
     {

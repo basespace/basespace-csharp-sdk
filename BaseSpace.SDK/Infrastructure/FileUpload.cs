@@ -18,7 +18,7 @@ namespace Illumina.BaseSpace.SDK
         protected IClientSettings ClientSettings { get; set; }
         protected IRequestOptions Options { get; set; }
         protected ILog Logger = LogManager.GetCurrentClassLogger();
-        
+
         public FileUpload(IWebClient webClient, IClientSettings settings, IRequestOptions options)
         {
             WebClient = webClient;
@@ -26,20 +26,20 @@ namespace Illumina.BaseSpace.SDK
             Options = options;
         }
 
-		public virtual TResult UploadFile<TResult>(FileUploadRequestBase<TResult> request)
-			where TResult : FileResponse
-		{
-			Logger.DebugFormat("numthreads {0}", request.ThreadCount);
-			TResult file = null;
+        public virtual TResult UploadFile<TResult>(FileUploadRequestBase<TResult> request)
+            where TResult : FileResponse
+        {
+            Logger.DebugFormat("numthreads {0}", request.ThreadCount);
+            TResult file = null;
 
             RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, string.Format("Uploading file {0}", request.FileInfo.Name),
                                    () =>
-	                               {
+                                   {
                                        request.MultiPart = request.FileInfo.Length >= ClientSettings.FileUploadMultipartSizeThreshold;
 
                                        file = request.MultiPart.Value ?
                                            UploadFile_MultiPart(request) :
-										   WebClient.Send(request);
+                                           WebClient.Send(request);
                                    }, Logger, retryHandler:
                                    (exc) =>
                                    {
@@ -59,14 +59,14 @@ namespace Illumina.BaseSpace.SDK
             return file;
         }
 
-		protected virtual TResult UploadFile_MultiPart<TResult>(FileUploadRequestBase<TResult> request)
-			where TResult : FileResponse
+        protected virtual TResult UploadFile_MultiPart<TResult>(FileUploadRequestBase<TResult> request)
+            where TResult : FileResponse
         {
             Logger.InfoFormat("File Upload: {0}: Initiating multipart upload", request.FileInfo.Name);
 
-			var fileUploadresp = WebClient.Send(request);
+            var fileUploadresp = WebClient.Send(request);
 
-			var server = ClientSettings.BaseSpaceApiUrl.TrimEnd('/');
+            var server = ClientSettings.BaseSpaceApiUrl.TrimEnd('/');
 
             uint chunkSize = ClientSettings.FileUploadMultipartChunkSize;
 
@@ -125,7 +125,7 @@ namespace Illumina.BaseSpace.SDK
                          }));
 
             bool success = errorSignal.WaitOne(0) == false;
-           
+
             var status = success ? FileUploadStatus.complete : FileUploadStatus.aborted;
 
             var statusReq = new FileRequestPost<TResult>
@@ -143,7 +143,7 @@ namespace Illumina.BaseSpace.SDK
 
 
         static object _syncRead = new object();
-        
+
         protected virtual void UploadPart(string fullUrl, FileInfo fileToUpload, long startPosition, int partNumber, ManualResetEvent errorSignal, string partDescription, uint chunkSize)
         {
             RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, string.Format("Uploading part {0} of {1}", partDescription, fileToUpload.Name),
@@ -159,9 +159,9 @@ namespace Illumina.BaseSpace.SDK
                         {
                             data = BufferPool.GetChunk((int)chunkSize);
 
-	                        var authentication = ClientSettings.Authentication;
-	                        authentication.UpdateHttpHeader(wc.Headers, new Uri(fullUrl), "PUT");
-                            
+                            var authentication = ClientSettings.Authentication;
+                            authentication.UpdateHttpHeader(wc.Headers, new Uri(fullUrl), "PUT");
+
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, chunkSize);
                             lock (_syncRead) // avoid thrashing the disk
@@ -196,18 +196,18 @@ namespace Illumina.BaseSpace.SDK
         }
 
         private class BSWebClient : WebClient
-		{
-			//TODO: Doesnt seem right? Need refactor?
-			// const int CONNECTION_LIMIT = 16;
-			protected override WebRequest GetWebRequest(Uri address)
-			{
-				var request = base.GetWebRequest(address) as HttpWebRequest;
+        {
+            //TODO: Doesnt seem right? Need refactor?
+            // const int CONNECTION_LIMIT = 16;
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                var request = base.GetWebRequest(address) as HttpWebRequest;
 
-				if (request != null && request.ServicePoint.ConnectionLimit < 20)
-					request.ServicePoint.ConnectionLimit = 10000;  //Note: Is this changing global value?
+                if (request != null && request.ServicePoint.ConnectionLimit < 20)
+                    request.ServicePoint.ConnectionLimit = 10000;  //Note: Is this changing global value?
 
-				return request;
-			}
-		}
+                return request;
+            }
+        }
     }
 }

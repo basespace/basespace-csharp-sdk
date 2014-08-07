@@ -10,6 +10,6 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public T Item { get; set; }
-        
+
     }
 }

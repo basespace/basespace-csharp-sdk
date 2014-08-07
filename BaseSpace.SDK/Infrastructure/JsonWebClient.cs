@@ -37,11 +37,11 @@ namespace Illumina.BaseSpace.SDK
             // call something on this object so it gets initialized in single threaded context
             HttpEncoder.Default.SerializeToString();
 
-			//need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
-			if (Helpers.IsRunningOnMono())
-			{
-				HttpEncoder.Current = HttpEncoder.Default;
-			}
+            //need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
+            if (Helpers.IsRunningOnMono())
+            {
+                HttpEncoder.Current = HttpEncoder.Default;
+            }
 
             HttpEncoder.Current.SerializeToString();
 
@@ -66,12 +66,12 @@ namespace Illumina.BaseSpace.SDK
 
             // setup custom deserializers
             JsConfig<IContentReference<IAbstractResource>>.RawDeserializeFn = ReferenceDeserializer.JsonToReference;
-            
+
             JsConfig<PropertyCompact>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyCompact;
             JsConfig<Property>.RawDeserializeFn = PropertyDeserializer.JsonToProperty;
 
             JsConfig<INotification<object>>.RawDeserializeFn = MiscDeserializers.NotificationDeserializer;
-            JsConfig<PropertyItemsResourceList>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyItemsResourceList;     
+            JsConfig<PropertyItemsResourceList>.RawDeserializeFn = PropertyDeserializer.JsonToPropertyItemsResourceList;
         }
 
         public IWebProxy WebProxy

@@ -7,14 +7,14 @@
         /// </summary>
         /// <param name="id">Purchase Id</param>
         public GetPurchaseRequest(string id)
-			: base(id)
+            : base(id)
         {
             ApiName = ApiNames.BASESPACE_BILLING;
         }
 
-		protected override string GetUrl()
-		{
-			return string.Format("{0}/purchases/{1}", Version, Id);
-		}
-	}
+        protected override string GetUrl()
+        {
+            return string.Format("{0}/purchases/{1}", Version, Id);
+        }
+    }
 }

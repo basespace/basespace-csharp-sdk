@@ -174,14 +174,14 @@ namespace Illumina.BaseSpace.SDK
         {
             return string.Format("{0}/coverag/{1}/{2}", version, req.Id, req.Chrom);
         }
-        
+
         public static string BuildUrl(this GetCoverageMetadataRequest req, string version)
         {
             return string.Format("{0}/coverag/{1}/{2}/meta", version, req.Id, req.Chrom);
         }
         #endregion
 
-		
+
 
         #region VerificationCode
         public static Uri BuildRequestUri(this VerificationCode verificationCode, BaseSpaceClientSettings settings)
@@ -212,12 +212,12 @@ namespace Illumina.BaseSpace.SDK
         {
             NameValueCollection queryPairs =
                 new NameValueCollection
-			    {
-			        {"client_id", settings.AppClientId},
-			        {"client_secret", settings.AppClientSecret},
-			        {"code", verificationCode.DeviceCode},
-			        {"grant_type", "device"}
-			    };
+                {
+                    {"client_id", settings.AppClientId},
+                    {"client_secret", settings.AppClientSecret},
+                    {"code", verificationCode.DeviceCode},
+                    {"grant_type", "device"}
+                };
 
             return new Uri(string.Format("{0}/{1}/oauthv2/token?{2}", settings.BaseSpaceApiUrl, settings.Version, RequestUrlExtensions.ToQueryString(queryPairs)));
         }

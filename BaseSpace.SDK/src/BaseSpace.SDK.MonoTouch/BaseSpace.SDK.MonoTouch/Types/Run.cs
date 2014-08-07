@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-    
+
     [DataContract(Name = "Run")]
     public class RunCompact : AbstractResource
     {

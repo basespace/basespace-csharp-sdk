@@ -34,14 +34,14 @@ namespace Illumina.BaseSpace.SDK
             }
             Settings = settings;
             // call something on this object so it gets initialized in single threaded context
-			//HttpEncoder object not supported in MonoTouch
+            //HttpEncoder object not supported in MonoTouch
             //HttpEncoder.Default.SerializeToString();
             //HttpEncoder.Current.SerializeToString();
             if (defaultOptions == null)
             {
                 defaultOptions = new RequestOptions(settings.BaseSpaceApiUrl);
             }
-           
+
             SetDefaultRequestOptions(defaultOptions);
 
             Client = new JsonServiceClient(DefaultRequestOptions.BaseUrl);
@@ -108,7 +108,7 @@ namespace Illumina.BaseSpace.SDK
             where TResult : class
         {
             client.BaseUri = request.Options.BaseUrl.TrimEnd('/') + "/";  //make sure we only have a single slash on end always
-            
+
 
             var fileRestRequest = request as FileRestRequest;
             if (fileRestRequest != null)

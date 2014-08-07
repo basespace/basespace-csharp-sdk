@@ -18,5 +18,5 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
         public string Id { get; set; }
     }
-    
+
 }

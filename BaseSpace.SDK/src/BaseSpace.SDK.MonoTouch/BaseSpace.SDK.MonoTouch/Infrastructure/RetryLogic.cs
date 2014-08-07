@@ -32,9 +32,9 @@ namespace Illumina.BaseSpace.SDK
             if (wse.Message.ToLower().Contains("receivefailure"))
                 return true;
 
-            //  --> (Inner exception 1) System.ApplicationException: Non retryable web exception 
-            //  ---> System.Net.WebException: An error occurred performing a WebClient request. 
-            //  ---> System.IO.IOException: IO exception during Write. 
+            //  --> (Inner exception 1) System.ApplicationException: Non retryable web exception
+            //  ---> System.Net.WebException: An error occurred performing a WebClient request.
+            //  ---> System.IO.IOException: IO exception during Write.
             //  ---> System.NullReferenceException: Object reference not set to an instance of an object
             if (wse.Message.ToLower().Contains("an error occurred performing a webclient request"))
                 return true;
@@ -70,7 +70,7 @@ namespace Illumina.BaseSpace.SDK
                                        double retryIntervalBaseSecs = 5, Action error = null,
                                         Func<Exception, bool> retryHandler = null)
         {
-          
+
             retryIntervalBaseSecs = Math.Max(1, retryIntervalBaseSecs);
             var triesLeft = maxAttempts;
             int whichAttempt = 0;
@@ -87,7 +87,7 @@ namespace Illumina.BaseSpace.SDK
 
                 try
                 {
-                   
+
                     logger.InfoFormat("operation starting: {0} attempt {1}", description, whichAttempt);
                     op();
                     timer.Stop();

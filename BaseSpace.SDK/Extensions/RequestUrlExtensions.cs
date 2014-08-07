@@ -10,9 +10,9 @@ namespace Illumina.BaseSpace.SDK
         #region VerificationCode
         public static Uri BuildRequestUri(this VerificationCode verificationCode, BaseSpaceClientSettings settings)
         {
-	        var authentication = settings.Authentication as OAuth2Authentication;
+            var authentication = settings.Authentication as OAuth2Authentication;
 
-			NameValueCollection queryPairs =
+            NameValueCollection queryPairs =
                 new NameValueCollection
                     {
                         {"client_id", authentication.AppId},
@@ -37,16 +37,16 @@ namespace Illumina.BaseSpace.SDK
         #region AccessToken
         public static Uri BuildRequestUri(this AccessToken accessToken, VerificationCode verificationCode, BaseSpaceClientSettings settings)
         {
-			var authentication = settings.Authentication as OAuth2Authentication;
+            var authentication = settings.Authentication as OAuth2Authentication;
 
             NameValueCollection queryPairs =
                 new NameValueCollection
-			    {
-			        {"client_id", authentication.AppId},
-			        {"client_secret", authentication.AppSecret},
-			        {"code", verificationCode.DeviceCode},
-			        {"grant_type", "device"}
-			    };
+                {
+                    {"client_id", authentication.AppId},
+                    {"client_secret", authentication.AppSecret},
+                    {"code", verificationCode.DeviceCode},
+                    {"grant_type", "device"}
+                };
 
             return new Uri(string.Format("{0}/{1}/oauthv2/token?{2}", settings.BaseSpaceApiUrl, settings.Version, ToQueryString(queryPairs)));
         }

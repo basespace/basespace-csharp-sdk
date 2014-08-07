@@ -74,7 +74,7 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefContent { get; set; }
-      
+
         [DataMember]
         public SampleCompact Content { get; set; }
 
@@ -100,6 +100,6 @@ namespace Illumina.BaseSpace.SDK.Types
 
     }
 
-  
+
 
 }

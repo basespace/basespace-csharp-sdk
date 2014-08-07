@@ -40,7 +40,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             setPropRequest.SetProperty("mytestapp.inputs.metrics").SetContentMap(map);
 
             // Create some properties
-            // POST: resource/{id}/properties 
+            // POST: resource/{id}/properties
             var properties = Client.SetPropertiesForResource(setPropRequest).Response.Items;
 
             // list those properties
@@ -52,7 +52,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             properties = Client.GetProject(new GetProjectRequest(_project.Id)).Response.Properties.Items;
 
             // take a deeper dive into the items list
-            // GET: resource/{id}/properties/{name}/items           
+            // GET: resource/{id}/properties/{name}/items
             var propertyItems = Client.ListPropertyItems(new ListPropertyItemsRequest(_project, "mytestapp.inputs.appresults")).Response.Items;
 
             // delete a property
@@ -396,7 +396,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             setPropRequest.SetProperty(name).SetContentReferencesArray(new IPropertyContent[] {});
 
             AssertErrorResponse(
-                () => Client.SetPropertiesForResource(setPropRequest), 
+                () => Client.SetPropertiesForResource(setPropRequest),
                 "BASESPACE.PROPERTIES.TYPE_INVALID",
                 HttpStatusCode.BadRequest);
 
@@ -595,7 +595,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var setPropRequest = new SetPropertiesRequest(_project);
 
             setPropRequest.SetProperty("unittest.multiitem.invalid.uri").SetContentReferencesArray(new[] { _project.Href.ToString(), "projects/notexistingproject" });
-            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_REFERENCE_NOT_RESOLVED", HttpStatusCode.Conflict);            
+            AssertErrorResponse(() => Client.SetPropertiesForResource(setPropRequest), "BASESPACE.PROPERTIES.CONTENT_REFERENCE_NOT_RESOLVED", HttpStatusCode.Conflict);
         }
 
         [Fact]

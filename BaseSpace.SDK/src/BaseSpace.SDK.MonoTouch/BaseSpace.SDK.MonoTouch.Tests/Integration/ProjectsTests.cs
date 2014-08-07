@@ -11,14 +11,14 @@ using NUnit.Framework;
 
 namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
 {
-	[TestFixture]
+    [TestFixture]
     public class ProjectsTests : BaseIntegrationTest
     {
         [Test]
         public void CanGetUserProjectsFirstPage()
         {
            ListProjectsResponse response = Client.ListProjects(new ListProjectsRequest());
-            
+
            Assert.NotNull(response);
            Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
             ProjectCompact projectResult = response.Response.Items[0];
@@ -34,7 +34,7 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
         public void CanGetUserProjectsFirstPageAsync()
         {
             Task<ListProjectsResponse> asyncResponse = Client.ListProjectsAsync(new ListProjectsRequest());
-           
+
             asyncResponse.Wait(TimeSpan.FromMinutes(1));
             var response = asyncResponse.Result;
             Assert.NotNull(response);
@@ -43,9 +43,9 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
             ProjectCompact projectResult = response.Response.Items[0];
 
             Assert.NotNull(projectResult);
-			Assert.IsNotNull(projectResult.Id);
-			Assert.IsNotNull(projectResult.Name);
-			Assert.IsNotNull(projectResult.Id, projectResult.Name);
+            Assert.IsNotNull(projectResult.Id);
+            Assert.IsNotNull(projectResult.Name);
+            Assert.IsNotNull(projectResult.Id, projectResult.Name);
             Assert.True(projectResult.DateCreated > new DateTime(2009, 1, 1));
         }
 
@@ -156,7 +156,7 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
             }
             catch (BaseSpace.SDK.BaseSpaceException baseSpaceException)
             {
-                Assert.True((baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound) || 
+                Assert.True((baseSpaceException.StatusCode == System.Net.HttpStatusCode.NotFound) ||
                             (baseSpaceException.StatusCode == System.Net.HttpStatusCode.BadRequest));
             }
             catch (Exception ex)

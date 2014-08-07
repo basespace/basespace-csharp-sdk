@@ -32,9 +32,9 @@
         /// </summary>
         public string Comment { get; set; }
 
-		protected override string GetUrl()
-		{
+        protected override string GetUrl()
+        {
             return string.Format("{0}/purchases/{1}/refund", Version, PurchaseId);
-		}
-	}
+        }
+    }
 }

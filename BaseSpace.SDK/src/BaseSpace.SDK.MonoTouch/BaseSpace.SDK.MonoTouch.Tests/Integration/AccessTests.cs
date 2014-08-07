@@ -16,7 +16,7 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
     public class AccessTests : BaseIntegrationTest
     {
         // the next line should only be enabled when running tests interactively since it requires personal attention to a browser that pops up
-		public void CreateWebRequestTest()
+        public void CreateWebRequestTest()
         {
             var client = CreateWebRequestClient();
             Assert.NotNull(client);
@@ -25,11 +25,11 @@ namespace Illumina.BaseSpace.SDK.MonoTouch.Tests.Integration
         public static IBaseSpaceClient CreateWebRequestClient()
         {
             // construct the settings object from the config file
-			string apiKey = SettingsDict["basespace:api-key"].ToString();
-			string apiSecret = SettingsDict["basespace:api-secret"].ToString();
-			string apiUrl = SettingsDict["basespace:api-url"].ToString();
-			string webUrl = SettingsDict["basespace:web-url"].ToString();
-			string version = SettingsDict["basespace:api-version"].ToString();
+            string apiKey = SettingsDict["basespace:api-key"].ToString();
+            string apiSecret = SettingsDict["basespace:api-secret"].ToString();
+            string apiUrl = SettingsDict["basespace:api-url"].ToString();
+            string webUrl = SettingsDict["basespace:web-url"].ToString();
+            string version = SettingsDict["basespace:api-version"].ToString();
             var settings = new BaseSpaceClientSettings() { AppClientId = apiKey, AppClientSecret = apiSecret, BaseSpaceApiUrl = apiUrl, BaseSpaceWebsiteUrl = webUrl, Version = version };
 
             // first retrieve the verification code

@@ -56,7 +56,7 @@ namespace Illumina.BaseSpace.SDK
         }
 
         /// <summary>
-        /// For properties of type 'string[]', returns property items that may be converted to int as a int[]. 
+        /// For properties of type 'string[]', returns property items that may be converted to int as a int[].
         /// </summary>
         public static int[] ToIntArray(this PropertyCompact property)
         {
@@ -68,7 +68,7 @@ namespace Illumina.BaseSpace.SDK
         }
 
         /// <summary>
-        /// For properties of type 'string[]', returns property items that may be converted to long as a long[]. 
+        /// For properties of type 'string[]', returns property items that may be converted to long as a long[].
         /// </summary>
         public static long[] ToLongArray(this PropertyCompact property)
         {
@@ -200,7 +200,7 @@ namespace Illumina.BaseSpace.SDK
         /// Convert to a compact resource
         /// </summary>
         /// <remarks>
-        /// TResourceType must be a compact resource object 
+        /// TResourceType must be a compact resource object
         /// </remarks>
         public static TResourceType ToResource<TResourceType>(this IPropertyContent propertyContent)
             where TResourceType : class, IPropertyContent

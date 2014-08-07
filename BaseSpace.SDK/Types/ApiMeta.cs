@@ -11,10 +11,10 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefRuns { get; set; }
-        
+
         [DataMember]
         public string HrefCurrentUser { get; set; }
-        
+
         [DataMember]
         public string HrefOAuthAuthorizeDialog { get; set; }
 

@@ -89,6 +89,6 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public DateTime DateCreated { get; set; }
     }
-    
+
     public enum SamplesSortByParameters { Id, Name, DateCreated }
 }

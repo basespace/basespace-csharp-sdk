@@ -15,7 +15,7 @@ namespace Illumina.BaseSpace.SDK
         /// </summary>
         /// <param name="options"></param>
         void SetDefaultRequestOptions(IRequestOptions options);
-        
+
 
         /// <summary>
         /// Send a HTTP request

@@ -4,8 +4,8 @@ using Illumina.BaseSpace.SDK.ServiceModels;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
-	public class OAuthTests : BaseIntegrationTest
-	{
+    public class OAuthTests : BaseIntegrationTest
+    {
         [Fact]
         public void CanStartDeviceAuth()
         {
@@ -44,7 +44,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 ConfigurationManager.AppSettings.Get("basespace:client-secret"),
                 ConfigurationManager.AppSettings.Get("basespace:web-url"),
                 ConfigurationManager.AppSettings.Get("basespace:authorization-code")));
-                
+
             Assert.NotNull(response);
             Assert.NotNull(response.AccessToken);
             Assert.NotNull(response.ExpiresIn);
@@ -57,47 +57,47 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 response.ExpiresIn);
         }
 
-		[Fact]
-		public void CanFinishDeviceAuthWithErrorStatus()
-		{
-			OAuthDeviceAuthResponse verificationResponse = null;
-			OAuthDeviceAccessTokenResponse tokenResponse = null;
-				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
-				tokenResponse = Client.FinishOAuthDeviceAuth (
-					new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), 
-				                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
+        [Fact]
+        public void CanFinishDeviceAuthWithErrorStatus()
+        {
+            OAuthDeviceAuthResponse verificationResponse = null;
+            OAuthDeviceAccessTokenResponse tokenResponse = null;
+                verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
+                tokenResponse = Client.FinishOAuthDeviceAuth (
+                    new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"),
+                                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
 
-			Assert.NotNull(tokenResponse);
-			Assert.NotNull(tokenResponse.Error);
-			Assert.NotNull(tokenResponse.ErrorMessage);
-			Assert.Equal("authorization_pending", tokenResponse.Error);
+            Assert.NotNull(tokenResponse);
+            Assert.NotNull(tokenResponse.Error);
+            Assert.NotNull(tokenResponse.ErrorMessage);
+            Assert.Equal("authorization_pending", tokenResponse.Error);
 
-			Log.DebugFormat(@"
+            Log.DebugFormat(@"
 			error: {0}
 			error message: {1}
 			", tokenResponse.Error, tokenResponse.ErrorMessage);
-		}
+        }
 
-		//step thru to make it work, by going to the verification url and accepting!
-		[Fact(Skip = "step through and browser interaction required")]
-		public void CanFinishDeviceAuthWithSuccess()
-		{
-			OAuthDeviceAuthResponse verificationResponse = null;
-			OAuthDeviceAccessTokenResponse tokenResponse = null;
+        //step thru to make it work, by going to the verification url and accepting!
+        [Fact(Skip = "step through and browser interaction required")]
+        public void CanFinishDeviceAuthWithSuccess()
+        {
+            OAuthDeviceAuthResponse verificationResponse = null;
+            OAuthDeviceAccessTokenResponse tokenResponse = null;
 
-				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
+                verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
 
-				// pause the debugger here and go accept the verification url
+                // pause the debugger here and go accept the verification url
 
-				tokenResponse = Client.FinishOAuthDeviceAuth (
-					new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), 
-				                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
-			
-			Assert.NotNull(tokenResponse);
-			Assert.NotNull(tokenResponse.AccessToken);
+                tokenResponse = Client.FinishOAuthDeviceAuth (
+                    new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"),
+                                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
 
-			Log.DebugFormat("Access Token: {0}", tokenResponse.AccessToken);
-		}
-	}
+            Assert.NotNull(tokenResponse);
+            Assert.NotNull(tokenResponse.AccessToken);
+
+            Log.DebugFormat("Access Token: {0}", tokenResponse.AccessToken);
+        }
+    }
 }
 

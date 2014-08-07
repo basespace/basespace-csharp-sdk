@@ -12,13 +12,13 @@ namespace Illumina.BaseSpace.SDK.Types
         public long[] MeanCoverage { get; set; }
         [DataMember]
         public string Chrom { get; set; }
-        
+
         [DataMember]
         public long StartPos { get; set; }
-        
+
         [DataMember]
         public long EndPos { get; set; }
-        
+
         [DataMember]
         public int BucketSize { get; set; }
     }
@@ -28,7 +28,7 @@ namespace Illumina.BaseSpace.SDK.Types
     {
         [DataMember(IsRequired = true)]
         public string Id { get; set; }
-        
+
         [DataMember]
         public long MaxCoverage { get; set; }
 
