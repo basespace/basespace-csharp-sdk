@@ -98,6 +98,8 @@
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppResultsFromAppSessionRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppSessionsRequest.cs" />
     <Compile Include="ServiceModels\Request\ListPropertyItemsRequest.cs" />
     <Compile Include="ServiceModels\Request\DeletePropertyRequest.cs" />
     <Compile Include="ServiceModels\Request\GetPropertyRequest.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToFileSetRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListAppSessionsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListPropertyItemsResponse.cs" />
     <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />

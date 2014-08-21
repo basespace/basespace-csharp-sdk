@@ -102,7 +102,6 @@
     <None Include="appSettings.config.hidden">
       <SubType>Designer</SubType>
     </None>
-    <None Include="appSettings.config.hidden" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
