@@ -113,4 +113,9 @@ namespace Illumina.BaseSpace.SDK.Types
         Path,
         DateCreated
     }
+
+    [DataContract]
+    public class RunFileCompact : FileCompact
+    {
+    }
 }
