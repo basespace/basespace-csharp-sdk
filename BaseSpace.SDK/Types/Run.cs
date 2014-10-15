@@ -66,6 +66,9 @@ namespace Illumina.BaseSpace.SDK.Types
         public UserCompact UserUploadedBy { get; set; }
 
         [DataMember]
+        public InstrumentCompact Instrument { get; set; }
+
+        [DataMember]
         public DateTime? DateUploadCompleted { get; set; }
 
         [DataMember]
