@@ -1,6 +1,13 @@
 basespace-csharp-sdk
 ====================
-## This is a pre-release and not fully functional or ready for production environments!! ##
+
+## Branches ##
+
+###### Master ######
+Master branch is stable and running in production environments.
+
+###### Develop ######
+Develop branch is pre-release and not fully functional or ready for production environments.
 
 ## Contributing ##
 - VS 2012
