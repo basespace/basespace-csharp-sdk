@@ -4,10 +4,10 @@ basespace-csharp-sdk
 ## Branches ##
 
 ###### Master ######
-The Master branch is stable and ready for production environments.
+Master branch is stable and ready for production environments.
 
 ###### Develop ######
-The Develop branch is pre-release and not fully functional or ready for production environments.
+Develop branch is pre-release and not fully functional or ready for production environments.
 
 ## Contributing ##
 - VS 2012
