@@ -2,7 +2,6 @@
 using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
-using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
@@ -32,8 +31,6 @@ namespace Illumina.BaseSpace.SDK
 		GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null);
 
         ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null);
-
-        ListSampleLibrariesResponse ListSampleLibrariesFromRun(ListSampleLibrariesFromRunRequest request, IRequestOptions options = null);
 
         ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null);
 
@@ -141,35 +138,5 @@ namespace Illumina.BaseSpace.SDK
         CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null);
 
         ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null);
-
-        /// <summary>
-        /// Create a library container
-        /// </summary>
-        /// <remarks>POST: /librarycontainers</remarks>
-        CreateLibraryContainerResponse CreateLibraryContainer(CreateLibraryContainerRequest request, IRequestOptions options = null);
-        
-        /// <summary>
-        /// Create or Update the container libraries (mapping)
-        /// </summary>
-        /// <remarks>POST: /librarycontainers/{Id}/libraries</remarks>
-        CreateOrUpdateContainerLibrariesResponse CreateOrUpdateContainerLibraries(CreateOrUpdateContainerLibrariesRequest request, IRequestOptions options = null);
-
-        /// <summary>
-        /// List library prep kit by Id
-        /// </summary>
-        /// <remarks>GET: /libraryprepkits/{Id}</remarks>
-        GetLibraryPrepKitIdResponse GetLibraryPrepKit(GetLibraryPrepKitIdRequest request, IRequestOptions options = null);
-
-        /// <summary>
-        /// Create a biological sample
-        /// </summary>
-        /// <remarks>POST: /biologicalsamples</remarks>
-        CreateBiologicalSampleResponse CreateBiologicalSample(CreateBiologicalSampleRequest request, IRequestOptions options = null);
-
-        /// <summary>
-        /// Get Libraries in Container
-        /// </summary>
-        /// <remarks>GET: /librarycontainers/{Id}/libraries </remarks>
-        GetContainerToLibraryMappingResponse GetContainerToLibraryMapping(GetContainerToLibraryMappingRequest request, IRequestOptions options = null);
     }
 }

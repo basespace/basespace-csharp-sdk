@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class ListSampleLibrariesFromRunRequest : AbstractResourceListRequest<ListSampleLibrariesResponse, LibrariesSortFields>
+    class ListSampleLibrariesFromRunRequest : AbstractResourceListRequest<ListSampleLibrariesResponse, LibrariesSortFields>
     {
         /// <summary>
         /// List samples libraries within a run
