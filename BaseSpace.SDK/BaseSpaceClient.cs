@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Illumina.BaseSpace.SDK.Types;
 
 namespace Illumina.BaseSpace.SDK
@@ -95,16 +96,16 @@ namespace Illumina.BaseSpace.SDK
 
 		#endregion
 
-		#region Samples
-		public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
+        #region Samples
+        public GetSampleResponse GetSample(GetSampleRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
 		}
 
-		public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
-		{
-			return WebClient.Send(request, options);
-		}
+        public ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
 		#endregion
 
 		#region AppResults
@@ -378,6 +379,40 @@ namespace Illumina.BaseSpace.SDK
         }
 
         public ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Prep-BiologicalSamples
+        public CreateBiologicalSampleResponse CreateBiologicalSample(CreateBiologicalSampleRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Prep-Libraries
+        public ListSampleLibrariesResponse ListSampleLibrariesFromRun(ListSampleLibrariesFromRunRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreateLibraryContainerResponse CreateLibraryContainer(CreateLibraryContainerRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreateOrUpdateContainerLibrariesResponse CreateOrUpdateContainerLibraries(CreateOrUpdateContainerLibrariesRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public GetLibraryPrepKitIdResponse GetLibraryPrepKit(GetLibraryPrepKitIdRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public GetContainerToLibraryMappingResponse GetContainerToLibraryMapping(GetContainerToLibraryMappingRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
         }

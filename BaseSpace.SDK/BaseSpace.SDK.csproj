@@ -95,6 +95,11 @@
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
+    <Compile Include="ServiceModels\Request\CreateBiologicalSampleRequest.cs" />
+    <Compile Include="ServiceModels\Request\CreateLibraryContainerRequest.cs" />
+    <Compile Include="ServiceModels\Request\CreateOrUpdateContainerLibrariesRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetContainerToLibraryMappingRequest.cs" />
+    <Compile Include="ServiceModels\Request\GetLibraryPrepKitIdRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleLibrariesFromRunRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
@@ -149,6 +154,11 @@
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToFileSetRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\CreateBioSampleResponse.cs" />
+    <Compile Include="ServiceModels\Response\CreateLibraryContainerResponse.cs" />
+    <Compile Include="ServiceModels\Response\CreateOrUpdateContainerLibrariesResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetContainerToLibraryMappingResponse.cs" />
+    <Compile Include="ServiceModels\Response\GetLibraryPrepKitIdResponse.cs" />
     <Compile Include="ServiceModels\Response\ListAppSessionsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListPropertyItemsResponse.cs" />
     <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
