@@ -203,7 +203,7 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
-    <Compile Include="Types\OptionItem.cs" />
+    <Compile Include="Types\FragmentationTimeInMinutes.cs" />
     <Compile Include="Types\PropertyContentMap.cs" />
     <Compile Include="Types\Billing\AppSessionBilling.cs" />
     <Compile Include="Types\Billing\PurchasedProduct.cs" />

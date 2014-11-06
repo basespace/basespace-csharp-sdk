@@ -7,9 +7,9 @@ using System.Text;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract]
-    public class OptionItem
+    public class FragmentationTimeInMinutes
     {
         [DataMember]
-        public string ItemValue { get; set; }
+        public float ItemValue { get; set; }
     }
 }
