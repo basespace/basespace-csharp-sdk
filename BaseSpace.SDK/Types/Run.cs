@@ -60,9 +60,6 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public PrepErrorStatusType PrepErrorStatus { get; set; }
 
-        [DataMember]
-        public string PlatformName { get; set; }
-
         public string Type { get { return PropertyTypes.RUN; } }
 
         public override string ToString()
