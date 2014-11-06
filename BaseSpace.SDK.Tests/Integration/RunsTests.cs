@@ -51,6 +51,25 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             }
             
         }
+
+        [Fact]
+        public void PrepSettings()
+        {
+            var runResponse = Client.GetRun(new ServiceModels.GetRunRequest("859860"));
+            
+            Assert.Equal(2, runResponse.Response.PrepSettings.DefaultInsertSize.ItemValue);
+            Assert.Equal(1.2f, runResponse.Response.PrepSettings.FragmentationTimeInMinutes);
+            Assert.True(runResponse.Response.PrepSettings.Normalize.Value);
+            Assert.True(runResponse.Response.PrepSettings.Quantitate.Value);
+            Assert.Equal(1, runResponse.Response.PrepSettings.PcrCycles.ItemValue);
+
+            Assert.Equal(runResponse.Response.PrepStatus, "New");
+            Assert.Equal(runResponse.Response.PrepErrorStatus, PrepErrorStatusType.None);
+            Assert.Equal(runResponse.Response.PlatformName, "NeoPrep");
+
+            Assert.Null(runResponse.Response.ExpectedInstrumentCompletionDate);
+            
+        }
         
 
     }
