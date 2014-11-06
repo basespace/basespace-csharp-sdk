@@ -81,7 +81,6 @@
     <Compile Include="Integration\FileDownloadTests.cs" />
     <Compile Include="Integration\GenomesTests.cs" />
     <Compile Include="Integration\OAuthTests.cs" />
-    <Compile Include="Integration\PrepTests.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\PropertyTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
