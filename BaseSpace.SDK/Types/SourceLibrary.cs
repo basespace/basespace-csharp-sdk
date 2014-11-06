@@ -252,7 +252,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string ProtocolVersion { get; set; }
 
         [DataMember]
-        public List<FragmentationTimeInMinutes> FragmentationTimeOptions { get; set; }
+        public List<float> FragmentationTimeOptions { get; set; }
     }
 
     [DataContract(Name = "LibraryPrepKit")]
