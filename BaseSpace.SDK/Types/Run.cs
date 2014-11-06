@@ -48,6 +48,18 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public UserCompact UserOwnedBy { get; set; }
 
+        [DataMember]
+        public PrepSettings PrepSettings { get; set; }
+
+        [DataMember]
+        public string PrepStatus { get; set; }
+
+        [DataMember]
+        public DateTime? ExpectedInstrumentCompletionDate { get; set; }
+
+        [DataMember]
+        public PrepErrorStatusType PrepErrorStatus { get; set; }
+
         public string Type { get { return PropertyTypes.RUN; } }
 
         public override string ToString()
@@ -101,6 +113,45 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public bool AutoRetireOnCompletion { get; set; }
+    }
+
+    [DataContract]
+    public class PrepSettings
+    {
+        [DataMember]
+        public bool? Quantitate { get; set; }
+
+        [DataMember]
+        public bool? Normalize { get; set; }
+
+        [DataMember]
+        public PcrCycles PcrCycles { get; set; }
+
+        [DataMember]
+        public InsertSize DefaultInsertSize { get; set; }
+
+        [DataMember]
+        public float? FragmentationTimeInMinutes { get; set; }
+    }
+
+    [DataContract]
+    public class PcrCycles
+    {
+        [DataMember]
+        public int ItemValue { get; set; }
+    }
+
+    [DataContract]
+    public class InsertSize
+    {
+        [DataMember]
+        public int ItemValue { get; set; }
+    }
+
+    public enum PrepErrorStatusType
+    {
+        None,
+        Errored
     }
 
     public enum RunSortByParameters
