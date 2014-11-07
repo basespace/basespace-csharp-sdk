@@ -95,6 +95,7 @@
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
+    <Compile Include="ServiceModels\Request\ListSampleLibrariesFromRunRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\GetPropertyResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListSampleLibrariesResponse.cs" />
     <Compile Include="ServiceModels\Response\SearchResponse.cs" />
     <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppSessionLogsResponse.cs" />
@@ -229,6 +231,8 @@
     <Compile Include="Types\Sample.cs" />
     <Compile Include="Types\ScheduledDowntime.cs" />
     <Compile Include="Types\SearchResult.cs" />
+    <Compile Include="Types\SourceLibrary.cs" />
+    <Compile Include="Types\Species.cs" />
     <Compile Include="Types\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\Variant.cs" />
