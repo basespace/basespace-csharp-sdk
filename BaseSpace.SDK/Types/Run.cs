@@ -125,7 +125,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public bool? Normalize { get; set; }
 
         [DataMember]
-        public int? PcrCyclesOption { get; set; }
+        public int? PcrCycles { get; set; }
 
         [DataMember]
         public int? DefaultInsertSize { get; set; }
