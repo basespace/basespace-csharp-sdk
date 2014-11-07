@@ -240,19 +240,19 @@ namespace Illumina.BaseSpace.SDK.Types
         public string AdapterSequenceRead2 { get; set; }
 
         [DataMember]
-        public List<PoolPlexity> PoolPlexityOptions { get; set; }
+        public List<PoolPlexityOption> PoolPlexityOptions { get; set; }
 
         [DataMember]
-        public List<InsertSize> InsertSizeOptions { get; set; }
+        public List<InsertSizeOption> InsertSizeOptions { get; set; }
 
         [DataMember]
-        public List<PcrCycles> PcrCyclesOptions { get; set; }
+        public List<PcrCyclesOption> PcrCyclesOptions { get; set; }
 
         [DataMember]
         public string ProtocolVersion { get; set; }
 
         [DataMember]
-        public List<float> FragmentationTimeOptions { get; set; }
+        public List<FragmentationTimeOptions> FragmentationTimeOptions { get; set; }
     }
 
     [DataContract(Name = "LibraryPrepKit")]
@@ -266,9 +266,30 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     [DataContract]
-    public class PoolPlexity
+    public class PoolPlexityOption
     {
         [DataMember]
         public int ItemValue { get; set; }
+    }
+
+    [DataContract]
+    public class PcrCyclesOption
+    {
+        [DataMember]
+        public int ItemValue { get; set; }
+    }
+
+    [DataContract]
+    public class InsertSizeOption
+    {
+        [DataMember]
+        public int ItemValue { get; set; }
+    }
+
+    [DataContract]
+    public class FragmentationTimeOptions
+    {
+        [DataMember]
+        public float ItemValue { get; set; }
     }
 }

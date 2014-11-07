@@ -125,27 +125,13 @@ namespace Illumina.BaseSpace.SDK.Types
         public bool? Normalize { get; set; }
 
         [DataMember]
-        public PcrCycles PcrCycles { get; set; }
+        public int? PcrCyclesOption { get; set; }
 
         [DataMember]
-        public InsertSize DefaultInsertSize { get; set; }
+        public int? DefaultInsertSize { get; set; }
 
         [DataMember]
         public float? FragmentationTimeInMinutes { get; set; }
-    }
-
-    [DataContract]
-    public class PcrCycles
-    {
-        [DataMember]
-        public int ItemValue { get; set; }
-    }
-
-    [DataContract]
-    public class InsertSize
-    {
-        [DataMember]
-        public int ItemValue { get; set; }
     }
 
     public enum PrepErrorStatusType
