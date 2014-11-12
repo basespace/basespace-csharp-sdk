@@ -132,6 +132,12 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public float? FragmentationTimeInMinutes { get; set; }
+
+        [DataMember]
+        public string LibraryPrepName { get; set; }
+
+        [DataMember]
+        public string ProtocolVersion { get; set; }
     }
 
     public enum PrepErrorStatusType
