@@ -177,38 +177,6 @@ namespace Illumina.BaseSpace.SDK.Types
         public RunCompact PrepRun { get; set; }
     }
 
-    [DataContract(Name = "LibraryPoolCompact")]
-    public class LibraryPoolCompact : AbstractResource
-    {
-        [DataMember(IsRequired = true)]
-        public override string Id { get; set; }
-
-        [DataMember]
-        public override Uri Href { get; set; }
-
-        [DataMember]
-        public string UserPoolId { get; set; }
-
-        [DataMember]
-        public UserCompact UserOwnedBy { get; set; }
-
-        [DataMember]
-        public int LibraryCount { get; set; }
-
-        [DataMember]
-        public DateTime DateModified { get; set; }
-
-        [DataMember]
-        public ICollection<string> LibraryPrep { get; set; }
-    }
-
-    [DataContract(Name = "LibraryPool")]
-    public class LibraryPool : LibraryPoolCompact
-    {
-        [DataMember]
-        public string Notes { get; set; }
-    }
-
     [DataContract(Name = "LibraryPrepKitCompact")]
     public class LibraryPrepKitCompact : AbstractResource
     {
