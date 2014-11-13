@@ -52,9 +52,6 @@ namespace Illumina.BaseSpace.SDK.Types
         public PrepSettings PrepSettings { get; set; }
 
         [DataMember]
-        public string PrepStatus { get; set; }
-
-        [DataMember]
         public DateTime? ExpectedInstrumentCompletionDate { get; set; }
 
         [DataMember]
