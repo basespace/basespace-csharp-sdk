@@ -55,7 +55,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public DateTime? ExpectedInstrumentCompletionDate { get; set; }
 
         [DataMember]
-        public PrepErrorStatusType PrepErrorStatus { get; set; }
+        public PrepErrorType PrepErrorType { get; set; }
 
         public string Type { get { return PropertyTypes.RUN; } }
 
@@ -137,7 +137,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public string ProtocolVersion { get; set; }
     }
 
-    public enum PrepErrorStatusType
+    public enum PrepErrorType
     {
         None,
         Errored
