@@ -55,7 +55,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public DateTime? ExpectedInstrumentCompletionDate { get; set; }
 
         [DataMember]
-        public PrepErrorType PrepErrorType { get; set; }
+        public string PrepErrorCode { get; set; }
 
         public string Type { get { return PropertyTypes.RUN; } }
 
@@ -135,12 +135,6 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public string ProtocolVersion { get; set; }
-    }
-
-    public enum PrepErrorType
-    {
-        None,
-        Errored
     }
 
     public enum RunSortByParameters
