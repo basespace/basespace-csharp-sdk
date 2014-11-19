@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Web.Util;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.Deserialization;
@@ -15,16 +16,27 @@ namespace Illumina.BaseSpace.SDK
 {
     public class JsonWebClient : IWebClient
     {
-        private readonly JsonServiceClient client;
-        private readonly JsonServiceClient clientBilling;
+        internal JsonServiceClient client;
+        private JsonServiceClient clientBilling;
 
-        private readonly ILog logger;
+        private ILog logger;
 
-        private readonly IClientSettings settings;
+        private IClientSettings settings;
+
+        public virtual void RespawnClient()
+        {
+            if (_clientFactoryMethod != null)
+                _clientFactoryMethod();
+        }
+
+
+        internal readonly Action _clientFactoryMethod; 
 
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
+            _clientFactoryMethod = () =>
+            {
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
@@ -53,6 +65,9 @@ namespace Illumina.BaseSpace.SDK
 
             clientBilling = new JsonServiceClient(settings.BaseSpaceBillingApiUrl);
             clientBilling.LocalHttpWebRequestFilter += WebRequestFilter;
+            };
+
+            _clientFactoryMethod();
         }
 
         static JsonWebClient()
@@ -108,10 +123,13 @@ namespace Illumina.BaseSpace.SDK
                 TReturn result = null;
                 options = options ?? DefaultRequestOptions;
 
-                var clientForRequest = PickClientForApiName(request.GetApiName());
 
-                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(),
-                    () => result = request.GetSendFunc(clientForRequest)(), logger);
+                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(PickClientForApiName(request.GetApiName()))(), logger, 
+                retryIntervalBaseSecs:options.RetryPowerBase,retryHandler: (exc) =>
+                    {
+                        RespawnClient();
+                        return RetryLogic.GenericRetryHandler(exc);
+                    });
                 return result;
             }
             catch (WebServiceException webx)

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using Illumina.BaseSpace.SDK.Deserialization;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using Moq;
 using Xunit;
 
 namespace Illumina.BaseSpace.SDK.Tests
@@ -8,6 +11,61 @@ namespace Illumina.BaseSpace.SDK.Tests
 
     public class JsonWebClientTests
     {
+        [Fact]
+        public void RequestOptionsAreProperlyUsed()
+        {
+            var client = new BaseSpaceClient(new BaseSpaceClientSettings()
+            {
+                BaseSpaceApiUrl = "https://api.basespace.illumina.com",
+                Authentication = new OAuth2Authentication("xxxxx"),
+                TimeoutMin = .00001
+            });
+
+            var sw = Stopwatch.StartNew();
+            try
+            {
+                var ass = client.GetAppSession(new GetAppSessionRequest("xxxx"), new RequestOptions(6,.1));
+            }
+            catch (Exception)
+            {
+                
+            }
+            sw.Stop();
+
+            Assert.InRange(sw.ElapsedMilliseconds,0,10*1000);
+
+        } 
+        
+
+        [Fact(Skip = "disabled since it needs token and session")]
+        public void CanRespawnClientAtEachRetry()
+        {
+            var setting = new BaseSpaceClientSettings()
+            {
+                BaseSpaceApiUrl = "https://api.cloud-test.illumina.com",
+                Authentication = new OAuth2Authentication("xxxxx"),
+                TimeoutMin = .0000000001
+            };
+
+            var client = new Mock<JsonWebClient>(setting, null);
+            int retry = 0;
+            client.Setup(c => c.RespawnClient()).Callback(() =>
+            {
+                // this should occur only once and because of the ridiculous timeout
+                Assert.Equal(1, ++retry);
+
+                // respawn the client with a normal timeout
+                // should be proof that the newly created client
+                // is used on second retry
+                client.Object._clientFactoryMethod();
+                client.Object.client.Timeout = TimeSpan.FromMinutes(1);
+            });
+
+            var ass = client.Object.Send(new GetAppSessionRequest("xxxxx"), new RequestOptions(6, .1));
+        }
+
+
+        
         [Fact]
         public void CanDeserializeARunCompactReference()
         {

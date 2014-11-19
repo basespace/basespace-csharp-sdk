@@ -1,8 +1,9 @@
 ﻿namespace Illumina.BaseSpace.SDK
 {
 	public class BaseSpaceClientSettings : IClientSettings
-	{
-		public const uint DEFAULT_RETRY_ATTEMPTS = 6;
+    {
+        public const uint DEFAULT_RETRY_ATTEMPTS = 6;
+        public const uint DEFAULT_RETRY_POWER_BASE = 5;
 
 		public const string DEFAULT_WEBSITE = "https://basespace.illumina.com";
 
@@ -48,6 +49,6 @@
 
         public IAuthentication Authentication { get; set; }
 
-        public int TimeoutMin { get; set; }
+        public double TimeoutMin { get; set; }
 	}
 }

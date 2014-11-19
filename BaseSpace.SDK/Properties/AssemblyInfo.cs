@@ -35,5 +35,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.9")]
 [assembly: AssemblyFileVersion("1.0.0.9")]
 //[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Private")]      //Sujit: had to comment this out to allow strong sigining TV for BaseSpaceDownloader
-//[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Tests")]        //Sujit: had to comment this out to allow strong sigining TV for BaseSpaceDownloader
+[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Tests")]        //Sujit: had to comment this out to allow strong sigining TV for BaseSpaceDownloader
 //[assembly: InternalsVisibleTo("Illumina.BaseSpace.SDK.Private.Tests")]//Sujit: had to comment this out to allow strong sigining TV for BaseSpaceDownloader
