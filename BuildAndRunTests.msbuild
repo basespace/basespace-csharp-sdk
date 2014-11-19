@@ -5,10 +5,10 @@
 </ItemGroup>
 <Target Name="Build">
 <Copy SourceFiles="@(ItemsThatNeedToBeCopied)" DestinationFiles="@(ItemsThatNeedToBeCopied->'.\%(RecursiveDir)%(Filename)%(Extension)')"      ></Copy>
-    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Release">
+    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Debug">
     </MSBuild>
-    <!--<xunit Assembly="BaseSpace.SDK.Tests\bin\release\Illumina.BaseSpace.SDK.Tests.dll" />-->
-	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
+    <!--<xunit Assembly="BaseSpace.SDK.Tests\bin\debug\Illumina.BaseSpace.SDK.Tests.dll" />-->
+	<CreateItem Include="BaseSpace.SDK\bin\Debug\*.nupkg" >
         	<Output TaskParameter="Include" ItemName="Artifacts" />
     	</CreateItem>
     	<Copy SourceFiles="@(Artifacts)" DestinationFolder="src"></Copy>
