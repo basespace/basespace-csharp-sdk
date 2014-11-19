@@ -63,4 +63,5 @@ namespace Illumina.BaseSpace.SDK.Types
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
     public enum AppSessionQueryParameters { Status, StatusSummary }
+    public enum AppSessionSortByParameters { Id, Name, DateCreated }
 }

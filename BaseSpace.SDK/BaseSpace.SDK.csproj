@@ -42,7 +42,7 @@
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Illumina.TerminalVelocity">
-      <HintPath>$(SolutionDir)\packages\TerminalVelocity.Sharp.1.0.0.68\lib\net40\Illumina.TerminalVelocity.dll</HintPath>
+      <HintPath>..\packages\TerminalVelocity.Sharp.1.0.0.72\lib\net40\Illumina.TerminalVelocity.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
       <HintPath>$(SolutionDir)\packages\ServiceStack.Common.3.9.35\lib\net35\ServiceStack.Common.dll</HintPath>
@@ -71,6 +71,7 @@
     <Compile Include="Deserialization\ReferenceDeserializer.cs" />
     <Compile Include="Extensions\PropertyExtensions.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
+    <Compile Include="Infrastructure\ApiNames.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
     <Compile Include="Infrastructure\BufferPool.cs" />
@@ -97,11 +98,17 @@
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppResultsFromAppSessionRequest.cs" />
+    <Compile Include="ServiceModels\Request\ListAppSessionsRequest.cs" />
     <Compile Include="ServiceModels\Request\ListPropertyItemsRequest.cs" />
     <Compile Include="ServiceModels\Request\DeletePropertyRequest.cs" />
     <Compile Include="ServiceModels\Request\GetPropertyRequest.cs" />
     <Compile Include="ServiceModels\Request\ListPropertiesRequest.cs" />
     <Compile Include="ServiceModels\Request\CreateAppSessionLogsRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\CreatePurchaseRefundRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\CreatePurchaseRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\GetPurchaseRequest.cs" />
+    <Compile Include="ServiceModels\Request\Billing\ListPurchasedProductsRequest.cs" />
     <Compile Include="ServiceModels\Request\FileContentRedirectMetaRequest.cs" />
     <Compile Include="ServiceModels\Request\FileRequestPost.cs" />
     <Compile Include="ServiceModels\Request\GetApiMetaRequest.cs" />
@@ -141,6 +148,7 @@
     <Compile Include="ServiceModels\Request\FileUploadRequestBase.cs" />
     <Compile Include="ServiceModels\Request\UploadFileToFileSetRequest.cs" />
     <Compile Include="ServiceModels\Response\AbstractResourceListResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListAppSessionsResponse.cs" />
     <Compile Include="ServiceModels\Response\ListPropertyItemsResponse.cs" />
     <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
@@ -148,6 +156,10 @@
     <Compile Include="ServiceModels\Response\SearchResponse.cs" />
     <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppSessionLogsResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\ListPurchasedProductsResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\CreatePurchaseRefundResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\CreatePurchaseResponse.cs" />
+    <Compile Include="ServiceModels\Response\Billing\GetPurchaseResponse.cs" />
     <Compile Include="ServiceModels\Response\FileContentRedirectMetaResponse.cs" />
     <Compile Include="ServiceModels\Response\FileResponse.cs" />
     <Compile Include="ServiceModels\Response\GetApiMetaResponse.cs" />
@@ -190,6 +202,8 @@
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
     <Compile Include="Types\PropertyContentMap.cs" />
+    <Compile Include="Types\Billing\AppSessionBilling.cs" />
+    <Compile Include="Types\Billing\PurchasedProduct.cs" />
     <Compile Include="Types\Coverage.cs" />
     <Compile Include="Types\FileContent.cs" />
     <Compile Include="Types\FileSet.cs" />
@@ -209,6 +223,7 @@
     <Compile Include="Types\PropertyContainer.cs" />
     <Compile Include="Types\PropertyContentLiteral.cs" />
     <Compile Include="Types\PropertyItem.cs" />
+    <Compile Include="Types\Billing\Purchase.cs" />
     <Compile Include="Types\RequestOptions.cs" />
     <Compile Include="Types\Run.cs" />
     <Compile Include="Types\Sample.cs" />

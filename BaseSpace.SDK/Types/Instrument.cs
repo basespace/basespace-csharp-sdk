@@ -10,5 +10,8 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public string SerialNumber { get; set; }
     }
 }

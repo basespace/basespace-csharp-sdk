@@ -72,6 +72,12 @@ namespace Illumina.BaseSpace.SDK
 		#endregion
 
 		#region AppSessions
+
+        public ListAppSessionsResponse ListAppSessions(ListAppSessionsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
@@ -112,7 +118,13 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
+        public ListAppResultsResponse ListAppResultsFromAppSession(ListAppResultsFromAppSessionRequest request,
+            IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
 		}
@@ -344,6 +356,28 @@ namespace Illumina.BaseSpace.SDK
 
         #region Search
         public SearchResponse Search(SearchRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Billing
+        public GetPurchaseResponse GetPurchase(GetPurchaseRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreatePurchaseResponse CreatePurchase(CreatePurchaseRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
         }

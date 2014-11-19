@@ -9,6 +9,8 @@
 
 		public const string DEFAULT_API = "https://api.basespace.illumina.com";
 
+        public const string DEFAULT_API_BILLING = "https://store.basespace.illumina.com";
+
 		public const string DEFAULT_VERSION = "v1pre3";
 
         public const uint DEFAULT_UPLOAD_MULTIPART_SIZE = 20 * 1024 * 1024; //in bytes
@@ -20,6 +22,7 @@
 		{
 			RetryAttempts = DEFAULT_RETRY_ATTEMPTS;
 			BaseSpaceApiUrl = DEFAULT_API;
+		    BaseSpaceBillingApiUrl = DEFAULT_API_BILLING;
 			BaseSpaceWebsiteUrl = DEFAULT_WEBSITE;
 			Version = DEFAULT_VERSION;
             FileUploadMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE_THRESHOLD;
@@ -34,7 +37,9 @@
 
 		public string BaseSpaceApiUrl { get; set; }
 
-		public string Version { get; set; }
+        public string BaseSpaceBillingApiUrl { get; set; }
+
+	    public string Version { get; set; }
 
         public uint FileUploadMultipartChunkSize { get; set; }
 

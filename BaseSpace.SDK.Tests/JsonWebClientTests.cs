@@ -42,7 +42,7 @@ namespace Illumina.BaseSpace.SDK.Tests
         {
             var setting = new BaseSpaceClientSettings()
             {
-                BaseSpaceApiUrl = "https://api.basespace.illumina.com",
+                BaseSpaceApiUrl = "https://api.cloud-test.illumina.com",
                 Authentication = new OAuth2Authentication("xxxxx"),
                 TimeoutMin = .0000000001
             };
@@ -61,7 +61,7 @@ namespace Illumina.BaseSpace.SDK.Tests
                 client.Object.client.Timeout = TimeSpan.FromMinutes(1);
             });
 
-            var ass = client.Object.Send(new GetAppSessionRequest("xxxxx"), new RequestOptions(6,.1));
+            var ass = client.Object.Send(new GetAppSessionRequest("xxxxx"), new RequestOptions(6, .1));
         }
 
 

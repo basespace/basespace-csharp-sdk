@@ -80,6 +80,7 @@
     <Compile Include="Integration\AppResultTests.cs" />
     <Compile Include="Integration\AppSessionTests.cs" />
     <Compile Include="Integration\BaseIntegrationTest.cs" />
+    <Compile Include="Integration\BillingTests.cs" />
     <Compile Include="Integration\FileDownloadTests.cs" />
     <Compile Include="Integration\GenomesTests.cs" />
     <Compile Include="Integration\OAuthTests.cs" />

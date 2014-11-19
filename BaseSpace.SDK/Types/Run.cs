@@ -43,6 +43,9 @@ namespace Illumina.BaseSpace.SDK.Types
         public int Number { get; set; }
 
         [DataMember]
+        public InstrumentCompact Instrument { get; set; }
+
+        [DataMember]
         public UserCompact UserOwnedBy { get; set; }
 
         public string Type { get { return PropertyTypes.RUN; } }

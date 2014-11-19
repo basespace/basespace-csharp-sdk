@@ -22,6 +22,8 @@ namespace Illumina.BaseSpace.SDK
 
 		CreateProjectResponse CreateProject(CreateProjectRequest request, IRequestOptions options = null);
 
+        ListAppSessionsResponse ListAppSessions(ListAppSessionsRequest request, IRequestOptions options = null);
+
 		GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
 
         CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
@@ -31,6 +33,8 @@ namespace Illumina.BaseSpace.SDK
         ListSamplesResponse ListSamples(ListSamplesRequest request, IRequestOptions options = null);
 
         ListAppResultsResponse ListAppResults(ListAppResultsRequest request, IRequestOptions options = null);
+
+        ListAppResultsResponse ListAppResultsFromAppSession(ListAppResultsFromAppSessionRequest request, IRequestOptions options = null);
 
 		GetAppResultResponse GetAppResult(GetAppResultRequest request, IRequestOptions options = null);
 
@@ -126,5 +130,13 @@ namespace Illumina.BaseSpace.SDK
         /// Retrieve resources from the API based on a search query
         /// </summary>
         SearchResponse Search(SearchRequest request, IRequestOptions options = null);
+
+        GetPurchaseResponse GetPurchase(GetPurchaseRequest request, IRequestOptions options = null);
+
+        CreatePurchaseResponse CreatePurchase(CreatePurchaseRequest request, IRequestOptions options = null);
+
+        CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null);
+
+        ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null);
     }
 }
