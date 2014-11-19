@@ -14,40 +14,54 @@ namespace Illumina.BaseSpace.SDK
 {
     public class JsonWebClient : IWebClient
     {
-        private readonly JsonServiceClient client;
+        private JsonServiceClient client;
 
-        private readonly ILog logger;
+        private ILog logger;
 
-        private readonly IClientSettings settings;
+        private IClientSettings settings;
+
+        internal void RespawnClient()
+        {
+            if (_clientFactoryMethod != null)
+                _clientFactoryMethod();
+        }
+
+
+        private readonly Action _clientFactoryMethod; 
 
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
         {
-            if (settings == null)
+            _clientFactoryMethod = () =>
             {
-                throw new ArgumentNullException("settings");
-            }
+                if (settings == null)
+                {
+                    throw new ArgumentNullException("settings");
+                }
 
-            this.settings = settings;
-            DefaultRequestOptions = defaultOptions ?? new RequestOptions();
-            logger = LogManager.GetCurrentClassLogger();
+                this.settings = settings;
+                DefaultRequestOptions = defaultOptions ?? new RequestOptions();
+                logger = LogManager.GetCurrentClassLogger();
 
-            // call something on this object so it gets initialized in single threaded context
-            HttpEncoder.Default.SerializeToString();
+                // call something on this object so it gets initialized in single threaded context
+                HttpEncoder.Default.SerializeToString();
 
-			//need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
-			if (Helpers.IsRunningOnMono())
-			{
-				HttpEncoder.Current = HttpEncoder.Default;
-			}
+                //need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
+                if (Helpers.IsRunningOnMono())
+                {
+                    HttpEncoder.Current = HttpEncoder.Default;
+                }
 
-            HttpEncoder.Current.SerializeToString();
+                HttpEncoder.Current.SerializeToString();
 
-            client = new JsonServiceClient(settings.BaseSpaceApiUrl);
-            client.LocalHttpWebRequestFilter += WebRequestFilter;
+                client = new JsonServiceClient(settings.BaseSpaceApiUrl);
+                client.LocalHttpWebRequestFilter += WebRequestFilter;
 
-            if (settings.TimeoutMin > 0)
-                client.Timeout = TimeSpan.FromMinutes(settings.TimeoutMin);
+                if (settings.TimeoutMin > 0)
+                    client.Timeout = TimeSpan.FromMinutes(settings.TimeoutMin);
+            };
+
+            _clientFactoryMethod();
         }
 
         static JsonWebClient()
@@ -103,7 +117,12 @@ namespace Illumina.BaseSpace.SDK
                 TReturn result = null;
                 options = options ?? DefaultRequestOptions;
 
-                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger);
+                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger
+                    ,retryHandler: (exc) =>
+                    {
+                        RespawnClient();
+                        return RetryLogic.GenericRetryHandler(exc);
+                    });
                 return result;
             }
             catch (WebServiceException webx)
