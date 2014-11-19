@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Web.Util;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.Deserialization;
@@ -14,20 +15,20 @@ namespace Illumina.BaseSpace.SDK
 {
     public class JsonWebClient : IWebClient
     {
-        private JsonServiceClient client;
+        internal JsonServiceClient client;
 
         private ILog logger;
 
         private IClientSettings settings;
 
-        internal void RespawnClient()
+        public virtual void RespawnClient()
         {
             if (_clientFactoryMethod != null)
                 _clientFactoryMethod();
         }
 
 
-        private readonly Action _clientFactoryMethod; 
+        internal readonly Action _clientFactoryMethod; 
 
 
         public JsonWebClient(IClientSettings settings, IRequestOptions defaultOptions = null)
@@ -118,7 +119,7 @@ namespace Illumina.BaseSpace.SDK
                 options = options ?? DefaultRequestOptions;
 
                 RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(), () => result = request.GetSendFunc(client)(), logger
-                    ,retryHandler: (exc) =>
+                    , retryIntervalBaseSecs:options.RetryPowerBase,retryHandler: (exc) =>
                     {
                         RespawnClient();
                         return RetryLogic.GenericRetryHandler(exc);
