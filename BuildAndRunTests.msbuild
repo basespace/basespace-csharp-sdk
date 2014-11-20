@@ -4,10 +4,10 @@
   <ItemsThatNeedToBeCopied Include="C:\build-files\basespace-csharp-sdk\**\*.*"/>
 </ItemGroup>
 <Target Name="Build">
-<Copy SourceFiles="@(ItemsThatNeedToBeCopied)" DestinationFiles="@(ItemsThatNeedToBeCopied->'.\%(RecursiveDir)%(Filename)%(Extension)')"      ></Copy>
+	<Copy SourceFiles="@(ItemsThatNeedToBeCopied)" DestinationFiles="@(ItemsThatNeedToBeCopied->'.\%(RecursiveDir)%(Filename)%(Extension)')"      ></Copy>
     <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Release">
     </MSBuild>
-	<Exec Command='"BaseSpace.SDK\bin\Release\GitLink.exe" .\ -s $(build_vcs_number) -u git@github.com:basespace/basespace-csharp-sdk.git' />
+	<Exec Command='"BaseSpace.SDK\bin\Release\GitLink.exe" .\ -s $(build_vcs_number) -u https://github.com/basespace/basespace-csharp-sdk.git' />
 
     <!--<xunit Assembly="BaseSpace.SDK.Tests\bin\release\Illumina.BaseSpace.SDK.Tests.dll" />-->
 	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
