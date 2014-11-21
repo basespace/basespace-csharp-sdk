@@ -150,6 +150,11 @@ namespace Illumina.BaseSpace.SDK
             {
                 settings.Authentication.UpdateHttpHeader(req);
             }
+
+            if (!string.IsNullOrWhiteSpace(settings.UserAgent))
+            {
+                req.UserAgent = settings.UserAgent;
+            }
         }
     }
 }

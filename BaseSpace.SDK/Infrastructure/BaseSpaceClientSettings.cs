@@ -1,7 +1,12 @@
-﻿namespace Illumina.BaseSpace.SDK
+﻿using System.Diagnostics;
+using System.Reflection;
+
+namespace Illumina.BaseSpace.SDK
 {
 	public class BaseSpaceClientSettings : IClientSettings
 	{
+	    private static readonly string SDK_VERSION;
+
 		public const uint DEFAULT_RETRY_ATTEMPTS = 6;
 
 		public const string DEFAULT_WEBSITE = "https://basespace.illumina.com";
@@ -17,6 +22,13 @@
 
 		public const uint DEFAULT_MULTIPART_SIZE_THRESHOLD = 25*1024*1024; //in bytes
 
+	    static BaseSpaceClientSettings()
+	    {
+	        var assembly = Assembly.GetExecutingAssembly();
+	        var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+	        SDK_VERSION = fileVersionInfo.ProductVersion;
+	    }
+
 		public BaseSpaceClientSettings()
 		{
 			RetryAttempts = DEFAULT_RETRY_ATTEMPTS;
@@ -26,8 +38,8 @@
 			Version = DEFAULT_VERSION;
             FileUploadMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE_THRESHOLD;
             FileUploadMultipartChunkSize = DEFAULT_UPLOAD_MULTIPART_SIZE;
-
             FileDownloadMultipartSizeThreshold = DEFAULT_DOWNLOAD_MULTIPART_SIZE;
+		    UserAgent = GetDefaultUserAgent();
 		}
 
 		public uint RetryAttempts { get; set; }
@@ -49,5 +61,12 @@
         public IAuthentication Authentication { get; set; }
 
         public int TimeoutMin { get; set; }
+
+        public string UserAgent { get; set; }
+
+	    private static string GetDefaultUserAgent()
+	    {
+	        return string.Format("Illumina BaseSpace C# SDK {0}", SDK_VERSION);
+	    }
 	}
 }
