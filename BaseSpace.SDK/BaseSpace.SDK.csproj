@@ -95,6 +95,7 @@
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
+    <Compile Include="ServiceModels\Request\ListLibraryContainersRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleLibrariesFromRunRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractResourceListRequest.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="ServiceModels\Response\DeletePropertyResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppResultResponse.cs" />
     <Compile Include="ServiceModels\Response\GetPropertyResponse.cs" />
+    <Compile Include="ServiceModels\Response\ListLibraryContainersResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSampleLibrariesResponse.cs" />
     <Compile Include="ServiceModels\Response\SearchResponse.cs" />
     <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />

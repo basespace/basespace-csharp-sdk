@@ -17,6 +17,8 @@ namespace Illumina.BaseSpace.SDK
 
         ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null);
 
+        ListLibraryContainersResponse ListLibraryContainers(ListLibraryContainersRequest request, IRequestOptions options = null);
+
 		GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null);
 
 		ListProjectsResponse ListProjects(ListProjectsRequest request, IRequestOptions options = null);

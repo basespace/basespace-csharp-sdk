@@ -390,5 +390,12 @@ namespace Illumina.BaseSpace.SDK
             return WebClient.Send(request, options);
         }
         #endregion
+
+        #region LibraryContainers
+        public ListLibraryContainersResponse ListLibraryContainers(ListLibraryContainersRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
     }
 }

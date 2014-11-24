@@ -83,6 +83,7 @@
     <Compile Include="Integration\OAuthTests.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\PropertyTests.cs" />
+    <Compile Include="Integration\LibraryContainersTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
     <Compile Include="Integration\UploadFileToAppResultTest.cs" />
     <Compile Include="Integration\UploadLogsToAppSessionTests.cs" />

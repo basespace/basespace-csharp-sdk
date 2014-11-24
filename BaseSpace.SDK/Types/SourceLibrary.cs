@@ -282,4 +282,11 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public float ItemValue { get; set; }
     }
+
+    public enum LibraryContainerSortFields
+    {
+        Id,
+        DateCreated,
+        DateModified
+    }
 }
