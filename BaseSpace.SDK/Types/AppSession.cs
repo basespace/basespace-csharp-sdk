@@ -56,8 +56,12 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefLogs { get; set; }
+
+        [DataMember]
+        public AppSessionCompact AppSessionRoot { get; set; }
     }
 
     public enum AppSessionStatus { Running, Complete, NeedsAttention, Aborted }
     public enum AppSessionQueryParameters { Status, StatusSummary }
+    public enum AppSessionSortByParameters { Id, Name, DateCreated }
 }

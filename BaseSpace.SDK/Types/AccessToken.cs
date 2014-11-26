@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 
 namespace Illumina.BaseSpace.SDK.Types
 {
-    internal class AccessToken
+    public class AccessToken
     {
         public string TokenString { get; set; }
         public int ExpiresIn { get; set; }

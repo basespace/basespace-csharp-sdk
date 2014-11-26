@@ -72,6 +72,12 @@ namespace Illumina.BaseSpace.SDK
 		#endregion
 
 		#region AppSessions
+
+        public ListAppSessionsResponse ListAppSessions(ListAppSessionsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		public GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
@@ -111,6 +117,13 @@ namespace Illumina.BaseSpace.SDK
 		{
 			return WebClient.Send(request, options);
 		}
+
+
+        public ListAppResultsResponse ListAppResultsFromAppSession(ListAppResultsFromAppSessionRequest request,
+            IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
 
 		public CreateAppResultResponse CreateAppResult(CreateAppResultRequest request, IRequestOptions options = null)
 		{
@@ -259,6 +272,23 @@ namespace Illumina.BaseSpace.SDK
             command.Execute();
         }
 
+        public void DownloadFile(FileCompact file, string filePath, int maxThreadCount,
+            CancellationToken token = new CancellationToken())
+        {
+            var command = new DownloadFileCommand(this, file, filePath, Settings, token, threadCount: maxThreadCount);
+            command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
+            command.Execute();
+        }
+
+        public void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount,
+                                 CancellationToken token = new CancellationToken())
+        {
+               var command = new DownloadFileCommand(this, file,filePath, Settings, maxThreadCount, maxChunkSize, token);
+            command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
+            command.Execute();
+        }
+
+
         public event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
         protected void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)
@@ -320,6 +350,35 @@ namespace Illumina.BaseSpace.SDK
         /// Delete a property given its parent resource and name.
         /// </summary>
         public DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Search
+        public SearchResponse Search(SearchRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+        #endregion
+
+        #region Billing
+        public GetPurchaseResponse GetPurchase(GetPurchaseRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreatePurchaseResponse CreatePurchase(CreatePurchaseRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
         }

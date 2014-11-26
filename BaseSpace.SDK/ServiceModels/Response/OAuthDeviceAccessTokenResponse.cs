@@ -1,5 +1,3 @@
-using Illumina.BaseSpace.SDK.Types;
-using System;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels

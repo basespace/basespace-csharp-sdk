@@ -1,4 +1,5 @@
-﻿using Illumina.BaseSpace.SDK.ServiceModels;
+﻿using System.Linq;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Tests.Helpers;
 using Illumina.BaseSpace.SDK.Types;
 using Xunit;
@@ -42,6 +43,13 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             var updateAppSession = response.Response;
             Assert.NotNull(updateAppSession);
             Assert.True(updateAppSession.Status.Contains(AppSessionStatus.Complete.ToString()));
+        }
+
+        [Fact]
+        public void CanListAppSessions()
+        {
+            var appSessionsList = Client.ListAppSessions(new ListAppSessionsRequest()).Response;
+            Assert.True(appSessionsList.Items.Any());
         }
     }
 }

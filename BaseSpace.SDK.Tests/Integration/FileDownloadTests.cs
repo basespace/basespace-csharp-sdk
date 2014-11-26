@@ -28,6 +28,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(response.Response.UploadStatus == FileUploadStatus.complete);
 
             var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
+            Client.FileDownloadProgressChanged += delegate(object sender, FileDownloadProgressChangedEventArgs e)
+            {
+                Assert.Equal(appResult.Id, e.FileId);// check if the file id is one we expect
+            };
             Client.DownloadFile(response.Response.Id, fs);
             Assert.Equal(fs.Length, data.Length);
         }
