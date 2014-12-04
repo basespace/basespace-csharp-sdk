@@ -20,7 +20,7 @@ namespace Illumina.BaseSpace.SDK.Types
         public virtual TResponse Response { get; set; }
 
         [DataMember(IsRequired = true)]
-        internal ServiceStack.ServiceInterface.ServiceModel.ResponseStatus ResponseStatus
+        public ServiceStack.ServiceInterface.ServiceModel.ResponseStatus ResponseStatus
         {
             get { return status; }
             set { status = value; }
