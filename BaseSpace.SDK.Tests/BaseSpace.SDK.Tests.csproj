@@ -81,6 +81,7 @@
     <Compile Include="Integration\FileDownloadTests.cs" />
     <Compile Include="Integration\GenomesTests.cs" />
     <Compile Include="Integration\OAuthTests.cs" />
+    <Compile Include="Integration\PrepTests.cs" />
     <Compile Include="Integration\ProjectsTests.cs" />
     <Compile Include="Integration\PropertyTests.cs" />
     <Compile Include="Integration\LibraryContainersTests.cs" />
@@ -119,6 +120,9 @@
       <Project>{53207aea-0e50-45ab-9aa5-d460cd3844bb}</Project>
       <Name>BaseSpace.SDK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

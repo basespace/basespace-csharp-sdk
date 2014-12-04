@@ -104,6 +104,16 @@ namespace Illumina.BaseSpace.SDK.Types
         public int? InsertSize { get; set; }
     }
 
+    public class SampleLibraryRequest
+    {
+        public string SampleLibraryId { get; set; }
+        public string BiologicalSampleId { get; set; }
+        public string Position { get; set; }
+        public string Index1SequenceId { get; set; }
+        public string Index2SequenceId { get; set; }
+        public string ProjectId { get; set; }
+    }
+
     [DataContract]
     public class LibraryIndexCompact
     {
@@ -290,3 +300,4 @@ namespace Illumina.BaseSpace.SDK.Types
         DateModified
     }
 }
+
