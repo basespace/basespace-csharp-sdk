@@ -226,7 +226,6 @@
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
     <Compile Include="Types\PlannedRun.cs" />
-    <Compile Include="Types\RegisteredInstrument.cs" />
     <Compile Include="Types\SourceLibrary.cs" />
     <Compile Include="Types\PropertyContentMap.cs" />
     <Compile Include="Types\Billing\AppSessionBilling.cs" />
@@ -256,7 +255,6 @@
     <Compile Include="Types\Sample.cs" />
     <Compile Include="Types\ScheduledDowntime.cs" />
     <Compile Include="Types\SearchResult.cs" />
-    <Compile Include="Types\SourceLibrary.cs" />
     <Compile Include="Types\Species.cs" />
     <Compile Include="Types\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
