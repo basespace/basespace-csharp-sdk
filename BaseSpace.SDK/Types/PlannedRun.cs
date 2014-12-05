@@ -10,20 +10,6 @@ namespace Illumina.BaseSpace.SDK.Types
     [DataContract(Name="PlannedRun")]
     public class PlannedRun : RunCompact
     {
-		[DataMember]
-		[Description("If the run is locked, designates the user holding the lock")]
-		public UserCompact UserLockedBy { get; set; }
-
-        [DataMember]
-        [Description("If the run is locked, designates the instrument (if any) holding the lock")]
-        public RegisteredInstrumentCompact InstrumentLockedBy { get; set; }
-
-        [DataMember]
-        public string ReagentBarcode { get; set; }
-
-        [DataMember]
-        public string FlowcellBarcode { get; set; }
-
         [DataMember]
         public string AnalysisWorkflowType { get; set; }
 
