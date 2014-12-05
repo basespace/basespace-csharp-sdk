@@ -50,6 +50,21 @@ namespace Illumina.BaseSpace.SDK.Types
 
         public string Type { get { return PropertyTypes.RUN; } }
 
+        [DataMember]
+        public string PlatformName { get; set; }
+
+        [DataMember]
+        public int NumCyclesRead1 { get; set; }
+
+        [DataMember]
+        public int NumCyclesRead2 { get; set; }
+
+        [DataMember]
+        public int NumCyclesIndex1 { get; set; }
+
+        [DataMember]
+        public int NumCyclesIndex2 { get; set; }
+
         public override string ToString()
         {
             return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
