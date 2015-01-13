@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
@@ -131,25 +132,33 @@ namespace Illumina.BaseSpace.SDK.Types
     public class PrepSettings
     {
         [DataMember]
-        public bool? Quantitate { get; set; }
-
-        [DataMember]
-        public bool? Normalize { get; set; }
-
-        [DataMember]
-        public int? PcrCycles { get; set; }
-
-        [DataMember]
-        public int? DefaultInsertSize { get; set; }
-
-        [DataMember]
-        public float? FragmentationTimeInMinutes { get; set; }
-
-        [DataMember]
         public string LibraryPrepName { get; set; }
 
         [DataMember]
         public string ProtocolVersion { get; set; }
+
+        [DataMember]
+        public List<PrepModule> Modules { get; set; }
+    }
+
+    [DataContract]
+    public class PrepModule
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public List<PrepModuleParameter> Parameters { get; set; }
+    }
+
+    [DataContract]
+    public class PrepModuleParameter
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Value { get; set; }
     }
 
     public enum RunSortByParameters
