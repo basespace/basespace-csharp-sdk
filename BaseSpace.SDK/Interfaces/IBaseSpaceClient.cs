@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading;
 using Illumina.BaseSpace.SDK.ServiceModels;
+using Illumina.BaseSpace.SDK.ServiceModels.Response;
 using Illumina.BaseSpace.SDK.Types;
 using System.Collections.Generic;
 
@@ -16,6 +17,8 @@ namespace Illumina.BaseSpace.SDK
 		GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
 
         ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null);
+
+        ListLibraryContainersResponse ListLibraryContainers(ListLibraryContainersRequest request, IRequestOptions options = null);
 
 		GetProjectResponse GetProject(GetProjectRequest request, IRequestOptions options = null);
 
@@ -126,6 +129,7 @@ namespace Illumina.BaseSpace.SDK
         /// </summary>
         /// <remarks>DELETE: {resource}/properties/{name}</remarks>
         DeletePropertyResponse DeletePropertyForResource(DeletePropertyRequest request, IRequestOptions options = null);
+
         /// <summary>
         /// Retrieve resources from the API based on a search query
         /// </summary>
@@ -138,6 +142,9 @@ namespace Illumina.BaseSpace.SDK
         CreatePurchaseRefundResponse CreatePurchaseRefund(CreatePurchaseRefundRequest request, IRequestOptions options = null);
 
         ListPurchasedProductsResponse ListPurchasedProducts(ListPurchasedProductsRequest request, IRequestOptions options = null);
+
+        ListSampleLibrariesResponse ListSampleLibrariesFromRun(ListSampleLibrariesFromRunRequest request, IRequestOptions options = null);
+
         /// <summary>
         /// Create a biological sample
         /// </summary>

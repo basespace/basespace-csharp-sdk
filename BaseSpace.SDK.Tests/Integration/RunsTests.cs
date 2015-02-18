@@ -51,7 +51,5 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             }
             
         }
-        
-
     }
 }

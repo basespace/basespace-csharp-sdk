@@ -16,4 +16,3 @@ namespace Illumina.BaseSpace.SDK.Types
         public string Name { get; set; }
     }
 }
-

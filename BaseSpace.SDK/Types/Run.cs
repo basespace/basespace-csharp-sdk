@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
@@ -47,6 +48,15 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public UserCompact UserOwnedBy { get; set; }
+
+        [DataMember]
+        public PrepSettings PrepSettings { get; set; }
+
+        [DataMember]
+        public DateTime? ExpectedInstrumentCompletionDate { get; set; }
+
+        [DataMember]
+        public string PrepErrorCode { get; set; }
 
         public string Type { get { return PropertyTypes.RUN; } }
 
@@ -116,6 +126,39 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public bool AutoRetireOnCompletion { get; set; }
+    }
+
+    [DataContract]
+    public class PrepSettings
+    {
+        [DataMember]
+        public string LibraryPrepName { get; set; }
+
+        [DataMember]
+        public string ProtocolVersion { get; set; }
+
+        [DataMember]
+        public List<PrepModule> Modules { get; set; }
+    }
+
+    [DataContract]
+    public class PrepModule
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public List<PrepModuleParameter> Parameters { get; set; }
+    }
+
+    [DataContract]
+    public class PrepModuleParameter
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Value { get; set; }
     }
 
     public enum RunSortByParameters
