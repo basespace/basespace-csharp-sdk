@@ -42,7 +42,7 @@
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Illumina.TerminalVelocity">
-      <HintPath>..\packages\TerminalVelocity.Sharp.1.0.0.72\lib\net40\Illumina.TerminalVelocity.dll</HintPath>
+      <HintPath>..\..\BrightSpark\output\bin\Illumina.TerminalVelocity.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -98,6 +98,7 @@
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
+    <Compile Include="ServiceModels\Request\CreateProjectShareRequest.cs" />
     <Compile Include="ServiceModels\Request\ListLibraryContainersRequest.cs" />
     <Compile Include="ServiceModels\Request\ListSampleLibrariesFromRunRequest.cs" />
     <Compile Include="ServiceModels\Request\AbstractRequest.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="ServiceModels\Response\ListSampleLibrariesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSupportedLibraryPrepKitsResponse.cs" />
     <Compile Include="ServiceModels\Response\PlannedRunReadyResponse.cs" />
+    <Compile Include="ServiceModels\Response\ProjectShareResponse.cs" />
     <Compile Include="ServiceModels\Response\SearchResponse.cs" />
     <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppSessionLogsResponse.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
+    <Compile Include="Types\Invite.cs" />
     <Compile Include="Types\PlannedRun.cs" />
     <Compile Include="Types\SourceLibrary.cs" />
     <Compile Include="Types\PropertyContentMap.cs" />
@@ -264,17 +267,7 @@
     <Compile Include="Types\Variant.cs" />
     <Compile Include="Types\VerificationCode.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="BaseSpace.SDK.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!--<Import Project="$(SolutionDir)\.nuget\nuget.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
