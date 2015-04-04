@@ -75,6 +75,7 @@
     <Compile Include="Extensions\PropertyExtensions.cs" />
     <Compile Include="Extensions\RequestUrlExtensions.cs" />
     <Compile Include="Infrastructure\ApiNames.cs" />
+    <Compile Include="Infrastructure\api_response_containing_lists.cs" />
     <Compile Include="Infrastructure\BaseSpaceClientSettings.cs" />
     <Compile Include="Infrastructure\BaseSpaceException.cs" />
     <Compile Include="Infrastructure\BufferPool.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Infrastructure\HttpMethods.cs" />
     <Compile Include="Infrastructure\OAuth2Authentication.cs" />
     <Compile Include="Infrastructure\JsonWebClient.cs" />
+    <Compile Include="Infrastructure\producer_consumer_thread_safe_queue.cs" />
     <Compile Include="Infrastructure\RetryLogic.cs" />
     <Compile Include="Interfaces\IAbstractResource.cs" />
     <Compile Include="Interfaces\IAbstractQueryParameters.cs" />
@@ -271,6 +273,9 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Infrastructure\SujitDownload.cpp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
