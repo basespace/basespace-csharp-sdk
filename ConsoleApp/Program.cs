@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Illumina.BaseSpace.SDK;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
@@ -18,7 +21,8 @@ namespace ConsoleApp
             public string Url { get; set; }
             public string Path { get; set; }
             public string FileId { get; set; }
-            public string HrefContent { get; set; }
+            public string DirectUrl { get; set; }
+            public string RenewUrl { get; set; }
             public DateTime Expires { get; set; }
         }
         public class BsfsMount
@@ -29,7 +33,11 @@ namespace ConsoleApp
             }
             public List<RemoteFile> MountFileList { get; set; }
         }
-
+        static public DateTime FromUnixTime(long unixTime)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTime);
+        }
         private static int totalFiles;
         static void Main(string[] args)
         {
@@ -54,6 +62,27 @@ namespace ConsoleApp
                 {
                     Console.WriteLine("{0}: {1}", searchResult.Href, searchResult.SpeciesName);
                 }*/
+                var  request  = (HttpWebRequest) WebRequest.Create("https://api.cloud-test.illumina.com/v1pre3/files/gen1_33309276/content?access_token=a48fb726ab1b49319b873c7d1e18104d");
+                request.AllowAutoRedirect = false;
+                var response = (HttpWebResponse)request.GetResponse();
+                var redirectedURl = response.Headers["Location"];
+                DateTime expires = DateTime.MaxValue;
+                
+                if (!string.IsNullOrWhiteSpace(redirectedURl))
+                {
+                    var expiresEpoch = HttpUtility.ParseQueryString(redirectedURl).Get("expires");
+                    long epoch = 0;
+                    if (!string.IsNullOrWhiteSpace(redirectedURl)&&long.TryParse(expiresEpoch, out epoch))
+                    {
+                        expires = FromUnixTime(epoch);
+                    }
+                }
+                var remainingTime = (expires - DateTime.UtcNow).TotalDays;
+                Console.WriteLine("Expires:{0}", expires);
+                
+                //https://api.cloud-test.illumina.com/v1pre3/files/gen1_33309276/content?access_token=a48fb726ab1b49319b873c7d1e18104d
+                
+                
                 GetGenomeFiles(client);
             }
           //  catch (Exception ex)
@@ -116,17 +145,18 @@ namespace ConsoleApp
                 foreach (var file in files)
                 {
                     Console.WriteLine("{0}:{1}", file.Path, file.Href);
-                    var fileMeta = client.GetFileContentUrl(new FileContentRedirectMetaRequest(file.Id)).Response;
+                    var fileMeta = client.GetFileContentUrl(new FileContentRedirectMetaRequest(file.Id)).Response;                    
                     bsfsMount.MountFileList.Add(new RemoteFile()
                     {
                         Path = file.Path,
                         Url = file.Href.ToString(),
                         FileId = file.Id,
-                        HrefContent = fileMeta.HrefContent,
-                        Expires = fileMeta.Expires
+                        DirectUrl = fileMeta.HrefContent,
+                        Expires = fileMeta.Expires,
+                        RenewUrl = String.Format("{0}/v1pre3/files/{1}/content?access_token={2}", "https://api.cloud-test.illumina.com", file.Id, "a48fb726ab1b49319b873c7d1e18104d")
                     });
                     totalFiles++;
-                   // break;
+                   break;
                 }
             }
         }
