@@ -19,6 +19,7 @@ namespace ConsoleApp
             public string Path { get; set; }
             public string FileId { get; set; }
             public string HrefContent { get; set; }
+            public DateTime Expires { get; set; }
         }
         public class BsfsMount
         {
@@ -29,8 +30,10 @@ namespace ConsoleApp
             public List<RemoteFile> MountFileList { get; set; }
         }
 
+        private static int totalFiles;
         static void Main(string[] args)
         {
+            totalFiles = 0;
           //  try
             {
                 string token = "a48fb726ab1b49319b873c7d1e18104d";
@@ -61,7 +64,7 @@ namespace ConsoleApp
        
         public static List<FileCompact> GetAllFilesUsingPaging(BaseSpaceClient client, ListFileSetFilesRequest listFileSetFilesRequest)
         {
-            List<FileCompact> retVal = new List<FileCompact>();
+            var retVal = new List<FileCompact>();
             listFileSetFilesRequest.Limit = 1000;            
             GenericResourceList<FileCompact, FilesSortByParameters> nextPage;
             do
@@ -75,9 +78,8 @@ namespace ConsoleApp
 
         private static void GetGenomeFiles(BaseSpaceClient client)
         {
-            BsfsMount bsfsMount = new BsfsMount();
-            var genomes = client.ListGenomes(new ListGenomeRequest()).Response;
-            int totalFiles = 0;
+            var bsfsMount = new BsfsMount();
+            var genomes = client.ListGenomes(new ListGenomeRequest()).Response;            
             foreach (var genome in genomes.Items)
             {
                 if (genome.HrefFileSets == null)
@@ -85,18 +87,7 @@ namespace ConsoleApp
                     continue;
                 }
                 var genomeFileSets = client.ListFileSets(new ListGenomeFileSetsRequest(genome)).Response;
-                foreach (FileSet fileSet in genomeFileSets.Items)
-                {
-
-                    var fileSetFiles = GetAllFilesUsingPaging(client, new ListFileSetFilesRequest(fileSet));
-                    foreach (var file in fileSetFiles)
-                    {
-                        Console.WriteLine("{0}:{1}",file.Path,file.Href);
-                        FileContentRedirectMeta fileMeta = client.GetFileContentUrl(new FileContentRedirectMetaRequest(file.Id)).Response;
-                        bsfsMount.MountFileList.Add(new RemoteFile() { Path = file.Path, Url = file.Href.ToString(), FileId = file.Id, HrefContent = fileMeta.HrefContent.ToString() });                        
-                        totalFiles++;                        
-                    }
-                }
+                GetAllFilesFromFileSets(client, genomeFileSets.Items, bsfsMount);
                 var annotations = client.ListGenomeAnnotations(new ListGenomeAnnotationsRequest(genome)).Response;
                 foreach (var annotation in annotations.Items)
                 {
@@ -105,19 +96,7 @@ namespace ConsoleApp
                         continue;
                     }
                     var annotationFileSets = client.ListFileSets(new ListGenomeAnnotationFileSetsRequest(annotation)).Response;
-                    //var fileList = GetAllFilesUsingPaging(client, new ListGenomeAnnotationFileSetsRequest(annotation));
-                    //GenericResourceList<GenomeAnnotationFileSet, FileSetSortFields> fileList = client.ListFileSets(new ListGenomeAnnotationFileSetsRequest(annotation)).Response;
-                    foreach (FileSet fileSet in annotationFileSets.Items)
-                    {
-                        var fileSetFiles = GetAllFilesUsingPaging(client, new ListFileSetFilesRequest(fileSet));
-                        foreach (var file in fileSetFiles)
-                        {
-                            Console.WriteLine("{0}:{1}", file.Path, file.Href);
-                            FileContentRedirectMeta fileMeta = client.GetFileContentUrl(new FileContentRedirectMetaRequest(file.Id)).Response;
-                            bsfsMount.MountFileList.Add(new RemoteFile() { Path = file.Path, Url = file.Href.ToString(), FileId = file.Id, HrefContent = fileMeta.HrefContent.ToString() });
-                            totalFiles++;
-                        }
-                    }
+                    GetAllFilesFromFileSets(client, annotationFileSets.Items, bsfsMount);                   
                 }
             }
             using (var stream = System.IO.File.OpenWrite("out.json"))
@@ -128,6 +107,28 @@ namespace ConsoleApp
             Console.ReadLine();
 
         }
-       
+
+        private static void GetAllFilesFromFileSets(BaseSpaceClient client, IEnumerable<FileSet> fileSets, BsfsMount bsfsMount)
+        {
+            foreach (FileSet fileSet in fileSets)
+            {
+                var files = GetAllFilesUsingPaging(client, new ListFileSetFilesRequest(fileSet));
+                foreach (var file in files)
+                {
+                    Console.WriteLine("{0}:{1}", file.Path, file.Href);
+                    var fileMeta = client.GetFileContentUrl(new FileContentRedirectMetaRequest(file.Id)).Response;
+                    bsfsMount.MountFileList.Add(new RemoteFile()
+                    {
+                        Path = file.Path,
+                        Url = file.Href.ToString(),
+                        FileId = file.Id,
+                        HrefContent = fileMeta.HrefContent,
+                        Expires = fileMeta.Expires
+                    });
+                    totalFiles++;
+                   // break;
+                }
+            }
+        }
     }
 }
