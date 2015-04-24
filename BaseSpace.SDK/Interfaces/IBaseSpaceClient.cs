@@ -28,6 +28,8 @@ namespace Illumina.BaseSpace.SDK
 
         ListAppSessionsResponse ListAppSessions(ListAppSessionsRequest request, IRequestOptions options = null);
 
+		ProjectShareResponse CreateProjectShare(CreateProjectShareRequest request, IRequestOptions options = null);
+				
 		GetAppSessionResponse GetAppSession(GetAppSessionRequest request, IRequestOptions options = null);
 
         CreateAppSessionLogsResponse CreateAppSessionLogs(CreateAppSessionLogsRequest request, IRequestOptions options = null);
