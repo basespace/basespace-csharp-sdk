@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ServiceStack.Text;
 using Xunit;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Tests.Helpers;
@@ -704,6 +705,330 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
             Assert.Equal(new[] { "b1a", "b1b", "b1c" }, prop.Items[1].ToMap()["b1"].Values);
             Assert.Equal(new[] { "b2a" }, prop.Items[1].ToMap()["b2"].Values);
+        }
+
+        #region test data for property arrays containing nulls
+        private string _propertyJsonWithArrayObjectThenNull = @"
+{
+    ""Items"": [
+        {
+            ""Type"": ""appresult[]"",
+            ""Href"": ""v1pre3/appsessions/4445456/properties/Input.sample-grouper-id.fpa"",
+            ""Name"": ""Input.sample-grouper-id.fpa"",
+            ""Description"": ""Fpa Samples"",
+            ""Items"": [
+                {
+                    ""Id"": ""3329331"",
+                    ""Href"": ""v1pre3/appresults/3329331"",
+                    ""UserOwnedBy"": {
+                        ""Id"": ""3003"",
+                        ""Href"": ""v1pre3/users/3003"",
+                        ""Name"": ""BaseSpace 2"",
+                        ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                    },
+                    ""Name"": ""HuBr2"",
+                    ""Status"": ""Complete"",
+                    ""StatusSummary"": """",
+                    ""DateCreated"": ""2015-05-12T08:53:15.0000000"",
+                    ""TotalSize"": 22446220,
+                    ""AppSession"": {
+                        ""Id"": ""4441438"",
+                        ""Name"": ""MSR: Small RNA"",
+                        ""Href"": ""v1pre3/appsessions/4441438"",
+                        ""Application"": {
+                            ""Id"": ""748758"",
+                            ""Href"": ""v1pre3/applications/748758"",
+                            ""Name"": ""MSR: Small RNA"",
+                            ""CompanyName"": ""Illumina Inc."",
+                            ""DateCreated"": ""2015-03-20T08:23:06.0000000"",
+                            ""IsBillingActivated"": false,
+                            ""Category"": ""Misc."",
+                            ""Classifications"": []
+                        },
+                        ""UserCreatedBy"": {
+                            ""Id"": ""3003"",
+                            ""Href"": ""v1pre3/users/3003"",
+                            ""Name"": ""BaseSpace 2"",
+                            ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                        },
+                        ""Status"": ""Complete"",
+                        ""StatusSummary"": """",
+                        ""DateCreated"": ""2015-05-12T05:51:05.0000000"",
+                        ""ModifiedOn"": ""2015-05-12T08:53:08.0000000"",
+                        ""DateCompleted"": ""2015-05-12T08:53:16.0000000"",
+                        ""TotalSize"": 109461059
+                    }
+                },
+                null
+            ],
+            ""HrefItems"": ""v1pre3/appsessions/4445456/properties/Input.sample-grouper-id.fpa/items"",
+            ""ItemsDisplayedCount"": 2,
+            ""ItemsTotalCount"": 2
+        }
+    ]
+}";
+
+        private string _propertyJsonWithArrayNullThenObject = @"
+{
+    ""Items"": [
+        {
+            ""Type"": ""appresult[]"",
+            ""Href"": ""v1pre3/appsessions/4445456/properties/Input.sample-grouper-id.fpa"",
+            ""Name"": ""Input.sample-grouper-id.fpa"",
+            ""Description"": ""Fpa Samples"",
+            ""Items"": [
+                null,
+                {
+                    ""Id"": ""3329331"",
+                    ""Href"": ""v1pre3/appresults/3329331"",
+                    ""UserOwnedBy"": {
+                        ""Id"": ""3003"",
+                        ""Href"": ""v1pre3/users/3003"",
+                        ""Name"": ""BaseSpace 2"",
+                        ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                    },
+                    ""Name"": ""HuBr2"",
+                    ""Status"": ""Complete"",
+                    ""StatusSummary"": """",
+                    ""DateCreated"": ""2015-05-12T08:53:15.0000000"",
+                    ""TotalSize"": 22446220,
+                    ""AppSession"": {
+                        ""Id"": ""4441438"",
+                        ""Name"": ""MSR: Small RNA"",
+                        ""Href"": ""v1pre3/appsessions/4441438"",
+                        ""Application"": {
+                            ""Id"": ""748758"",
+                            ""Href"": ""v1pre3/applications/748758"",
+                            ""Name"": ""MSR: Small RNA"",
+                            ""CompanyName"": ""Illumina Inc."",
+                            ""DateCreated"": ""2015-03-20T08:23:06.0000000"",
+                            ""IsBillingActivated"": false,
+                            ""Category"": ""Misc."",
+                            ""Classifications"": []
+                        },
+                        ""UserCreatedBy"": {
+                            ""Id"": ""3003"",
+                            ""Href"": ""v1pre3/users/3003"",
+                            ""Name"": ""BaseSpace 2"",
+                            ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                        },
+                        ""Status"": ""Complete"",
+                        ""StatusSummary"": """",
+                        ""DateCreated"": ""2015-05-12T05:51:05.0000000"",
+                        ""ModifiedOn"": ""2015-05-12T08:53:08.0000000"",
+                        ""DateCompleted"": ""2015-05-12T08:53:16.0000000"",
+                        ""TotalSize"": 109461059
+                    }
+                }                
+            ],
+            ""HrefItems"": ""v1pre3/appsessions/4445456/properties/Input.sample-grouper-id.fpa/items"",
+            ""ItemsDisplayedCount"": 2,
+            ""ItemsTotalCount"": 2
+        }
+    ]
+}";
+
+
+        private string _propertyJsonWithArrayAllNullItems = @"
+{
+    ""Items"": [
+        {
+            ""Type"": ""appresult[]"",
+            ""Href"": ""v1pre3/appsessions/4445456/properties/Input.sample-grouper-id.fpa"",
+            ""Name"": ""Input.sample-grouper-id.fpa"",
+            ""Description"": ""Fpa Samples"",
+            ""Items"": [
+                null,
+                null,
+                null
+            ],
+            ""HrefItems"": ""v1pre3/appsessions/4445456/properties/Input.sample-grouper-id.fpa/items"",
+            ""ItemsDisplayedCount"": 3,
+            ""ItemsTotalCount"": 3
+        }
+    ]
+}";
+
+        // For GET: resources/{id}/properties/{name}/items
+        private string _propertyJsonArrayItemsWithNulls = @"
+{
+    ""Type"": ""appresult[]"",
+    ""Items"": [
+        {
+            ""Id"": ""b1551aef8d1547b2bdac08fd7e543db9"",
+            ""Content"": null
+        },
+        {
+            ""Id"": ""85f5db7a82b340c1a1b4347998897e2d"",
+            ""Content"": {
+                ""Id"": ""3329327"",
+                ""Href"": ""v1pre3/appresults/3329327"",
+                ""UserOwnedBy"": {
+                    ""Id"": ""3003"",
+                    ""Href"": ""v1pre3/users/3003"",
+                    ""Name"": ""BaseSpace 2"",
+                    ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                },
+                ""Name"": ""7-3 12874"",
+                ""Status"": ""Complete"",
+                ""StatusSummary"": """",
+                ""DateCreated"": ""2015-05-12T06:38:16.0000000"",
+                ""TotalSize"": 430610916,
+                ""AppSession"": {
+                    ""Id"": ""4441437"",
+                    ""Name"": ""MSR: Enrichment"",
+                    ""Href"": ""v1pre3/appsessions/4441437"",
+                    ""Application"": {
+                        ""Id"": ""748752"",
+                        ""Href"": ""v1pre3/applications/748752"",
+                        ""Name"": ""MSR: Enrichment"",
+                        ""CompanyName"": ""Illumina Inc."",
+                        ""DateCreated"": ""2015-03-20T08:23:06.0000000"",
+                        ""IsBillingActivated"": false,
+                        ""Category"": ""Misc."",
+                        ""Classifications"": []
+                    },
+                    ""UserCreatedBy"": {
+                        ""Id"": ""3003"",
+                        ""Href"": ""v1pre3/users/3003"",
+                        ""Name"": ""BaseSpace 2"",
+                        ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                    },
+                    ""Status"": ""Complete"",
+                    ""StatusSummary"": """",
+                    ""DateCreated"": ""2015-05-12T05:52:13.0000000"",
+                    ""ModifiedOn"": ""2015-05-12T06:38:21.0000000"",
+                    ""DateCompleted"": ""2015-05-12T06:38:17.0000000"",
+                    ""TotalSize"": 1566013117
+                }
+            }
+        },        
+        {
+            ""Id"": ""4f85c8ca99b3479ab499ed2b6918e77b"",
+            ""Content"": null
+        },
+        {
+            ""Id"": ""cb9331fff701410aa50e91e8e09c9968"",
+            ""Content"": {
+                ""Id"": ""3311315"",
+                ""Href"": ""v1pre3/appresults/3311315"",
+                ""UserOwnedBy"": {
+                    ""Id"": ""3003"",
+                    ""Href"": ""v1pre3/users/3003"",
+                    ""Name"": ""BaseSpace 2"",
+                    ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                },
+                ""Name"": ""HBR_100ng_35278"",
+                ""Status"": ""Complete"",
+                ""StatusSummary"": """",
+                ""DateCreated"": ""2015-04-06T23:42:29.0000000"",
+                ""TotalSize"": 25647536,
+                ""AppSession"": {
+                    ""Id"": ""4409405"",
+                    ""Name"": ""MSR: Targeted RNA"",
+                    ""Href"": ""v1pre3/appsessions/4409405"",
+                    ""Application"": {
+                        ""Id"": ""748759"",
+                        ""Href"": ""v1pre3/applications/748759"",
+                        ""Name"": ""MSR: Targeted RNA"",
+                        ""CompanyName"": ""Illumina Inc."",
+                        ""DateCreated"": ""2015-03-20T08:23:06.0000000"",
+                        ""IsBillingActivated"": false,
+                        ""Category"": ""Misc."",
+                        ""Classifications"": []
+                    },
+                    ""UserCreatedBy"": {
+                        ""Id"": ""3003"",
+                        ""Href"": ""v1pre3/users/3003"",
+                        ""Name"": ""BaseSpace 2"",
+                        ""GravatarUrl"": ""https://secure.gravatar.com/avatar/702e4f8795f80bd0929a8b818bb19f65.jpg?s=20&d=https%3a%2f%2fcloud-endor.illumina.com%2fpublic%2fimages%2fDefaultCustomerGravatar.png&r=PG""
+                    },
+                    ""Status"": ""Complete"",
+                    ""StatusSummary"": """",
+                    ""DateCreated"": ""2015-04-06T23:28:30.0000000"",
+                    ""ModifiedOn"": ""2015-04-06T23:42:30.0000000"",
+                    ""DateCompleted"": ""2015-04-06T23:38:52.0000000"",
+                    ""TotalSize"": 550303289
+                }
+            }
+
+        },
+        {
+            ""Id"": ""4f85c8ca99b3479ab499ed2b6918e77b"",
+            ""Content"": null
+        }
+    ],
+    ""DisplayedCount"": 5,
+    ""TotalCount"": 5,
+    ""Offset"": 0,
+    ""Limit"": 50,
+    ""SortDir"": ""Asc"",
+    ""SortBy"": ""DateCreated""
+}
+";
+
+        #endregion
+
+        [Fact]
+        public void PropertyArrayObjectThenNull()
+        {
+            var properties = JsonSerializer.DeserializeFromString<PropertyContainer>(_propertyJsonWithArrayObjectThenNull);
+            Assert.NotNull(properties.Items);
+            var prop = properties.Items.FirstOrDefault();
+            Assert.NotNull(prop);
+            Assert.Equal(2, prop.Items.Count());
+            Assert.NotNull(prop.Items[0]);
+            Assert.Null(prop.Items[1]);
+        }
+
+        [Fact]
+        public void PropertyArrayNullThenObject()
+        {
+            var properties = JsonSerializer.DeserializeFromString<PropertyContainer>(_propertyJsonWithArrayNullThenObject);
+            Assert.NotNull(properties.Items);
+            var prop = properties.Items.FirstOrDefault();
+            Assert.NotNull(prop);
+            Assert.Equal(2, prop.Items.Count());
+            Assert.Null(prop.Items[0]);
+            Assert.NotNull(prop.Items[1]);
+        }
+
+        [Fact]
+        public void PropertyArrayAllNulls()
+        {
+            var properties =
+                JsonSerializer.DeserializeFromString<PropertyContainer>(
+                    _propertyJsonWithArrayAllNullItems);
+            Assert.NotNull(properties.Items);
+            var prop = properties.Items.FirstOrDefault();
+            Assert.NotNull(prop);
+            Assert.Equal(3, prop.Items.Count());
+            Assert.Equal(3, prop.Items.Count(x => x == null));
+        }
+
+        [Fact]
+        public void PropertyArrayItemsSomeNulls()
+        {
+            var properties =
+                JsonSerializer.DeserializeFromString<PropertyItemsResourceList>(
+                    _propertyJsonArrayItemsWithNulls);
+
+            Assert.NotNull(properties.Items);
+            Assert.Equal(5, properties.Items.Count());
+            Assert.NotNull(properties.Items[0]);
+            Assert.True(properties.Items.All(x => x != null));
+            Assert.Null(properties.Items[0].Content);
+            Assert.NotNull(properties.Items[1].Content);
+            Assert.Null(properties.Items[2].Content);
+            Assert.NotNull(properties.Items[3].Content);
+            Assert.Null(properties.Items[4].Content);
+
+            var appResults = properties.ToAppResultArray();
+            Assert.Null(appResults[0]);
+            Assert.NotNull(appResults[1]);
+            Assert.Null(appResults[2]);
+            Assert.NotNull(appResults[3]);
+            Assert.Null(appResults[4]);
         }
     }
 }
