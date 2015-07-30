@@ -41,6 +41,12 @@ namespace Illumina.BaseSpace.SDK
 		{
 			return WebClient.Send(request, options);
 		}
+
+        public GetUserPermissionResponse GetUserPermissions(GetUserPermissionRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		#endregion
 
 		#region Runs
