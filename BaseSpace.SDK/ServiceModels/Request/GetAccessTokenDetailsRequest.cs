@@ -2,7 +2,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetUserPermissionRequest : AbstractResourceRequest<GetUserPermissionResponse>
+    public class GetAccessTokenDetailsRequest : AbstractResourceRequest<GetAccessTokenDetailsResponse>
     {
         public string access_token { get; set; }
 

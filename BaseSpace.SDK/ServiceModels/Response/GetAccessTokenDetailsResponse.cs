@@ -3,7 +3,7 @@
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
-    public class GetUserPermissionResponse : ApiResponse<UserPermission>   
+    public class GetAccessTokenDetailsResponse : ApiResponse<AccessTokenDetails>   
     {
     }
 }

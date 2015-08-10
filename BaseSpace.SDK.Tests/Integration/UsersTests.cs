@@ -20,17 +20,17 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         [Fact]
-        public void CanGetCUrrentUserPermissions()
+        public void CanGetAccessTokenDetails()
         {            
-            var request = new GetUserPermissionRequest();
-            GetUserPermissionResponse response = Client.GetUserPermissions(request);
+            var request = new GetAccessTokenDetailsRequest();
+            GetAccessTokenDetailsResponse response = Client.GetUserPermissions(request);
 
             Assert.NotNull(response);
 
-            UserPermission userPermission = response.Response;
-            Assert.NotNull(userPermission);
-            Assert.NotNull(userPermission.AccessToken);
-            Assert.NotNull(userPermission.UserResourceOwner);
+            AccessTokenDetails accessTokenDetails = response.Response;
+            Assert.NotNull(accessTokenDetails);
+            Assert.NotNull(accessTokenDetails.AccessToken);
+            Assert.NotNull(accessTokenDetails.UserResourceOwner);
 
         }
     }

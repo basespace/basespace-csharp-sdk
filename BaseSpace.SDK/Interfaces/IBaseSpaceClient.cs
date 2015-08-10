@@ -14,7 +14,7 @@ namespace Illumina.BaseSpace.SDK
 
         GetUserResponse GetUser(GetUserRequest request, IRequestOptions options = null);
 
-        GetUserPermissionResponse GetUserPermissions(GetUserPermissionRequest request, IRequestOptions options = null);
+        GetAccessTokenDetailsResponse GetUserPermissions(GetAccessTokenDetailsRequest request, IRequestOptions options = null);
 
 		GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
 

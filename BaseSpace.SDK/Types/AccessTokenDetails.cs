@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Illumina.BaseSpace.SDK.Types
 {
     [DataContract]
-    public class UserPermission : AbstractResource
+    public class AccessTokenDetails : AbstractResource
     {
         [DataMember(IsRequired = true)]
         public override string Id { get; set; }
