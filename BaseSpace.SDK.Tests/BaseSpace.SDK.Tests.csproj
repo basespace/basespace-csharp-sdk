@@ -86,6 +86,7 @@
     <Compile Include="Integration\PropertyTests.cs" />
     <Compile Include="Integration\LibraryContainersTests.cs" />
     <Compile Include="Integration\RunsTests.cs" />
+    <Compile Include="Integration\SearchTest.cs" />
     <Compile Include="Integration\UploadFileToAppResultTest.cs" />
     <Compile Include="Integration\UploadLogsToAppSessionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
