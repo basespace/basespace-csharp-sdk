@@ -233,6 +233,7 @@
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
     <Compile Include="Types\PlannedRun.cs" />
+    <Compile Include="Types\SequencingStats.cs" />
     <Compile Include="Types\SourceLibrary.cs" />
     <Compile Include="Types\PropertyContentMap.cs" />
     <Compile Include="Types\Billing\AppSessionBilling.cs" />

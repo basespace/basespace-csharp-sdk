@@ -104,6 +104,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public PropertyContainer Properties { get; set; }
+
+        [DataMember]
+        public SequencingStatsCompact SequencingStats { get; set; }
     }
 
     [DataContract]

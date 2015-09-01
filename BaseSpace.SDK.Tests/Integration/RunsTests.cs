@@ -2,7 +2,9 @@
 using Illumina.BaseSpace.SDK.Tests.Helpers;
 using Xunit;
 using System;
+using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using ServiceStack.Common.Extensions;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
@@ -50,6 +52,22 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                 Assert.NotNull(run.UserOwnedBy);
             }
             
+        }
+
+        [Fact]
+        public void GetRunResponseIncludesSequencingStats()
+        {
+            var listResponse = Client.ListRuns(new ServiceModels.ListRunsRequest
+            {
+                SortBy = RunSortByParameters.DateModified,
+                SortDir = SortDirection.Desc
+            });
+            var runCompact = listResponse.Response.Items[0];
+
+            var fullResponse = Client.GetRun(new GetRunRequest(runCompact.Id));
+            var runFull = fullResponse.Response;
+
+            Assert.NotNull(runFull.SequencingStats);
         }
     }
 }
