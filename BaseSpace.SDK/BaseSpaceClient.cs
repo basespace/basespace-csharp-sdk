@@ -55,7 +55,12 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
+        public GetRunSequencingStatsResponse GetRunSequencingStats(GetRunSequencingStatsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
 		}

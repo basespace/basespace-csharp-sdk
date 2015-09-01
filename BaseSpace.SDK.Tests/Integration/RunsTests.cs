@@ -69,5 +69,20 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
             Assert.NotNull(runFull.SequencingStats);
         }
+
+        [Fact]
+        public void CanGetRunSequencingStats()
+        {
+            var listResponse = Client.ListRuns(new ServiceModels.ListRunsRequest
+            {
+                SortBy = RunSortByParameters.DateModified,
+                SortDir = SortDirection.Desc
+            });
+            var runCompact = listResponse.Response.Items[0];
+
+            var seqStatsResponse = Client.GetRunSequencingStats(new GetRunSequencingStatsRequest(runCompact));
+
+            Assert.NotNull(seqStatsResponse.Response);
+        }
     }
 }
