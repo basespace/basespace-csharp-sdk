@@ -119,7 +119,7 @@ namespace Illumina.BaseSpace.SDK.Deserialization
                         property.Items = JsonSerializer.DeserializeFromString<PropertyContentMap[]>(json.Child("Items"));
                         break;
                     default:
-                        property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyReference(simpleType, itemj.ToJson())).Where(x => x != null).ToArray();
+                        property.Items = json.ArrayObjects("Items").Select(itemj => DeserializePropertyReference(simpleType, itemj.ToJson())).ToArray();
                         break;
                 }
             }

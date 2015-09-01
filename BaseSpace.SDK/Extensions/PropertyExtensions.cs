@@ -253,7 +253,7 @@ namespace Illumina.BaseSpace.SDK
         {
             if (propertyItemsResourceList.Items != null)
             {
-                return propertyItemsResourceList.Items.Select(i => i.Content.ToResource<TResourceType>()).Where(i => i != null).ToArray();
+                return propertyItemsResourceList.Items.Select(i => i.Content.ToResource<TResourceType>()).ToArray();
             }
             return null;
         }

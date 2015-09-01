@@ -148,7 +148,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
                 {
                     Type = referencedResourcesContent.First().Type + PropertyTypes.LIST_SUFFIX;
                 }
-                Items = referencedResourcesContent.Select(rr => rr.Href.ToString()).ToArray();
+                Items = referencedResourcesContent.Select(rr => rr == null ? null : rr.Href.ToString()).ToArray();
                 Content = null;
             }
         }
