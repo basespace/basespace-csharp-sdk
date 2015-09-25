@@ -128,7 +128,7 @@ namespace Illumina.BaseSpace.SDK
         {
             if (allowRetry)
             {
-                logger.ErrorFormat("Error while {0}, status code {1} error code {2}, attempt {3}, elapsed {4}ms, retrying in {5} seconds: \r\n{6}", description,
+                logger.ErrorFormat("Error while {0}, status code {1}, error code {2}, attempt {3}, elapsed {4}ms, retrying in {5} seconds: \r\n{6}", description,
                     statusCode, errorCode, whichAttempt, timer.ElapsedMilliseconds, delay, message );
                 Thread.Sleep(1000 * delay);
                 return true;
