@@ -18,6 +18,8 @@ namespace Illumina.BaseSpace.SDK
 
 		GetRunResponse GetRun(GetRunRequest request, IRequestOptions options = null);
 
+        GetRunSequencingStatsResponse GetRunSequencingStats(GetRunSequencingStatsRequest request, IRequestOptions options = null);
+
         ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null);
 
         ListLibraryContainersResponse ListLibraryContainers(ListLibraryContainersRequest request, IRequestOptions options = null);
