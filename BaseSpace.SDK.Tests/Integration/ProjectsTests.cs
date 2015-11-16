@@ -30,6 +30,24 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         [Fact]
+        public void CanGetUserProjectsFirstPageWithPermissions()
+        {
+            // Include=permissions
+            ListProjectsResponse response = Client.ListProjects(new ListProjectsRequest { Include = new[]{"permissions" }});
+
+            Assert.NotNull(response);
+            Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
+            ProjectCompact projectResult = response.Response.Items[0];
+
+            Assert.NotNull(projectResult);
+            Assert.NotEmpty(projectResult.Id);
+            Assert.NotEmpty(projectResult.Name);
+            Assert.NotSame(projectResult.Id, projectResult.Name);
+            Assert.NotNull(projectResult.Permissions);
+            Assert.True(projectResult.DateCreated > new DateTime(2009, 1, 1));           
+        }
+
+        [Fact]
         public void CanPageThroughProjects()
         {
 
