@@ -16,35 +16,13 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanGetUserProjectsFirstPage()
         {
-           ListProjectsResponse response = Client.ListProjects(new ListProjectsRequest());
-            
-           Assert.NotNull(response);
-           Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
-            ProjectCompact projectResult = response.Response.Items[0];
-
-           Assert.NotNull(projectResult);
-            Assert.NotEmpty(projectResult.Id);
-            Assert.NotEmpty(projectResult.Name);
-            Assert.NotSame(projectResult.Id, projectResult.Name);
-            Assert.True(projectResult.DateCreated > new DateTime(2009,1,1));
+            TestHelpers.CanGetUserProjectsFirstPage(Client);          
         }
 
         [Fact]
         public void CanGetUserProjectsFirstPageWithPermissions()
         {
-            // Include=permissions
-            ListProjectsResponse response = Client.ListProjects(new ListProjectsRequest { Include = new[]{"permissions" }});
-
-            Assert.NotNull(response);
-            Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
-            ProjectCompact projectResult = response.Response.Items[0];
-
-            Assert.NotNull(projectResult);
-            Assert.NotEmpty(projectResult.Id);
-            Assert.NotEmpty(projectResult.Name);
-            Assert.NotSame(projectResult.Id, projectResult.Name);
-            Assert.NotNull(projectResult.Permissions);
-            Assert.True(projectResult.DateCreated > new DateTime(2009, 1, 1));           
+            TestHelpers.CanGetUserProjectsFirstPage(Client, new[] { ProjectIncludes.PERMISSIONS });                        
         }
 
         [Fact]
@@ -115,21 +93,13 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         [Fact]
         public void CanGetProject()
         {
-            var project = TestHelpers.CreateRandomTestProject(Client);
+            TestHelpers.CanGetProject(Client);            
+        }
 
-            ListProjectsResponse listProjectResponse = Client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, Name = project.Name });
-            Assert.True(listProjectResponse.Response.Items.Length == 1);
-            var compactProject = listProjectResponse.Response.Items[0];
-            Assert.True(project.Id == compactProject.Id);
-            Assert.True(project.Name == compactProject.Name);
-
-            var getProjectResponse = Client.GetProject(new GetProjectRequest(compactProject.Id));
-            var retrievedProject = getProjectResponse.Response;
-            Assert.True(project.Id == retrievedProject.Id);
-            Assert.True(project.Name == retrievedProject.Name);
-            Assert.True(project.HrefAppResults == retrievedProject.HrefAppResults);
-            Assert.True(project.HrefBaseSpaceUI == retrievedProject.HrefBaseSpaceUI);
-            Assert.True(project.HrefSamples == retrievedProject.HrefSamples);
+        [Fact]
+        public void CanGetProjectWithPermissions()
+        {
+            TestHelpers.CanGetProject(Client,  new []{ProjectIncludes.PERMISSIONS});            
         }
 
         [Fact]

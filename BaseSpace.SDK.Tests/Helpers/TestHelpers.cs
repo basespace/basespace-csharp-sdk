@@ -26,6 +26,58 @@ namespace Illumina.BaseSpace.SDK.Tests.Helpers
             Assert.True(project.Name.Contains(projectName));
             return project;
         }
+
+
+        public static void CanGetUserProjectsFirstPage(IBaseSpaceClient client, string[] includeStrings = null)
+        {
+            var getListProjsRequest = new ListProjectsRequest();
+
+            if (includeStrings != null && includeStrings.Length > 0)
+                getListProjsRequest.Include = includeStrings;
+
+            ListProjectsResponse response = client.ListProjects(getListProjsRequest);
+
+            Assert.NotNull(response);
+            Assert.True(response.Response.TotalCount > 0); //make sure account has at least 1 for access token
+            ProjectCompact projectResult = response.Response.Items[0];
+
+            Assert.NotNull(projectResult);
+            Assert.NotEmpty(projectResult.Id);
+            Assert.NotEmpty(projectResult.Name);
+            Assert.NotSame(projectResult.Id, projectResult.Name);
+            Assert.True(projectResult.DateCreated > new DateTime(2009, 1, 1));
+
+            if (includeStrings != null && includeStrings.Length > 0)
+                Assert.NotNull(projectResult.Permissions);
+        }
+
+        public static void CanGetProject(IBaseSpaceClient client, string[] includeStrings = null)
+        {
+            var project = CreateRandomTestProject(client);
+
+            ListProjectsResponse listProjectResponse = client.ListProjects(new ListProjectsRequest() { Limit = 1, Offset = 0, Name = project.Name });
+            Assert.True(listProjectResponse.Response.Items.Length == 1);
+            var compactProject = listProjectResponse.Response.Items[0];
+            Assert.True(project.Id == compactProject.Id);
+            Assert.True(project.Name == compactProject.Name);
+
+            var getProjRequest = new GetProjectRequest(compactProject.Id);
+
+            if (includeStrings != null && includeStrings.Length > 0)
+                getProjRequest.Include = includeStrings;
+
+            var getProjectResponse = client.GetProject(new GetProjectRequest(compactProject.Id) { Include = new[] { ProjectIncludes.PERMISSIONS } });
+
+            var retrievedProject = getProjectResponse.Response;
+            Assert.True(project.Id == retrievedProject.Id);
+            Assert.True(project.Name == retrievedProject.Name);
+            Assert.True(project.HrefAppResults == retrievedProject.HrefAppResults);
+            Assert.True(project.HrefBaseSpaceUI == retrievedProject.HrefBaseSpaceUI);
+            Assert.True(project.HrefSamples == retrievedProject.HrefSamples);
+
+            if (includeStrings != null && includeStrings.Length > 0)
+                Assert.NotNull(retrievedProject.Permissions);
+        }
         #endregion Project
 
         #region AppResult
