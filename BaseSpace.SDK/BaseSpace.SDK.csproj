@@ -41,8 +41,9 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Illumina.TerminalVelocity">
-      <HintPath>..\packages\TerminalVelocity.Sharp.1.0.0.72\lib\net40\Illumina.TerminalVelocity.dll</HintPath>
+    <Reference Include="Illumina.TerminalVelocity, Version=1.0.0.138, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TerminalVelocity.Sharp.1.0.0.138\lib\net40\Illumina.TerminalVelocity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
