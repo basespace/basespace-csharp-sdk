@@ -25,4 +25,12 @@
         public const string FILES_SAMPLE = "sample_files";
         public const string FILES_BOTH_SAMPLE_AND_APPRESULT = "sample_files,appresult_files";
     }
+
+    /// <summary>
+    /// Include the const strings to pass to the query
+    /// </summary>
+    public static class ProjectIncludes
+    {
+        public const string PERMISSIONS = "Permissions";
+    }
 }
