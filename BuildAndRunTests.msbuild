@@ -35,20 +35,20 @@
 		<!-- Restore Packages -->
 		<Exec Command='$(NugetPath) restore $(SolutionPath)' />
 	</Target>
-  
-	<Target Name="BuildPackage">
-		<!-- Download latest nuget.exe -->		
-	    <DownloadFile Condition="!Exists($(NugetPath))" Address="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" FileName="$(NugetPath)" />
-		<!-- Create Packages -->
-		<Exec Command='$(NugetPath) pack BaseSpace.SDK\BaseSpace.SDK.csproj -p Configuration=$(Configuration) -o "$(ArtifactsPath)" -symbols' />
-	</Target>
-
 <Target Name="Build" DependsOnTargets="RestoreNuGetPackages">
-    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Release">
+    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build" Properties="Configuration=Release">
     </MSBuild>
 	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
         	<Output TaskParameter="Include" ItemName="Artifacts" />
     	</CreateItem>
     	<Copy SourceFiles="@(Artifacts)" DestinationFolder="$(ArtifactsPath)"></Copy>
 </Target>
+  
+	<Target Name="BuildPackage" DependsOnTargets="Build">
+		<!-- Download latest nuget.exe -->		
+	    <DownloadFile Condition="!Exists($(NugetPath))" Address="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" FileName="$(NugetPath)" />
+		<!-- Create Packages -->
+		<Exec Command='$(NugetPath) pack BaseSpace.SDK\BaseSpace.SDK.csproj -p Configuration=$(Configuration) -o "$(ArtifactsPath)" -symbols' />
+	</Target>
+
 </Project>
