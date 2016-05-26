@@ -44,7 +44,7 @@
 	</Target>
 
 <Target Name="Build">
-    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="RestoreNuGetPackages;Build;BuildPackage" Properties="Configuration=Release">
+    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Release">
     </MSBuild>
 	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
         	<Output TaskParameter="Include" ItemName="Artifacts" />
