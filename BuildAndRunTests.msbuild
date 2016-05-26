@@ -7,7 +7,7 @@
     <ContinueOnTestError Condition="'$(ContinueOnTestError)' == ''">false</ContinueOnTestError>
     <ToolsHome Condition=" '$(ToolsHome)'=='' ">$(MSBuildThisFileDirectory)tools\</ToolsHome>
     <NugetPath Condition="'$(NugetPath)' == ''">..\build\NuGet.exe</NugetPath>
-		<SolutionPath Condition="'$(SolutionPath)' == ''">..\BaseSpace.Store.sln</SolutionPath>
+		<SolutionPath Condition="'$(SolutionPath)' == ''">.\BaseSpace.SDK.sln</SolutionPath>
 		<ArtifactsPath Condition="'$(ArtifactsPath)' == ''">..\artifacts</ArtifactsPath>
   </PropertyGroup>
 	<UsingTask TaskName="DownloadFile" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">		
