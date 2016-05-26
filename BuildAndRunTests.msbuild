@@ -38,6 +38,7 @@
 <Target Name="Build" DependsOnTargets="RestoreNuGetPackages">
     <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build" Properties="Configuration=Release">
     </MSBuild>
+	<MakeDir  Directories="$(ArtifactsPath)"/>
 	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
         	<Output TaskParameter="Include" ItemName="Artifacts" />
     	</CreateItem>
