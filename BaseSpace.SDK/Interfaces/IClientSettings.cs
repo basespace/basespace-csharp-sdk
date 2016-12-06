@@ -20,5 +20,7 @@
 		IAuthentication Authentication { get; }
 
         int TimeoutMin { get;  }
+
+        string UserAgent { get; set; }
 	}
 }
