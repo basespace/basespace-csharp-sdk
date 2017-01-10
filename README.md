@@ -1,6 +1,8 @@
 basespace-csharp-sdk
 ====================
 
+[![Join the chat at https://gitter.im/basespace/basespace-csharp-sdk](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/basespace/basespace-csharp-sdk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Branches ##
 
 ###### Master ######
