@@ -20,7 +20,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		internal virtual Func<TReturn> GetSendFunc(ServiceClientBase client)
 		{
-			return () => client.Send<TReturn>(HttpMethod.ToString(), GetUrl(), this);
+		    return RequestHelpers.GetSendFunc<TReturn>(client, HttpMethod, GetUrl(), this);
 		}
 
 		internal string GetName()
@@ -42,4 +42,12 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		protected abstract string GetUrl();
 	}
+
+    public static class RequestHelpers
+    {
+        internal static Func<TReturn> GetSendFunc<TReturn>(ServiceClientBase client, HttpMethods httpMethod, string requestUrl, object requestObj)
+        {
+            return () => client.Send<TReturn>(httpMethod.ToString(), requestUrl, requestObj);
+        }
+    }
 }

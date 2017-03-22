@@ -81,7 +81,7 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     [DataContract]
-    public class SampleFileCompact : FileCompact
+    public class SampleFileCompact : V1pre3FileCompact
     {
     }
     

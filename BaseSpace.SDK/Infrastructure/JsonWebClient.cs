@@ -77,29 +77,58 @@ namespace Illumina.BaseSpace.SDK
 
         public IRequestOptions DefaultRequestOptions { get; set; }
 
-        public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
-            where TReturn : class
+        public TReturn Send<TReturn>(string requestUrl, HttpMethods httpMethod, IRequestOptions options = null, object requestObj = null)
         {
             try
             {
-                if (logger.IsDebugEnabled)
-                {
-                    var debugMessage = request.GetDebugLogMessage();
-                    if (!string.IsNullOrWhiteSpace(debugMessage))
-                    {
-                        logger.Debug(debugMessage);
-                    }
-                }
+                TReturn result = default(TReturn);
+                options = options ?? DefaultRequestOptions;
 
-                if (logger.IsInfoEnabled)
-                {
-                    var infoMessage = request.GetInfoLogMessage();
-                    if (!string.IsNullOrEmpty(infoMessage))
-                    {
-                        logger.Info(infoMessage);
-                    }
-                }
 
+                RetryLogic.DoWithRetry(options.RetryAttempts, requestUrl,
+                    () => result = RequestHelpers.GetSendFunc<TReturn>(client, httpMethod, requestUrl, requestObj)(), logger);
+                return result;
+            }
+            catch (WebServiceException webx)
+            {
+                string errorCode = string.Empty;
+                if (!string.IsNullOrEmpty(webx.ErrorCode))
+                {
+                    errorCode = string.Format(" ({0})", webx.ErrorCode);
+                }
+                var msg = string.Format("{0} status: {1} ({2}) Message: {3}{4}", requestUrl, webx.StatusCode,
+                    webx.StatusDescription, webx.ErrorMessage, errorCode);
+                throw new BaseSpaceException(msg, webx.ErrorCode, webx);
+            }
+            catch (Exception x)
+            {
+                throw new BaseSpaceException(requestUrl + " failed", string.Empty, x);
+            }
+        }
+
+        public TReturn Send<TReturn>(AbstractRequest<TReturn> request, IRequestOptions options = null)
+            where TReturn : class
+        {
+            if (logger.IsDebugEnabled)
+            {
+                var debugMessage = request.GetDebugLogMessage();
+                if (!string.IsNullOrWhiteSpace(debugMessage))
+                {
+                    logger.Debug(debugMessage);
+                }
+            }
+
+            if (logger.IsInfoEnabled)
+            {
+                var infoMessage = request.GetInfoLogMessage();
+                if (!string.IsNullOrEmpty(infoMessage))
+                {
+                    logger.Info(infoMessage);
+                }
+            }
+
+            try
+            {
                 TReturn result = null;
                 options = options ?? DefaultRequestOptions;
 

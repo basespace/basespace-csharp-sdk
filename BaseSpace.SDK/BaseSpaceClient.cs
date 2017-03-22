@@ -243,7 +243,7 @@ namespace Illumina.BaseSpace.SDK
             command.Execute();
         }
 
-        public void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
+        public void DownloadFile(V1pre3FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
         {
             var command = new DownloadFileCommand(this, file, stream, Settings, token, WebProxy);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
@@ -251,7 +251,7 @@ namespace Illumina.BaseSpace.SDK
             command.Execute();
         }
 
-        public void DownloadFile(FileCompact file, string filePath, CancellationToken token = new CancellationToken())
+        public void DownloadFile(V1pre3FileCompact file, string filePath, CancellationToken token = new CancellationToken())
         {
             var command = new DownloadFileCommand(this, file, filePath, Settings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
@@ -259,7 +259,7 @@ namespace Illumina.BaseSpace.SDK
             command.Execute();
         }
 
-        public void DownloadFile(FileCompact file, string filePath, int maxThreadCount,
+        public void DownloadFile(V1pre3FileCompact file, string filePath, int maxThreadCount,
             CancellationToken token = new CancellationToken())
         {
             var command = new DownloadFileCommand(this, file, filePath, Settings, token, threadCount: maxThreadCount);
@@ -267,7 +267,7 @@ namespace Illumina.BaseSpace.SDK
             command.Execute();
         }
         
-        public void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount,
+        public void DownloadFile(V1pre3FileCompact file, string filePath, int maxChunkSize, int maxThreadCount,
                                  CancellationToken token = new CancellationToken())
         {
                var command = new DownloadFileCommand(this, file,filePath, Settings, maxThreadCount, maxChunkSize, token);

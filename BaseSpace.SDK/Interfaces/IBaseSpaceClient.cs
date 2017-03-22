@@ -78,11 +78,13 @@ namespace Illumina.BaseSpace.SDK
 
         void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken());
 
-        void DownloadFile(FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
+        void DownloadFile(V1pre3FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
 
-        void DownloadFile(FileCompact file, string filePath, CancellationToken token = new CancellationToken());
+        void DownloadFile(V1pre3FileCompact file, string filePath, CancellationToken token = new CancellationToken());
 
-        void DownloadFile(FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken());
+        void DownloadFile(V1pre3FileCompact file, string filePath, int maxThreadCount, CancellationToken token = new CancellationToken());
+
+        void DownloadFile(V1pre3FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken());
         
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 

@@ -20,7 +20,7 @@ namespace Illumina.BaseSpace.SDK
         private bool _enableLogging = true;
         private string _fileName = "NotSet";
 
-        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, proxy, enableLogging)
+        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, proxy, enableLogging)
         {
           
         }
@@ -39,7 +39,7 @@ namespace Illumina.BaseSpace.SDK
 
         }
 
-        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName,
+        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName,
                                    IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true, int threadCount = DEFAULT_THREADS)
         {
             DateTime expiration;
@@ -50,7 +50,7 @@ namespace Illumina.BaseSpace.SDK
             _enableLogging = enableLogging;
         }
 
-        public DownloadFileCommand(BaseSpaceClient client, FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
+        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
         {
             DateTime expiration;
             string url = GetFileContentUrl(client, file.Id, out expiration);

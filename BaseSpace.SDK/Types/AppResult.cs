@@ -59,7 +59,7 @@ namespace Illumina.BaseSpace.SDK.Types
     }
 
     [DataContract]
-    public class AppResultFileCompact : FileCompact
+    public class AppResultFileCompact : V1pre3FileCompact
     {
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK.Types
@@ -43,9 +44,36 @@ namespace Illumina.BaseSpace.SDK.Types
         public int Number { get; set; }
 
         [DataMember]
+        public InstrumentCompact Instrument { get; set; }
+
+        [DataMember]
         public UserCompact UserOwnedBy { get; set; }
 
+        [DataMember]
+        public PrepSettings PrepSettings { get; set; }
+
+        [DataMember]
+        public DateTime? ExpectedInstrumentCompletionDate { get; set; }
+
+        [DataMember]
+        public string PrepErrorCode { get; set; }
+
         public string Type { get { return PropertyTypes.RUN; } }
+
+        [DataMember]
+        public string PlatformName { get; set; }
+
+        [DataMember]
+        public int NumCyclesRead1 { get; set; }
+
+        [DataMember]
+        public int NumCyclesRead2 { get; set; }
+
+        [DataMember]
+        public int NumCyclesIndex1 { get; set; }
+
+        [DataMember]
+        public int NumCyclesIndex2 { get; set; }
 
         public override string ToString()
         {
@@ -76,6 +104,9 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public PropertyContainer Properties { get; set; }
+
+        [DataMember]
+        public SequencingStatsCompact SequencingStats { get; set; }
     }
 
     [DataContract]
@@ -98,6 +129,39 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public bool AutoRetireOnCompletion { get; set; }
+    }
+
+    [DataContract]
+    public class PrepSettings
+    {
+        [DataMember]
+        public string LibraryPrepName { get; set; }
+
+        [DataMember]
+        public string ProtocolVersion { get; set; }
+
+        [DataMember]
+        public List<PrepModule> Modules { get; set; }
+    }
+
+    [DataContract]
+    public class PrepModule
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public List<PrepModuleParameter> Parameters { get; set; }
+    }
+
+    [DataContract]
+    public class PrepModuleParameter
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Value { get; set; }
     }
 
     public enum RunSortByParameters
