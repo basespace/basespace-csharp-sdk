@@ -19,6 +19,8 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public V2DatasetCompact Dataset { get; set; }
         [DataMember]
+        public V1pre3RunCompact Run { get; set; }
+        [DataMember]
         public Uri HrefFiles { get; set; }
         [DataMember]
         public Uri HrefResourceManifest { get; set; }
