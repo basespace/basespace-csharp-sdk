@@ -21,11 +21,15 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public SampleFileCompact SampleFile { get; set; }
+
         [DataMember]
         public AppResultFileCompact AppResultFile { get; set; }
 
         //[DataMember]
         //public ApplicationCompact Application { get; set; }
+
+        [DataMember]
+        public AppResultCompact AppResult { get; set; }
 
         public override string ToString()
         {
@@ -41,14 +45,21 @@ namespace Illumina.BaseSpace.SDK.Types
             //{
             //    return Sample.ToString();
             //}
-            if (SampleFile != null)
-            {
+
+            if (SampleFile != null)            
                 return SampleFile.ToString();
-            }
+            
             //if (Application != null)
             //{
             //    return Application.ToString();
             //}
+
+            if (AppResult != null)
+                return AppResult.ToString();
+
+            if (AppResultFile != null)
+                return AppResultFile.ToString();
+            
             return base.ToString();
         }
     }

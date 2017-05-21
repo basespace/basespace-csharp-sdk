@@ -20,6 +20,12 @@ namespace Illumina.BaseSpace.SDK.Types
         public string CompanyName { get; set; }
 
         [DataMember]
+        public string Category { get; set; }
+
+        [DataMember]
+        public string[] Classifications { get; set; }
+
+        [DataMember]
         public string HrefLogo { get; set; }
 
         [DataMember]
@@ -30,6 +36,12 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public string DateCreated { get; set; }
+
+        [DataMember]
+        public string PublishStatus { get; set; }
+
+        [DataMember]
+        public bool IsBillingActivated { get; set; }
 
         public override string ToString()
         {

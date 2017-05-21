@@ -1,16 +1,55 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask AssemblyFile="C:\xunit\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
-<ItemGroup>
-  <ItemsThatNeedToBeCopied Include="C:\build-files\basespace-csharp-sdk\**\*.*"/>
-</ItemGroup>
-<Target Name="Build">
-<Copy SourceFiles="@(ItemsThatNeedToBeCopied)" DestinationFiles="@(ItemsThatNeedToBeCopied->'.\%(RecursiveDir)%(Filename)%(Extension)')"      ></Copy>
-    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build;BuildPackage" Properties="Configuration=Release">
+<PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <ParallelizeTests Condition="'$(ParallelizeTests)' == ''">false</ParallelizeTests>
+    <SerializeTests Condition="'$(SerializeTests)' == ''">false</SerializeTests>
+    <MaxParallelThreads Condition="'$(MaxParallelThreads)' == ''">6</MaxParallelThreads>
+    <ContinueOnTestError Condition="'$(ContinueOnTestError)' == ''">false</ContinueOnTestError>
+    <ToolsHome Condition=" '$(ToolsHome)'=='' ">$(MSBuildThisFileDirectory)tools\</ToolsHome>
+    <NugetPath Condition="'$(NugetPath)' == ''">.\build\NuGet.exe</NugetPath>
+		<SolutionPath Condition="'$(SolutionPath)' == ''">.\BaseSpace.SDK.sln</SolutionPath>
+		<ArtifactsPath Condition="'$(ArtifactsPath)' == ''">.\artifacts</ArtifactsPath>
+  </PropertyGroup>
+	<UsingTask TaskName="DownloadFile" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">		
+		<ParameterGroup>		
+			<Address ParameterType="System.String" Required="true"/>		
+			<FileName ParameterType="System.String" Required="true" />		
+		</ParameterGroup>		
+		<Task>		
+		<Reference Include="System" />		
+			<Code Type="Fragment" Language="cs">		
+				<![CDATA[		
+					var directory = System.IO.Path.GetDirectoryName(FileName);		
+					System.IO.Directory.CreateDirectory(directory);		
+					var client = new System.Net.WebClient();		
+					client.Proxy = System.Net.WebRequest.DefaultWebProxy;		
+					client.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;		
+					client.DownloadFile(Address, FileName);		
+				]]>		
+			</Code>		
+		</Task>	
+	</UsingTask>
+	<Target Name="RestoreNuGetPackages">
+		<!-- Download latest nuget.exe -->		
+	    <DownloadFile Condition="!Exists($(NugetPath))" Address="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" FileName="$(NugetPath)" />
+		<!-- Restore Packages -->
+		<Exec Command='$(NugetPath) restore $(SolutionPath)' />
+	</Target>
+<Target Name="Build" DependsOnTargets="RestoreNuGetPackages">
+    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build" Properties="Configuration=Release">
     </MSBuild>
-    <!--<xunit Assembly="BaseSpace.SDK.Tests\bin\release\Illumina.BaseSpace.SDK.Tests.dll" />-->
+	<MakeDir  Directories="$(ArtifactsPath)"/>
 	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
         	<Output TaskParameter="Include" ItemName="Artifacts" />
     	</CreateItem>
-    	<Copy SourceFiles="@(Artifacts)" DestinationFolder="src"></Copy>
+    	<Copy SourceFiles="@(Artifacts)" DestinationFolder="$(ArtifactsPath)"></Copy>
 </Target>
+  
+	<Target Name="BuildPackage" DependsOnTargets="Build">
+		<!-- Download latest nuget.exe -->		
+	    <DownloadFile Condition="!Exists($(NugetPath))" Address="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" FileName="$(NugetPath)" />
+		<!-- Create Packages -->
+		<Exec Command='$(NugetPath) pack BaseSpace.SDK\BaseSpace.SDK.csproj -p Configuration=$(Configuration) -o "$(ArtifactsPath)" -symbols' />
+	</Target>
+
 </Project>

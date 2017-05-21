@@ -41,6 +41,12 @@ namespace Illumina.BaseSpace.SDK
 		{
 			return WebClient.Send(request, options);
 		}
+
+        public GetAccessTokenDetailsResponse GetUserPermissions(GetAccessTokenDetailsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
 		#endregion
 
 		#region Runs
@@ -49,7 +55,12 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-		public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
+        public GetRunSequencingStatsResponse GetRunSequencingStats(GetRunSequencingStatsRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public ListRunsResponse ListRuns(ListRunsRequest request, IRequestOptions options = null)
 		{
 			return WebClient.Send(request, options);
 		}
@@ -454,6 +465,11 @@ namespace Illumina.BaseSpace.SDK
 
         #region LibraryContainers
         public ListLibraryContainersResponse ListLibraryContainers(ListLibraryContainersRequest request, IRequestOptions options = null)
+        {
+            return WebClient.Send(request, options);
+        }
+
+        public GetLibraryContainerResponse GetLibraryContainer(GetLibraryContainerRequest request, IRequestOptions options = null)
         {
             return WebClient.Send(request, options);
         }

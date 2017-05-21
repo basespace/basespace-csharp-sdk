@@ -29,7 +29,22 @@ namespace Illumina.BaseSpace.SDK.Types
         {
             return string.Format("Href: {0}; Name: {1}", Href, Name);
         }
+
+        [DataMember]
+        public Permissions Permissions { get; set; }
     }
+
+    [DataContract(Name = "Permissions")]
+    public class Permissions
+    {
+        [DataMember]
+        public string[] UserOperations { get; set; }
+
+        [DataMember]
+        public string[] AccessTokenOperations { get; set; }
+
+      
+    }   
 
     [DataContract()]
     public class Project : ProjectCompact, IPropertyContainingResource

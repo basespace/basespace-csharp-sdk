@@ -18,5 +18,20 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.True(user.DateCreated > new DateTime(2009,1,1));
             Assert.NotNull(user.Id);
         }
+
+        [Fact]
+        public void CanGetAccessTokenDetails()
+        {            
+            var request = new GetAccessTokenDetailsRequest();
+            GetAccessTokenDetailsResponse response = Client.GetUserPermissions(request);
+
+            Assert.NotNull(response);
+
+            AccessTokenDetails accessTokenDetails = response.Response;
+            Assert.NotNull(accessTokenDetails);
+            Assert.NotNull(accessTokenDetails.AccessToken);
+            Assert.NotNull(accessTokenDetails.UserResourceOwner);
+
+        }
     }
 }
