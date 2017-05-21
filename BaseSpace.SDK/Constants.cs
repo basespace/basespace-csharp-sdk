@@ -11,7 +11,6 @@
         public const string SAMPLE_FILE = "samplefile";
         public const string APPRESULT_FILE = "appresultfile";
         public const string APPSESSION = "appsession";
-        public const string INVITE = "invite";
         public const string MAP = "map";
         public const string LIST_SUFFIX = "[]";
     } 

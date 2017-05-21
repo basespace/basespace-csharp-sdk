@@ -42,8 +42,6 @@
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Illumina.TerminalVelocity">
-      <HintPath>..\..\BrightSpark\output\bin\Illumina.TerminalVelocity.dll</HintPath>
     <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
@@ -106,7 +104,6 @@
     <Compile Include="Interfaces\IRequest.cs" />
     <Compile Include="Interfaces\IRequestOptions.cs" />
     <Compile Include="Interfaces\IWebClient.cs" />
-    <Compile Include="ServiceModels\Request\CreateProjectShareRequest.cs" />
     <Compile Include="ServiceModels\Request\GetLibraryContainerRequest.cs" />
     <Compile Include="ServiceModels\Request\GetAccessTokenDetailsRequest.cs" />
     <Compile Include="ServiceModels\Request\GetRunSequencingStatsRequest.cs" />
@@ -194,7 +191,6 @@
     <Compile Include="ServiceModels\Response\ListSampleLibrariesResponse.cs" />
     <Compile Include="ServiceModels\Response\ListSupportedLibraryPrepKitsResponse.cs" />
     <Compile Include="ServiceModels\Response\PlannedRunReadyResponse.cs" />
-    <Compile Include="ServiceModels\Response\ProjectShareResponse.cs" />
     <Compile Include="ServiceModels\Response\SearchResponse.cs" />
     <Compile Include="ServiceModels\Response\SetPropertiesResponse.cs" />
     <Compile Include="ServiceModels\Response\CreateAppSessionLogsResponse.cs" />
@@ -244,7 +240,6 @@
     <Compile Include="Types\Agreement.cs" />
     <Compile Include="Types\ApiCategoryAttribute.cs" />
     <Compile Include="Types\ApiMeta.cs" />
-    <Compile Include="Types\Invite.cs" />
     <Compile Include="Types\PlannedRun.cs" />
     <Compile Include="Types\SequencingStats.cs" />
     <Compile Include="Types\SourceLibrary.cs" />
@@ -282,6 +277,14 @@
     <Compile Include="Types\AccessTokenDetails.cs" />
     <Compile Include="Types\Variant.cs" />
     <Compile Include="Types\VerificationCode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BaseSpace.SDK.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
