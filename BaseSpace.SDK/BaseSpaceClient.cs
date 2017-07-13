@@ -251,7 +251,7 @@ namespace Illumina.BaseSpace.SDK
             command.Execute();
         }
 
-        public void DownloadFile(V1pre3FileCompact file, string filePath, CancellationToken token = new CancellationToken())
+        public void DownloadFile(V1pre3FileCompact file, string filePath, CancellationToken token = new CancellationToken(), bool s3Redirect = false)
         {
             var command = new DownloadFileCommand(this, file, filePath, Settings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;

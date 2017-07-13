@@ -124,10 +124,10 @@ namespace Illumina.BaseSpace.SDK
 			}
 		}
 
-		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration)
+		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration, bool s3Redirect = false)
 		{
 			// get the download URL
-			var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId));
+			var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId, s3Redirect?FileContentRedirectType.True:FileContentRedirectType.Meta));
 
 			if (response.Response == null || response.Response.HrefContent == null)
 			{
