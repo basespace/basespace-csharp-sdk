@@ -76,15 +76,15 @@ namespace Illumina.BaseSpace.SDK
 
 		UploadFileToAppResultResponse UploadFileToAppResult(UploadFileToAppResultRequest request, IRequestOptions options = null);
 
-        void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken());
+        void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken(), bool useS3Redirect = false);
 
-        void DownloadFile(V1pre3FileCompact file, Stream stream, CancellationToken token = new CancellationToken());
+        void DownloadFile(V1pre3FileCompact file, Stream stream, CancellationToken token = new CancellationToken(), bool useS3Redirect = false);
 
         void DownloadFile(V1pre3FileCompact file, string filePath, CancellationToken token = new CancellationToken(), bool useS3Redirect = false);
 
-        void DownloadFile(V1pre3FileCompact file, string filePath, int maxThreadCount, CancellationToken token = new CancellationToken());
+        void DownloadFile(V1pre3FileCompact file, string filePath, int maxThreadCount, CancellationToken token = new CancellationToken(), bool useS3Redirect = false);
 
-        void DownloadFile(V1pre3FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken());
+        void DownloadFile(V1pre3FileCompact file, string filePath, int maxChunkSize, int maxThreadCount, CancellationToken token = new CancellationToken(), bool useS3Redirect = false);
         
         event FileDownloadProgressChangedEventHandler FileDownloadProgressChanged;
 
