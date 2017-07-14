@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -236,17 +235,17 @@ namespace Illumina.BaseSpace.SDK
 			return WebClient.Send(request, options);
 		}
 
-        public void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken(), bool s3Redirect = false )
+        public void DownloadFile(string fileId, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, fileId, stream, Settings, token, s3Redirect, WebProxy);
+            var command = new DownloadFileCommand(this, fileId, stream, Settings, token, WebProxy);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
         }
 
-        public void DownloadFile(V1pre3FileCompact file, Stream stream, CancellationToken token = new CancellationToken(), bool s3Redirect = false)
+        public void DownloadFile(V1pre3FileCompact file, Stream stream, CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, file, stream, Settings, token, s3Redirect, WebProxy);
+            var command = new DownloadFileCommand(this, file, stream, Settings, token, WebProxy);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
@@ -254,24 +253,24 @@ namespace Illumina.BaseSpace.SDK
 
         public void DownloadFile(V1pre3FileCompact file, string filePath, CancellationToken token = new CancellationToken(), bool s3Redirect = false)
         {
-            var command = new DownloadFileCommand(this, file, filePath, Settings, token, s3Redirect);
+            var command = new DownloadFileCommand(this, file, filePath, Settings, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
 
             command.Execute();
         }
 
         public void DownloadFile(V1pre3FileCompact file, string filePath, int maxThreadCount,
-            CancellationToken token = new CancellationToken(), bool useS3Redirect = false)
+            CancellationToken token = new CancellationToken())
         {
-            var command = new DownloadFileCommand(this, file, filePath, Settings, token, useS3Redirect, threadCount: maxThreadCount);
+            var command = new DownloadFileCommand(this, file, filePath, Settings, token, threadCount: maxThreadCount);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
             command.Execute();
         }
         
         public void DownloadFile(V1pre3FileCompact file, string filePath, int maxChunkSize, int maxThreadCount,
-                                 CancellationToken token = new CancellationToken(), bool useS3Redirect = false)
+                                 CancellationToken token = new CancellationToken())
         {
-               var command = new DownloadFileCommand(this, file,filePath, Settings, maxThreadCount, maxChunkSize, token, useS3Redirect);
+               var command = new DownloadFileCommand(this, file,filePath, Settings, maxThreadCount, maxChunkSize, token);
             command.FileDownloadProgressChanged += command_FileDownloadProgressChanged;
             command.Execute();
         }

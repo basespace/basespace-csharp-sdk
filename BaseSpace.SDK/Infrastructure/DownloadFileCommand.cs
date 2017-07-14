@@ -18,17 +18,17 @@ namespace Illumina.BaseSpace.SDK
 	    private CancellationToken _token { get; set; }
         private static ILog logger = LogManager.GetCurrentClassLogger();
         private bool _enableLogging = true;
-        private string _fileName = "NotSet";       	    
+        private string _fileName = "NotSet";
 
-        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), bool s3Redirect = false, IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, s3Redirect, proxy, enableLogging)
+        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, proxy, enableLogging)
         {
           
         }
 
-        public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), bool s3Redirect = false, IWebProxy proxy = null, bool enableLogging = true)
+        public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client,fileId, out expiration, s3Redirect);
+            string url = GetFileContentUrl(client,fileId, out expiration);
 #pragma warning disable 618
             ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: true);
 #pragma warning restore 618
@@ -40,20 +40,20 @@ namespace Illumina.BaseSpace.SDK
         }
 
         public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName,
-                                   IClientSettings settings, CancellationToken token = new CancellationToken(), bool s3Redirect = false, int threadCount = DEFAULT_THREADS, bool enableLogging = true)
+                                   IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true, int threadCount = DEFAULT_THREADS)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client, file.Id, out expiration, s3Redirect);
+            string url = GetFileContentUrl(client, file.Id, out expiration);
             ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, id: file.Id);
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
         }
 
-        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool s3Redirect = false, bool enableLogging = true)
+        public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client, file.Id, out expiration, s3Redirect);
+            string url = GetFileContentUrl(client, file.Id, out expiration);
             _fileName = string.Format("[{0}],{1}",file.Id,file.Name);
             ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id);
             _parameters = parameters;
@@ -68,6 +68,7 @@ namespace Illumina.BaseSpace.SDK
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
+
         }
 
         protected DownloadFileCommand(ILargeFileDownloadParameters downloadParameters,
@@ -75,8 +76,8 @@ namespace Illumina.BaseSpace.SDK
         {
             _token = token;
             _proxy = proxy;
-            _parameters = downloadParameters;           
-            _enableLogging = enableLogging;            
+            _parameters = downloadParameters;
+            _enableLogging = enableLogging;
         }
 
 
@@ -126,7 +127,7 @@ namespace Illumina.BaseSpace.SDK
 		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration, bool s3Redirect = false)
 		{
 			// get the download URL
-			var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId, s3Redirect?FileContentRedirectType.Proxy:FileContentRedirectType.True));
+			var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId, s3Redirect?FileContentRedirectType.True:FileContentRedirectType.Meta));
 
 			if (response.Response == null || response.Response.HrefContent == null)
 			{

@@ -4,7 +4,7 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public class FileContentRedirectMetaRequest : AbstractResourceRequest<FileContentRedirectMetaResponse>
     {
-        public FileContentRedirectMetaRequest(string fileId, FileContentRedirectType redirectType = FileContentRedirectType.True)
+        public FileContentRedirectMetaRequest(string fileId, FileContentRedirectType redirectType = FileContentRedirectType.Meta)
 			: base (fileId)
         {
             Redirect = redirectType;
@@ -14,7 +14,8 @@ namespace Illumina.BaseSpace.SDK.ServiceModels
 
 		protected override string GetUrl()
 		{
-		  return $"{Version}/files/{Id}/content?redirect={Redirect}";
+		    var strRedirect = Redirect == FileContentRedirectType.True ? "?redirect=proxy" : String.Empty;
+            return $"{Version}/files/{Id}/content{strRedirect}";
 		}
 	}
 }
