@@ -24,7 +24,7 @@
             FileUploadMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE_THRESHOLD;
             FileUploadMultipartChunkSize = DEFAULT_UPLOAD_MULTIPART_SIZE;
 
-            FileDownloadMultipartSizeThreshold = DEFAULT_DOWNLOAD_MULTIPART_SIZE;
+            FileDownloadMultipartSizeThreshold = DEFAULT_DOWNLOAD_MULTIPART_SIZE;		          
 		}
 
 		public uint RetryAttempts { get; set; }
@@ -44,5 +44,6 @@
         public IAuthentication Authentication { get; set; }
 
         public int TimeoutMin { get; set; }
+	    public bool UseS3Redirect { get; set; } 
 	}
 }

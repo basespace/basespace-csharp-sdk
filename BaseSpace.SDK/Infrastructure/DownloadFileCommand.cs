@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
@@ -28,9 +29,10 @@ namespace Illumina.BaseSpace.SDK
         public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client,fileId, out expiration);
+            long fileSize;
+            string url = GetFileContentUrl(client,fileId, out expiration,out fileSize, settings.UseS3Redirect);
 #pragma warning disable 618
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: true);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, fileSize, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: !settings.UseS3Redirect);
 #pragma warning restore 618
             _parameters = parameters;
             _token = token;
@@ -43,8 +45,10 @@ namespace Illumina.BaseSpace.SDK
                                    IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true, int threadCount = DEFAULT_THREADS)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client, file.Id, out expiration);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, id: file.Id);
+            long fileSize;
+            string url = GetFileContentUrl(client, file.Id, out expiration,out fileSize, settings.UseS3Redirect);
+
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, fileSize: fileSize, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, id: file.Id, verifyLength: !settings.UseS3Redirect);
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
@@ -53,9 +57,10 @@ namespace Illumina.BaseSpace.SDK
         public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client, file.Id, out expiration);
+            long fileSize;
+            string url = GetFileContentUrl(client, file.Id, out expiration,out fileSize, settings.UseS3Redirect);
             _fileName = string.Format("[{0}],{1}",file.Id,file.Name);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, fileSize: fileSize, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id, verifyLength: !settings.UseS3Redirect);
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
@@ -124,23 +129,44 @@ namespace Illumina.BaseSpace.SDK
 			}
 		}
 
-		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration)
+		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration, out long fileSize, bool useS3Redirect)
 		{
-			// get the download URL
-			var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId));
+		    if (useS3Redirect)
+		    {
+		        var response = client.GetFilesInformation(new GetFileInformationRequest(fileId));
+                if (response.Response?.HrefContent == null)
+                {
+                    throw new ApplicationException("Unable to get HrefContent");
+                }
+                expiration = DateTime.MaxValue;
+                
+                var apiUri = new Uri(client.Settings.BaseSpaceApiUrl);
+                var uriBuilder = new System.UriBuilder(apiUri);
+                uriBuilder.Path += response.Response.HrefContent;
+		        uriBuilder.Query = "redirect=proxy";
+		        var xxx = uriBuilder.Uri.ToString();
+		        fileSize = response.Response.Size;
+                return uriBuilder.Uri.ToString();
+		    }
+		    else
+		    {
+                // get the download URL
+                FileContentRedirectMetaResponse response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId, useS3Redirect ? FileContentRedirectType.Proxy : FileContentRedirectType.Meta));
 
-			if (response.Response == null || response.Response.HrefContent == null)
-			{
-				throw new ApplicationException("Unable to get HrefContent");
-			}
+                if (response.Response?.HrefContent == null)
+                {
+                    throw new ApplicationException("Unable to get HrefContent");
+                }
 
-			if (!response.Response.SupportsRange)
-			{
-				throw new ApplicationException("This file does not support range queries");
-			}
+                if (!response.Response.SupportsRange)
+                {
+                    throw new ApplicationException("This file does not support range queries");
+                }
 
-			expiration = response.Response.Expires;
-			return response.Response.HrefContent;
+                expiration = response.Response.Expires;
+		        fileSize = -1;
+                return response.Response.HrefContent;
+            }
 		}
 
 	}

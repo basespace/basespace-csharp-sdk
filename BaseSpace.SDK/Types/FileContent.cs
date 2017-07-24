@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Illumina.BaseSpace.SDK
 {
-    public enum FileContentRedirectType { True, False, Meta }
+    public enum FileContentRedirectType { True, Proxy, Meta }
 
     [DataContract]
     public class FileContentRedirectMeta

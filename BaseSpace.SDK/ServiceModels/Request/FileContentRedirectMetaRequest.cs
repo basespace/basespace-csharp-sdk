@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public class FileContentRedirectMetaRequest : AbstractResourceRequest<FileContentRedirectMetaResponse>
     {
-        public FileContentRedirectMetaRequest(string fileId)
+        public FileContentRedirectMetaRequest(string fileId, FileContentRedirectType redirectType = FileContentRedirectType.Meta)
 			: base (fileId)
         {
-            Redirect = FileContentRedirectType.Meta;
+            Redirect = redirectType;
         }
 
         public FileContentRedirectType Redirect { get; set; }
 
 		protected override string GetUrl()
 		{
-            return String.Format("{0}/files/{1}/content", Version, Id);
+		    var url = $"{Version}/files/{Id}/content";//?redirect={Redirect}
+            Debug.WriteLine(url);
+		    return url;
 		}
 	}
 }
