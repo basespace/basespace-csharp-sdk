@@ -7,5 +7,6 @@ namespace Illumina.BaseSpace.SDK
 	{
 		void UpdateHttpHeader(HttpWebRequest request);
 	    void UpdateHttpHeader(WebHeaderCollection headers, Uri requestUri, string requestMethod);
-	}
+        string AccessToken { get; }
+    }
 }

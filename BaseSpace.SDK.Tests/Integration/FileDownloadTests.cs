@@ -8,37 +8,43 @@ using Xunit;
 using File = System.IO.File;
 using System.IO;
 using System;
+using System.Threading;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class FileDownloadTests : BaseIntegrationTest
     {
         [Fact]
-        public void CanDownloadFile()
+        public void CanDownloadSmallFile()
         {
-            var project = TestHelpers.CreateRandomTestProject(Client);
-            var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
-            var file = File.Create(string.Format("UnitTestFile_{0}", appResult.Id));
-            var data = new byte[1024];
-            new Random().NextBytes(data);
-            file.Write(data, 0, data.Length);
-            file.Close();
-            var response = Client.UploadFileToAppResult(new UploadFileToAppResultRequest(appResult.Id, file.Name), null);
-            Assert.NotNull(response);
-            Assert.True(response.Response.UploadStatus == FileUploadStatus.complete);
-
-            var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
-            Client.FileDownloadProgressChanged += delegate(object sender, FileDownloadProgressChangedEventArgs e)
-            {
-                Assert.Equal(appResult.Id, e.FileId);// check if the file id is one we expect
+            IBaseSpaceClient client = CreateRealClient(useS3Proxy:false);
+            var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);           
+            client.FileDownloadProgressChanged += delegate(object sender, FileDownloadProgressChangedEventArgs e)
+            {                          
+               Console.WriteLine($"FileId={e.FileId} BytesDownloaded={e.BytesDownloaded} Progress={e.ProgressPercentage}%");            
             };
-            Client.DownloadFile(response.Response.Id, fs);
-            Assert.Equal(fs.Length, data.Length);
+           
+            client.DownloadFile("72882900", fs);            
+            Assert.Equal(fs.Length, 3737);            
         }
 
         [Fact]
-        public void CanDownloadLargerFile()
+        public void CanDownloadSmallFileWithProxy()
         {
+            IBaseSpaceClient client = CreateRealClient(useS3Proxy: true);
+            var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
+
+            client.FileDownloadProgressChanged += delegate (object sender, FileDownloadProgressChangedEventArgs e)
+            {
+                Debug.WriteLine($"FileId={e.FileId} BytesDownloaded={e.BytesDownloaded} Progress={e.ProgressPercentage}%");
+            };
+            client.DownloadFile("72882900", fs);
+            Assert.Equal(fs.Length, 3737);
+        }
+
+        [Fact (Skip="takes too long - sujit")]
+        public void CanDownloadLargerFile()
+        {            
             var project = TestHelpers.CreateRandomTestProject(Client);
             var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
             var file = File.Create(string.Format("UnitTestFile_{0}", appResult.Id));
@@ -66,7 +72,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
         [Fact]
         public void CanDownloadZeroByteFile()
-        {
+        {            
             var project = TestHelpers.CreateRandomTestProject(Client);
             var appResult = TestHelpers.CreateRandomTestAppResult(Client, project);
             var file = File.Create(string.Format("UnitTestFile_{0}", appResult.Id));

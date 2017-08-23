@@ -25,9 +25,14 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Debug.Listeners.Add(new DefaultTraceListener());
         }
 
+        private IBaseSpaceClient CreateRealClient()
+        {
+            return CreateRealClient(false);
+        }
+
         private readonly Lazy<IBaseSpaceClient> _lazy;
 
-        public IBaseSpaceClient Client
+        public virtual IBaseSpaceClient Client
         {
             get { return _lazy.Value; }
         }
@@ -43,7 +48,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
         // Note: prefer access through the Client property!
-        protected virtual IBaseSpaceClient CreateRealClient()
+        protected virtual IBaseSpaceClient CreateRealClient(bool useS3Proxy= false)
         {
             //string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
             //string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
@@ -56,8 +61,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 					Authentication = GetAuthentication(),
 					BaseSpaceApiUrl = apiUrl, 
 					BaseSpaceWebsiteUrl = webUrl, 
-					Version = version
-				};
+					Version = version,
+                    UseS3Proxy = useS3Proxy
+            };
 
 			return new BaseSpaceClient(settings);
         }

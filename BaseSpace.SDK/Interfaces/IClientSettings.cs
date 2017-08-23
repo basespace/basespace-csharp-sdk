@@ -18,5 +18,5 @@
 		IAuthentication Authentication { get; }
 
         int TimeoutMin { get;  }
-	}
+    }
 }
