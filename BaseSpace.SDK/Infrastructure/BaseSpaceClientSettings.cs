@@ -45,5 +45,6 @@
 
         public int TimeoutMin { get; set; }
 
+        public bool UseS3Proxy { get; set; }
     }
 }
