@@ -123,3 +123,4 @@ BaseSpace.SDK/src/BaseSpace.SDK.MonoTouch/BaseSpace.SDK.MonoTouch.Tests/Settings
 *.plist
 *.DS_Store
 *.DS_Store
+.vs/config/applicationhost.config
