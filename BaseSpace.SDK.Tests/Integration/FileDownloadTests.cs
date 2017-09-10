@@ -23,8 +23,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
                Console.WriteLine($"FileId={e.FileId} BytesDownloaded={e.BytesDownloaded} Progress={e.ProgressPercentage}%");            
             };
            
-            client.DownloadFile("72882900", fs);            
-            Assert.Equal(fs.Length, 3737);            
+            client.DownloadFile("145435603", fs);            
+            Assert.Equal(fs.Length, 64596);            
         }
 
         [Fact]
@@ -37,8 +37,8 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             {
                 Debug.WriteLine($"FileId={e.FileId} BytesDownloaded={e.BytesDownloaded} Progress={e.ProgressPercentage}%");
             };
-            client.DownloadFile("72882900", fs);
-            Assert.Equal(fs.Length, 3737);
+            client.DownloadFile("145435603", fs);
+            Assert.Equal(fs.Length, 64596);
         }
         [Fact]
         public void CanDownloadFile()
