@@ -18,5 +18,6 @@
 		IAuthentication Authentication { get; }
 
         int TimeoutMin { get;  }
-	}
+        bool UseS3Proxy { get; }
+    }
 }

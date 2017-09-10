@@ -14,6 +14,33 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
     public class FileDownloadTests : BaseIntegrationTest
     {
         [Fact]
+        public void CanDownloadSmallFile()
+        {
+            IBaseSpaceClient client = CreateRealClient(useS3Proxy:false);
+            var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);           
+            client.FileDownloadProgressChanged += delegate(object sender, FileDownloadProgressChangedEventArgs e)
+            {                          
+               Console.WriteLine($"FileId={e.FileId} BytesDownloaded={e.BytesDownloaded} Progress={e.ProgressPercentage}%");            
+            };
+           
+            client.DownloadFile("145435603", fs);            
+            Assert.Equal(fs.Length, 64596);            
+        }
+
+        [Fact]
+        public void CanDownloadSmallFileWithProxy()
+        {
+            IBaseSpaceClient client = CreateRealClient(useS3Proxy: true);
+            var fs = new FileStream("DownloadedFile-" + StringHelpers.RandomAlphanumericString(5), FileMode.OpenOrCreate);
+
+            client.FileDownloadProgressChanged += delegate (object sender, FileDownloadProgressChangedEventArgs e)
+            {
+                Debug.WriteLine($"FileId={e.FileId} BytesDownloaded={e.BytesDownloaded} Progress={e.ProgressPercentage}%");
+            };
+            client.DownloadFile("145435603", fs);
+            Assert.Equal(fs.Length, 64596);
+        }
+        [Fact]
         public void CanDownloadFile()
         {
             var project = TestHelpers.CreateRandomTestProject(Client);
@@ -35,8 +62,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Client.DownloadFile(response.Response.Id, fs);
             Assert.Equal(fs.Length, data.Length);
         }
-
-        [Fact]
+        [Fact (Skip="takes too long - sujit")]
         public void CanDownloadLargerFile()
         {
             var project = TestHelpers.CreateRandomTestProject(Client);
