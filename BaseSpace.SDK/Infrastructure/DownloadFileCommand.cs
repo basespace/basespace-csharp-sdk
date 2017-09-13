@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
@@ -19,7 +20,7 @@ namespace Illumina.BaseSpace.SDK
         private static ILog logger = LogManager.GetCurrentClassLogger();
         private bool _enableLogging = true;
         private string _fileName = "NotSet";
-
+	    private static bool UseS3Proxy = false;
         public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true): this(client, file.Id, stream, settings, token, proxy, enableLogging)
         {
           
@@ -28,9 +29,15 @@ namespace Illumina.BaseSpace.SDK
         public DownloadFileCommand(BaseSpaceClient client, string fileId, Stream stream, IClientSettings settings, CancellationToken token = new CancellationToken(), IWebProxy proxy = null, bool enableLogging = true)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client,fileId, out expiration);
+            long fileSize;
+            
+            string url = GetFileContentUrl(client, fileId, out expiration, out fileSize);
 #pragma warning disable 618
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters(new Uri(url), stream, 0, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, autoCloseStream: false, verifyLength: true);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadWithStreamParameters
+                (
+                 new Uri(url), stream, fileSize, id: fileId, maxThreads: DEFAULT_THREADS, maxChunkSize: (int)settings.FileDownloadMultipartSizeThreshold, 
+                 autoCloseStream: false, verifyLength: false, accessToken: UseS3Proxy?settings.Authentication.AccessToken:""
+                );
 #pragma warning restore 618
             _parameters = parameters;
             _token = token;
@@ -43,8 +50,14 @@ namespace Illumina.BaseSpace.SDK
                                    IClientSettings settings, CancellationToken token = new CancellationToken(), bool enableLogging = true, int threadCount = DEFAULT_THREADS)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client, file.Id, out expiration);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, id: file.Id);
+            long fileSize;
+            string url = GetFileContentUrl(client, file.Id, out expiration, out fileSize);
+
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters
+                (
+                    new Uri(url), targetFileName, fileSize: fileSize, maxThreads: threadCount, maxChunkSize: (int?)settings.FileDownloadMultipartSizeThreshold, 
+                    id: file.Id, verifyLength: false, accessToken: UseS3Proxy ? settings.Authentication.AccessToken : ""
+                );
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
@@ -53,9 +66,14 @@ namespace Illumina.BaseSpace.SDK
         public DownloadFileCommand(BaseSpaceClient client, V1pre3FileCompact file, string targetFileName, IClientSettings settings, int threadCount,  int maxChunkSize, CancellationToken token = new CancellationToken(), bool enableLogging = true)
         {
             DateTime expiration;
-            string url = GetFileContentUrl(client, file.Id, out expiration);
+            long fileSize;
+            string url = GetFileContentUrl(client, file.Id, out expiration, out fileSize);
             _fileName = string.Format("[{0}],{1}",file.Id,file.Name);
-            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters(new Uri(url), targetFileName, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id);
+            ILargeFileDownloadParameters parameters = new LargeFileDownloadParameters
+                (
+                    new Uri(url), targetFileName, fileSize: fileSize, maxThreads: threadCount, maxChunkSize: maxChunkSize, id: file.Id, 
+                    verifyLength: false, accessToken: UseS3Proxy ? settings.Authentication.AccessToken : ""
+                );
             _parameters = parameters;
             _token = token;
             _enableLogging = enableLogging;
@@ -117,32 +135,63 @@ namespace Illumina.BaseSpace.SDK
 		}
      
 	    protected virtual void OnFileDownloadProgressChanged(FileDownloadProgressChangedEventArgs e)
-		{
-			if (FileDownloadProgressChanged != null)
-			{
-				FileDownloadProgressChanged(this, e);
-			}
-		}
+        {
+            FileDownloadProgressChanged?.Invoke(this, e);
+        }
+        private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration, out long fileSize)
+        {
+            if (UseS3Proxy)
+            {
+                return GetS3ProxiedFileContentUrl(client, fileId, out expiration, out fileSize);
+            }
+            // get the download URL
+            var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId));
 
-		private static string GetFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration)
-		{
-			// get the download URL
-			var response = client.GetFileContentUrl(new FileContentRedirectMetaRequest(fileId));
+            if (response.Response?.HrefContent == null)
+            {
+                throw new ApplicationException("Unable to get HrefContent");
+            }
 
-			if (response.Response == null || response.Response.HrefContent == null)
-			{
-				throw new ApplicationException("Unable to get HrefContent");
-			}
+            if (!response.Response.SupportsRange)
+            {
+                throw new ApplicationException("This file does not support range queries");
+            }
 
-			if (!response.Response.SupportsRange)
-			{
-				throw new ApplicationException("This file does not support range queries");
-			}
+            expiration = response.Response.Expires;
 
-			expiration = response.Response.Expires;
-			return response.Response.HrefContent;
-		}
+            //We will try to get the filesize using the S3 url, if that fails, then that means
+            //that access to S3 is blocked because of restrictive network policies, therefore
+            //we will use the S3Proxied Url 
+            try
+            {
+                fileSize = new Uri(response.Response.HrefContent).GetContentLength(maxRetries: 0);
+            }           
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Switching to S3Proxy mode because of {0}",ex,ex.Message);
+                UseS3Proxy = true;
+                return GetS3ProxiedFileContentUrl(client, fileId, out expiration, out fileSize);
 
+            }
+            return response.Response.HrefContent;
+        }
+
+	    private static string GetS3ProxiedFileContentUrl(BaseSpaceClient client, string fileId, out DateTime expiration, out long fileSize)
+	    {
+	        var infoResponse = client.GetFilesInformation(new GetFileInformationRequest(fileId));
+	        if (infoResponse.Response?.HrefContent == null)
+	        {
+	            throw new ApplicationException("Unable to get HrefContent");
+	        }
+	        expiration = DateTime.MaxValue;
+
+	        var apiUri = new Uri(client.Settings.BaseSpaceApiUrl);
+	        var uriBuilder = new System.UriBuilder(apiUri);
+	        uriBuilder.Path += infoResponse.Response.HrefContent;
+	        uriBuilder.Query = "redirect=proxy";
+	        fileSize = infoResponse.Response.Size;
+	        return uriBuilder.Uri.ToString();
+	    }
 	}
 }
 
