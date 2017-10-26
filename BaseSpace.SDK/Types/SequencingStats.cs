@@ -26,6 +26,12 @@ namespace Illumina.BaseSpace.SDK.Types
         public float ErrorRate { get; set; }
 
         [DataMember]
+        public float ErrorRateR1 { get; set; }
+
+        [DataMember]
+        public float ErrorRateR2 { get; set; }
+
+        [DataMember]
         public float IntensityCycle1 { get; set; }
 
         [DataMember]
@@ -90,6 +96,33 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public float PercentResynthesis { get; set; }
+
+        [DataMember]
+        public float PercentGtQ30R1 { get; set; }
+
+        [DataMember]
+        public float PercentGtQ30R2 { get; set; }
+
+        [DataMember]
+        public float PercentPf { get; set; }
+
+        [DataMember]
+        public float PhasingR1 { get; set; }
+
+        [DataMember]
+        public float PhasingR2 { get; set; }
+
+        [DataMember]
+        public float PrePhasingR1 { get; set; }
+
+        [DataMember]
+        public float PrePhasingR2 { get; set; }
+
+        [DataMember]
+        public long ReadsPfTotal { get; set; }
+
+        [DataMember]
+        public long ReadsTotal { get; set; }
     }
 
     [DataContract(Name = "SequencingStats")]
@@ -193,6 +226,30 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public float IntensityCycle1 { get; set; }
+
+        [DataMember]
+        public string Id { get; set; }
+
+        [DataMember]
+        public Uri Href { get; set; }
+
+        [DataMember]
+        public float MaxProjectedYieldInGbp { get; set; }
+
+        [DataMember]
+        public float ProjectedYieldInGbp { get; set; }
+
+        [DataMember]
+        public string Status { get; set; }
+
+        [DataMember]
+        public Uri HrefComments { get; set; }
+
+        [DataMember]
+        public bool ContainsComments { get; set; }
+
+        [DataMember]
+        public Uri HrefLaneSequencingStats { get; set; }
     }
 
     [DataContract(Name = "LaneByRead")]
