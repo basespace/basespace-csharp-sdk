@@ -14,6 +14,9 @@ namespace Illumina.BaseSpace.SDK.Types
         public override Uri Href { get; set; }
 
         [DataMember]
+        public string Side { get; set; }
+
+        [DataMember]
         public string ExperimentName { get; set; }
 
         [DataMember]
@@ -168,7 +171,17 @@ namespace Illumina.BaseSpace.SDK.Types
     {
         Id,
         DateCreated,
-        DateModified
+        DateModified,
+        ExperimentName,
+        LaneAndQcStatus,
+        NameOwnedBy,
+        PlatformName,
+        UserOwnedBy,
+        Status,
+        Workflow,
+        InstrumentName,
+        InstrumentSerialNumber,
+        TotalSize
     }
 
     public enum RunFilesSortByParameters
