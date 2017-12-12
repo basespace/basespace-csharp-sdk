@@ -250,6 +250,18 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public Uri HrefLaneSequencingStats { get; set; }
+
+        [DataMember]
+        public virtual float PhasingSlope { get; set; }
+
+        [DataMember]
+        public virtual float PhasingOffset { get; set; }
+
+        [DataMember]
+        public virtual float PrePhasingSlope { get; set; }
+
+        [DataMember]
+        public virtual float PrePhasingOffset { get; set; }
     }
 
     [DataContract(Name = "LaneByRead")]
@@ -347,5 +359,17 @@ namespace Illumina.BaseSpace.SDK.Types
 
         [DataMember]
         public float IntensityCycle1Deviation { get; set; }
+
+        [DataMember]
+        public virtual float PhasingSlope { get; set; }
+
+        [DataMember]
+        public virtual float PhasingOffset { get; set; }
+
+        [DataMember]
+        public virtual float PrePhasingSlope { get; set; }
+
+        [DataMember]
+        public virtual float PrePhasingOffset { get; set; }
     }
 }
