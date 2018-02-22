@@ -164,7 +164,7 @@ namespace Illumina.BaseSpace.SDK
             //we will use the S3Proxied Url 
             try
             {
-                fileSize = new Uri(response.Response.HrefContent).GetContentLength(maxRetries: 0);
+                fileSize = new Uri(response.Response.HrefContent).GetContentLength(maxRetries: 1);
             }           
             catch (Exception ex)
             {
