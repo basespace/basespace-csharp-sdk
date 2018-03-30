@@ -81,6 +81,9 @@ namespace Illumina.BaseSpace.SDK.Types
         [DataMember]
         public string SampleSheetName { get; set; }
 
+        [DataMember]
+        public string PrepKitName { get; set; }
+
         public override string ToString()
         {
             return string.Format("Href: {0}; Name: {1}; Status: {2}", Href, Name, Status);
