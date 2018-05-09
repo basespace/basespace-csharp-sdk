@@ -28,28 +28,29 @@
 				]]>		
 			</Code>		
 		</Task>	
-	</UsingTask>
-	<Target Name="RestoreNuGetPackages">
-		<!-- Download latest nuget.exe -->		
-	    <DownloadFile Condition="!Exists($(NugetPath))" Address="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" FileName="$(NugetPath)" />
-		<!-- Restore Packages -->
-		<Exec Command='$(NugetPath) restore $(SolutionPath)' />
-	</Target>
-<Target Name="Build" DependsOnTargets="RestoreNuGetPackages">
-    <MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build" Properties="Configuration=Release">
-    </MSBuild>
-	<MakeDir  Directories="$(ArtifactsPath)"/>
-	<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
-        	<Output TaskParameter="Include" ItemName="Artifacts" />
-    	</CreateItem>
-    	<Copy SourceFiles="@(Artifacts)" DestinationFolder="$(ArtifactsPath)"></Copy>
-</Target>
-  
-	<Target Name="BuildPackage" DependsOnTargets="Build">
-		<!-- Download latest nuget.exe -->		
-	    <DownloadFile Condition="!Exists($(NugetPath))" Address="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" FileName="$(NugetPath)" />
-		<!-- Create Packages -->
-		<Exec Command='$(NugetPath) pack BaseSpace.SDK\BaseSpace.SDK.csproj -p Configuration=$(Configuration) -o "$(ArtifactsPath)" -symbols' />
+	</UsingTask>	
+	<Target Name="Build" DependsOnTargets="RestoreNuGetPackages">
+		<MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build" Properties="Configuration=Release">
+		</MSBuild>
+		<MakeDir  Directories="$(ArtifactsPath)"/>
+		<CreateItem Include="BaseSpace.SDK\bin\Release\*.nupkg" >
+				<Output TaskParameter="Include" ItemName="Artifacts" />
+			</CreateItem>
+			<Copy SourceFiles="@(Artifacts)" DestinationFolder="$(ArtifactsPath)"></Copy>
+	</Target>	
+	<ItemGroup>
+    <!-- todo: get rid of this group, separate the integration tests from these unit tests and make them thread safe -->
+		<TestAssemblies Include=".\BaseSpace.SDK.Tests\bin\Release\Illumina.BaseSpace.SDK.Tests.dll" />
+		
+	</ItemGroup>
+	<Target Name="Test" DependsOnTargets="Build">
+		<xunit html="test.html"
+		  Assemblies="@(TestAssemblies)"
+		  ParallelizeAssemblies="false"
+		  ParallelizeTestCollections="false"
+		  MaxParallelThreads="1"
+		  ContinueOnError="$(ContinueOnTestError)">
+		</xunit>
 	</Target>
 
 </Project>
