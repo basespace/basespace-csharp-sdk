@@ -43,20 +43,5 @@
 				<Output TaskParameter="Include" ItemName="Artifacts" />
 			</CreateItem>
 			<Copy SourceFiles="@(Artifacts)" DestinationFolder="$(ArtifactsPath)"></Copy>
-	</Target>	
-	<ItemGroup>
-    <!-- todo: get rid of this group, separate the integration tests from these unit tests and make them thread safe -->
-		<TestAssemblies Include=".\BaseSpace.SDK.Tests\bin\Release\Illumina.BaseSpace.SDK.Tests.dll" />
-		
-	</ItemGroup>
-	<Target Name="Test" DependsOnTargets="Build">
-		<xunit html="test.html"
-		  Assemblies="@(TestAssemblies)"
-		  ParallelizeAssemblies="false"
-		  ParallelizeTestCollections="false"
-		  MaxParallelThreads="1"
-		  ContinueOnError="$(ContinueOnTestError)">
-		</xunit>
-	</Target>
-
+	</Target>		
 </Project>
