@@ -29,6 +29,12 @@
 			</Code>		
 		</Task>	
 	</UsingTask>	
+	<Target Name="RestoreNuGetPackages">
+		<!-- Download latest nuget.exe -->		
+		  <DownloadFile Condition="!Exists($(NugetPath))" Address="https://nuget.org/nuget.exe" FileName="$(NugetPath)" />
+		<!-- Restore Packages -->
+		<Exec Command='$(NugetPath) restore $(SolutionPath)' />
+	</Target>
 	<Target Name="Build" DependsOnTargets="RestoreNuGetPackages">
 		<MSBuild Projects="BaseSpace.SDK\BaseSpace.SDK.csproj" Targets="Build" Properties="Configuration=Release">
 		</MSBuild>
