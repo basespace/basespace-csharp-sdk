@@ -9,6 +9,10 @@ namespace Illumina.BaseSpace.SDK
     {
         public static bool TryGetProperty(this PropertyContainer propertyContainer, string name, out PropertyCompact property)
         {
+            if (propertyContainer.Items == null)
+            {
+                return false;
+            }
             property = propertyContainer.Items.FirstOrDefault(p => p.Name == name);
             return property != null;
         }
