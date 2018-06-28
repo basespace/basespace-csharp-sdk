@@ -11,6 +11,7 @@ namespace Illumina.BaseSpace.SDK
         {
             if (propertyContainer.Items == null)
             {
+                property=null;
                 return false;
             }
             property = propertyContainer.Items.FirstOrDefault(p => p.Name == name);
