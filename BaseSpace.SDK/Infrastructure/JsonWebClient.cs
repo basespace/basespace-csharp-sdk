@@ -10,6 +10,7 @@ using Illumina.TerminalVelocity;
 using ServiceStack;
 #else
 using ServiceStack.ServiceClient.Web;
+using ServiceStack.ServiceModel.Serialization;
 #endif
 using ServiceStack.Text;
 using Property = Illumina.BaseSpace.SDK.Types.Property;
