@@ -37,10 +37,19 @@ namespace Illumina.BaseSpace.SDK
             DefaultRequestOptions = defaultOptions ?? new RequestOptions();
             logger = LogManager.GetCurrentClassLogger();
 
-            // call something on this object so it gets initialized in single threaded context
+            client = new JsonServiceClient(settings.BaseSpaceApiUrl);
 
-#if !NETSTANDARD
-            // using ServiceStack.ServiceClient.Web;
+            if (settings.TimeoutMin > 0)
+                client.Timeout = TimeSpan.FromMinutes(settings.TimeoutMin);
+
+            clientBilling = new JsonServiceClient(settings.BaseSpaceBillingApiUrl);
+
+#if NETSTANDARD
+            client.RequestFilter += WebRequestFilter;
+            clientBilling.RequestFilter += WebRequestFilter;
+
+#else
+           // call something on this object so it gets initialized in single threaded context
             System.Web.Util.HttpEncoder.Default.SerializeToString();
 
 			//need to add the following call for Mono -- https://bugzilla.xamarin.com/show_bug.cgi?id=12565
@@ -50,25 +59,22 @@ namespace Illumina.BaseSpace.SDK
 			}
 
             System.Web.Util.HttpEncoder.Current.SerializeToString();
-
-            client = new JsonServiceClient(settings.BaseSpaceApiUrl);
             client.LocalHttpWebRequestFilter += WebRequestFilter;
-
-            if (settings.TimeoutMin > 0)
-                client.Timeout = TimeSpan.FromMinutes(settings.TimeoutMin);
-
-            clientBilling = new JsonServiceClient(settings.BaseSpaceBillingApiUrl);
             clientBilling.LocalHttpWebRequestFilter += WebRequestFilter;
-#endif            
+#endif           
 
         }
 
         static JsonWebClient()
         {
+#if NETSTANDARD
+            JsConfig.DateHandler = DateHandler.ISO8601;
+#else
             // setting this just to make sure it's not set in Linux
-          //  JsonDataContractDeserializer.Instance.UseBcl = false;
+            JsonDataContractDeserializer.Instance.UseBcl = false;
             // BaseSpace uses this format for DateTime
-          //  JsConfig.DateHandler = JsonDateHandler.ISO8601;
+             JsConfig.DateHandler = JsonDateHandler.ISO8601;
+#endif
 
             JsConfig<Uri>.DeSerializeFn = s => new Uri(s, s.StartsWith("http") ? UriKind.Absolute : UriKind.Relative);
 
