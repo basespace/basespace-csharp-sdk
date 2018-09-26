@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26510.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSpace.SDK.dotnetstandard", "BaseSpace.SDK\BaseSpace.SDK.dotnetstandard.csproj", "{B573665F-84BA-4F0E-8F17-BCAEA4D0828D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B573665F-84BA-4F0E-8F17-BCAEA4D0828D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B573665F-84BA-4F0E-8F17-BCAEA4D0828D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B573665F-84BA-4F0E-8F17-BCAEA4D0828D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B573665F-84BA-4F0E-8F17-BCAEA4D0828D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8F826BA-9314-4560-A305-909645F5B949}
+	EndGlobalSection
+EndGlobal

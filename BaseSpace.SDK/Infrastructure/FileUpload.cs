@@ -6,8 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
-using ServiceStack.ServiceClient.Web;
 using Illumina.BaseSpace.SDK.Types;
+
+#if NETSTANDARD
+using ServiceStack;
+#else
+using ServiceStack.ServiceClient.Web;
+#endif
 using File = System.IO.File;
 
 namespace Illumina.BaseSpace.SDK

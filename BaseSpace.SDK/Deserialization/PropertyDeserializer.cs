@@ -2,6 +2,7 @@
 using System.Linq;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
+using ServiceStack;
 using ServiceStack.Text;
 
 namespace Illumina.BaseSpace.SDK.Deserialization
@@ -61,11 +62,11 @@ namespace Illumina.BaseSpace.SDK.Deserialization
             return JsonToProperty(jsonString);
         }
 
-        public static Property JsonToProperty(string jsonString)
+        public static Types.Property JsonToProperty(string jsonString)
         {
             var json = JsonObject.Parse(jsonString);
 
-            var property = new Property()
+            var property = new Types.Property()
             {
                 Description = json.Get("Description"),
                 Href = json.Get<Uri>("Href"),
