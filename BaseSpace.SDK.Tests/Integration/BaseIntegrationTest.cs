@@ -44,12 +44,12 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
 
-        private string GetConfigValue(string key)
+        public static string GetConfigValue(string key)
         {
             var module = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".dll";
             var config = ConfigurationManager.OpenExeConfiguration(module);
             var data = config.AppSettings.Settings[key];
-            return data.Value;
+            return data?.Value;
         }
 
 

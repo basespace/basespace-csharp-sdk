@@ -10,7 +10,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CanStartDeviceAuth()
         {
             OAuthDeviceAuthResponse response = null;
-            response = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
+            response = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest( GetConfigValue("basespace:api-key"), "browse global"));
 
             Assert.NotNull(response);
             Assert.NotNull(response.DeviceCode);
@@ -40,10 +40,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public void CanDoNativeAppAuth()
         {
             OAuthV2AccessTokenResponse response = null;
-            response = Client.GetOAuthAccessToken(new OAuthV2AccessTokenRequest(ConfigurationManager.AppSettings.Get("basespace:client-id"),
-                ConfigurationManager.AppSettings.Get("basespace:client-secret"),
-                ConfigurationManager.AppSettings.Get("basespace:web-url"),
-                ConfigurationManager.AppSettings.Get("basespace:authorization-code")));
+            response = Client.GetOAuthAccessToken(new OAuthV2AccessTokenRequest( GetConfigValue("basespace:client-id"),
+                 GetConfigValue("basespace:client-secret"),
+                 GetConfigValue("basespace:web-url"),
+                 GetConfigValue("basespace:authorization-code")));
                 
             Assert.NotNull(response);
             Assert.NotNull(response.AccessToken);
@@ -62,10 +62,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 		{
 			OAuthDeviceAuthResponse verificationResponse = null;
 			OAuthDeviceAccessTokenResponse tokenResponse = null;
-				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest(ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
+				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest( GetConfigValue("basespace:api-key"), "browse global"));
 				tokenResponse = Client.FinishOAuthDeviceAuth (
-					new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), 
-				                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
+					new OAuthDeviceAccessTokenRequest ( GetConfigValue("basespace:api-key"), 
+				                                    GetConfigValue("basespace:api-secret"), verificationResponse.DeviceCode));
 
 			Assert.NotNull(tokenResponse);
 			Assert.NotNull(tokenResponse.Error);
@@ -85,13 +85,13 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 			OAuthDeviceAuthResponse verificationResponse = null;
 			OAuthDeviceAccessTokenResponse tokenResponse = null;
 
-				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), "browse global"));
+				verificationResponse = Client.BeginOAuthDeviceAuth(new OAuthDeviceAuthRequest ( GetConfigValue("basespace:api-key"), "browse global"));
 
 				// pause the debugger here and go accept the verification url
 
 				tokenResponse = Client.FinishOAuthDeviceAuth (
-					new OAuthDeviceAccessTokenRequest (ConfigurationManager.AppSettings.Get("basespace:api-key"), 
-				                                   ConfigurationManager.AppSettings.Get("basespace:api-secret"), verificationResponse.DeviceCode));
+					new OAuthDeviceAccessTokenRequest (GetConfigValue("basespace:api-key"),
+					    GetConfigValue("basespace:api-secret"), verificationResponse.DeviceCode));
 			
 			Assert.NotNull(tokenResponse);
 			Assert.NotNull(tokenResponse.AccessToken);

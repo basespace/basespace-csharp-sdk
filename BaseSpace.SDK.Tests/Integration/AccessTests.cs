@@ -25,11 +25,11 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         public static IBaseSpaceClient CreateWebRequestClient()
         {
             // construct the settings object from the config file
-            string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
-            string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
-            string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
-            string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
-            string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
+            string apiKey =  GetConfigValue("basespace:api-key");
+            string apiSecret =  GetConfigValue("basespace:api-secret");
+            string apiUrl =  GetConfigValue("basespace:api-url");
+            string webUrl =  GetConfigValue("basespace:web-url");
+            string version =  GetConfigValue("basespace:api-version");
 
 	        var authentication = new OAuth2Authentication(apiKey, apiSecret);
 
