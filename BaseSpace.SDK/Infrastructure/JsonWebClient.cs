@@ -6,7 +6,7 @@ using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 using Illumina.TerminalVelocity;
 
-#if NETSTANDARD
+#if NETSTANDARD || NETCOREAPP
 using ServiceStack;
 #else
 using ServiceStack.ServiceClient.Web;
@@ -45,7 +45,7 @@ namespace Illumina.BaseSpace.SDK
 
             clientBilling = new JsonServiceClient(settings.BaseSpaceBillingApiUrl);
 
-#if NETSTANDARD
+#if  NETSTANDARD || NETCOREAPP
             client.RequestFilter += WebRequestFilter;
             clientBilling.RequestFilter += WebRequestFilter;
 
@@ -68,7 +68,7 @@ namespace Illumina.BaseSpace.SDK
 
         static JsonWebClient()
         {
-#if NETSTANDARD
+#if  NETSTANDARD || NETCOREAPP
             JsConfig.DateHandler = DateHandler.ISO8601;
 #else
             // setting this just to make sure it's not set in Linux

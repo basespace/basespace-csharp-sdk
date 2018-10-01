@@ -4,7 +4,6 @@ using Xunit;
 using System;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
-using ServiceStack.Common.Extensions;
 
 namespace Illumina.BaseSpace.SDK.Tests.Integration
 {

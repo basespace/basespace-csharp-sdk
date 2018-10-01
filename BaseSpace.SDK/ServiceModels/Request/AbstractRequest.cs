@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if NETSTANDARD
+#if  NETSTANDARD || NETCOREAPP
 using ServiceStack;
 #else
 using ServiceStack.ServiceClient.Web;

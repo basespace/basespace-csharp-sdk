@@ -8,7 +8,7 @@ using Common.Logging;
 using Illumina.BaseSpace.SDK.ServiceModels;
 using Illumina.BaseSpace.SDK.Types;
 
-#if NETSTANDARD
+#if  NETSTANDARD || NETCOREAPP
 using ServiceStack;
 #else
 using ServiceStack.ServiceClient.Web;

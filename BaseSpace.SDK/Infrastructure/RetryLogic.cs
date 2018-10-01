@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Common.Logging;
-#if NETSTANDARD
+#if  NETSTANDARD || NETCOREAPP
 using ServiceStack;
 #else
 using ServiceStack.ServiceClient.Web;
