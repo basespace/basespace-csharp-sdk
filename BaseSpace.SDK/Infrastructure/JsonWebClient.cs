@@ -70,6 +70,7 @@ namespace Illumina.BaseSpace.SDK
         {
 #if  NETSTANDARD || NETCOREAPP
             JsConfig.DateHandler = DateHandler.ISO8601;
+            JsConfig.AlwaysUseUtc = true;
 #else
             // setting this just to make sure it's not set in Linux
             JsonDataContractDeserializer.Instance.UseBcl = false;
