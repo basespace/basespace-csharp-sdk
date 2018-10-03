@@ -20,8 +20,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             _lazy = new Lazy<IBaseSpaceClient>(CreateRealClient);
 
             // set Adapter
-#if !NETCOREAPP
             LogManager.Adapter = new Common.Logging.Simple.DebugLoggerFactoryAdapter(properties);
+#if NETCOREAPP
+            Trace.Listeners.Add(new DefaultTraceListener());
+#else
             Debug.Listeners.Add(new DefaultTraceListener());
 #endif
         }
