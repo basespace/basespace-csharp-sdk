@@ -10,6 +10,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class BaseIntegrationTest
     {
+        private Configuration _config;
         public BaseIntegrationTest()
         {
             //configure console logging
@@ -18,6 +19,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             properties["showDateTime"] = "true";
 
             _lazy = new Lazy<IBaseSpaceClient>(CreateRealClient);
+
+            var module = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".dll";
+            _config = ConfigurationManager.OpenExeConfiguration(module);
 
             // set Adapter
             LogManager.Adapter = new Common.Logging.Simple.DebugLoggerFactoryAdapter(properties);
@@ -46,11 +50,9 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
         }
 
 
-        public static string GetConfigValue(string key)
+        public string GetConfigValue(string key)
         {
-            var module = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".dll";
-            var config = ConfigurationManager.OpenExeConfiguration(module);
-            var data = config.AppSettings.Settings[key];
+            var data = _config.AppSettings.Settings[key];
             return data?.Value;
         }
 

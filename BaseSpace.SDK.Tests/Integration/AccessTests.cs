@@ -22,7 +22,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             Assert.NotNull(client);
         }
 
-        public static IBaseSpaceClient CreateWebRequestClient()
+        public IBaseSpaceClient CreateWebRequestClient()
         {
             // construct the settings object from the config file
             string apiKey =  GetConfigValue("basespace:api-key");
