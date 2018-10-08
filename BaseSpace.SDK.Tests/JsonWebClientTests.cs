@@ -11,7 +11,28 @@ namespace Illumina.BaseSpace.SDK.Tests
         [Fact]
         public void CanDeserializeARunCompactReference()
         {
-            var result = ReferenceDeserializer.JsonToReference(TestData.AppResultReference) as ContentReference<AppResult>;
+
+            var AppResultReference = @"{
+                ""Rel"": ""UsedBy"",
+                ""Type"": ""AppResult"",
+                ""Href"": ""v1pre3/appresults/291294"",
+                ""HrefContent"": ""v1pre3/appresults/291294"",
+                ""Content"": {
+                    ""Id"": ""291294"",
+                    ""Href"": ""v1pre3/appresults/291294"",
+                    ""UserOwnedBy"": {
+                        ""Id"": ""1001"",
+                        ""Href"": ""v1pre3/users/1001"",
+                        ""Name"": ""Illumina Inc""
+                    },
+                    ""Name"": ""BWA GATK - HiSeq 2500 NA12878 demo 2x150"",
+                    ""Status"": ""Complete"",
+                    ""StatusSummary"": """",
+                    ""DateCreated"": ""2012-11-15T19:24:21.0000000""
+                }";
+
+
+            var result = ReferenceDeserializer.JsonToReference(AppResultReference) as ContentReference<AppResult>;
             Assert.NotNull(result);
             Assert.True(result.Href.ToString() == @"v1pre3/appresults/291294");
             Assert.True(result.HrefContent.ToString() == @"v1pre3/appresults/291294");
@@ -33,7 +54,29 @@ namespace Illumina.BaseSpace.SDK.Tests
         [Fact]
         public void CanDeserializeASampleCompactReference()
         {
-            var result = ReferenceDeserializer.JsonToReference(TestData.SampleReference) as ContentReference<Sample>;
+            var SampleReference = @"{
+                ""Rel"": ""Using"",
+                ""Type"": ""Sample"",
+                ""Href"": ""v1pre3/samples/262264"",
+                ""HrefContent"": ""v1pre3/samples/262264"",
+                ""Content"": {
+                    ""Id"": ""262264"",
+                    ""Href"": ""v1pre3/samples/262264"",
+                    ""UserOwnedBy"": {
+                        ""Id"": ""1001"",
+                        ""Href"": ""v1pre3/users/1001"",
+                        ""Name"": ""Illumina Inc""
+                    },
+                    ""Name"": ""HiSeq 2500 NA12878 demo 2x150"",
+                    ""SampleId"": ""HiSeq 2500 NA12878 demo 2x150"",
+                    ""Status"": ""Complete"",
+                    ""StatusSummary"": """",
+                    ""DateCreated"": ""2012-11-15T19:22:54.0000000""
+                }
+            }";
+
+
+            var result = ReferenceDeserializer.JsonToReference(SampleReference) as ContentReference<Sample>;
             Assert.NotNull(result);
             Assert.True(result.Href.ToString() == @"v1pre3/samples/262264");
             Assert.True(result.HrefContent.ToString() == @"v1pre3/samples/262264");

@@ -5,7 +5,11 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Common.Logging;
+#if  NETSTANDARD || NETCOREAPP
+using ServiceStack;
+#else
 using ServiceStack.ServiceClient.Web;
+#endif
 
 namespace Illumina.BaseSpace.SDK
 {

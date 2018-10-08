@@ -1,6 +1,12 @@
 ﻿using System;
+
+#if  NETSTANDARD || NETCOREAPP
+using ServiceStack;
+#else
 using ServiceStack.ServiceClient.Web;
-using ServiceStack.ServiceModel;
+using ServiceStack.ServiceModel.Serialization;
+#endif
+
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {
 	public abstract class AbstractRequest<TReturn>

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.IO;
+#if  NETSTANDARD || NETCOREAPP
+using ServiceStack;
+#else
 using ServiceStack.ServiceClient.Web;
+#endif
 
 namespace Illumina.BaseSpace.SDK.ServiceModels
 {

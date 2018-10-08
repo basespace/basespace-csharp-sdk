@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
 using System.Net;
@@ -11,18 +10,26 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 {
     public class BaseIntegrationTest
     {
+        private Configuration _config;
         public BaseIntegrationTest()
         {
             //configure console logging
             // create properties
-            var properties = new NameValueCollection();
+            var properties = new Common.Logging.Configuration.NameValueCollection();
             properties["showDateTime"] = "true";
 
             _lazy = new Lazy<IBaseSpaceClient>(CreateRealClient);
 
+            var module = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".dll";
+            _config = ConfigurationManager.OpenExeConfiguration(module);
+
             // set Adapter
-            LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter(properties);
+            LogManager.Adapter = new Common.Logging.Simple.DebugLoggerFactoryAdapter(properties);
+#if NETCOREAPP
+            Trace.Listeners.Add(new DefaultTraceListener());
+#else
             Debug.Listeners.Add(new DefaultTraceListener());
+#endif
         }
 
         private readonly Lazy<IBaseSpaceClient> _lazy;
@@ -42,15 +49,23 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
             }
         }
 
+
+        public string GetConfigValue(string key)
+        {
+            var data = _config.AppSettings.Settings[key];
+            return data?.Value;
+        }
+
+
         // Note: prefer access through the Client property!
         protected virtual IBaseSpaceClient CreateRealClient()
         {
-            //string apiKey = ConfigurationManager.AppSettings.Get("basespace:api-key");
-            //string apiSecret = ConfigurationManager.AppSettings.Get("basespace:api-secret");
-            string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
-            string apiBillingUrl = ConfigurationManager.AppSettings.Get("basespace:api-billing-url");
-            string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
-            string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
+            //string apiKey =  GetConfigValue("basespace:api-key");
+            //string apiSecret =  GetConfigValue("basespace:api-secret");
+            string apiUrl =  GetConfigValue("basespace:api-url");
+            string apiBillingUrl =  GetConfigValue("basespace:api-billing-url");
+            string webUrl =  GetConfigValue("basespace:web-url");
+            string version =  GetConfigValue("basespace:api-version");
             
             var settings = new BaseSpaceClientSettings
 				{
@@ -66,10 +81,10 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
         protected virtual IClientSettings BuildSettings()
         {
-            string apiUrl = ConfigurationManager.AppSettings.Get("basespace:api-url");
-            string webUrl = ConfigurationManager.AppSettings.Get("basespace:web-url");
-            string apiBillingUrl = ConfigurationManager.AppSettings.Get("basespace:api-billing-url");
-            string version = ConfigurationManager.AppSettings.Get("basespace:api-version");
+            string apiUrl =  GetConfigValue("basespace:api-url");
+            string webUrl =  GetConfigValue("basespace:web-url");
+            string apiBillingUrl =  GetConfigValue("basespace:api-billing-url");
+            string version =  GetConfigValue("basespace:api-version");
 
             return new BaseSpaceClientSettings
             {
@@ -83,7 +98,7 @@ namespace Illumina.BaseSpace.SDK.Tests.Integration
 
         protected virtual IAuthentication GetAuthentication()
         {
-            string accessToken = ConfigurationManager.AppSettings.Get("basespace:api-accesstoken");
+            string accessToken =  GetConfigValue("basespace:api-accesstoken");
 
             return new OAuth2Authentication(accessToken);
         }
