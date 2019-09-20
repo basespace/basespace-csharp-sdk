@@ -30,15 +30,8 @@
   <ItemGroup>
     <PackageReference Include="Common.Logging" Version="3.4.1" />
     <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
-    <PackageReference Include="ServiceStack" Version="5.4.0" />
     <PackageReference Include="ServiceStack.Client" Version="5.4.0" />
     <PackageReference Include="ServiceStack.Client.Core" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Common" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Common.Core" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Interfaces" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Interfaces.Core" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Text" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Text.Core" Version="5.4.0" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="TerminalVelocity.Sharp.dotnetstandard" Version="1.0.0.172" />
   </ItemGroup>
