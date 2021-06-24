@@ -1,12 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Illumina.BaseSpace.SDK
+﻿namespace Illumina.BaseSpace.SDK
 {
 	public interface IClientSettings
 	{
 		uint RetryAttempts { get; }
-		
-		Collection<int> RetryableCodes { get; }
 
 		string BaseSpaceWebsiteUrl { get; }
 

@@ -13,12 +13,14 @@ using ServiceStack.ServiceClient.Web;
 
 namespace Illumina.BaseSpace.SDK
 {
-    internal static class RetryLogic
+    public static class RetryLogic
     {
-        public static Func<Exception, Collection<int>, bool> GenericRetryHandler = (wse, retryableStatusCodes) =>
+        public static ICollection<int> RetryableCodes = new Collection<int>(new[] { 0, 413, 500, 503, 504 });
+
+        public static Func<Exception,bool> GenericRetryHandler = (wse) =>
                                                                      {
                                                                          var statusCode = GetStatusCode(wse);
-                                                                         return retryableStatusCodes.Contains(statusCode);
+                                                                         return RetryableCodes.Contains(statusCode);
                                                                      };
 
         public static int GetStatusCode(Exception exception)
@@ -44,9 +46,9 @@ namespace Illumina.BaseSpace.SDK
 
             return statusCode;
         }
-        public static void DoWithRetry(uint maxAttempts, Collection<int> retryableCodes, string description, Action op, ILog logger,
+        public static void DoWithRetry(uint maxAttempts, string description, Action op, ILog logger,
                                        double retryIntervalBaseSecs = 5, Action error = null,
-                                        Func<Exception, Collection<int>, bool> retryHandler = null)
+                                        Func<Exception, bool> retryHandler = null)
         {
           
             retryIntervalBaseSecs = Math.Max(1, retryIntervalBaseSecs);
@@ -74,7 +76,7 @@ namespace Illumina.BaseSpace.SDK
                 }
                 catch (WebServiceException exc)
                 {
-                    bool allowRetry = retryHandler(exc, retryableCodes);
+                    bool allowRetry = retryHandler(exc);
 
                     int statusCode = exc.StatusCode;
                     string message = exc.ErrorMessage;
@@ -86,7 +88,7 @@ namespace Illumina.BaseSpace.SDK
                 }
                 catch (WebException exc)
                 {
-                    bool allowRetry = retryHandler(exc,retryableCodes);
+                    bool allowRetry = retryHandler(exc);
                     int statusCode = 0;
                     string message = exc.ToString();
                     string errorCode = string.Empty;

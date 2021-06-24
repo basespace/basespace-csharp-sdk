@@ -1,12 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Illumina.BaseSpace.SDK
+﻿namespace Illumina.BaseSpace.SDK
 {
 	public class BaseSpaceClientSettings : IClientSettings
 	{
 		public const uint DEFAULT_RETRY_ATTEMPTS = 6;
-
-		public static readonly Collection<int> DEFAULT_RETRY_STATUS_CODES = new Collection<int>(new[] { 0, 413, 500, 503, 504 });
 
 		public const string DEFAULT_WEBSITE = "https://basespace.illumina.com";
 
@@ -24,20 +20,17 @@ namespace Illumina.BaseSpace.SDK
 		public BaseSpaceClientSettings()
 		{
 			RetryAttempts = DEFAULT_RETRY_ATTEMPTS;
-			RetryableCodes = DEFAULT_RETRY_STATUS_CODES;
 			BaseSpaceApiUrl = DEFAULT_API;
 		    BaseSpaceBillingApiUrl = DEFAULT_API_BILLING;
 			BaseSpaceWebsiteUrl = DEFAULT_WEBSITE;
 			Version = DEFAULT_VERSION;
             FileUploadMultipartSizeThreshold = DEFAULT_MULTIPART_SIZE_THRESHOLD;
             FileUploadMultipartChunkSize = DEFAULT_UPLOAD_MULTIPART_SIZE;
-            
+
             FileDownloadMultipartSizeThreshold = DEFAULT_DOWNLOAD_MULTIPART_SIZE;
 		}
 
 		public uint RetryAttempts { get; set; }
-		
-		public Collection<int> RetryableCodes { get; set; }
 
 		public string BaseSpaceWebsiteUrl { get; set; }
 
@@ -56,6 +49,5 @@ namespace Illumina.BaseSpace.SDK
         public IAuthentication Authentication { get; set; }
 
         public int TimeoutMin { get; set; }
-        
 	}
 }
