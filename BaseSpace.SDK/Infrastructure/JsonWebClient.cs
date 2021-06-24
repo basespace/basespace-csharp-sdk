@@ -126,7 +126,7 @@ namespace Illumina.BaseSpace.SDK
 
                 var clientForRequest = PickClientForApiName(request.GetApiName());
 
-                RetryLogic.DoWithRetry(options.RetryAttempts, request.GetName(),
+                RetryLogic.DoWithRetry(options.RetryAttempts, options.RetryableCodes, request.GetName(),
                     () => result = request.GetSendFunc(clientForRequest)(), logger);
                 return result;
             }

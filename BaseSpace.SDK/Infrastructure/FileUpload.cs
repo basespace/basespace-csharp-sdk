@@ -36,8 +36,7 @@ namespace Illumina.BaseSpace.SDK
 		{
 			Logger.DebugFormat("numthreads {0}", request.ThreadCount);
 			TResult file = null;
-
-            RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, string.Format("Uploading file {0}", request.FileInfo.Name),
+            RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, ClientSettings.RetryableCodes, string.Format("Uploading file {0}", request.FileInfo.Name),
                                    () =>
 	                               {
                                        request.MultiPart = request.FileInfo.Length >= ClientSettings.FileUploadMultipartSizeThreshold;
@@ -46,7 +45,7 @@ namespace Illumina.BaseSpace.SDK
                                            UploadFile_MultiPart(request) :
 										   WebClient.Send(request);
                                    }, Logger, retryHandler:
-                                   (exc) =>
+                                   (exc, retryableCodes) =>
                                    {
                                        var appExc = exc as ApplicationException;
                                        if (appExc != null && appExc.InnerException != null)
@@ -56,7 +55,7 @@ namespace Illumina.BaseSpace.SDK
                                                // we need to reupload the file with the conflict error
                                                if (wse.StatusCode == 409)
                                                    return true;
-                                           return RetryLogic.GenericRetryHandler(wse);
+                                           return RetryLogic.GenericRetryHandler(wse, retryableCodes);
                                        }
                                        return false;
                                    }
@@ -151,7 +150,7 @@ namespace Illumina.BaseSpace.SDK
         
         protected virtual void UploadPart(string fullUrl, FileInfo fileToUpload, long startPosition, int partNumber, ManualResetEvent errorSignal, string partDescription, uint chunkSize)
         {
-            RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, string.Format("Uploading part {0} of {1}", partDescription, fileToUpload.Name),
+            RetryLogic.DoWithRetry(ClientSettings.RetryAttempts, ClientSettings.RetryableCodes, string.Format("Uploading part {0} of {1}", partDescription, fileToUpload.Name),
                 () =>
                 {
                     if (errorSignal.WaitOne(0))
