@@ -15,7 +15,7 @@ namespace Illumina.BaseSpace.SDK
 {
     internal static class RetryLogic
     {
-        public static ICollection<int> RetryableCodes = new Collection<int>(new[] { 0, 413, 500, 502, 503, 504 });
+        public static ICollection<int> RetryableCodes = new ReadOnlyCollection<int>(new[] { 0, 413, 500, 502, 503, 504 });
 
         public static Func<Exception,bool> GenericRetryHandler = (wse) =>
                                                                      {
