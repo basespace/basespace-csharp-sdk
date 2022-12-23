@@ -13,7 +13,6 @@
   <ItemGroup>
     <PackageReference Include="Common.Logging" Version="3.4.1" />
     <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="2.2.0-preview2-35157" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
