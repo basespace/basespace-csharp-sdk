@@ -1,4 +1,4 @@
-﻿namespace Illumina.BaseSpace.SDK.ServiceModels
+namespace Illumina.BaseSpace.SDK.ServiceModels
 {
     public class UpdateAppSessionRequest : AbstractResourceRequest<UpdateAppSessionResponse>
     {
@@ -14,9 +14,13 @@
 			HttpMethod = HttpMethods.POST;
         }
 
+        public enum UpdateAppSessionRequestIncludeFields { Properties, References, Logs, ComputeCharges }
+
         public string Status { get; set; }
 
         public string StatusSummary { get; set; }
+        
+        public string[] Include { get; set; }
 
 		protected override string GetUrl()
 		{
