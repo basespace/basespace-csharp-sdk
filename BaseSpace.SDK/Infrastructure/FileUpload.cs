@@ -120,13 +120,8 @@ namespace Illumina.BaseSpace.SDK
                              Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName);
 
                              UploadPart(serviceUrl, request.FileInfo, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1),chunkSize);
-                             lock (sync)
-                             {
-                                 totalPartsUploaded++;
-                                 Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded",
-                                                    partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName,
-                                                    totalPartsUploaded);
-                             }
+                             Interlocked.Increment(ref totalPartsUploaded);
+                             Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName, totalPartsUploaded);
                          }));
 
             bool success = errorSignal.WaitOne(0) == false;
@@ -169,12 +164,11 @@ namespace Illumina.BaseSpace.SDK
                             
                             int actualSize;
                             int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, chunkSize);
-                            lock (_syncRead) // avoid thrashing the disk
-                                using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Delete | FileShare.Read))
-                                {
-                                    fs.Seek(startPosition, SeekOrigin.Begin);
-                                    actualSize = fs.Read(data, 0, desiredSize);
-                                }
+                            using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            {
+                                fs.Seek(startPosition, SeekOrigin.Begin);
+                                actualSize = fs.Read(data, 0, desiredSize);
+                            }
                             if (actualSize != desiredSize)
                             {
                                 throw new Exception("we didn't read what we expected from this file");
