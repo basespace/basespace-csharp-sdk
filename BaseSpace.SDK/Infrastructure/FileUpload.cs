@@ -99,7 +99,7 @@ namespace Illumina.BaseSpace.SDK
                 var chunkSize10000Parts = (uint) (((l - 1) - (l - 1) % 10000) / 10000 + 1);
                 uint newChunkSize = Math.Max(ClientSettings.FileDownloadMultipartSizeThreshold, chunkSize10000Parts);
 
-                Logger.InfoFormat("the file you are trying to upload is too big ({0} bytes) for the part size you specified ({1} bytes) (there can be at most 10000 parts). the chunksize parameter will be overridden with {2} bytes", request.FileInfo.Length, ClientSettings.FileUploadMultipartChunkSize, newChunkSize);
+                Logger.DebugFormat("the file you are trying to upload is too big ({0} bytes) for the part size you specified ({1} bytes) (there can be at most 10000 parts). the chunksize parameter will be overridden with {2} bytes", request.FileInfo.Length, ClientSettings.FileUploadMultipartChunkSize, newChunkSize);
                 chunkSize = newChunkSize;
                 zeroBasedPartNumberMax = (request.FileInfo.Length - 1) / chunkSize;
             }
@@ -117,13 +117,13 @@ namespace Illumina.BaseSpace.SDK
                              var partNumber = zeroBasedPartNumber + 1;
                              var byteOffset = zeroBasedPartNumber * chunkSize;
                              var serviceUrl = string.Format("{0}/{1}/files/{2}/parts/{3}", server, ClientSettings.Version, fileId, partNumber);
-                             Logger.InfoFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName);
+                             Logger.DebugFormat("Uploading part {0}/{1} of {2}", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName);
 
                              UploadPart(serviceUrl, request.FileInfo, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1),chunkSize);
                              lock (sync)
                              {
                                  totalPartsUploaded++;
-                                 Logger.InfoFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded",
+                                 Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded",
                                                     partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName,
                                                     totalPartsUploaded);
                              }
