@@ -122,6 +122,7 @@ namespace Illumina.BaseSpace.SDK
                              UploadPart(serviceUrl, request.FileInfo, byteOffset, zeroBasedPartNumber, errorSignal, string.Format("{0}/{1}", partNumber, zeroBasedPartNumberMax + 1),chunkSize);
                              Interlocked.Increment(ref totalPartsUploaded);
                              Logger.DebugFormat("Done Uploading part {0}/{1} of {2}, {3} total parts uploaded", partNumber, 1 + zeroBasedPartNumberMax, request.FileInfo.FullName, totalPartsUploaded);
+                             Thread.Sleep(1);
                          }));
 
             bool success = errorSignal.WaitOne(0) == false;
