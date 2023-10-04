@@ -140,9 +140,6 @@ namespace Illumina.BaseSpace.SDK
 
             return response;
         }
-
-
-        static object _syncRead = new object();
         
         protected virtual void UploadPart(string fullUrl, FileInfo fileToUpload, long startPosition, int partNumber, ManualResetEvent errorSignal, string partDescription, uint chunkSize)
         {
@@ -154,35 +151,25 @@ namespace Illumina.BaseSpace.SDK
 
                     using (var wc = new BSWebClient())
                     {
-                        byte[] data = null;
-                        try
-                        {
-                            data = BufferPool.GetChunk((int)chunkSize);
-
-	                        var authentication = ClientSettings.Authentication;
-	                        authentication.UpdateHttpHeader(wc.Headers, new Uri(fullUrl), "PUT");
+                        byte[] data = new byte[chunkSize];
+                        var authentication = ClientSettings.Authentication;
+                        authentication.UpdateHttpHeader(wc.Headers, new Uri(fullUrl), "PUT");
                             
-                            int actualSize;
-                            int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, chunkSize);
-                            using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                            {
-                                fs.Seek(startPosition, SeekOrigin.Begin);
-                                actualSize = fs.Read(data, 0, desiredSize);
-                            }
-                            if (actualSize != desiredSize)
-                            {
-                                throw new Exception("we didn't read what we expected from this file");
-                            }
-                            if (actualSize != data.Length)
-                                data = data.Take(actualSize).ToArray(); // TODO: Find a way to prevent creating sub-arrays (memory fragmentation)
-                            Logger.InfoFormat("File Upload: {0}: Uploading part {1}", fileToUpload.Name, partDescription);
-                            wc.UploadData(fullUrl, "PUT", data);
-
-                        }
-                        finally
+                        int actualSize;
+                        int desiredSize = (int)Math.Min(fileToUpload.Length - startPosition, chunkSize);
+                        using (var fs = System.IO.File.Open(fileToUpload.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
-                            BufferPool.ReleaseChunk(data);
+                            fs.Seek(startPosition, SeekOrigin.Begin);
+                            actualSize = fs.Read(data, 0, desiredSize);
                         }
+                        if (actualSize != desiredSize)
+                        {
+                            throw new Exception("we didn't read what we expected from this file");
+                        }
+                        if (actualSize != data.Length)
+                            data = data.Take(actualSize).ToArray(); // TODO: Find a way to prevent creating sub-arrays (memory fragmentation)
+                        Logger.InfoFormat("File Upload: {0}: Uploading part {1}", fileToUpload.Name, partDescription);
+                        wc.UploadData(fullUrl, "PUT", data);
                     }
                 },
                     Logger,

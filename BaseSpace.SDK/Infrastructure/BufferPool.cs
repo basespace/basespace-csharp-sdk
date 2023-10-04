@@ -6,7 +6,7 @@ namespace Illumina.BaseSpace.SDK
 {
     internal static class BufferPool
     {
-        static Dictionary<int, Stack<WeakReference>> _chunks = new Dictionary<int, Stack<WeakReference>>();
+        private static Dictionary<int, Stack<WeakReference>> _chunks = new Dictionary<int, Stack<WeakReference>>();
 
         public static byte[] GetChunk(int size)
         {
